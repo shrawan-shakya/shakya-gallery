@@ -5,6 +5,7 @@ export default defineType({
   title: 'Artwork',
   type: 'document',
   fields: [
+    // --- 1. BASIC INFO ---
     defineField({
       name: 'title',
       title: 'Title',
@@ -27,6 +28,43 @@ export default defineType({
       type: 'string',
       initialValue: 'Unknown Master',
     }),
+    
+    // --- 2. CLASSIFICATION (The "Filter" Engine) ---
+    defineField({
+      name: 'categories',
+      title: 'Categories',
+      type: 'array',
+      description: 'Select Style, Subject, or Collection tags (e.g. "Abstract", "Mountain", "Summer Sale")',
+      of: [{ type: 'reference', to: { type: 'category' } }], // <--- REFERENCES THE NEW SCHEMA
+    }),
+    
+    // --- 3. DETAILS ---
+    defineField({
+      name: 'year',
+      title: 'Year / Period',
+      type: 'string',
+    }),
+    defineField({
+      name: 'material',
+      title: 'Material Text',
+      type: 'string',
+      description: 'Display text like "Oil on Canvas" (Use Categories for filtering)',
+      placeholder: 'e.g. Gilded Bronze',
+    }),
+    defineField({
+      name: 'dimensions',
+      title: 'Dimensions',
+      type: 'string',
+      placeholder: 'e.g. 36 x 48 IN',
+    }),
+
+    // --- 4. SALES & INVENTORY ---
+    defineField({
+      name: 'price',
+      title: 'Price (USD)',
+      type: 'number',
+      description: 'Leave empty if "Price on Request"',
+    }),
     defineField({
       name: 'status',
       title: 'Availability Status',
@@ -37,27 +75,19 @@ export default defineType({
           { title: 'Sold', value: 'sold' },
           { title: 'Private Collection', value: 'private' },
         ],
-        layout: 'radio', // Shows as radio buttons instead of dropdown
+        layout: 'radio',
       },
       initialValue: 'available',
     }),
     defineField({
-      name: 'dimensions',
-      title: 'Dimensions',
-      type: 'string',
-      placeholder: 'e.g. 36 x 48 IN',
+      name: 'onSale',
+      title: 'On Sale / Highlight',
+      type: 'boolean',
+      initialValue: false,
+      description: 'Toggle this to mark as a special offer or featured item',
     }),
-    defineField({
-      name: 'year',
-      title: 'Year / Period',
-      type: 'string',
-    }),
-    defineField({
-      name: 'material',
-      title: 'Material',
-      type: 'string',
-      placeholder: 'e.g. Gilded Bronze, Thangka on Silk',
-    }),
+
+    // --- 5. MEDIA ---
     defineField({
       name: 'mainImage',
       title: 'Main Image',
@@ -70,7 +100,6 @@ export default defineType({
           name: 'alt',
           type: 'string',
           title: 'Alternative Text',
-          description: 'Important for SEO and accessiblity.',
           validation: (rule) => rule.required(),
         },
       ],
