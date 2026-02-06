@@ -1,57 +1,144 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
+import { usePathname } from "next/navigation";
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
+import { useState, useEffect } from "react";
+
+const links = [
+  { name: "Collection", href: "/" },
+  { name: "Exhibitions", href: "/" },
+  { name: "Contact", href: "/" },
+];
 
 export function Navbar() {
-  const { scrollY } = useScroll();
+  const [isOpen, setIsOpen] = useState(false);
+  const [isHidden, setIsHidden] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const { scrollY } = useScroll();
 
-  // Detect scroll position
   useMotionValueEvent(scrollY, "change", (latest) => {
-    if (latest > 50) {
+    const previous = scrollY.getPrevious() || 0;
+    
+    // 1. Scrolled State (For Shadow/Color)
+    // We increase the threshold to 10px to avoid flickering at the very top
+    if (latest > 10) {
       setIsScrolled(true);
     } else {
       setIsScrolled(false);
     }
+
+    // 2. Hide State (For Scrolling Down)
+    if (latest > previous && latest > 150) {
+      setIsHidden(true);
+    } else {
+      setIsHidden(false);
+    }
   });
 
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [isOpen]);
+
   return (
-    <motion.nav
-      className={cn(
-        "fixed top-0 w-full z-50 transition-colors duration-500 ease-in-out px-6 md:px-12 py-4",
-        isScrolled ? "bg-bone/95 backdrop-blur-sm shadow-sm border-b border-black/5" : "bg-transparent"
-      )}
-    >
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
+    <>
+      <motion.nav
+        variants={{
+          visible: { y: 0 },
+          hidden: { y: "-100%" },
+        }}
+        animate={isHidden ? "hidden" : "visible"}
+        transition={{ duration: 0.35, ease: "easeInOut" }}
+
+        // THE FIX:
+        // 1. At Top: bg-transparent (Let Hero color show through)
+        // 2. Scrolled: bg-[#FDFCF8] (Solid Bone color)
+        className={`fixed top-0 left-0 right-0 z-50 px-6 md:px-12 flex justify-between items-center w-full transition-all duration-500 ease-in-out
+          ${isScrolled 
+            ? "py-4 bg-[#FDFCF8] border-b border-black/5 shadow-sm" // Scrolled: Solid & Compact
+            : "py-6 md:py-10 bg-transparent border-none shadow-none" // Top: Invisible Background
+          }
+        `}
+      >
         
-        {/* Logo - Hides when at top to avoid clashing with Hero, appears on scroll */}
-        <Link href="/" className="group">
-            <span className={cn(
-                "font-serif text-xl tracking-widest font-bold text-primary transition-opacity duration-500",
-                // isScrolled ? "opacity-100" : "opacity-0"
-            )}>
-                SHAKYA
-            </span>
+        {/* LOGO */}
+        <Link href="/" className="z-50 group">
+          <h1 className={`font-serif tracking-widest relative font-thin transition-all duration-500 text-soft-black
+            ${isScrolled ? "text-xl md:text-2xl" : "text-2xl md:text-3xl"}
+          `}>
+            SHAKYA
+            <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-current transition-all duration-500 group-hover:w-full" />
+          </h1>
         </Link>
 
-        {/* Links */}
-        <div className="flex items-center gap-8 md:gap-12">
-          {["Collection", "Our Story", "Contact"].map((item) => (
+        {/* DESKTOP LINKS */}
+        <div className="hidden md:flex gap-12 items-center font-thin text-soft-black">
+          {links.map((link) => (
             <Link 
-              key={item} 
-              href={`/${item.toLowerCase().replace(" ", "-")}`} 
-              className="font-sans text-[11px] tracking-micro uppercase text-soft-black/70 hover:text-primary transition-colors relative group"
+              key={link.name} 
+              href={link.href} 
+              className="font-sans text-xs tracking-[0.25em] uppercase hover:text-gray-500 transition-colors"
             >
-              {item}
-              {/* Subtle underline hover effect */}
-              <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-primary/40 transition-all duration-300 group-hover:w-full" />
+              {link.name}
             </Link>
           ))}
         </div>
-      </div>
-    </motion.nav>
+
+        {/* MOBILE HAMBURGER */}
+        <button 
+          onClick={() => setIsOpen(!isOpen)} 
+          className="md:hidden z-50 w-8 h-8 flex flex-col justify-center items-end gap-1.5 text-soft-black"
+        >
+          <motion.span 
+            animate={isOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
+            className="w-8 h-[1px] bg-current block"
+          />
+          <motion.span 
+            animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
+            className="w-6 h-[1px] bg-current block"
+          />
+          <motion.span 
+            animate={isOpen ? { rotate: -45, y: -6, width: 32 } : { rotate: 0, y: 0, width: 16 }}
+            className="w-4 h-[1px] bg-current block"
+          />
+        </button>
+      </motion.nav>
+
+      {/* MOBILE MENU (Matches Bone Color) */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: "-100%" }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: "-100%" }}
+            transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+            className="fixed inset-0 bg-[#FDFCF8] z-40 flex flex-col justify-center items-center"
+          >
+            <div className="flex flex-col gap-8 text-center">
+              {links.map((link, i) => (
+                <motion.div
+                  key={link.name}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 + (i * 0.1), duration: 0.5 }}
+                >
+                  <Link 
+                    href={link.href} 
+                    onClick={() => setIsOpen(false)}
+                    className="font-serif text-4xl text-[#1A1A1A] italic hover:text-[#999999] transition-colors"
+                  >
+                    {link.name}
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }

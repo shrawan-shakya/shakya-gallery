@@ -19,7 +19,11 @@ interface Artwork {
 
 export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
   return (
-    <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-40 items-start px-6">
+    // UPDATED: 
+    // 1. gap-y-20 (Mobile) -> md:gap-y-40 (Desktop)
+    // 2. px-6 (Mobile) -> md:px-12 (Desktop)
+    // 3. Added pb-32 for bottom spacing
+    <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-20 md:gap-y-40 items-start px-6 md:px-12 pb-32">
       
       {artworks.map((art, index) => (
         <motion.div
