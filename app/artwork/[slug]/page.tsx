@@ -13,6 +13,8 @@ async function getArtwork(slug: string) {
       material,
       description,
       artist,
+      status, 
+      price,
       "imageUrl": mainImage.asset->url,
       "aspectRatio": mainImage.asset->metadata.dimensions.aspectRatio
     }
@@ -30,32 +32,38 @@ export default async function ArtworkPage({
 
   if (!art) return notFound(); 
 
+  const isSold = art.status === "sold" || art.status === "private";
+
+  // Reusable Breadcrumbs
+  const Breadcrumbs = ({ className }: { className?: string }) => (
+    <nav className={`flex items-center gap-3 font-sans text-[9px] tracking-[0.2em] uppercase text-gray-400 ${className}`}>
+      <Link href="/" className="hover:text-soft-black transition-colors">Home</Link>
+      <span className="text-gray-300">/</span>
+      <Link href="/collection" className="hover:text-soft-black transition-colors">Collection</Link>
+      <span className="text-gray-300">/</span>
+      <span className="text-soft-black line-clamp-1 border-b border-black/20 pb-0.5">Current Work</span>
+    </nav>
+  );
+
   return (
-    // MAIN CONTAINER
     <main className="min-h-screen bg-bone pt-32 lg:pt-40 pb-20">
       
-      {/* MOBILE NAV (Hidden on Desktop) */}
-      <div className="lg:hidden px-6 mb-6">
-        <Link href="/" className="font-sans text-[10px] tracking-widest uppercase text-gray-400 hover:text-soft-black transition-colors block py-2">
-          ← Return to Gallery
-        </Link>
+      {/* MOBILE BREADCRUMBS */}
+      <div className="lg:hidden px-6 mb-10">
+        <Breadcrumbs />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-0 px-6 md:px-12 max-w-[1400px] mx-auto">
         
-        {/* LEFT COLUMN: The Art (Sticky) */}
+        {/* LEFT COLUMN: The Art */}
         <div className="relative flex items-start justify-center lg:h-[calc(100vh-200px)] lg:sticky lg:top-48">
-          
-          {/* IMAGE CONTAINER 
-             - my-12: Adds vertical spacing (top & bottom) ONLY on mobile.
-             - lg:my-0: Removes that spacing on desktop so it aligns with the sticky container.
-          */}
           <div className="relative w-full max-w-xl max-h-[50vh] lg:max-h-[60vh] flex items-center justify-center my-12 lg:my-0">
             <MuseumFrame aspectRatio={art.aspectRatio} className="shadow-2xl h-full w-auto">
               {art.imageUrl && (
                 <img 
                   src={art.imageUrl} 
                   alt={art.title} 
+                  // UPDATED: Removed logic for grayscale/opacity. Always full color now.
                   className="w-full h-full object-contain max-h-[50vh] lg:max-h-[60vh]"
                 />
               )}
@@ -63,25 +71,42 @@ export default async function ArtworkPage({
           </div>
         </div>
 
-        {/* RIGHT COLUMN: The Story (Scrollable) */}
+        {/* RIGHT COLUMN: The Story */}
         <div className="flex flex-col justify-start lg:pl-20 lg:border-l border-black/5 min-h-[50vh]">
           
           <div className="flex flex-col gap-8 animate-in fade-in slide-in-from-bottom-8 duration-1000 max-w-lg">
             
-            {/* 1. Header */}
+            {/* 1. HEADER */}
             <div className="flex flex-col gap-2">
-                <Link href="/" className="hidden lg:block font-sans text-[9px] tracking-[0.2em] uppercase text-gray-400 hover:text-soft-black transition-colors mb-8">
-                  ← Gallery
-                </Link>
+                <Breadcrumbs className="hidden lg:flex mb-8" />
+                
+                {/* SOLD INDICATOR (Clean Red Dot) */}
+                {isSold && (
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-600" />
+                    <span className="font-sans text-[10px] tracking-[0.2em] text-red-800 uppercase font-medium">
+                      {art.status === "private" ? "Private Collection" : "Sold"}
+                    </span>
+                  </div>
+                )}
+
                 <h1 className="font-serif text-3xl md:text-5xl text-soft-black leading-none">
                   {art.title}
                 </h1>
-                <p className="font-serif italic text-xl md:text-2xl text-gray-500 mt-1">
-                  {art.artist}, {art.year}
-                </p>
+                <div className="flex justify-between items-baseline mt-2">
+                  <p className="font-serif italic text-xl md:text-2xl text-gray-500">
+                    {art.artist}, {art.year}
+                  </p>
+                  
+                  {!isSold && art.price && (
+                    <p className="font-sans text-lg text-soft-black">
+                      ${art.price.toLocaleString()}
+                    </p>
+                  )}
+                </div>
             </div>
 
-            {/* 2. Technical Details */}
+            {/* 2. TECHNICAL DETAILS */}
             <div className="grid grid-cols-2 gap-x-8 py-6 border-y border-black/5">
                 <div>
                     <p className="font-sans text-[9px] tracking-widest uppercase text-gray-400 mb-1">Material</p>
@@ -93,24 +118,48 @@ export default async function ArtworkPage({
                 </div>
             </div>
 
-            {/* 3. The Narrative */}
+            {/* 3. THE NARRATIVE */}
             <div className="font-sans font-light text-sm leading-[2.2] tracking-wide text-gray-600 text-justify">
               {art.description}
             </div>
 
-            {/* 4. The Action */}
+            {/* 4. THE ACTION AREA */}
             <div className="pt-6 pb-12">
-              <a 
-                href={`mailto:contact@shakyagallery.com?subject=Inquiry: ${art.title}`}
-                className="group inline-flex items-center gap-4 px-0 py-3 border-b border-black hover:border-gray-400 transition-all duration-300 cursor-pointer"
-              >
-                <span className="font-sans text-[10px] tracking-[0.3em] uppercase text-soft-black group-hover:text-gray-600 transition-colors">
-                  Inquire to Acquire
-                </span>
-                <span className="text-lg transform group-hover:translate-x-2 transition-transform duration-500">
-                  →
-                </span>
-              </a>
+              
+              {isSold ? (
+                // OPTION A: SOLD MESSAGE (Concierge Sourcing)
+                <div className="bg-black/[0.03] p-8 border border-black/5 flex flex-col gap-4">
+                  <div>
+                    <h3 className="font-serif text-xl text-soft-black italic mb-1">Looking for something similar?</h3>
+                    <p className="font-sans text-[11px] leading-relaxed text-gray-500 tracking-wide">
+                      While this specific work has been acquired, our curation team specializes in sourcing rare pieces similar to this one.
+                    </p>
+                  </div>
+                  <a 
+                    href={`mailto:concierge@shakyagallery.com?subject=Sourcing Request: Similar to ${art.title}`}
+                    className="inline-flex items-center gap-3 group"
+                  >
+                    <span className="font-sans text-[10px] tracking-[0.2em] uppercase text-soft-black border-b border-black group-hover:border-transparent transition-all">
+                      Contact Concierge
+                    </span>
+                    <span className="text-lg transform group-hover:translate-x-1 transition-transform">→</span>
+                  </a>
+                </div>
+              ) : (
+                // OPTION B: AVAILABLE (Standard Inquiry)
+                <a 
+                  href={`mailto:sales@shakyagallery.com?subject=Inquiry: ${art.title}`}
+                  className="group inline-flex items-center gap-4 px-0 py-3 border-b border-black hover:border-gray-400 transition-all duration-300 cursor-pointer"
+                >
+                  <span className="font-sans text-[10px] tracking-[0.3em] uppercase text-soft-black group-hover:text-gray-600 transition-colors">
+                    Inquire to Acquire
+                  </span>
+                  <span className="text-lg transform group-hover:translate-x-2 transition-transform duration-500">
+                    →
+                  </span>
+                </a>
+              )}
+
             </div>
 
           </div>

@@ -6,7 +6,7 @@ import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-
 import { useState, useEffect } from "react";
 
 const links = [
-  { name: "Collection", href: "/" },
+  { name: "Collection", href: "/collection" },
   { name: "Exhibitions", href: "/" },
   { name: "Contact", href: "/contact" },
 ];
