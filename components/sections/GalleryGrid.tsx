@@ -1,9 +1,7 @@
 import { client } from "@/sanity/lib/client";
-import { urlFor } from "@/sanity/lib/image";
-import { MuseumFrame } from "@/components/ui/MuseumFrame";
-import { GalleryGridClient } from "./GalleryGridClient"; // We will create this next
+import { GalleryGridClient } from "./GalleryGridClient";
 
-// 1. The Query: Ask Sanity for data
+// 1. The Query
 async function getArtworks() {
   const query = `
     *[_type == "artwork"] | order(_createdAt desc) {
@@ -11,9 +9,9 @@ async function getArtworks() {
       title,
       dimensions,
       year,
-      artist,   // <--- Added
-      material, // <--- Added
-      "slug": slug.current, // <--- ADDED THIS LINE
+      artist,
+      material,
+      "slug": slug.current,
       "imageUrl": mainImage.asset->url,
       "aspectRatio": mainImage.asset->metadata.dimensions.aspectRatio
     }
@@ -22,18 +20,33 @@ async function getArtworks() {
 }
 
 export async function GalleryGrid() {
-  // 2. Fetch the data (Server Side)
   const artworks = await getArtworks();
 
   return (
-    <section className="py-24 px-4 md:px-12 bg-bone">
-      {/* Section Header */}
-      <div className="max-w-7xl mx-auto mb-16 text-center">
-        <h2 className="font-serif text-4xl text-primary italic mb-4">Selected Acquisitions</h2>
-        <div className="w-12 h-[1px] bg-primary/20 mx-auto" />
+    <section className="py-24 md:py-32 px-6 bg-bone">
+      
+      {/* 2. THE HEADER (Styled to match HeritagePreview) */}
+      <div className="max-w-4xl mx-auto text-center flex flex-col items-center mb-24 md:mb-32">
+        
+        {/* Top Tag: Matches 'Our Heritage' style */}
+        <p className="font-sans text-[8px] md:text-xs tracking-[0.3em] text-gray-400 uppercase mb-8 font-medium">
+          The Collection
+        </p>
+
+        {/* Main Title: Big, Serif, Wide Tracking */}
+        <h2 className="font-serif text-4xl md:text-6xl tracking-[0.1em] text-soft-black leading-tight mb-8">
+          CURATED <span className="italic">MASTERS</span>
+        </h2>
+
+        {/* The Narrative: "From X to Y..." (Adapted for your brand) */}
+        <div className="max-w-2xl">
+          <p className="font-serif text-lg md:text-xl italic text-soft-black/80 leading-relaxed">
+            "From the intricate devotion of traditional Paubha to the bold strokes of contemporary visionaries, discover iconic creations from Nepal’s most revered artists right here."
+          </p>
+        </div>
       </div>
 
-      {/* 3. Pass data to the Client Component for animation */}
+      {/* 3. The Grid Animation */}
       <GalleryGridClient artworks={artworks} />
     </section>
   );

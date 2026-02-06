@@ -2,7 +2,7 @@ import { defineField, defineType } from 'sanity'
 
 export default defineType({
   name: 'artwork',
-  title: 'Artwork', // This is what shows up in the Studio
+  title: 'Artwork',
   type: 'document',
   fields: [
     defineField({
@@ -27,7 +27,21 @@ export default defineType({
       type: 'string',
       initialValue: 'Unknown Master',
     }),
-        defineField({
+    defineField({
+      name: 'status',
+      title: 'Availability Status',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Available', value: 'available' },
+          { title: 'Sold', value: 'sold' },
+          { title: 'Private Collection', value: 'private' },
+        ],
+        layout: 'radio', // Shows as radio buttons instead of dropdown
+      },
+      initialValue: 'available',
+    }),
+    defineField({
       name: 'dimensions',
       title: 'Dimensions',
       type: 'string',
@@ -49,16 +63,24 @@ export default defineType({
       title: 'Main Image',
       type: 'image',
       options: {
-        hotspot: true, // Allows you to crop images in the dashboard
+        hotspot: true,
       },
+      fields: [
+        {
+          name: 'alt',
+          type: 'string',
+          title: 'Alternative Text',
+          description: 'Important for SEO and accessiblity.',
+          validation: (rule) => rule.required(),
+        },
+      ],
       validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'description',
       title: 'The Story',
-      type: 'text', // Simple text for now
+      type: 'text',
       rows: 4,
     }),
-
   ],
 })
