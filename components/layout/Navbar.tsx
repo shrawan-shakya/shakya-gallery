@@ -67,7 +67,7 @@ export function Navbar() {
         
         {/* LOGO */}
         <Link href="/" className="z-50 group">
-          <h1 className={`font-serif tracking-widest relative font-thin transition-all duration-500 text-soft-black
+          <h1 className={`font-serif tracking-[0.3em] relative font-thin transition-all duration-500 text-soft-black
             ${isScrolled ? "text-xl md:text-2xl" : "text-2xl md:text-3xl"}
           `}>
             SHAKYA
