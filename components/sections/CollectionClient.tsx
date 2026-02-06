@@ -196,8 +196,7 @@ export function CollectionClient({
   return (
     <div className="min-h-screen bg-bone pt-32 pb-20 px-6 md:px-12">
       
-      {/* --- MOBILE FILTER BUTTON (Static, at the top) --- */}
-      {/* No sticky, no complex animation. Just a clean row at the start of the page. */}
+      {/* MOBILE FILTER BUTTON (Static) */}
       <div className="lg:hidden mb-12 flex justify-between items-end border-b border-black/5 pb-4">
         <button 
           onClick={() => setIsMobileFilterOpen(true)} 
@@ -212,7 +211,7 @@ export function CollectionClient({
         </span>
       </div>
 
-      {/* --- MOBILE FULLSCREEN DRAWER --- */}
+      {/* MOBILE DRAWER */}
       <AnimatePresence>
         {isMobileFilterOpen && (
           <motion.div 
@@ -236,9 +235,10 @@ export function CollectionClient({
 
       <div className="flex flex-col lg:flex-row gap-12 lg:gap-16">
         
-        {/* DESKTOP SIDEBAR */}
+        {/* DESKTOP SIDEBAR (Static) */}
         <aside className="hidden lg:block w-64 flex-shrink-0">
-          <div className="sticky top-40">
+          {/* UPDATED: Removed 'sticky top-40'. Now it scrolls normally. */}
+          <div className="">
             <div className="mb-8 pb-4 border-b border-black/5">
                 <p className="font-sans text-[10px] tracking-widest text-gray-400 uppercase">{filteredArtworks.length} Results</p>
             </div>
