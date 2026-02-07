@@ -71,6 +71,89 @@ const FilterSection = ({
   );
 };
 
+// --- EXTRACTED COMPONENT: FILTER PANEL ---
+// Defined OUTSIDE so it doesn't re-render and lose focus
+const FilterPanel = ({
+  searchQuery,
+  setSearchQuery,
+  categoriesByType,
+  selectedCategory,
+  setSelectedCategory,
+  statusFilter,
+  setStatusFilter,
+  sortOption,
+  setSortOption,
+  openSections,
+  toggleSection
+}: {
+  searchQuery: string;
+  setSearchQuery: (val: string) => void;
+  categoriesByType: Record<string, string[]>;
+  selectedCategory: string | null;
+  setSelectedCategory: (val: string | null) => void;
+  statusFilter: string;
+  setStatusFilter: (val: any) => void;
+  sortOption: string;
+  setSortOption: (val: any) => void;
+  openSections: Record<string, boolean>;
+  toggleSection: (key: string) => void;
+}) => {
+  return (
+    <>
+      <FilterSection title="Search" isOpen={openSections["search"]} onToggle={() => toggleSection("search")}>
+        <input 
+          type="text" 
+          placeholder="Artist or Title..." 
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="w-full bg-transparent border-b border-black/20 py-2 font-sans text-sm tracking-wide outline-none placeholder:text-gray-400 focus:border-black transition-colors"
+        />
+      </FilterSection>
+
+      {Object.entries(categoriesByType).map(([type, titles]) => (
+        <FilterSection 
+          key={type}
+          title={type.charAt(0).toUpperCase() + type.slice(1)} 
+          isOpen={openSections[type] || false} 
+          onToggle={() => toggleSection(type)}
+        >
+          {titles.map((title) => (
+            <button 
+              key={title}
+              onClick={() => setSelectedCategory(selectedCategory === title ? null : title)}
+              className={`text-left font-sans text-[11px] tracking-[0.2em] uppercase py-1 transition-all duration-300
+                ${selectedCategory === title ? "text-soft-black font-semibold pl-2 border-l-2 border-soft-black" : "text-gray-400 hover:text-soft-black"}
+              `}
+            >
+              {title}
+            </button>
+          ))}
+        </FilterSection>
+      ))}
+
+      <FilterSection title="Availability" isOpen={openSections["availability"]} onToggle={() => toggleSection("availability")}>
+        {["all", "available", "sold"].map((status) => (
+          <button 
+            key={status}
+            onClick={() => setStatusFilter(status as any)}
+            className={`text-left font-sans text-[11px] tracking-[0.2em] uppercase py-1 transition-all duration-300
+              ${statusFilter === status ? "text-soft-black font-semibold pl-2 border-l-2 border-soft-black" : "text-gray-400 hover:text-soft-black"}
+            `}
+          >
+            {status}
+          </button>
+        ))}
+      </FilterSection>
+
+      <FilterSection title="Sort" isOpen={openSections["sort"]} onToggle={() => toggleSection("sort")}>
+        <button onClick={() => setSortOption("newest")} className={`text-left font-sans text-[11px] tracking-[0.2em] uppercase py-1 ${sortOption === "newest" ? "text-soft-black font-semibold" : "text-gray-400"}`}>Newest</button>
+        <button onClick={() => setSortOption("price_asc")} className={`text-left font-sans text-[11px] tracking-[0.2em] uppercase py-1 ${sortOption === "price_asc" ? "text-soft-black font-semibold" : "text-gray-400"}`}>Price: Low to High</button>
+        <button onClick={() => setSortOption("price_desc")} className={`text-left font-sans text-[11px] tracking-[0.2em] uppercase py-1 ${sortOption === "price_desc" ? "text-soft-black font-semibold" : "text-gray-400"}`}>Price: High to Low</button>
+      </FilterSection>
+    </>
+  );
+};
+
 export function CollectionClient({ 
   artworks, 
   allCategories 
@@ -137,61 +220,21 @@ export function CollectionClient({
     return acc;
   }, {} as Record<string, string[]>);
 
-  // --- FILTER CONTENT RENDERER ---
-  const FilterContent = () => (
-    <>
-      <FilterSection title="Search" isOpen={openSections["search"]} onToggle={() => toggleSection("search")}>
-        <input 
-          type="text" 
-          placeholder="Artist or Title..." 
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full bg-transparent border-b border-black/20 py-2 font-sans text-sm tracking-wide outline-none placeholder:text-gray-400 focus:border-black transition-colors"
-        />
-      </FilterSection>
-
-      {Object.entries(categoriesByType).map(([type, titles]) => (
-        <FilterSection 
-          key={type}
-          title={type.charAt(0).toUpperCase() + type.slice(1)} 
-          isOpen={openSections[type] || false} 
-          onToggle={() => toggleSection(type)}
-        >
-          {titles.map((title) => (
-            <button 
-              key={title}
-              onClick={() => setSelectedCategory(selectedCategory === title ? null : title)}
-              className={`text-left font-sans text-[11px] tracking-[0.2em] uppercase py-1 transition-all duration-300
-                ${selectedCategory === title ? "text-soft-black font-semibold pl-2 border-l-2 border-soft-black" : "text-gray-400 hover:text-soft-black"}
-              `}
-            >
-              {title}
-            </button>
-          ))}
-        </FilterSection>
-      ))}
-
-      <FilterSection title="Availability" isOpen={openSections["availability"]} onToggle={() => toggleSection("availability")}>
-        {["all", "available", "sold"].map((status) => (
-          <button 
-            key={status}
-            onClick={() => setStatusFilter(status as any)}
-            className={`text-left font-sans text-[11px] tracking-[0.2em] uppercase py-1 transition-all duration-300
-              ${statusFilter === status ? "text-soft-black font-semibold pl-2 border-l-2 border-soft-black" : "text-gray-400 hover:text-soft-black"}
-            `}
-          >
-            {status}
-          </button>
-        ))}
-      </FilterSection>
-
-      <FilterSection title="Sort" isOpen={openSections["sort"]} onToggle={() => toggleSection("sort")}>
-        <button onClick={() => setSortOption("newest")} className={`text-left font-sans text-[11px] tracking-[0.2em] uppercase py-1 ${sortOption === "newest" ? "text-soft-black font-semibold" : "text-gray-400"}`}>Newest</button>
-        <button onClick={() => setSortOption("price_asc")} className={`text-left font-sans text-[11px] tracking-[0.2em] uppercase py-1 ${sortOption === "price_asc" ? "text-soft-black font-semibold" : "text-gray-400"}`}>Price: Low to High</button>
-        <button onClick={() => setSortOption("price_desc")} className={`text-left font-sans text-[11px] tracking-[0.2em] uppercase py-1 ${sortOption === "price_desc" ? "text-soft-black font-semibold" : "text-gray-400"}`}>Price: High to Low</button>
-      </FilterSection>
-    </>
-  );
+  // --- PREPARE PROPS FOR FILTER PANEL ---
+  // We bundle these so we can pass them cleanly to the mobile drawer and sidebar
+  const filterProps = {
+    searchQuery,
+    setSearchQuery,
+    categoriesByType,
+    selectedCategory,
+    setSelectedCategory,
+    statusFilter,
+    setStatusFilter,
+    sortOption,
+    setSortOption,
+    openSections,
+    toggleSection
+  };
 
   return (
     <div className="min-h-screen bg-bone pt-32 pb-20 px-6 md:px-12">
@@ -225,7 +268,10 @@ export function CollectionClient({
                 <h2 className="font-serif text-3xl text-soft-black">Filters</h2>
                 <button onClick={() => setIsMobileFilterOpen(false)} className="p-2 hover:opacity-50 transition-opacity"><span className="font-sans text-xl">✕</span></button>
              </div>
-             <div className="flex-1 overflow-y-auto p-6 pb-32"><FilterContent /></div>
+             <div className="flex-1 overflow-y-auto p-6 pb-32">
+                {/* --- FIX IS HERE: Using the external component --- */}
+                <FilterPanel {...filterProps} />
+             </div>
              <div className="p-6 border-t border-black/5 bg-bone">
                 <button onClick={() => setIsMobileFilterOpen(false)} className="w-full bg-soft-black text-white font-sans text-[10px] tracking-[0.3em] uppercase py-4 hover:bg-black/80 transition-colors">Show {filteredArtworks.length} Results</button>
              </div>
@@ -237,12 +283,12 @@ export function CollectionClient({
         
         {/* DESKTOP SIDEBAR (Static) */}
         <aside className="hidden lg:block w-64 flex-shrink-0">
-          {/* UPDATED: Removed 'sticky top-40'. Now it scrolls normally. */}
           <div className="">
             <div className="mb-8 pb-4 border-b border-black/5">
                 <p className="font-sans text-[10px] tracking-widest text-gray-400 uppercase">{filteredArtworks.length} Results</p>
             </div>
-            <FilterContent />
+            {/* --- FIX IS HERE: Using the external component --- */}
+            <FilterPanel {...filterProps} />
           </div>
         </aside>
 

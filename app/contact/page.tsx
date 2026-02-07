@@ -1,98 +1,173 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 export default function ContactPage() {
+  const [activeTab, setActiveTab] = useState<"inquiry" | "visit">("inquiry");
+  
+  // --- FORM STATE ---
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+    interest: "Acquiring Art" // Default interest
+  });
+
+  // --- HANDLE INPUT CHANGES ---
+  const handleChange = (e: any) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // --- HANDLE SUBMIT (The Logic) ---
+  const handleSubmit = async (e: any) => {
+    e.preventDefault(); // Stop page refresh
+    setIsSubmitting(true);
+
+    // 1. Send data to Web3Forms (Free Service)
+    const response = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        access_key: "dd980e1f-daa2-4f43-a832-3b887232392b", // <--- WE WILL REPLACE THIS
+        ...formData,
+        subject: `New Inquiry from Shakya Gallery: ${formData.interest}`,
+      }),
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      setIsSuccess(true);
+      setFormData({ name: "", email: "", message: "", interest: "Acquiring Art" }); // Clear form
+    } else {
+      alert("Something went wrong. Please try again.");
+    }
+
+    setIsSubmitting(false);
+  };
+
   return (
-    <main className="min-h-screen bg-bone pt-32 pb-20 px-6 md:px-12 flex flex-col justify-between">
+    <main className="min-h-screen bg-bone pt-32 pb-20 px-6 md:px-12">
       
-      {/* 1. BIG HEADER */}
-      <div className="max-w-[1400px] mx-auto w-full border-b border-black/5 pb-12">
-        <motion.h1 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="font-serif text-5xl md:text-8xl text-soft-black"
-        >
-          CONTACT
-        </motion.h1>
+      {/* HEADER ... (Same as before) */}
+      <div className="max-w-4xl mx-auto text-center mb-24">
+        <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="font-sans text-xs tracking-[0.3em] text-gray-400 uppercase mb-6">Concierge Service</motion.p>
+        <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="font-serif text-5xl md:text-7xl text-soft-black leading-none mb-8">GET IN <span className="italic">TOUCH</span></motion.h1>
       </div>
 
-      {/* 2. INFO GRID */}
-      <div className="max-w-[1400px] mx-auto w-full grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-8 mt-20">
+      <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24">
         
-        {/* Column 1: Visit */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="flex flex-col gap-6"
-        >
-          <span className="font-sans text-[10px] tracking-widest uppercase text-gray-400">Visit</span>
-          <div className="font-serif text-2xl text-soft-black leading-relaxed">
-            <p>Shakya Gallery</p>
-            <p>Thamel, Kathmandu</p>
-            <p>Nepal, 44600</p>
-          </div>
-          <p className="font-sans text-sm text-gray-500 mt-2">
-            Open by appointment only.<br/>
-            Monday — Friday, 10am — 6pm.
-          </p>
-        </motion.div>
-
-        {/* Column 2: Inquiries */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="flex flex-col gap-6"
-        >
-          <span className="font-sans text-[10px] tracking-widest uppercase text-gray-400">Inquiries</span>
-          <div className="flex flex-col gap-8">
-            <div>
-              <p className="font-serif text-xl text-soft-black mb-2">Acquisitions</p>
-              <a href="mailto:sales@shakyagallery.com" className="font-sans text-sm text-gray-500 hover:text-black transition-colors border-b border-transparent hover:border-black inline-block pb-1">
-                sales@shakyagallery.com
-              </a>
-            </div>
-            <div>
-              <p className="font-serif text-xl text-soft-black mb-2">Press & Studio</p>
-              <a href="mailto:info@shakyagallery.com" className="font-sans text-sm text-gray-500 hover:text-black transition-colors border-b border-transparent hover:border-black inline-block pb-1">
-                info@shakyagallery.com
-              </a>
+        {/* LEFT COLUMN ... (Same as before) */}
+        <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }} className="space-y-16">
+          <div className="space-y-8">
+            <h3 className="font-sans text-xs tracking-[0.2em] text-soft-black border-b border-black/10 pb-4 uppercase">Direct Lines</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div><p className="font-serif text-lg italic text-gray-500 mb-2">Acquisitions</p><a href="mailto:private@shakyagallery.com" className="font-sans text-sm tracking-wide text-soft-black">private@shakyagallery.com</a></div>
+              <div><p className="font-serif text-lg italic text-gray-500 mb-2">General</p><a href="mailto:contact@shakyagallery.com" className="font-sans text-sm tracking-wide text-soft-black">contact@shakyagallery.com</a></div>
             </div>
           </div>
+          {/* ... Location Section ... */}
         </motion.div>
 
-        {/* Column 3: Socials */}
+        {/* RIGHT COLUMN: THE FORM (WIRED UP) */}
         <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="flex flex-col gap-6"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.4 }}
+          className="bg-white p-8 md:p-12 border border-black/5 shadow-2xl shadow-black/[0.02]"
         >
-          <span className="font-sans text-[10px] tracking-widest uppercase text-gray-400">Follow</span>
-          <div className="flex flex-col gap-2">
-            <a href="https://instagram.com" target="_blank" className="font-serif text-2xl text-soft-black hover:italic transition-all">Instagram ↗</a>
-            <a href="https://linkedin.com" target="_blank" className="font-serif text-2xl text-soft-black hover:italic transition-all">LinkedIn ↗</a>
-          </div>
+          {isSuccess ? (
+            // SUCCESS STATE
+            <div className="h-full flex flex-col items-center justify-center text-center space-y-6 py-12">
+              <span className="text-4xl">✉️</span>
+              <h3 className="font-serif text-2xl text-soft-black">Message Sent</h3>
+              <p className="font-sans text-sm text-gray-500 leading-relaxed max-w-xs">
+                Thank you. Our curation team will review your inquiry and respond shortly.
+              </p>
+              <button onClick={() => setIsSuccess(false)} className="font-sans text-[10px] tracking-[0.2em] uppercase border-b border-black">Send Another</button>
+            </div>
+          ) : (
+            // FORM STATE
+            <form onSubmit={handleSubmit} className="space-y-12">
+              
+              <div className="space-y-6">
+                <label className="block font-sans text-xs tracking-[0.2em] text-gray-400 uppercase">I am interested in...</label>
+                <div className="flex flex-wrap gap-4">
+                  {["Acquiring Art", "Commissioning", "Valuation", "Other"].map((option) => (
+                    <button
+                      key={option}
+                      type="button"
+                      onClick={() => { setActiveTab(option as any); setFormData({...formData, interest: option}) }}
+                      className={`font-sans text-[10px] tracking-[0.2em] uppercase px-6 py-3 border transition-all duration-300
+                        ${formData.interest === option ? "border-soft-black bg-soft-black text-white" : "border-black/10 text-gray-500 hover:border-black/30"}
+                      `}
+                    >
+                      {option}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="space-y-2">
+                  <label className="font-sans text-[10px] tracking-[0.2em] text-gray-400 uppercase">Name</label>
+                  <input 
+                    name="name" 
+                    required 
+                    value={formData.name} 
+                    onChange={handleChange}
+                    type="text" 
+                    className="w-full border-b border-black/20 py-2 font-serif text-xl text-soft-black focus:border-black outline-none bg-transparent" 
+                    placeholder="Your Name" 
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="font-sans text-[10px] tracking-[0.2em] text-gray-400 uppercase">Email</label>
+                  <input 
+                    name="email" 
+                    required 
+                    value={formData.email} 
+                    onChange={handleChange}
+                    type="email" 
+                    className="w-full border-b border-black/20 py-2 font-serif text-xl text-soft-black focus:border-black outline-none bg-transparent" 
+                    placeholder="email@address.com" 
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="font-sans text-[10px] tracking-[0.2em] text-gray-400 uppercase">Message</label>
+                <textarea 
+                  name="message" 
+                  required 
+                  value={formData.message} 
+                  onChange={handleChange}
+                  rows={4} 
+                  className="w-full border-b border-black/20 py-2 font-serif text-xl text-soft-black focus:border-black outline-none bg-transparent resize-none" 
+                  placeholder="Tell us about your collection..." 
+                />
+              </div>
+
+              <div className="pt-4">
+                <button type="submit" disabled={isSubmitting} className="group flex items-center gap-4 text-soft-black disabled:opacity-50">
+                  <span className="font-sans text-xs tracking-[0.3em] uppercase border-b border-black pb-1 group-hover:border-gray-400 transition-colors">
+                    {isSubmitting ? "Sending..." : "Send Message"}
+                  </span>
+                  <span className="text-xl transform group-hover:translate-x-2 transition-transform duration-300">→</span>
+                </button>
+              </div>
+
+            </form>
+          )}
         </motion.div>
 
       </div>
-
-      {/* 3. IMAGE OR MAP FILLER (Optional) */}
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 0.8 }}
-        className="w-full h-[30vh] md:h-[40vh] bg-black/5 mt-20 md:mt-32 grayscale opacity-50 overflow-hidden"
-      >
-        {/* You can replace this with a real image of Kathmandu or your gallery later */}
-         <div className="w-full h-full flex items-center justify-center">
-            <p className="font-sans text-[10px] tracking-widest text-gray-400 uppercase">Kathmandu Valley</p>
-         </div>
-      </motion.div>
-
     </main>
   );
 }

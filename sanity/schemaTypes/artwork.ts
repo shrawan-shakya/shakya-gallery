@@ -35,7 +35,7 @@ export default defineType({
       title: 'Categories',
       type: 'array',
       description: 'Select Style, Subject, or Collection tags (e.g. "Abstract", "Mountain", "Summer Sale")',
-      of: [{ type: 'reference', to: { type: 'category' } }], // <--- REFERENCES THE NEW SCHEMA
+      of: [{ type: 'reference', to: { type: 'category' } }],
     }),
     
     // --- 3. DETAILS ---
@@ -59,6 +59,13 @@ export default defineType({
     }),
 
     // --- 4. SALES & INVENTORY ---
+    defineField({
+      name: 'sku',
+      title: 'SKU (Internal ID)',
+      type: 'string',
+      description: 'Internal Stock Keeping Unit. This will NOT be visible on the website.',
+      validation: (Rule) => Rule.required().error('Every artwork needs a SKU.'),
+    }),
     defineField({
       name: 'price',
       title: 'Price (USD)',
