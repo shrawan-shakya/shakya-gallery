@@ -34,7 +34,7 @@ export default function ContactPage() {
         Accept: "application/json",
       },
       body: JSON.stringify({
-        access_key: "dd980e1f-daa2-4f43-a832-3b887232392b", // <--- WE WILL REPLACE THIS
+        access_key: "dd980e1f-daa2-4f43-a832-3b887232392b", // <--- KEY IS ALREADY HERE
         ...formData,
         subject: `New Inquiry from Shakya Gallery: ${formData.interest}`,
       }),
@@ -95,6 +95,9 @@ export default function ContactPage() {
           ) : (
             // FORM STATE
             <form onSubmit={handleSubmit} className="space-y-12">
+              
+              {/* --- SPAM PROTECTION (HONEYPOT) --- */}
+              <input type="checkbox" name="botcheck" className="hidden" style={{ display: 'none' }} />
               
               <div className="space-y-6">
                 <label className="block font-sans text-xs tracking-[0.2em] text-gray-400 uppercase">I am interested in...</label>

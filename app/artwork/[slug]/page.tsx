@@ -2,12 +2,14 @@ import { client } from "@/sanity/lib/client";
 import { MuseumFrame } from "@/components/ui/MuseumFrame";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { ArtworkInquiry } from "@/components/ArtworkInquiry"; // <--- 1. IMPORT THE COMPONENT
 
 // FETCH DATA
 async function getArtwork(slug: string) {
   const query = `
     *[_type == "artwork" && slug.current == $slug][0] {
       title,
+      sku, // <--- 2. ADDED SKU HERE SO THE POPUP CAN USE IT
       year,
       dimensions,
       material,
@@ -63,7 +65,6 @@ export default async function ArtworkPage({
                 <img 
                   src={art.imageUrl} 
                   alt={art.title} 
-                  // UPDATED: Removed logic for grayscale/opacity. Always full color now.
                   className="w-full h-full object-contain max-h-[50vh] lg:max-h-[60vh]"
                 />
               )}
@@ -80,7 +81,7 @@ export default async function ArtworkPage({
             <div className="flex flex-col gap-2">
                 <Breadcrumbs className="hidden lg:flex mb-8" />
                 
-                {/* SOLD INDICATOR (Clean Red Dot) */}
+                {/* SOLD INDICATOR */}
                 {isSold && (
                   <div className="flex items-center gap-3 mb-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-red-600" />
@@ -146,18 +147,9 @@ export default async function ArtworkPage({
                   </a>
                 </div>
               ) : (
-                // OPTION B: AVAILABLE (Standard Inquiry)
-                <a 
-                  href={`mailto:sales@shakyagallery.com?subject=Inquiry: ${art.title}`}
-                  className="group inline-flex items-center gap-4 px-0 py-3 border-b border-black hover:border-gray-400 transition-all duration-300 cursor-pointer"
-                >
-                  <span className="font-sans text-[10px] tracking-[0.3em] uppercase text-soft-black group-hover:text-gray-600 transition-colors">
-                    Inquire to Acquire
-                  </span>
-                  <span className="text-lg transform group-hover:translate-x-2 transition-transform duration-500">
-                    →
-                  </span>
-                </a>
+                // OPTION B: NEW POPUP MODAL
+                // <--- 3. REPLACED THE OLD LINK WITH THIS COMPONENT
+                <ArtworkInquiry artwork={art} />
               )}
 
             </div>
