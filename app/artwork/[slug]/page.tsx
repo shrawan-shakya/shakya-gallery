@@ -2,14 +2,14 @@ import { client } from "@/sanity/lib/client";
 import { MuseumFrame } from "@/components/ui/MuseumFrame";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArtworkInquiry } from "@/components/ArtworkInquiry"; // <--- 1. IMPORT THE COMPONENT
+import { ArtworkInquiry } from "@/components/ArtworkInquiry";
 
 // FETCH DATA
 async function getArtwork(slug: string) {
   const query = `
     *[_type == "artwork" && slug.current == $slug][0] {
       title,
-      sku, // <--- 2. ADDED SKU HERE SO THE POPUP CAN USE IT
+      sku, 
       year,
       dimensions,
       material,
@@ -136,20 +136,16 @@ export default async function ArtworkPage({
                       While this specific work has been acquired, our curation team specializes in sourcing rare pieces similar to this one.
                     </p>
                   </div>
-                  <a 
-                    href={`mailto:concierge@shakyagallery.com?subject=Sourcing Request: Similar to ${art.title}`}
-                    className="inline-flex items-center gap-3 group"
-                  >
-                    <span className="font-sans text-[10px] tracking-[0.2em] uppercase text-soft-black border-b border-black group-hover:border-transparent transition-all">
-                      Contact Concierge
-                    </span>
-                    <span className="text-lg transform group-hover:translate-x-1 transition-transform">→</span>
-                  </a>
+                  
+                  {/* --- UPDATED: USES THE POPUP COMPONENT WITH isSold=true --- */}
+                  <div className="pt-2">
+                    <ArtworkInquiry artwork={art} isSold={true} />
+                  </div>
+
                 </div>
               ) : (
-                // OPTION B: NEW POPUP MODAL
-                // <--- 3. REPLACED THE OLD LINK WITH THIS COMPONENT
-                <ArtworkInquiry artwork={art} />
+                // OPTION B: AVAILABLE (Standard Inquiry)
+                <ArtworkInquiry artwork={art} isSold={false} />
               )}
 
             </div>
