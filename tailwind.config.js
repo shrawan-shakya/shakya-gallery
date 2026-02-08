@@ -21,6 +21,15 @@ content: [
         "gallery-top": "#F2F0E9",    // Warm Linen (Lightest)
         "gallery-center": "#E8E8E3", // Stone Grey (Medium)
         "gallery-bottom": "#DFDDD5", // Muted Taupe (Deepest)
+          "frame-ebony": "#111111",
+    "frame-gold": "#D4AF37",      // Brighter highlight
+    "frame-gold-deep": "#B8860B", // Deeper shadow for 3D depth
+    "gallery-top": "#F2F0E9",
+    "gallery-center": "#E8E8E3",
+    "gallery-bottom": "#DFDDD5",
+"frame-ebony": "#111111",
+    "frame-gold": "#797979",      // Light Champagne/Pale Gold highlight
+    "frame-gold-deep": "#e4c96f", // Muted Gold for the 3D depth
       },
       fontFamily: {
         serif: ["var(--font-cormorant)", "serif"],
