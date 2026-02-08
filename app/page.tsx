@@ -19,7 +19,7 @@ export default async function Home() {
 
   return (
     <main className="bg-bone min-h-screen">
-      <AnimatedHero heroArt={heroArt} />
+      <AnimatedHero/>
       
       <div className="relative z-10 bg-bone pt-10">
         <HeritagePreview />

@@ -1,10 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  // WE CHANGED THIS PART TO BE SAFER:
 content: [
-    "./src/**/*.{js,ts,jsx,tsx,mdx}",   // Scans everything in src
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",   // Scans everything in app (if you have one in root)
-    "./components/**/*.{js,ts,jsx,tsx,mdx}", // Scans components in root
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
@@ -15,18 +14,23 @@ content: [
         "soft-black": "#1A1A1A", 
         accent: "#C0C0C0",  
         "frame-base": "#111111", 
+        // NEW: Centralized Gold and Ebony for the "Mix"
+        "frame-gold": "#D4AF37",  
+        "frame-ebony": "#111111",
+        // "hero-bg": "#E8E8E3",
+        "gallery-top": "#F2F0E9",    // Warm Linen (Lightest)
+        "gallery-center": "#E8E8E3", // Stone Grey (Medium)
+        "gallery-bottom": "#DFDDD5", // Muted Taupe (Deepest)
       },
       fontFamily: {
         serif: ["var(--font-cormorant)", "serif"],
         sans: ["var(--font-montserrat)", "sans-serif"],
       },
-      letterSpacing: {
-        signature: "0.5em", 
-        micro: "0.4em",     
-      },
       boxShadow: {
         'museum': '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
         'inner-mat': 'inset 0 0 10px rgba(0,0,0,0.1)', 
+        // NEW: A tighter shadow for the gold fillet
+        'gold-glow': '0 0 4px rgba(212, 175, 55, 0.3)',
       }
     },
   },

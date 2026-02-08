@@ -10,36 +10,63 @@ import {
   BentoCell 
 } from "@/components/ui/hero-scroll";
 
-export function AnimatedHero({ heroArt }: { heroArt: any[] }) {
-  // CONFIG:
-  // Desktop: Thicker Frame + Mat
-  // Mobile: Thinner Frame + Mat
-  const frameStyle = "bg-white p-[12px] md:p-[23px] border-[8px] md:border-[14px] border-[#1a1a1a] shadow-2xl box-border";
-  
-  // MOBILE CELL:
-  // - Fixed Height (55vh)
-  // - Auto Width
-  // - Snap Center
-  const mobileCellStyle = "flex-none h-[55vh] w-auto aspect-auto snap-center";
+/**
+ * STATIC_ART: Hardcoded local or external assets to ensure 
+ * the landing experience is instant and reliable.
+ */
+const STATIC_ART = [
+  { id: 1, url: "/hero-1.jpg", alt: "Traditional Paubha" },
+  { id: 2, url: "/hero-2.jpg", alt: "Himalayan Landscape" },
+  { id: 3, url: "/hero-3.jpg", alt: "Contemporary Vision" },
+  { id: 4, url: "/hero-4.jpg", alt: "Ancient Script" },
+  { id: 5, url: "/hero-5.jpg", alt: "Bronze Statue" },
+];
 
-  // DESKTOP CELL:
-  // - Full Fit
+export function AnimatedHero() {
+  
+  /**
+   * MANUAL LUXURY FRAME CONFIG
+   * Ebony outer border with a Gold inner ring fillet.
+   * Matting is kept white (#FFFFFF) to pop against the gallery background.
+   */
+  const frameStyle = `
+    bg-white p-[15px] md:p-[25px] 
+    border-[10px] md:border-[16px] border-frame-ebony 
+    ring-[1.5px] ring-frame-gold ring-inset 
+    shadow-museum box-border flex flex-col
+  `;
+  
+  const mobileCellStyle = "flex-none h-[55vh] w-auto aspect-auto snap-center";
   const desktopCellStyle = "xl:h-full xl:w-full";
+  const imageClasses = "h-full w-full object-cover block shadow-sm";
+
+  // Defined grid spans for the cinematic Bento layout
+  const gridSpans = [
+    "xl:col-span-6 xl:row-span-2", // Primary Feature
+    "xl:col-span-6 xl:row-span-1", // Secondary Feature
+    "xl:col-span-2 xl:row-span-1", // Lower Trio - Left
+    "xl:col-span-2 xl:row-span-1", // Lower Trio - Center
+    "xl:col-span-2 xl:row-span-1"  // Lower Trio - Right
+  ];
 
   return (
-    <ContainerScroll>
+    /**
+     * THE GRADIENT BACKDROP:
+     * Using the 'gallery' color tokens from tailwind.config.js to 
+     * create atmospheric lighting behind the frames.
+     */
+    <ContainerScroll className="bg-gradient-to-b from-gallery-top via-gallery-center to-gallery-bottom">
       
-      {/* 1. HERO TEXT (Fades OUT) */}
+      {/* 1. HERO BRANDING & TEXT */}
       <ContainerScale>
         <div className="relative w-full h-full flex flex-col items-center justify-center select-none">
-          {/* Watermark S */}
+          {/* Large watermark background */}
           <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
             <span className="font-serif text-[40vw] leading-none text-soft-black/5 opacity-50 blur-[1px] translate-y-8">S</span>
           </div>
           
-          {/* Main Title */}
           <div className="z-10 flex flex-col items-center text-center">
-             <p className="font-sans text-[10px] md:text-xs tracking-[2em] text-gray-500 uppercase mb-6 ml-2">Est. 1998</p>
+             <p className="font-sans text-[10px] md:text-xs tracking-[2em] text-gray-400 uppercase mb-6 ml-2">Est. 1998</p>
              <h1 className="font-serif font-bold text-7xl md:text-9xl text-soft-black tracking-wide leading-none">SHAKYA</h1>
              <div className="flex flex-col items-center mt-4">
                <p className="font-sans text-[10px] md:text-sm tracking-[0.8em] text-primary/80 uppercase ml-3">The Gallery</p>
@@ -47,7 +74,6 @@ export function AnimatedHero({ heroArt }: { heroArt: any[] }) {
              </div>
           </div>
           
-          {/* SCROLL INDICATOR (Vertical) */}
           <motion.div 
             className="absolute bottom-10 flex flex-col items-center gap-4"
             initial={{ opacity: 0 }}
@@ -55,7 +81,7 @@ export function AnimatedHero({ heroArt }: { heroArt: any[] }) {
             transition={{ delay: 1.2, duration: 1 }}
           >
             <p className="font-sans text-[9px] tracking-[0.3em] uppercase text-gray-400 ml-1">Scroll to Explore</p>
-            <div className="w-[1px] h-24 bg-gray-200 overflow-hidden relative">
+            <div className="w-[1px] h-24 bg-gray-200 overflow-hidden relative border-l border-gray-100">
                 <motion.div 
                   className="absolute top-0 left-0 w-full h-full bg-soft-black/30"
                   animate={{ y: ["-100%", "100%"] }}
@@ -66,7 +92,7 @@ export function AnimatedHero({ heroArt }: { heroArt: any[] }) {
         </div>
       </ContainerScale>
 
-      {/* 2. SWIPE INDICATOR (Fades IN) */}
+      {/* 2. SWIPE INDICATOR (Mobile only) */}
       <ContainerSwipeIndicator className="bottom-24 xl:hidden">
         <motion.div 
             animate={{ x: [0, 10, 0] }}
@@ -78,42 +104,27 @@ export function AnimatedHero({ heroArt }: { heroArt: any[] }) {
         </motion.div>
       </ContainerSwipeIndicator>
 
-      {/* 3. GALLERY (Hybrid Grid) */}
+      {/* 3. BENTO GALLERY GRID */}
       <style jsx global>{`
         .scrollbar-hide::-webkit-scrollbar { display: none; }
         .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
       `}</style>
 
-      {/* UPDATED: Changed xl:w-[85%] to xl:w-[75%] for bigger margins */}
-      <BentoGrid className={`
-        scrollbar-hide
-        flex flex-row overflow-x-auto items-center justify-start gap-6 px-8 snap-x snap-mandatory 
-        xl:grid xl:grid-cols-12 xl:grid-rows-[repeat(2,1fr)] xl:items-center xl:justify-center xl:overflow-visible xl:px-0
-        w-full xl:w-[75%] h-screen
-      `}>
+      <BentoGrid className="scrollbar-hide flex flex-row overflow-x-auto items-center justify-start gap-6 px-8 snap-x snap-mandatory xl:grid xl:grid-cols-12 xl:grid-rows-[repeat(2,1fr)] xl:items-center xl:justify-center xl:overflow-visible xl:px-0 w-full xl:w-[75%] h-screen">
         
-        {/* IMAGE 1 (Big Left) */}
-        <BentoCell className={`${frameStyle} ${mobileCellStyle} ${desktopCellStyle} xl:col-span-6 xl:row-span-2`}>
-           {heroArt[0]?.imageUrl && <img src={heroArt[0].imageUrl} className="h-full w-auto object-contain xl:object-cover xl:w-full xl:h-full" alt="Art" />}
-        </BentoCell>
-
-        {/* IMAGE 2 (Top Right Wide) */}
-        <BentoCell className={`${frameStyle} ${mobileCellStyle} ${desktopCellStyle} xl:col-span-6 xl:row-span-1`}>
-           {heroArt[1]?.imageUrl && <img src={heroArt[1].imageUrl} className="h-full w-auto object-contain xl:object-cover xl:w-full xl:h-full" alt="Art" />}
-        </BentoCell>
-
-        {/* BOTTOM RIGHT TRIO */}
-        <BentoCell className={`${frameStyle} ${mobileCellStyle} ${desktopCellStyle} xl:col-span-2 xl:row-span-1`}>
-           {heroArt[2]?.imageUrl && <img src={heroArt[2].imageUrl} className="h-full w-auto object-contain xl:object-cover xl:w-full xl:h-full" alt="Art" />}
-        </BentoCell>
-        
-        <BentoCell className={`${frameStyle} ${mobileCellStyle} ${desktopCellStyle} xl:col-span-2 xl:row-span-1`}>
-           {heroArt[3]?.imageUrl && <img src={heroArt[3].imageUrl} className="h-full w-auto object-contain xl:object-cover xl:w-full xl:h-full" alt="Art" />}
-        </BentoCell>
-        
-        <BentoCell className={`${frameStyle} ${mobileCellStyle} ${desktopCellStyle} xl:col-span-2 xl:row-span-1`}>
-           {heroArt[4]?.imageUrl && <img src={heroArt[4].imageUrl} className="h-full w-auto object-contain xl:object-cover xl:w-full xl:h-full" alt="Art" />}
-        </BentoCell>
+        {STATIC_ART.map((art, i) => (
+          <BentoCell key={art.id} className={`${frameStyle} ${mobileCellStyle} ${desktopCellStyle} ${gridSpans[i]}`}>
+             <div className="relative w-full h-full overflow-hidden bg-gray-100">
+                <img 
+                  src={art.url} 
+                  className={imageClasses} 
+                  alt={art.alt} 
+                />
+                {/* Subtle glass reflection overlay */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent pointer-events-none" />
+             </div>
+          </BentoCell>
+        ))}
 
       </BentoGrid>
 
