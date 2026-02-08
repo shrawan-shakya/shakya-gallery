@@ -125,7 +125,7 @@ export default function LegacyPage() {
         year="1998"
         title="Mountain Art Gallery"
         text="Founded in the heart of Kathmandu, our journey began as a humble sanctuary for local artisans. For over two decades, 'Mountain Art Gallery' served as a bridge between the spiritual craftsmanship of the Himalayas and collectors who sought authenticity."
-        image="https://images.unsplash.com/photo-1544634076-a901606f4180?q=80&w=2800&auto=format&fit=crop" // Placeholder: Vintage Kathmandu Vibe
+        image="http://lhassoadventure.com/wp-content/uploads/2024/09/a.jpg" // Placeholder: Vintage Kathmandu Vibe
         alignment="left"
       />
 

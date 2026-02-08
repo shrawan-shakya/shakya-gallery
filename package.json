@@ -11,7 +11,8 @@
   "dependencies": {
     "@sanity/image-url": "^1.2.0",
     "@sanity/vision": "^4.22.0",
-    "clsx": "^2.1.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "framer-motion": "^11.0.8",
     "lucide-react": "^0.344.0",
     "next": "latest",
@@ -20,7 +21,7 @@
     "react-dom": "^18",
     "sanity": "^4.22.0",
     "styled-components": "^6.3.8",
-    "tailwind-merge": "^2.2.1"
+    "tailwind-merge": "^2.6.1"
   },
   "devDependencies": {
     "@types/node": "^20",
