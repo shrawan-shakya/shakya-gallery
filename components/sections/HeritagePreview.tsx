@@ -6,9 +6,9 @@ export function HeritagePreview() {
   return (
     <section className="bg-bone py-48 px-6 border-b border-primary/5">
       <div className="max-w-4xl mx-auto text-center flex flex-col items-center">
-        
+
         {/* 1. Small Top Tag */}
-        <motion.p 
+        <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -19,14 +19,14 @@ export function HeritagePreview() {
         </motion.p>
 
         {/* 2. Main Title */}
-        <motion.h2 
+        <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.2 }}
           className="font-serif text-5xl md:text-6xl tracking-[0.2em] text-soft-black leading-[1.1] mb-12"
         >
-          THE LEGACY OF <br/>
+          THE LEGACY OF <br />
           SHAKYA
         </motion.h2>
 
@@ -51,7 +51,7 @@ export function HeritagePreview() {
           transition={{ duration: 1, delay: 0.6 }}
           className="max-w-3xl"
         >
-          <p className="font-sans text-sm md:text-base leading-loose text-gray-500 font-light">
+          <p className="font-sans text-sm md:text-base leading-loose text-gray-800 font-light">
             Established in 1998 as the Mountain Art Gallery, our transition to the Shakya digital platform marks a significant new era. We have dedicated more than twenty-five years to the curation of Nepalese artistry, moving from a local physical shop in Kathmandu to an international stage. Today, SHAKYA continues to represent the profound masters of Nepalese art, ensuring their legacy is preserved and recognized by collectors worldwide.
           </p>
         </motion.div>
