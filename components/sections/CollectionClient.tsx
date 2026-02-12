@@ -353,7 +353,7 @@ export function CollectionClient({
                               SOLD
                             </span>
                             <span className={`mt-16 font-sans text-white tracking-[0.2em] uppercase font-medium drop-shadow-md text-center px-4
-                              ${gridCols === 2 ? "text-[10px]" : "text-[8px] leading-tight"}
+                              ${gridCols === 2 ? "text-[8px] md:text-[10px]" : "text-[8px] leading-tight"}
                             `}>
                               Looking for something similar?
                             </span>

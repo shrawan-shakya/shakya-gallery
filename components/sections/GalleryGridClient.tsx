@@ -114,7 +114,7 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                         <span className="font-serif font-bold italic text-3xl md:text-4xl text-white bg-[#7D1818] shadow-xl -rotate-12 tracking-widest px-6 py-2">
                           SOLD
                         </span>
-                        <span className="mt-16 font-sans text-[10px] md:text-xs text-white tracking-[0.2em] uppercase font-medium drop-shadow-md">
+                        <span className="mt-16 font-sans text-[8px] md:text-xs text-white tracking-[0.2em] uppercase font-medium drop-shadow-md">
                           Looking for something similar?
                         </span>
                       </span>
