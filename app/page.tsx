@@ -9,12 +9,17 @@ export default async function Home() {
 
   return (
     <main className="bg-bone min-h-screen">
-      <AnimatedHero />
+      <section className="snap-start h-screen w-full">
+        <AnimatedHero />
+      </section>
 
-      <div className="relative z-10 bg-bone pt-10">
+      <section className="snap-start min-h-screen w-full flex items-center justify-center bg-bone">
         <HeritagePreview />
+      </section>
+
+      <section className="snap-start min-h-screen w-full bg-bone pt-20">
         <GalleryGrid />
-      </div>
+      </section>
     </main>
   );
 }

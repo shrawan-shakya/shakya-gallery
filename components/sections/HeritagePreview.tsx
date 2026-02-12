@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export function HeritagePreview() {
   return (
-    <section className="bg-bone py-48 px-6 border-b border-primary/5">
+    <section className="bg-bone px-6 border-b border-primary/5 w-full">
       <div className="max-w-4xl mx-auto text-center flex flex-col items-center">
 
         {/* 1. Small Top Tag */}

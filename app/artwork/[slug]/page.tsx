@@ -48,7 +48,7 @@ export default async function ArtworkPage({
   );
 
   return (
-    <main className="min-h-screen bg-bone pt-32 lg:pt-40 pb-40">
+    <main className="min-h-screen bg-bone pt-24 lg:pt-28 pb-40">
 
       {/* MOBILE BREADCRUMBS */}
       <div className="lg:hidden px-6 mb-10">
@@ -58,7 +58,7 @@ export default async function ArtworkPage({
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-0 px-6 md:px-12 max-w-[1400px] mx-auto">
 
         {/* LEFT COLUMN: The Art */}
-        <div className="relative flex items-start justify-center lg:h-[calc(100vh-200px)] lg:sticky lg:top-48">
+        <div className="relative flex items-start justify-center lg:h-[calc(100vh-200px)] lg:sticky lg:top-32">
           {/* 
             SIZER WRAPPER STRATEGY:
             1. Wrapper is relative inline-block (or flex center).

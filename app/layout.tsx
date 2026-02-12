@@ -5,17 +5,17 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 
 // 1. The Elegant Serif (Headings)
-const cormorant = Cormorant_Garamond({ 
-  subsets: ["latin"], 
-  weight: ["300", "400", "600", "700"], 
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["300", "400", "600", "700"],
   variable: "--font-cormorant",
   display: "swap",
 });
 
 // 2. The Clean Sans (Details)
-const montserrat = Montserrat({ 
-  subsets: ["latin"], 
-  weight: ["200", "400"], 
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["200", "400"],
   variable: "--font-montserrat",
   display: "swap",
 });
@@ -31,16 +31,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="snap-y snap-mandatory scroll-smooth">
       {/* 3. Added flex column layout so footer pushes to bottom */}
       <body className={`${cormorant.variable} ${montserrat.variable} bg-bone text-soft-black antialiased flex flex-col min-h-screen`}>
         <Navbar />
-        
+
         {/* Main content grows to fill space */}
         <main className="flex-grow">
           {children}
         </main>
-        
+
         <Footer />
       </body>
     </html>
