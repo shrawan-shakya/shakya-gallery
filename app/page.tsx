@@ -9,15 +9,15 @@ export default async function Home() {
 
   return (
     <main className="bg-bone min-h-screen">
-      <section className="snap-start h-screen w-full">
+      <section className="h-screen w-full">
         <AnimatedHero />
       </section>
 
-      <section className="snap-start min-h-screen w-full flex items-center justify-center bg-bone">
+      <section className="min-h-screen w-full flex items-center justify-center bg-bone">
         <HeritagePreview />
       </section>
 
-      <section className="snap-start min-h-screen w-full bg-bone pt-20">
+      <section className="min-h-screen w-full bg-bone pt-20">
         <GalleryGrid />
       </section>
     </main>

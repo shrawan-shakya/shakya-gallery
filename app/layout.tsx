@@ -3,6 +3,7 @@ import { Cormorant_Garamond, Montserrat } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { SmoothScroll } from "@/components/ui/SmoothScroll";
 
 // 1. The Elegant Serif (Headings)
 const cormorant = Cormorant_Garamond({
@@ -31,17 +32,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="snap-y snap-mandatory scroll-smooth">
+    <html lang="en">
       {/* 3. Added flex column layout so footer pushes to bottom */}
       <body className={`${cormorant.variable} ${montserrat.variable} bg-bone text-soft-black antialiased flex flex-col min-h-screen`}>
-        <Navbar />
+        <SmoothScroll>
+          <Navbar />
 
-        {/* Main content grows to fill space */}
-        <main className="flex-grow">
-          {children}
-        </main>
+          {/* Main content grows to fill space */}
+          <main className="flex-grow">
+            {children}
+          </main>
 
-        <Footer />
+          <Footer />
+        </SmoothScroll>
       </body>
     </html>
   );
