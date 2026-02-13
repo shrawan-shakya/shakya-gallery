@@ -38,7 +38,7 @@ export async function GalleryGrid({ limit }: { limit?: number }) {
         </h2>
         <div className="max-w-2xl">
           <p className="font-serif text-lg md:text-xl italic text-soft-black/80 leading-relaxed">
-            "From the intricate devotion of traditional Paubha to the bold strokes of contemporary visionaries, discover iconic creations from Nepal’s most revered artists right here."
+            "From time-honored traditions to bold contemporary visions, discover iconic known creations from Nepal’s most revered fine artists."
           </p>
         </div>
       </div>

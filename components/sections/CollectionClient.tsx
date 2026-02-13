@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { MuseumFrame } from "@/components/ui/MuseumFrame";
@@ -121,7 +122,7 @@ const FilterPanel = ({
             <button
               key={title}
               onClick={() => setSelectedCategory(selectedCategory === title ? null : title)}
-              className={`text-left font-sans text-[11px] tracking-[0.2em] uppercase py-1 transition-all duration-300
+              className={`text-left font-sans text-xs tracking-[0.2em] uppercase py-1 transition-all duration-300
                 ${selectedCategory === title ? "text-soft-black font-semibold pl-2 border-l-2 border-soft-black" : "text-gray-400 hover:text-soft-black"}
               `}
             >
@@ -136,7 +137,7 @@ const FilterPanel = ({
           <button
             key={status}
             onClick={() => setStatusFilter(status as any)}
-            className={`text-left font-sans text-[11px] tracking-[0.2em] uppercase py-1 transition-all duration-300
+            className={`text-left font-sans text-xs tracking-[0.2em] uppercase py-1 transition-all duration-300
               ${statusFilter === status ? "text-soft-black font-semibold pl-2 border-l-2 border-soft-black" : "text-gray-400 hover:text-soft-black"}
             `}
           >
@@ -146,9 +147,9 @@ const FilterPanel = ({
       </FilterSection>
 
       <FilterSection title="Sort" isOpen={openSections["sort"]} onToggle={() => toggleSection("sort")}>
-        <button onClick={() => setSortOption("newest")} className={`text-left font-sans text-[11px] tracking-[0.2em] uppercase py-1 ${sortOption === "newest" ? "text-soft-black font-semibold" : "text-gray-400"}`}>Newest</button>
-        <button onClick={() => setSortOption("price_asc")} className={`text-left font-sans text-[11px] tracking-[0.2em] uppercase py-1 ${sortOption === "price_asc" ? "text-soft-black font-semibold" : "text-gray-400"}`}>Price: Low to High</button>
-        <button onClick={() => setSortOption("price_desc")} className={`text-left font-sans text-[11px] tracking-[0.2em] uppercase py-1 ${sortOption === "price_desc" ? "text-soft-black font-semibold" : "text-gray-400"}`}>Price: High to Low</button>
+        <button onClick={() => setSortOption("newest")} className={`text-left font-sans text-xs tracking-[0.2em] uppercase py-1 ${sortOption === "newest" ? "text-soft-black font-semibold" : "text-gray-400"}`}>Newest</button>
+        <button onClick={() => setSortOption("price_asc")} className={`text-left font-sans text-xs tracking-[0.2em] uppercase py-1 ${sortOption === "price_asc" ? "text-soft-black font-semibold" : "text-gray-400"}`}>Price: Low to High</button>
+        <button onClick={() => setSortOption("price_desc")} className={`text-left font-sans text-xs tracking-[0.2em] uppercase py-1 ${sortOption === "price_desc" ? "text-soft-black font-semibold" : "text-gray-400"}`}>Price: High to Low</button>
       </FilterSection>
     </>
   );
@@ -246,11 +247,11 @@ export function CollectionClient({
           onClick={() => setIsMobileFilterOpen(true)}
           className="group flex items-center gap-2"
         >
-          <span className="font-sans text-[11px] tracking-[0.2em] uppercase text-soft-black group-hover:text-gray-600 transition-colors border-b border-black/20 pb-0.5">
+          <span className="font-sans text-xs tracking-[0.2em] uppercase text-soft-black group-hover:text-gray-600 transition-colors border-b border-black/20 pb-0.5">
             Filter + Sort
           </span>
         </button>
-        <span className="font-sans text-[9px] tracking-widest text-gray-400 uppercase">
+        <span className="font-sans text-[10px] tracking-widest text-gray-400 uppercase">
           {filteredArtworks.length} Results
         </span>
       </div>
@@ -269,12 +270,12 @@ export function CollectionClient({
               <h2 className="font-serif text-3xl text-soft-black">Filters</h2>
               <button onClick={() => setIsMobileFilterOpen(false)} className="p-2 hover:opacity-50 transition-opacity"><span className="font-sans text-xl">✕</span></button>
             </div>
-            <div className="flex-1 overflow-y-auto p-6 pb-32">
+            <div className="flex-1 overflow-y-auto p-6 pb-32" data-lenis-prevent>
               {/* --- FIX IS HERE: Using the external component --- */}
               <FilterPanel {...filterProps} />
             </div>
             <div className="p-6 border-t border-black/5 bg-bone">
-              <button onClick={() => setIsMobileFilterOpen(false)} className="w-full bg-soft-black text-white font-sans text-[10px] tracking-[0.3em] uppercase py-4 hover:bg-black/80 transition-colors">Show {filteredArtworks.length} Results</button>
+              <button onClick={() => setIsMobileFilterOpen(false)} className="w-full bg-soft-black text-white font-sans text-xs tracking-[0.3em] uppercase py-4 hover:bg-black/80 transition-colors">Show {filteredArtworks.length} Results</button>
             </div>
           </motion.div>
         )}
@@ -282,11 +283,14 @@ export function CollectionClient({
 
       <div className="flex flex-col lg:flex-row gap-12 lg:gap-16">
 
-        {/* DESKTOP SIDEBAR (Static) */}
-        <aside className="hidden lg:block w-64 flex-shrink-0">
-          <div className="">
+        {/* DESKTOP SIDEBAR (Sticky) */}
+        <aside
+          className="hidden lg:block w-64 flex-shrink-0 sticky top-32 h-[calc(100vh-8rem)] overflow-y-auto custom-scrollbar"
+          data-lenis-prevent
+        >
+          <div className="pb-8">
             <div className="mb-8 pb-4 border-b border-black/5">
-              <p className="font-sans text-[10px] tracking-widest text-gray-400 uppercase">{filteredArtworks.length} Results</p>
+              <p className="font-sans text-[11px] tracking-widest text-gray-400 uppercase">{filteredArtworks.length} Results</p>
             </div>
             {/* --- FIX IS HERE: Using the external component --- */}
             <FilterPanel {...filterProps} />
@@ -302,19 +306,19 @@ export function CollectionClient({
             <div className="flex items-center gap-4 border-r border-black/10 pr-6 mr-2">
               <button
                 onClick={() => setShowMat(true)}
-                className={`font-sans text-[9px] tracking-widest uppercase transition-all ${showMat ? "text-soft-black font-semibold" : "text-gray-400 hover:text-gray-600"}`}
+                className={`font-sans text-[11px] tracking-widest uppercase transition-all ${showMat ? "text-soft-black font-semibold" : "text-gray-400 hover:text-gray-600"}`}
               >
                 Mat
               </button>
               <button
                 onClick={() => setShowMat(false)}
-                className={`font-sans text-[9px] tracking-widest uppercase transition-all ${!showMat ? "text-soft-black font-semibold" : "text-gray-400 hover:text-gray-600"}`}
+                className={`font-sans text-[11px] tracking-widest uppercase transition-all ${!showMat ? "text-soft-black font-semibold" : "text-gray-400 hover:text-gray-600"}`}
               >
                 No Mat
               </button>
             </div>
 
-            <span className="font-sans text-[9px] tracking-widest text-gray-400 uppercase mr-2">View</span>
+            <span className="font-sans text-[11px] tracking-widest text-gray-400 uppercase mr-2">View</span>
             <button onClick={() => setGridCols(2)} className={`p-2 transition-colors duration-300 ${gridCols === 2 ? "text-soft-black" : "text-gray-300 hover:text-gray-500"}`}>
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0.5" y="0.5" width="7" height="17" stroke="currentColor" /><rect x="10.5" y="0.5" width="7" height="17" stroke="currentColor" /></svg>
             </button>
@@ -344,12 +348,14 @@ export function CollectionClient({
 
                     {/* IMAGE FRAME */}
                     <div className="relative group/image">
-                      <MuseumFrame className="h-auto" hasMat={showMat}>
+                      <MuseumFrame className="h-auto" hasMat={showMat} aspectRatio={art.aspectRatio}>
                         {art.imageUrl && (
-                          <img
+                          <Image
                             src={art.imageUrl}
                             alt={art.title}
-                            className={`w-full h-auto block transition-all duration-700 ease-out scale-100 group-hover/image:scale-105
+                            fill
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                            className={`object-cover transition-all duration-700 ease-out scale-100 group-hover/image:scale-105
                               ${(art.status === "sold" || art.status === "private")
                                 ? "grayscale-[0.2] group-hover/image:grayscale group-hover/image:opacity-40"
                                 : "grayscale-[0.2] group-hover/image:grayscale-0"
@@ -370,7 +376,7 @@ export function CollectionClient({
                               SOLD
                             </span>
                             <span className={`mt-16 font-sans text-white tracking-[0.2em] uppercase font-medium drop-shadow-md text-center px-4
-                              ${gridCols === 2 ? "text-[8px] md:text-[10px]" : "text-[8px] leading-tight"}
+                              ${gridCols === 2 ? "text-[10px]" : "text-[9px] leading-tight"}
                             `}>
                               Looking for something similar?
                             </span>
@@ -380,7 +386,7 @@ export function CollectionClient({
                         {art.status === "available" && art.price && (
                           <span className={`
                              absolute bg-white/95 text-soft-black font-sans tracking-[0.2em] opacity-0 group-hover/image:opacity-100 transition-opacity duration-500 backdrop-blur-md shadow-md border border-soft-black/10
-                             ${gridCols === 2 ? "top-6 right-6 text-xs px-4 py-2" : "top-3 right-3 text-[9px] px-3 py-1.5"}
+                             ${gridCols === 2 ? "top-6 right-6 text-xs px-4 py-2" : "top-3 right-3 text-[10px] px-3 py-1.5"}
                            `}>
                             ${art.price.toLocaleString()}
                           </span>
