@@ -1,5 +1,14 @@
 import { client } from "@/sanity/lib/client";
 import { CollectionClient } from "@/components/sections/CollectionClient";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Buy Paintings in Nepal | Curated Collection of Nepali Art",
+  description: "Explore our curated selection of original paintings for sale in Nepal. Authentic Paubha, Thangka, and modern works available for acquisition.",
+  alternates: {
+    canonical: "https://shakyagallery.com/collection",
+  },
+};
 
 // 1. Fetch Artworks
 async function getArtworks() {
@@ -39,7 +48,7 @@ export default async function CollectionPage() {
 
   return (
     <main>
-       <CollectionClient artworks={artworks} allCategories={categories} />
+      <CollectionClient artworks={artworks} allCategories={categories} />
     </main>
   );
 }

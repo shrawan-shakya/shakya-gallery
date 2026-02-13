@@ -22,8 +22,32 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "SHAKYA | Himalayan Heritage",
-  description: "A luxury archive of Himalayan art.",
+  metadataBase: new URL("https://shakyagallery.com"),
+  title: {
+    default: "SHAKYA | Premier Art Gallery in Nepal",
+    template: "%s | SHAKYA Gallery",
+  },
+  description: "A luxury archive of Himalayan art. Discover authentic Paubha paintings and masterpieces from Nepal's most revered artists.",
+  keywords: ["Nepal Art", "Paubha", "Thangka", "Buy Art Nepal", "Kathmandu Art Gallery", "Nepali Paintings", "Traditional Art"],
+  openGraph: {
+    title: "SHAKYA | Premier Art Gallery in Nepal",
+    description: "A luxury archive of Himalayan art. Discover authentic Paubha paintings and masterpieces from Nepal's most revered artists.",
+    url: "https://shakyagallery.com",
+    siteName: "Shakya Gallery",
+    locale: "en_US",
+    type: "website",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
 export default function RootLayout({
