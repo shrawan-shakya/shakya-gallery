@@ -81,10 +81,12 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
               {/* --- SCALING WRAPPER --- */}
               {/* This is the magic. It shrinks the painting to 75-85% of the column width 
                 and centers it, creating that expensive whitespace on the sides. */}
-              <div className="w-full max-w-[85%] md:max-w-[75%] mx-auto">
+              {/* --- SCALING WRAPPER (DECOUPLED) --- */}
+              <div className="w-full mx-auto">
 
-                {/* 1. THE FRAME ZONE */}
-                <div className="relative group/image">
+                {/* 1. THE FRAME ZONE (Wider on Mobile) */}
+                {/* Mobile: w-full (almost full width relative to pad). Desktop: max-w-[75%] */}
+                <div className="w-full md:max-w-[75%] mx-auto relative group/image">
                   <MuseumFrame aspectRatio={art.aspectRatio}>
                     {art.imageUrl && (
                       <div className="absolute inset-0 w-full h-full">
@@ -129,8 +131,9 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                   </div>
                 </div>
 
-                {/* 2. THE PLAQUE ZONE (Centered) */}
-                <div className="relative z-0 mt-8 md:mt-12 flex flex-col items-center text-center">
+                {/* 2. THE PLAQUE ZONE (Centered, Kept Compact) */}
+                {/* Mobile: max-w-[85%] (same as before). Desktop: max-w-[75%] */}
+                <div className="w-full max-w-[85%] md:max-w-[75%] mx-auto relative z-0 mt-8 md:mt-12 flex flex-col items-center text-center">
                   <MuseumPlaque
                     title={art.title}
                     artist={art.artist}
