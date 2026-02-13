@@ -79,7 +79,9 @@ export function Footer() {
                 <input type="checkbox" name="botcheck" className="hidden" style={{ display: 'none' }} />
 
                 <div className="relative border-b border-white/20 focus-within:border-white transition-colors duration-300">
+                  <label htmlFor="footer-email" className="sr-only">Email Address</label>
                   <input
+                    id="footer-email"
                     type="email"
                     placeholder="Email Address"
                     value={email}

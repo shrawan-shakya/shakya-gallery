@@ -39,7 +39,7 @@ export default async function ArtworkPage({
 
   // Reusable Breadcrumbs
   const Breadcrumbs = ({ className }: { className?: string }) => (
-    <nav className={`flex items-center gap-3 font-sans text-[9px] tracking-[0.2em] uppercase text-gray-400 ${className}`}>
+    <nav className={`flex items-center gap-3 font-sans text-[11px] tracking-[0.2em] uppercase text-gray-400 ${className}`}>
       <Link href="/" className="hover:text-soft-black transition-colors">Home</Link>
       <span className="text-gray-300">/</span>
       <Link href="/collection" className="hover:text-soft-black transition-colors">Collection</Link>
@@ -112,7 +112,7 @@ export default async function ArtworkPage({
               {/* SOLD INDICATOR */}
               {art.status === "sold" && (
                 <div className="flex items-center gap-3 mb-6">
-                  <span className="font-serif font-bold italic text-2xl text-white bg-[#7D1818] px-6 py-2 -rotate-6 tracking-widest shadow-lg">
+                  <span className="font-serif font-bold italic text-2xl text-white bg-[#7D1818] px-6 py-2 -rotate-12 tracking-widest shadow-lg">
                     SOLD
                   </span>
                 </div>
@@ -137,11 +137,11 @@ export default async function ArtworkPage({
             {/* 2. TECHNICAL DETAILS */}
             <div className="grid grid-cols-2 gap-x-8 py-6 border-y border-black/5">
               <div>
-                <p className="font-sans text-[9px] tracking-widest uppercase text-gray-400 mb-1">Material</p>
+                <p className="font-sans text-[11px] tracking-widest uppercase text-gray-400 mb-1">Material</p>
                 <p className="font-serif text-base md:text-lg text-soft-black leading-tight">{art.material || "Mixed Media"}</p>
               </div>
               <div>
-                <p className="font-sans text-[9px] tracking-widest uppercase text-gray-400 mb-1">Dimensions</p>
+                <p className="font-sans text-[11px] tracking-widest uppercase text-gray-400 mb-1">Dimensions</p>
                 <p className="font-serif text-base md:text-lg text-soft-black leading-tight">{art.dimensions || "Variable"}</p>
               </div>
             </div>

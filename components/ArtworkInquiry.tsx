@@ -120,10 +120,22 @@ export function ArtworkInquiry({ artwork, isSold = false }: { artwork: any, isSo
                   </div>
 
                   <div className="space-y-4">
-                    <input required type="text" placeholder="Your Name" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} className="w-full bg-transparent border-b border-black/10 py-3 font-serif text-lg outline-none focus:border-black transition-colors placeholder:text-gray-300" />
-                    <input required type="email" placeholder="Email Address" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} className="w-full bg-transparent border-b border-black/10 py-3 font-serif text-lg outline-none focus:border-black transition-colors placeholder:text-gray-300" />
-                    <input type="tel" placeholder="Phone (Optional)" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} className="w-full bg-transparent border-b border-black/10 py-3 font-serif text-lg outline-none focus:border-black transition-colors placeholder:text-gray-300" />
-                    <textarea rows={3} value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} className="w-full bg-transparent border-b border-black/10 py-3 font-serif text-lg outline-none focus:border-black transition-colors placeholder:text-gray-300 resize-none" />
+                    <div>
+                      <label htmlFor="name" className="sr-only">Your Name</label>
+                      <input required id="name" type="text" placeholder="Your Name" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} className="w-full bg-transparent border-b border-black/10 py-3 font-serif text-lg outline-none focus:border-black transition-colors placeholder:text-gray-300" />
+                    </div>
+                    <div>
+                      <label htmlFor="email" className="sr-only">Email Address</label>
+                      <input required id="email" type="email" placeholder="Email Address" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} className="w-full bg-transparent border-b border-black/10 py-3 font-serif text-lg outline-none focus:border-black transition-colors placeholder:text-gray-300" />
+                    </div>
+                    <div>
+                      <label htmlFor="phone" className="sr-only">Phone Number (Optional)</label>
+                      <input id="phone" type="tel" placeholder="Phone (Optional)" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} className="w-full bg-transparent border-b border-black/10 py-3 font-serif text-lg outline-none focus:border-black transition-colors placeholder:text-gray-300" />
+                    </div>
+                    <div>
+                      <label htmlFor="message" className="sr-only">Message</label>
+                      <textarea id="message" rows={3} value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} className="w-full bg-transparent border-b border-black/10 py-3 font-serif text-lg outline-none focus:border-black transition-colors placeholder:text-gray-300 resize-none" />
+                    </div>
                   </div>
 
                   <button type="submit" disabled={isSubmitting} className="w-full bg-soft-black text-white py-4 font-sans text-xs tracking-[0.2em] uppercase hover:bg-gray-800 transition-colors disabled:opacity-50">
