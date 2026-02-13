@@ -57,8 +57,8 @@ export async function POST(request: Request) {
         // 1. Send Admin Notification (To Gallery)
         // TODO: Replace 'shrawanshakya@gmail.com' with the actual gallery email env var or keeping it hardcoded for now as per user request.
         const { error: adminError } = await resend.emails.send({
-            from: 'Shakya Gallery <onboarding@resend.dev>', // Update this after verifying domain
-            to: ['shrawanshakya@gmail.com'],
+            from: 'Shakya Gallery <concierge@shakyagallery.com>', // Update this after verifying domain
+            to: ['mag.boudha@gmail.com'],
             subject: `New Inquiry: ${artworkTitle} (${name})`,
             react: InquiryEmail({
                 artworkTitle,
@@ -84,7 +84,7 @@ export async function POST(request: Request) {
 
         // 2. Send User Confirmation (Auto-Response)
         const { error: userError } = await resend.emails.send({
-            from: 'Shakya Gallery <onboarding@resend.dev>', // Update this after verifying domain
+            from: 'Shakya Gallery <concierge@shakyagallery.com>', // Update this after verifying domain
             to: [email],
             subject: `We received your inquiry: ${artworkTitle}`,
             react: ConfirmationEmail({
