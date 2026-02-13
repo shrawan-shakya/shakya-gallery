@@ -42,26 +42,35 @@ export function ArtworkInquiry({ artwork, isSold = false }: { artwork: any, isSo
   const [file, setFile] = useState<File | null>(null);
 
   const countryCodes = [
-    { code: "+977", country: "Nepal" },
-    { code: "+1", country: "USA/Canada" },
-    { code: "+44", country: "UK" },
-    { code: "+61", country: "Australia" },
-    { code: "+86", country: "China" },
-    { code: "+91", country: "India" },
-    { code: "+81", country: "Japan" },
-    { code: "+33", country: "France" },
-    { code: "+49", country: "Germany" },
-    { code: "+971", country: "UAE" },
-    { code: "+65", country: "Singapore" },
-    // Add more as needed or allows user to type
+    { code: "+977", iso: "NP", country: "Nepal" },
+    { code: "+1", iso: "US", country: "USA/Canada" },
+    { code: "+44", iso: "UK", country: "UK" },
+    { code: "+61", iso: "AU", country: "Australia" },
+    { code: "+86", iso: "CN", country: "China" },
+    { code: "+91", iso: "IN", country: "India" },
+    { code: "+81", iso: "JP", country: "Japan" },
+    { code: "+33", iso: "FR", country: "France" },
+    { code: "+49", iso: "DE", country: "Germany" },
+    { code: "+971", iso: "AE", country: "UAE" },
+    { code: "+65", iso: "SG", country: "Singapore" },
+    // Add more as needed
   ];
+
+  // ... inside rendering of select
+  {
+    countryCodes.map((c) => (
+      <option key={c.country} value={c.code}>
+        {c.iso} {c.code}
+      </option>
+    ))
+  }
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     const formData = new FormData();
-    formData.append("access_key", "dd980e1f-daa2-4f43-a832-3b887232392b"); // <--- CHECK YOUR KEY
+    // Access key is now handled server-side
     formData.append("subject", isSold
       ? `Sourcing Request: Similar to ${artwork.title}`
       : `Bespoke Acquisition: ${artwork.title}`
@@ -93,7 +102,7 @@ export function ArtworkInquiry({ artwork, isSold = false }: { artwork: any, isSo
     `);
 
     try {
-      const response = await fetch("https://api.web3forms.com/submit", {
+      const response = await fetch("/api/inquiry", {
         method: "POST",
         body: formData, // Sending FormData supports files
       });
@@ -230,7 +239,7 @@ export function ArtworkInquiry({ artwork, isSold = false }: { artwork: any, isSo
                             >
                               {countryCodes.map((c) => (
                                 <option key={c.country} value={c.code}>
-                                  {c.code} ({c.country})
+                                  {c.iso} {c.code}
                                 </option>
                               ))}
                             </select>
