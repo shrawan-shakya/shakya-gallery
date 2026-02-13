@@ -17,7 +17,7 @@ export function AnimatedHero() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="flex flex-col items-center text-center z-10 px-4 mt-[22vh]"
+        className="flex flex-col items-center text-center z-10 px-4 mt-[15vh] md:mt-[22vh]"
       >
         <p className="font-sans text-[10px] md:text-xs tracking-[2em] text-gray-400 uppercase mb-6 ml-2">Est. 1998</p>
         <h1 className="font-serif font-bold text-7xl md:text-9xl text-soft-black tracking-wide leading-none">SHAKYA</h1>
