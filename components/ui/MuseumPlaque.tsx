@@ -49,7 +49,7 @@ export function MuseumPlaque({
       <div className="relative z-10 flex flex-col items-center gap-1.5">
 
         {/* Artist */}
-        <h3 className="font-sans text-[8px] tracking-[0.45em] uppercase text-[#999999] font-semibold whitespace-nowrap">
+        <h3 className="font-sans text-[10px] tracking-[0.45em] uppercase text-[#999999] font-semibold whitespace-nowrap">
           {artist}
         </h3>
 
@@ -59,7 +59,7 @@ export function MuseumPlaque({
         </h1>
 
         {/* Medium */}
-        <p className="font-sans text-[8px] tracking-[0.2em] uppercase text-[#666666] font-light">
+        <p className="font-sans text-[10px] tracking-[0.2em] uppercase text-[#666666] font-light">
           {medium}
         </p>
 
@@ -67,14 +67,14 @@ export function MuseumPlaque({
         <div className="w-[30px] h-[0.5px] bg-[#CCCCCC] my-1" />
 
         {/* Year */}
-        <p className="font-sans text-[8px] tracking-[0.2em] uppercase text-[#666666] font-light">
+        <p className="font-sans text-[10px] tracking-[0.2em] uppercase text-[#666666] font-light">
           {dimensions ? `${dimensions} • ` : ""}{year}
         </p>
 
         {/* Button */}
         {showButton && (
           <button className="mt-4 px-8 py-2 border border-[#1A1A1A]/20 hover:border-[#003153] hover:bg-[#003153] hover:text-white transition-all duration-300 bg-transparent group/btn w-full flex items-center justify-center">
-            <span className="font-sans text-[10px] tracking-[0.25em] uppercase text-[#1A1A1A] group-hover/btn:text-white transition-colors font-medium ml-1">
+            <span className="font-sans text-xs tracking-[0.25em] uppercase text-[#1A1A1A] group-hover/btn:text-white transition-colors font-medium ml-1">
               Private Inquiry
             </span>
           </button>

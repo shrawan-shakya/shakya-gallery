@@ -18,7 +18,7 @@ export default async function Home() {
       </section>
 
       <section className="min-h-screen w-full bg-bone pt-20">
-        <GalleryGrid />
+        <GalleryGrid limit={6} />
       </section>
     </main>
   );

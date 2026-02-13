@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { MuseumFrame } from "@/components/ui/MuseumFrame";
 import { MuseumPlaque } from "@/components/ui/MuseumPlaque";
 import { cn } from "@/lib/utils";
@@ -23,13 +24,41 @@ interface Artwork {
 
 export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
   const [layout, setLayout] = useState<"grid" | "single">("single");
+  const [showMat, setShowMat] = useState(true);
 
   return (
     <>
-      {/* LAYOUT TOGGLE */}
-      {/* LAYOUT TOGGLE BAR (Desktop Only) */}
+      {/* LAYOUT & MAT TOGGLE BAR (Desktop Only) */}
       <div className="sticky top-0 z-40 w-full bg-bone/95 backdrop-blur-sm border-b border-[#1A1A1A]/5 transition-all duration-300 mb-12 hidden md:block">
-        <div className="flex justify-end max-w-[1800px] mx-auto px-8 py-4 gap-8">
+        <div className="flex justify-between max-w-[1800px] mx-auto px-8 py-4">
+
+          {/* MAT TOGGLE */}
+          <div className="flex gap-6">
+            <button
+              onClick={() => setShowMat(true)}
+              className={cn(
+                "font-sans text-[10px] tracking-[0.25em] uppercase transition-all duration-300",
+                showMat
+                  ? "text-soft-black font-semibold border-b border-soft-black"
+                  : "text-gray-400 hover:text-soft-black border-b border-transparent"
+              )}
+            >
+              Mat
+            </button>
+            <button
+              onClick={() => setShowMat(false)}
+              className={cn(
+                "font-sans text-[10px] tracking-[0.25em] uppercase transition-all duration-300",
+                !showMat
+                  ? "text-soft-black font-semibold border-b border-soft-black"
+                  : "text-gray-400 hover:text-soft-black border-b border-transparent"
+              )}
+            >
+              No Mat
+            </button>
+          </div>
+
+          {/* LAYOUT TOGGLE */}
           <div className="flex gap-6">
             <button
               onClick={() => setLayout("grid")}
@@ -87,13 +116,15 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                 {/* 1. THE FRAME ZONE (Wider on Mobile) */}
                 {/* Mobile: w-full (almost full width relative to pad). Desktop: max-w-[75%] */}
                 <div className="w-full md:max-w-[75%] mx-auto relative group/image">
-                  <MuseumFrame aspectRatio={art.aspectRatio}>
+                  <MuseumFrame aspectRatio={art.aspectRatio} hasMat={showMat}>
                     {art.imageUrl && (
                       <div className="absolute inset-0 w-full h-full">
-                        <img
+                        <Image
                           src={art.imageUrl}
                           alt={art.title}
-                          className={`w-full h-full object-cover transition-all duration-700 ease-out scale-100 group-hover/image:scale-105
+                          fill
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                          className={`object-cover transition-all duration-700 ease-out scale-100 group-hover/image:scale-105
                             ${(art.status === "sold" || art.status === "private")
                               ? "grayscale-[0.2] group-hover/image:grayscale group-hover/image:opacity-40"
                               : "grayscale-[0.2] group-hover/image:grayscale-0"

@@ -2,6 +2,7 @@ import { client } from "@/sanity/lib/client";
 import { MuseumFrame } from "@/components/ui/MuseumFrame";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { ArtworkInquiry } from "@/components/ArtworkInquiry";
 
 // FETCH DATA
@@ -83,10 +84,13 @@ export default async function ArtworkPage({
               <MuseumFrame aspectRatio={art.aspectRatio}>
                 {art.imageUrl && (
                   <div className="absolute inset-0 w-full h-full">
-                    <img
+                    <Image
                       src={art.imageUrl}
                       alt={art.title}
-                      className="w-full h-full object-cover"
+                      fill
+                      priority
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      className="object-cover"
                     />
                   </div>
                 )}

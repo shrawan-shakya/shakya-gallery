@@ -1,10 +1,11 @@
 import { client } from "@/sanity/lib/client";
 import { GalleryGridClient } from "./GalleryGridClient";
+import Link from "next/link";
 
 // 1. The Query
-async function getArtworks() {
+async function getArtworks(limit?: number) {
   const query = `
-    *[_type == "artwork"] | order(_createdAt desc) {
+    *[_type == "artwork"] | order(_updatedAt desc)${limit ? `[0...${limit}]` : ""} {
       _id,
       title,
       dimensions,
@@ -21,12 +22,12 @@ async function getArtworks() {
   return await client.fetch(query);
 }
 
-export async function GalleryGrid() {
-  const artworks = await getArtworks();
+export async function GalleryGrid({ limit }: { limit?: number }) {
+  const artworks = await getArtworks(limit);
 
   return (
     <section className="py-24 md:py-32 px-6 bg-bone">
-      
+
       {/* 2. THE HEADER */}
       <div className="max-w-4xl mx-auto text-center flex flex-col items-center mb-24 md:mb-32">
         <p className="font-sans text-[8px] md:text-xs tracking-[0.3em] text-gray-400 uppercase mb-8 font-medium">
@@ -44,6 +45,23 @@ export async function GalleryGrid() {
 
       {/* 3. The Grid (Passes data to Client) */}
       <GalleryGridClient artworks={artworks} />
+
+      {/* 4. CTA (If limited) */}
+      {limit && (
+        <div className="flex justify-center mt-24">
+          <Link
+            href="/collection"
+            className="group relative inline-flex items-center gap-3 px-8 py-4 border border-soft-black/20 hover:border-soft-black transition-colors duration-500"
+          >
+            <span className="font-sans text-xs tracking-[0.25em] uppercase text-soft-black group-hover:tracking-[0.35em] transition-all duration-500">
+              View Entire Collection
+            </span>
+            <span className="text-xl transform group-hover:translate-x-2 transition-transform duration-500">
+              →
+            </span>
+          </Link>
+        </div>
+      )}
     </section>
   );
 }

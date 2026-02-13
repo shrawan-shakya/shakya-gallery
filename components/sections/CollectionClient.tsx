@@ -167,6 +167,7 @@ export function CollectionClient({
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [statusFilter, setStatusFilter] = useState<"all" | "available" | "sold">("all");
   const [sortOption, setSortOption] = useState<"newest" | "price_asc" | "price_desc">("newest");
+  const [showMat, setShowMat] = useState(true);
 
   // UI State
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
@@ -297,6 +298,22 @@ export function CollectionClient({
 
           {/* GRID TOGGLE (Desktop Only) */}
           <div className="hidden lg:flex justify-end mb-8 items-center gap-4">
+            {/* MAT TOGGLE */}
+            <div className="flex items-center gap-4 border-r border-black/10 pr-6 mr-2">
+              <button
+                onClick={() => setShowMat(true)}
+                className={`font-sans text-[9px] tracking-widest uppercase transition-all ${showMat ? "text-soft-black font-semibold" : "text-gray-400 hover:text-gray-600"}`}
+              >
+                Mat
+              </button>
+              <button
+                onClick={() => setShowMat(false)}
+                className={`font-sans text-[9px] tracking-widest uppercase transition-all ${!showMat ? "text-soft-black font-semibold" : "text-gray-400 hover:text-gray-600"}`}
+              >
+                No Mat
+              </button>
+            </div>
+
             <span className="font-sans text-[9px] tracking-widest text-gray-400 uppercase mr-2">View</span>
             <button onClick={() => setGridCols(2)} className={`p-2 transition-colors duration-300 ${gridCols === 2 ? "text-soft-black" : "text-gray-300 hover:text-gray-500"}`}>
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0.5" y="0.5" width="7" height="17" stroke="currentColor" /><rect x="10.5" y="0.5" width="7" height="17" stroke="currentColor" /></svg>
@@ -327,7 +344,7 @@ export function CollectionClient({
 
                     {/* IMAGE FRAME */}
                     <div className="relative group/image">
-                      <MuseumFrame className="h-auto">
+                      <MuseumFrame className="h-auto" hasMat={showMat}>
                         {art.imageUrl && (
                           <img
                             src={art.imageUrl}

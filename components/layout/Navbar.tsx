@@ -20,7 +20,7 @@ export function Navbar() {
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious() || 0;
-    
+
     // 1. Scrolled State (For Shadow/Color)
     // We increase the threshold to 10px to avoid flickering at the very top
     if (latest > 10) {
@@ -59,13 +59,13 @@ export function Navbar() {
         // 1. At Top: bg-transparent (Let Hero color show through)
         // 2. Scrolled: bg-[#FDFCF8] (Solid Bone color)
         className={`fixed top-0 left-0 right-0 z-50 px-6 md:px-12 flex justify-between items-center w-full transition-all duration-500 ease-in-out
-          ${isScrolled 
+          ${isScrolled
             ? "py-4 bg-[#FDFCF8] border-b border-black/5 shadow-sm" // Scrolled: Solid & Compact
             : "py-6 md:py-10 bg-transparent border-none shadow-none" // Top: Invisible Background
           }
         `}
       >
-        
+
         {/* LOGO */}
         <Link href="/" className="z-50 group">
           <h1 className={`font-serif tracking-[0.3em] relative font-thin transition-all duration-500 text-soft-black
@@ -79,10 +79,10 @@ export function Navbar() {
         {/* DESKTOP LINKS */}
         <div className="hidden md:flex gap-12 items-center font-thin text-soft-black">
           {links.map((link) => (
-            <Link 
-              key={link.name} 
-              href={link.href} 
-              className="font-sans text-xs tracking-[0.25em] uppercase hover:text-gray-500 transition-colors"
+            <Link
+              key={link.name}
+              href={link.href}
+              className="font-sans text-sm tracking-[0.25em] uppercase hover:text-gray-500 transition-colors"
             >
               {link.name}
             </Link>
@@ -90,19 +90,19 @@ export function Navbar() {
         </div>
 
         {/* MOBILE HAMBURGER */}
-        <button 
-          onClick={() => setIsOpen(!isOpen)} 
+        <button
+          onClick={() => setIsOpen(!isOpen)}
           className="md:hidden z-50 w-8 h-8 flex flex-col justify-center items-end gap-1.5 text-soft-black"
         >
-          <motion.span 
+          <motion.span
             animate={isOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
             className="w-8 h-[1px] bg-current block"
           />
-          <motion.span 
+          <motion.span
             animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
             className="w-6 h-[1px] bg-current block"
           />
-          <motion.span 
+          <motion.span
             animate={isOpen ? { rotate: -45, y: -6, width: 32 } : { rotate: 0, y: 0, width: 16 }}
             className="w-4 h-[1px] bg-current block"
           />
@@ -127,8 +127,8 @@ export function Navbar() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 + (i * 0.1), duration: 0.5 }}
                 >
-                  <Link 
-                    href={link.href} 
+                  <Link
+                    href={link.href}
                     onClick={() => setIsOpen(false)}
                     className="font-serif text-4xl text-[#1A1A1A] italic hover:text-[#999999] transition-colors"
                   >
