@@ -1,60 +1,120 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLenis } from "@studio-freight/react-lenis";
 
 export function ArtworkInquiry({ artwork, isSold = false }: { artwork: any, isSold?: boolean }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    // DYNAMIC MESSAGE based on status
-    message: isSold
-      ? "I am interested in sourcing a piece similar to this. Please contact me with options."
-      : "I am interested in acquiring this piece. Please provide more details."
-  });
+  const lenis = useLenis();
+
+  // Lock Body Scroll & Lenis
+  useEffect(() => {
+    if (isOpen) {
+      lenis?.stop();
+      document.body.style.overflow = "hidden";
+    } else {
+      lenis?.start();
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      lenis?.start();
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen, lenis]);
+
+  // Form State
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [countryCode, setCountryCode] = useState("+977"); // Default to Nepal
+  const [mobile, setMobile] = useState("");
+
+  // Shipping Details
+  const [street, setStreet] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [zip, setZip] = useState("");
+  const [country, setCountry] = useState("");
+
+  const [file, setFile] = useState<File | null>(null);
+
+  const countryCodes = [
+    { code: "+977", country: "Nepal" },
+    { code: "+1", country: "USA/Canada" },
+    { code: "+44", country: "UK" },
+    { code: "+61", country: "Australia" },
+    { code: "+86", country: "China" },
+    { code: "+91", country: "India" },
+    { code: "+81", country: "Japan" },
+    { code: "+33", country: "France" },
+    { code: "+49", country: "Germany" },
+    { code: "+971", country: "UAE" },
+    { code: "+65", country: "Singapore" },
+    // Add more as needed or allows user to type
+  ];
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    const response = await fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify({
-        access_key: "dd980e1f-daa2-4f43-a832-3b887232392b", // <--- CHECK YOUR KEY
-        // DYNAMIC SUBJECT
-        subject: isSold
-          ? `Sourcing Request: Similar to ${artwork.title}`
-          : `Inquiry: ${artwork.title} (SKU: ${artwork.sku || "N/A"})`,
-        from_name: "Shakya Gallery Website",
-        ...formData,
-        artwork_details: `
-          Title: ${artwork.title}
-          SKU: ${artwork.sku || "N/A"}
-          Status: ${isSold ? "Sold / Private" : "Available"}
-          URL: ${window.location.href}
-        `
-      }),
-    });
+    const formData = new FormData();
+    formData.append("access_key", "dd980e1f-daa2-4f43-a832-3b887232392b"); // <--- CHECK YOUR KEY
+    formData.append("subject", isSold
+      ? `Sourcing Request: Similar to ${artwork.title}`
+      : `Bespoke Acquisition: ${artwork.title}`
+    );
+    formData.append("from_name", "Shakya Gallery Website");
 
-    const result = await response.json();
-    if (result.success) {
-      setIsSuccess(true);
+    // Fields
+    formData.append("Name", name);
+    formData.append("Email", email);
+    formData.append("Mobile", `${countryCode} ${mobile}`); // Combine code and number
+
+    // Combined Address
+    const fullAddress = `
+      ${street}
+      ${city}, ${state} ${zip}
+      ${country}
+    `;
+    formData.append("Shipping Address", fullAddress);
+
+    if (file) {
+      formData.append("Virtual Preview", file);
     }
+
+    formData.append("Artwork Details", `
+      Title: ${artwork.title}
+      SKU: ${artwork.sku || "N/A"}
+      Status: ${isSold ? "Sold / Private" : "Available"}
+      URL: ${window.location.href}
+    `);
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData, // Sending FormData supports files
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        setIsSuccess(true);
+      } else {
+        alert("Something went wrong. Please try again.");
+      }
+    } catch (error) {
+      console.error("Submission Error", error);
+      alert("Network error. Please try again.");
+    }
+
     setIsSubmitting(false);
   };
 
   return (
     <>
-      {/* 1. THE TRIGGER BUTTON (Dynamic Text) */}
+      {/* 1. THE TRIGGER BUTTON */}
       <button
         onClick={() => setIsOpen(true)}
         className="group inline-flex items-center gap-3 px-0 py-2 border-b border-black hover:border-gray-400 transition-all duration-300 cursor-pointer"
@@ -84,66 +144,159 @@ export function ArtworkInquiry({ artwork, isSold = false }: { artwork: any, isSo
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-lg bg-bone p-8 md:p-12 shadow-2xl border border-white/20"
+              className="relative w-full max-w-xl bg-bone shadow-2xl border border-white/20 max-h-[90vh] flex flex-col rounded-sm overflow-hidden"
             >
-              <button
-                onClick={() => setIsOpen(false)}
-                className="absolute top-6 right-6 text-2xl text-gray-400 hover:text-soft-black transition-colors"
+              {/* Sticky Close Button Area */}
+              <div className="absolute top-0 right-0 p-6 z-20 pointer-events-none">
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="pointer-events-auto text-2xl text-gray-400 hover:text-soft-black transition-colors"
+                >
+                  ✕
+                </button>
+              </div>
+
+              {/* Scrollable Content */}
+              <div
+                data-lenis-prevent
+                className="overflow-y-auto p-8 md:p-12 overscroll-contain
+                [&::-webkit-scrollbar]:w-1.5
+                [&::-webkit-scrollbar-track]:bg-transparent
+                [&::-webkit-scrollbar-thumb]:bg-black/10
+                hover:[&::-webkit-scrollbar-thumb]:bg-black/20"
               >
-                ✕
-              </button>
+                {isSuccess ? (
+                  <div className="text-center py-12 space-y-8">
+                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-full border border-soft-black text-2xl mb-4">
+                      ✓
+                    </div>
 
-              {isSuccess ? (
-                <div className="text-center py-12 space-y-6">
-                  <span className="text-4xl">💎</span>
-                  <h3 className="font-serif text-2xl text-soft-black">Request Received</h3>
-                  <p className="font-sans text-sm leading-relaxed text-gray-500">
-                    {isSold
-                      ? "Our curation team has received your sourcing request. We will review our private collection for similar pieces."
-                      : `Thank you for your interest in ${artwork.title}. Our private sales team will review availability.`
-                    }
-                  </p>
-                  <button onClick={() => setIsOpen(false)} className="text-xs uppercase underline tracking-widest mt-4">Close</button>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-8">
+                    <h3 className="font-serif text-3xl text-soft-black">Your inquiry is with our curators.</h3>
 
-                  {/* HONEYPOT */}
-                  <input type="checkbox" name="botcheck" className="hidden" style={{ display: 'none' }} />
-
-                  <div>
-                    <p className="font-sans text-xs tracking-[0.2em] text-gray-400 uppercase mb-2">
-                      {isSold ? "Sourcing Request" : "Acquisition Request"}
+                    <p className="font-sans text-sm leading-loose text-gray-600 max-w-md mx-auto">
+                      We are currently calculating shipping costs and preparing your virtual preview. To maintain the quality of our service, a gallery advisor will reach out via email within 24 hours with your personalized quote.
                     </p>
-                    <h2 className="font-serif text-2xl text-soft-black">{artwork.title}</h2>
-                    <p className="font-serif text-sm italic text-gray-500 mt-1">SKU: {artwork.sku || "Unlisted"}</p>
-                  </div>
 
-                  <div className="space-y-4">
-                    <div>
-                      <label htmlFor="name" className="sr-only">Your Name</label>
-                      <input required id="name" type="text" placeholder="Your Name" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} className="w-full bg-transparent border-b border-black/10 py-3 font-serif text-lg outline-none focus:border-black transition-colors placeholder:text-gray-300" />
-                    </div>
-                    <div>
-                      <label htmlFor="email" className="sr-only">Email Address</label>
-                      <input required id="email" type="email" placeholder="Email Address" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} className="w-full bg-transparent border-b border-black/10 py-3 font-serif text-lg outline-none focus:border-black transition-colors placeholder:text-gray-300" />
-                    </div>
-                    <div>
-                      <label htmlFor="phone" className="sr-only">Phone Number (Optional)</label>
-                      <input id="phone" type="tel" placeholder="Phone (Optional)" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} className="w-full bg-transparent border-b border-black/10 py-3 font-serif text-lg outline-none focus:border-black transition-colors placeholder:text-gray-300" />
-                    </div>
-                    <div>
-                      <label htmlFor="message" className="sr-only">Message</label>
-                      <textarea id="message" rows={3} value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} className="w-full bg-transparent border-b border-black/10 py-3 font-serif text-lg outline-none focus:border-black transition-colors placeholder:text-gray-300 resize-none" />
+                    <div className="pt-8 border-t border-black/5 mt-8">
+                      <p className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-400 mb-4">
+                        Prefer an immediate update?
+                      </p>
+                      <a
+                        href="https://wa.me/9779841234567" // Placeholder Number
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-soft-black hover:text-[#25D366] transition-colors font-serif italic text-lg"
+                      >
+                        <span className="text-xl">💬</span> Message us on WhatsApp
+                      </a>
                     </div>
                   </div>
+                ) : (
+                  <form onSubmit={handleSubmit} className="space-y-10">
 
-                  <button type="submit" disabled={isSubmitting} className="w-full bg-soft-black text-white py-4 font-sans text-xs tracking-[0.2em] uppercase hover:bg-gray-800 transition-colors disabled:opacity-50">
-                    {isSubmitting ? "Processing..." : "Confirm Request"}
-                  </button>
+                    {/* HEADER */}
+                    <div className="pr-8"> {/* Padding right to avoid overlap with close button */}
+                      <p className="font-sans text-xs tracking-[0.3em] text-gray-400 uppercase mb-2">
+                        Bespoke Acquisition
+                      </p>
+                      <h2 className="font-serif text-3xl text-soft-black leading-tight">{artwork.title}</h2>
+                      <p className="font-serif text-sm italic text-gray-500 mt-1">SKU: {artwork.sku || "Unlisted"}</p>
+                    </div>
 
-                </form>
-              )}
+                    {/* FIELDS */}
+                    <div className="space-y-6">
+
+                      {/* Name & Email */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="space-y-1">
+                          <label className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-500">Full Name</label>
+                          <input required type="text" value={name} onChange={(e) => setName(e.target.value)} className="w-full bg-transparent border-b border-black/10 py-2 font-serif text-lg outline-none focus:border-black transition-colors" />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-500">Email Address</label>
+                          <input required type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full bg-transparent border-b border-black/10 py-2 font-serif text-lg outline-none focus:border-black transition-colors" />
+                        </div>
+                      </div>
+
+                      {/* Mobile with Country Code */}
+                      <div className="space-y-1">
+                        <label className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-500">Mobile Number <span className="text-red-400">*</span></label>
+                        <div className="flex gap-4">
+                          <div className="relative w-1/3">
+                            <select
+                              value={countryCode}
+                              onChange={(e) => setCountryCode(e.target.value)}
+                              className="w-full bg-transparent border-b border-black/10 py-2 font-serif text-lg outline-none focus:border-black transition-colors appearance-none cursor-pointer"
+                            >
+                              {countryCodes.map((c) => (
+                                <option key={c.country} value={c.code}>
+                                  {c.code} ({c.country})
+                                </option>
+                              ))}
+                            </select>
+                            {/* Custom Arrow */}
+                            <span className="absolute right-0 top-1/2 -translate-y-1/2 text-xs text-gray-400 pointer-events-none">▼</span>
+                          </div>
+                          <input
+                            required
+                            type="tel"
+                            value={mobile}
+                            onChange={(e) => setMobile(e.target.value)}
+                            placeholder="Phone Number"
+                            className="w-2/3 bg-transparent border-b border-black/10 py-2 font-serif text-lg outline-none focus:border-black transition-colors placeholder:text-gray-300 placeholder:text-sm placeholder:font-sans"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Detailed Shipping Address */}
+                      <div className="space-y-4">
+                        <label className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-500">Shipping Destination</label>
+
+                        {/* Street */}
+                        <input required type="text" placeholder="Street Address" value={street} onChange={(e) => setStreet(e.target.value)} className="w-full bg-transparent border-b border-black/10 py-2 font-serif text-lg outline-none focus:border-black transition-colors placeholder:text-gray-300 placeholder:text-sm placeholder:font-sans" />
+
+                        {/* City & State */}
+                        <div className="grid grid-cols-2 gap-6">
+                          <input required type="text" placeholder="City" value={city} onChange={(e) => setCity(e.target.value)} className="w-full bg-transparent border-b border-black/10 py-2 font-serif text-lg outline-none focus:border-black transition-colors placeholder:text-gray-300 placeholder:text-sm placeholder:font-sans" />
+                          <input required type="text" placeholder="State / Province" value={state} onChange={(e) => setState(e.target.value)} className="w-full bg-transparent border-b border-black/10 py-2 font-serif text-lg outline-none focus:border-black transition-colors placeholder:text-gray-300 placeholder:text-sm placeholder:font-sans" />
+                        </div>
+
+                        {/* Zip & Country */}
+                        <div className="grid grid-cols-2 gap-6">
+                          <input required type="text" placeholder="Zip / Postal Code" value={zip} onChange={(e) => setZip(e.target.value)} className="w-full bg-transparent border-b border-black/10 py-2 font-serif text-lg outline-none focus:border-black transition-colors placeholder:text-gray-300 placeholder:text-sm placeholder:font-sans" />
+                          <input required type="text" placeholder="Country" value={country} onChange={(e) => setCountry(e.target.value)} className="w-full bg-transparent border-b border-black/10 py-2 font-serif text-lg outline-none focus:border-black transition-colors placeholder:text-gray-300 placeholder:text-sm placeholder:font-sans" />
+                        </div>
+                      </div>
+
+                      {/* File Upload */}
+                      <div className="space-y-3">
+                        <label className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-500 block">Virtual Preview (Optional)</label>
+                        <div className="relative border border-dashed border-black/20 hover:border-black/40 transition-colors rounded-sm p-6 text-center group cursor-pointer">
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)}
+                            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                          />
+                          <span className="text-2xl mb-2 block text-gray-400 group-hover:text-soft-black transition-colors">📷</span>
+                          <p className="font-serif text-sm text-gray-600">
+                            {file ? `Selected: ${file.name}` : "Upload a photo of your wall."}
+                          </p>
+                          <p className="font-sans text-[10px] text-gray-400 mt-2">
+                            We will digitally place the artwork for you to ensure it brings peace to your space.
+                          </p>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <button type="submit" disabled={isSubmitting} className="w-full bg-soft-black text-white py-4 font-sans text-xs tracking-[0.2em] uppercase hover:bg-gray-800 transition-colors disabled:opacity-50">
+                      {isSubmitting ? "Processing..." : "Submit Inquiry"}
+                    </button>
+
+                  </form>
+                )}
+              </div>
             </motion.div>
           </div>
         )}
