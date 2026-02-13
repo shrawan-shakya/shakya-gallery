@@ -126,9 +126,9 @@ export function ArtworkInquiry({ artwork, isSold = false }: { artwork: any, isSo
       {/* 1. THE TRIGGER BUTTON */}
       <button
         onClick={() => setIsOpen(true)}
-        className="group inline-flex items-center gap-3 px-0 py-2 border-b border-black hover:border-gray-400 transition-all duration-300 cursor-pointer"
+        className="group w-full md:w-auto inline-flex items-center justify-center gap-4 px-8 py-4 bg-soft-black text-white hover:bg-gray-800 transition-all duration-300 cursor-pointer shadow-lg hover:shadow-xl"
       >
-        <span className="font-sans text-xs tracking-[0.3em] uppercase text-soft-black group-hover:text-gray-600 transition-colors">
+        <span className="font-sans text-xs tracking-[0.3em] uppercase">
           {isSold ? "Contact Concierge" : "Inquire to Acquire"}
         </span>
         <span className="text-lg transform group-hover:translate-x-2 transition-transform duration-500">

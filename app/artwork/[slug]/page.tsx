@@ -195,16 +195,10 @@ export default async function ArtworkPage({
                 </div>
               </div>
 
-              {/* 3. THE NARRATIVE */}
-              <div className="font-sans font-light text-sm leading-[2.2] tracking-wide text-gray-600 text-justify">
-                {art.description}
-              </div>
-
-              {/* 4. THE ACTION AREA */}
-              <div className="pt-6 pb-12">
-
+              {/* 3. THE ACTION AREA (Moved Up) */}
+              <div className="py-2">
                 {isSold ? (
-                  // OPTION A: SOLD MESSAGE (Concierge Sourcing)
+                  // OPTION A: SOLD MESSAGE
                   <div className="bg-black/[0.03] p-8 border border-black/5 flex flex-col gap-4">
                     <div>
                       <h3 className="font-serif text-xl text-soft-black italic mb-1">Looking for something similar?</h3>
@@ -212,18 +206,39 @@ export default async function ArtworkPage({
                         While this specific work has been acquired, our curation team specializes in sourcing rare pieces similar to this one.
                       </p>
                     </div>
-
-                    {/* --- UPDATED: USES THE POPUP COMPONENT WITH isSold=true --- */}
                     <div className="pt-2">
                       <ArtworkInquiry artwork={art} isSold={true} />
                     </div>
-
                   </div>
                 ) : (
-                  // OPTION B: AVAILABLE (Standard Inquiry)
+                  // OPTION B: AVAILABLE
                   <ArtworkInquiry artwork={art} isSold={false} />
                 )}
+              </div>
 
+              {/* 4. THE NARRATIVE */}
+              <div className="space-y-4 pt-4 border-t border-black/5">
+                <h3 className="font-serif text-xl italic text-soft-black">About The Artwork</h3>
+                <div className="font-sans font-light text-sm leading-[2.2] tracking-wide text-gray-600 text-justify">
+                  {art.description}
+                </div>
+              </div>
+
+              {/* 5. STATIC INFORMATION */}
+              <div className="space-y-6 pt-8 border-t border-black/5">
+                <div className="space-y-2">
+                  <h4 className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-400">Authenticity</h4>
+                  <p className="font-sans text-xs leading-relaxed text-gray-500">
+                    Every acquisition is accompanied by a Certificate of Authenticity signed by the Shakya Gallery curation team, guaranteeing the provenance and originality of the work.
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <h4 className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-400">Shipping & Insurance</h4>
+                  <p className="font-sans text-xs leading-relaxed text-gray-500">
+                    We provide specialized art logistics for global delivery. Each piece is custom crated and fully insured during transit. Shipping costs are calculated based on destination and will be provided in your personalized quote.
+                  </p>
+                </div>
               </div>
 
             </div>
