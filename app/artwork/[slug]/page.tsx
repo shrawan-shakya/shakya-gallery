@@ -97,7 +97,7 @@ export default async function ArtworkPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <main className="min-h-screen bg-bone pt-24 lg:pt-28 pb-40">
+      <div className="min-h-screen bg-bone pt-24 lg:pt-28 pb-40">
 
 
         {/* MOBILE BREADCRUMBS */}
@@ -245,7 +245,7 @@ export default async function ArtworkPage({
           </div>
 
         </div>
-      </main>
+      </div>
     </>
   );
 }

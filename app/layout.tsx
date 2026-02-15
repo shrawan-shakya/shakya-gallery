@@ -48,6 +48,16 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "SHAKYA | Premier Art Gallery in Nepal",
+    description: "A luxury archive of Himalayan art. Discover authentic Paubha paintings and masterpieces from Nepal's most revered artists.",
+    creator: "@shakyagallery", // Placeholder
+    images: ["https://shakyagallery.com/opengraph-image.png"], // Placeholder
+  },
+  verification: {
+    google: "google-site-verification=YOUR_CODE", // Placeholder
+  },
 };
 
 export default function RootLayout({

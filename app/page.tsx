@@ -27,7 +27,7 @@ export default async function Home() {
   };
 
   return (
-    <main className="bg-bone min-h-screen">
+    <div className="bg-bone min-h-screen">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -43,6 +43,6 @@ export default async function Home() {
       <section className="min-h-screen w-full bg-bone pt-20">
         <GalleryGrid limit={6} />
       </section>
-    </main>
+    </div>
   );
 }

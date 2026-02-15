@@ -4,8 +4,8 @@ import path from "path";
 
 // Image metadata
 export const size = {
-    width: 32,
-    height: 32,
+    width: 192,
+    height: 192,
 };
 export const contentType = "image/png";
 
@@ -20,7 +20,7 @@ export default function Icon() {
             // ImageResponse JSX element
             <div
                 style={{
-                    fontSize: 24,
+                    fontSize: 140, // Scaled for 192px
                     background: "#e4e4e4", // soft gray
                     width: "100%",
                     height: "100%",
@@ -29,7 +29,7 @@ export default function Icon() {
                     justifyContent: "center",
                     color: "#000000", // black
                     fontFamily: '"Cormorant Garamond"',
-                    borderRadius: "2px",
+                    borderRadius: "4px", // Slightly larger radius
                 }}
             >
                 S

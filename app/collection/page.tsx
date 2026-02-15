@@ -46,9 +46,28 @@ export default async function CollectionPage() {
   const artworks = await getArtworks();
   const categories = await getCategories();
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Shakya Gallery Collection",
+    "description": "Explore our curated selection of original paintings for sale in Nepal.",
+    "url": "https://shakyagallery.com/collection",
+    "numberOfItems": artworks.length,
+    "itemListElement": artworks.map((art: any, index: number) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "url": `https://shakyagallery.com/artwork/${art.slug}`,
+      "name": art.title
+    }))
+  };
+
   return (
-    <main>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <CollectionClient artworks={artworks} allCategories={categories} />
-    </main>
+    </>
   );
 }
