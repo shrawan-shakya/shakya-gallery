@@ -184,7 +184,7 @@ export function Footer() {
           © {new Date().getFullYear()} Shakya Gallery. All Rights Reserved.
         </p>
         <div className="flex gap-8">
-          <Link href="/privacy" className="font-sans text-xs tracking-[0.2em] text-gray-600 uppercase hover:text-white transition-colors">Privacy</Link>
+          <Link href="/privacy-policy" className="font-sans text-xs tracking-[0.2em] text-gray-600 uppercase hover:text-white transition-colors">Privacy</Link>
           <Link href="/terms" className="font-sans text-xs tracking-[0.2em] text-gray-600 uppercase hover:text-white transition-colors">Terms</Link>
         </div>
       </div >
