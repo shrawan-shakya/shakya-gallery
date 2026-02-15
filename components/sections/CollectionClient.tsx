@@ -342,7 +342,7 @@ export function CollectionClient({
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.5 }}
-                  className={`relative z-0 break-inside-avoid inline-block w-full align-top mt-0 overflow-hidden transform-gpu ${gridCols === 2 ? "mb-12" : "mb-8"}`}
+                  className={`relative z-0 break-inside-avoid block w-full align-top mt-0 overflow-hidden ${gridCols === 2 ? "mb-12" : "mb-8"}`}
                 >
                   <Link href={`/artwork/${art.slug}`} className="block cursor-pointer group/card">
 

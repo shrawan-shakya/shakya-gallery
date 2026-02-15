@@ -103,7 +103,7 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: index * 0.1 }}
             viewport={{ once: true, margin: "-50px" }}
-            className="w-full break-inside-avoid inline-block align-top mt-0 mb-12 overflow-hidden transform-gpu"
+            className="w-full break-inside-avoid block align-top mt-0 mb-12 overflow-hidden"
           >
             <Link href={`/artwork/${art.slug}`} className="block cursor-pointer no-underline group/card">
 
