@@ -28,7 +28,7 @@ export async function POST(request: Request) {
             return NextResponse.json({ success: false, message: 'Invalid Input' }, { status: 400 });
         }
 
-        const { name, email, interest, message } = result.data;
+        const { name, email, interest = "General Inquiry", message } = result.data;
 
         // Retrieve Resend API Key
         const resendApiKey = process.env.RESEND_API_KEY;
