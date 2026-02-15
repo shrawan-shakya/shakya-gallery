@@ -79,11 +79,11 @@ export default function ContactPage() {
             <h3 className="font-sans text-xs tracking-[0.2em] text-soft-black border-b border-black/10 pb-4 uppercase">Visit The Gallery</h3>
             <div className="space-y-4">
               <p className="font-serif text-2xl text-soft-black leading-relaxed">
-                Patan Durbar Square,<br />
-                Lalitpur, Nepal
+                Kathmandu,<br />
+                Nepal
               </p>
               <a
-                href="https://maps.google.com/?q=Shakya+Gallery+Patan"
+                href="https://maps.google.com/?q=Shakya+Gallery+Kathmandu"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block font-sans text-xs tracking-[0.2em] uppercase border-b border-black/30 hover:border-black transition-colors pb-1"

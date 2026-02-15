@@ -11,8 +11,8 @@ const whyBuyItems = [
     },
     {
         icon: <Globe className="w-8 h-8 text-soft-black" />,
-        title: "Global Shipping",
-        description: "We provide secure, insured international shipping to collectors worldwide, ensuring your masterpiece arrives safely."
+        title: "Worldwide & Local Access",
+        description: "We provide secure international crating and shipping for global collectors, and complimentary delivery within the Kathmandu Valley."
     },
     {
         icon: <Heart className="w-8 h-8 text-soft-black" />,
@@ -21,8 +21,8 @@ const whyBuyItems = [
     },
     {
         icon: <Lock className="w-8 h-8 text-soft-black" />,
-        title: "Secure Transactions",
-        description: "Purchase with confidence using our encrypted payment processing, offering peace of mind for every transaction."
+        title: "Secure Invoicing",
+        description: "We facilitate secure international Bank Transfers (SWIFT) and local digital payments, ensuring transparency for every acquisition."
     }
 ];
 

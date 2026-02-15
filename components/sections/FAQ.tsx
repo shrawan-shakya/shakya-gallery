@@ -6,24 +6,24 @@ import { Plus, Minus } from "lucide-react";
 
 const faqs = [
     {
-        question: "Is every artwork an original piece?",
-        answer: "Yes, Shakya Gallery exclusively represents original fine art from Nepal. Whether it is an expressive abstract painting, a detailed landscape, or an intimate portrait, every piece is a unique creation by a master artist from the Kathmandu Valley, accompanied by a signed Certificate of Authenticity."
+        question: "How do I pay for an artwork?",
+        answer: "We facilitate secure transactions for all clients. International collectors can pay via Bank Wire Transfer (SWIFT) or International Credit Card (upon request). For local clients in Nepal, we accept Bank Transfer, Digital Wallets (Fonepay/eSewa), or Cash on Delivery."
     },
     {
         question: "Do you offer international shipping?",
-        answer: "Absolutely. We specialize in securely shipping large-format canvas paintings to collectors worldwide. Our team handles all export documentation, custom crating, and insurance to ensure your artwork arrives safely, no matter where you are located."
+        answer: "Yes, we specialize in global logistics. For international orders, we provide custom crating, export documentation, and insured shipping via DHL/FedEx. For local clients in Kathmandu, we offer complimentary hand-delivery or gallery pickup."
     },
     {
-        question: "Can I commission a custom painting?",
-        answer: "Yes, many of our featured artists accept commissions. If you are looking for a specific size, color palette, or subject—such as a family portrait or a specific Himalayan landscape—we can facilitate a bespoke creation tailored to your vision."
+        question: "Can I see the artwork before buying?",
+        answer: "Absolutely. For local clients, we invite you to a private viewing at our Kathmandu gallery. For international collectors, we offer high-resolution detail shots and a 'Virtual Preview' service—just send us a photo of your wall, and we will digitally place the artwork for you."
+    },
+    {
+        question: "Is every artwork an original piece?",
+        answer: "Yes, Shakya Gallery exclusively represents original fine art. Whether it is an expressive abstract or a detailed Paubha, every piece is a unique creation by a master artist, accompanied by a signed Certificate of Authenticity."
     },
     {
         question: "How do you support Nepalese artists?",
         answer: "Since 1998, our mission has been to provide a global platform for local talent. By acquiring art through SHAKYA, you are directly supporting the livelihoods of traditional and contemporary artists in Nepal, helping to preserve our rich cultural heritage."
-    },
-    {
-        question: "What if the artwork arrives damaged?",
-        answer: "In the unlikely event of damage during transit, your shipment is fully insured. Simply contact our concierge team within 48 hours of delivery with photos, and we will arrange for a full refund or restoration, completely hassle-free."
     }
 ];
 

@@ -60,12 +60,12 @@ export default function BuyingGuidePage() {
                     <Step
                         number="03"
                         title="Secure the Work"
-                        text="Once you decide to proceed, we issue a secure invoice. We accept major credit cards and bank transfers. Upon payment, the artwork is marked as 'Sold'."
+                        text="Once you decide to proceed, we issue a secure invoice. We facilitate bank transfers and digital payments. Upon payment, the artwork is marked as 'Sold'."
                     />
                     <Step
                         number="04"
-                        title="White-Glove Delivery"
-                        text="We professionally crate every piece to museum standards. Fully insured global shipping ensures your investment arrives safely at your doorstep, ready to hang."
+                        title="Professional Delivery"
+                        text="We carefully pack and ship every piece to ensure it arrives safely. Fully insured delivery brings your new artwork directly to your doorstep, ready to hang."
                     />
                 </div>
             </section>
