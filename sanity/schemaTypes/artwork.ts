@@ -28,7 +28,7 @@ export default defineType({
       type: 'string',
       initialValue: 'Unknown Master',
     }),
-    
+
     // --- 2. CLASSIFICATION (The "Filter" Engine) ---
     defineField({
       name: 'categories',
@@ -37,7 +37,7 @@ export default defineType({
       description: 'Select Style, Subject, or Collection tags (e.g. "Abstract", "Mountain", "Summer Sale")',
       of: [{ type: 'reference', to: { type: 'category' } }],
     }),
-    
+
     // --- 3. DETAILS ---
     defineField({
       name: 'year',
@@ -111,6 +111,26 @@ export default defineType({
         },
       ],
       validation: (rule) => rule.required(),
+    }),
+
+    defineField({
+      name: 'relatedImages',
+      title: 'Gallery Images',
+      type: 'array',
+      description: 'Add extra angles, close-ups, or in-situ shots.',
+      of: [
+        {
+          type: 'image',
+          options: { hotspot: true },
+          fields: [
+            {
+              name: 'alt',
+              type: 'string',
+              title: 'Alternative Text',
+            }
+          ]
+        }
+      ],
     }),
     defineField({
       name: 'description',

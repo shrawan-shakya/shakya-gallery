@@ -1,9 +1,8 @@
 import { client } from "@/sanity/lib/client";
-import { MuseumFrame } from "@/components/ui/MuseumFrame";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
 import { ArtworkInquiry } from "@/components/ArtworkInquiry";
+import { ArtworkGallery } from "@/components/artwork/ArtworkGallery";
 
 // FETCH DATA
 async function getArtwork(slug: string) {
@@ -18,8 +17,14 @@ async function getArtwork(slug: string) {
       artist,
       status, 
       price,
-      "imageUrl": mainImage.asset->url,
-      "aspectRatio": mainImage.asset->metadata.dimensions.aspectRatio
+      "mainImage": {
+        "url": mainImage.asset->url,
+        "aspectRatio": mainImage.asset->metadata.dimensions.aspectRatio
+      },
+      "relatedImages": relatedImages[]{
+        "url": asset->url,
+        "aspectRatio": asset->metadata.dimensions.aspectRatio
+      }
     }
   `;
   return await client.fetch(query, { slug });
@@ -41,7 +46,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     openGraph: {
       title: `${art.title} - Buy Original Nepali Art Online | SHAKYA`,
       description: `Buy ${art.title}, an original ${art.material} painting by ${art.artist}. Available now at Shakya Gallery.`,
-      images: [art.imageUrl],
+      images: [art.mainImage.url],
       type: "article",
     },
   };
@@ -75,7 +80,7 @@ export default async function ArtworkPage({
     "@context": "https://schema.org",
     "@type": ["Product", "VisualArtwork"],
     "name": art.title,
-    "image": art.imageUrl,
+    "image": art.mainImage.url,
     "description": art.description,
     "sku": art.sku || art._id,
     "brand": {
@@ -116,45 +121,14 @@ export default async function ArtworkPage({
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-0 px-6 md:px-12 max-w-[1400px] mx-auto">
 
           {/* LEFT COLUMN: The Art */}
-          <div className="relative flex items-start justify-center lg:h-[calc(100vh-200px)] lg:sticky lg:top-32">
-            {/* 
-            SIZER WRAPPER STRATEGY:
-            1. Wrapper is relative inline-block (or flex center).
-            2. We render a "Sizer Image" (opacity-0) that has natural aspect ratio.
-            3. We restrain the Sizer Image with `max-w-full` (for width limit) AND `max-h-[60vh]` (for height limit).
-            4. The wrapper naturally shrinks to fit the Sizer Image.
-            5. The MuseumFrame is `absolute inset-0`, perfectly covering the Sizer Image.
-          */}
-            <div className="relative shadow-2xl my-12 lg:my-0 flex-none bg-bone max-w-full">
+          <div className="relative flex flex-col items-center justify-start lg:h-auto lg:sticky lg:top-32 gap-12 hover:group">
 
-              {/* THE SIZER (Invisible, drives dimensions) */}
-              {art.imageUrl && (
-                <img
-                  src={art.imageUrl}
-                  alt="sizer"
-                  className="w-auto h-auto max-w-full max-h-[85vh] opacity-0 relative z-0 pointer-events-none block"
-                />
-              )}
+            <ArtworkGallery
+              mainImage={art.mainImage}
+              relatedImages={art.relatedImages}
+              title={art.title}
+            />
 
-              {/* THE FRAME (Visible, absolute overlay) */}
-              <div className="absolute inset-0 z-10 w-full h-full">
-                <MuseumFrame aspectRatio={art.aspectRatio}>
-                  {art.imageUrl && (
-                    <div className="absolute inset-0 w-full h-full">
-                      <Image
-                        src={art.imageUrl}
-                        alt={art.title}
-                        fill
-                        priority
-                        sizes="(max-width: 1024px) 100vw, 50vw"
-                        className="object-cover"
-                      />
-                    </div>
-                  )}
-                </MuseumFrame>
-              </div>
-
-            </div>
           </div>
 
           {/* RIGHT COLUMN: The Story */}
@@ -178,17 +152,20 @@ export default async function ArtworkPage({
                 <h1 className="font-serif text-3xl md:text-5xl text-soft-black leading-none">
                   {art.title}
                 </h1>
-                <div className="flex justify-between items-baseline mt-2">
+                <div className="flex justify-between items-baseline mt-2 mb-6">
                   <p className="font-serif italic text-xl md:text-2xl text-gray-500">
                     {art.artist}, {art.year}
                   </p>
+                </div>
 
-                  {!isSold && art.price && (
-                    <p className="font-sans text-lg text-soft-black">
+                {/* MOVED PRICE */}
+                {!isSold && art.price && (
+                  <div className="mb-2">
+                    <p className="font-serif text-3xl md:text-4xl text-soft-black">
                       ${art.price.toLocaleString()}
                     </p>
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
 
               {/* 2. TECHNICAL DETAILS */}

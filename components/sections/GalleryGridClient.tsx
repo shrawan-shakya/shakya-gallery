@@ -155,7 +155,7 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
 
                     {/* PRICE TAG */}
                     {art.status === "available" && art.price && (
-                      <span className="absolute top-4 right-4 bg-white/95 text-soft-black text-[9px] md:text-[10px] font-sans tracking-[0.2em] px-3 py-1.5 opacity-0 group-hover/image:opacity-100 transition-opacity duration-500 backdrop-blur-md shadow-md border border-soft-black/10">
+                      <span className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-white/95 text-soft-black text-sm md:text-base font-sans tracking-[0.2em] px-6 py-3 opacity-0 group-hover/image:opacity-100 transition-opacity duration-500 backdrop-blur-md shadow-md border border-soft-black/10">
                         ${art.price.toLocaleString()}
                       </span>
                     )}
