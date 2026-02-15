@@ -87,99 +87,160 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
       </div>
 
       {/* THE OUTER GRID */}
-      <div
-        className={cn(
-          "mx-auto items-start px-6 pb-40 transition-all duration-700 ease-in-out",
-          layout === "grid"
-            ? "max-w-[1800px] block columns-1 md:columns-2 gap-12"
-            : "max-w-[800px] grid grid-cols-1 gap-y-32 md:gap-y-48"
-        )}
-      >
+      <div className="mx-auto px-6 pb-40 transition-all duration-700 ease-in-out">
 
-        {artworks.map((art, index) => (
-          <motion.div
-            key={art._id}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: index * 0.1 }}
-            viewport={{ once: true, margin: "-50px" }}
-            className="w-full break-inside-avoid block align-top mt-0 mb-12 relative z-10"
-          >
-            <Link href={`/artwork/${art.slug}`} className="block cursor-pointer no-underline group/card">
-
-              {/* --- SCALING WRAPPER --- */}
-              {/* This is the magic. It shrinks the painting to 75-85% of the column width 
-                and centers it, creating that expensive whitespace on the sides. */}
-              {/* --- SCALING WRAPPER (DECOUPLED) --- */}
-              <div className="w-full mx-auto">
-
-                {/* 1. THE FRAME ZONE (Wider on Mobile) */}
-                {/* Mobile: w-full (almost full width relative to pad). Desktop: max-w-[75%] */}
-                <div className="w-full md:max-w-[75%] mx-auto relative group/image">
-                  <MuseumFrame aspectRatio={art.aspectRatio} hasMat={showMat}>
-                    {art.imageUrl && (
-                      <div className="absolute inset-0 w-full h-full">
-                        <Image
-                          src={art.imageUrl}
-                          alt={art.title}
-                          fill
-                          sizes="(max-width: 768px) 100vw, 50vw"
-                          className={`object-cover transition-all duration-700 ease-out scale-100 group-hover/image:scale-105
+        {/* VIEW: SINGLE ROW (Unchanged) */}
+        {layout === "single" && (
+          <div className="max-w-[800px] mx-auto grid grid-cols-1 gap-y-32 md:gap-y-48">
+            {artworks.map((art, index) => (
+              <motion.div
+                key={art._id}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: index * 0.1 }}
+                viewport={{ once: true, margin: "-50px" }}
+                className="w-full relative z-10"
+              >
+                <Link href={`/artwork/${art.slug}`} className="block cursor-pointer no-underline group/card">
+                  <div className="w-full mx-auto">
+                    <div className="w-full md:max-w-[75%] mx-auto relative group/image">
+                      <MuseumFrame aspectRatio={art.aspectRatio} hasMat={showMat}>
+                        {art.imageUrl && (
+                          <div className="absolute inset-0 w-full h-full">
+                            <Image
+                              src={art.imageUrl}
+                              alt={art.title}
+                              fill
+                              sizes="(max-width: 768px) 100vw, 50vw"
+                              className={`object-cover transition-all duration-700 ease-out scale-100 group-hover/image:scale-105
                             ${(art.status === "sold" || art.status === "private")
-                              ? "grayscale-[0.2] group-hover/image:grayscale group-hover/image:opacity-40"
-                              : "grayscale-[0.2] group-hover/image:grayscale-0"
-                            }
+                                  ? "grayscale-[0.2] group-hover/image:grayscale group-hover/image:opacity-40"
+                                  : "grayscale-[0.2] group-hover/image:grayscale-0"
+                                }
                           `}
-                        />
-                      </div>
-                    )}
-                  </MuseumFrame>
-
-                  {/* --- STATUS BADGES --- */}
-                  <div className="absolute inset-0 pointer-events-none p-4 md:p-6">
-
-                    {/* SOLD TAG */}
-                    {art.status === "sold" && (
-                      <span className={`
+                            />
+                          </div>
+                        )}
+                      </MuseumFrame>
+                      {/* STATUS BADGES */}
+                      <div className="absolute inset-0 pointer-events-none p-4 md:p-6">
+                        {art.status === "sold" && (
+                          <span className={`
                       absolute inset-0 flex flex-col items-center justify-center z-20
                       opacity-0 group-hover/image:opacity-100 transition-opacity duration-500
                     `}>
-                        <span className="font-serif font-bold italic text-3xl md:text-4xl text-white bg-[#7D1818] shadow-xl -rotate-12 tracking-widest px-6 py-2">
-                          SOLD
-                        </span>
-                        <span className="mt-16 font-sans text-[8px] md:text-xs text-white tracking-[0.2em] uppercase font-medium drop-shadow-md">
-                          Looking for something similar?
-                        </span>
-                      </span>
-                    )}
-
-                    {/* PRICE TAG */}
-                    {art.status === "available" && art.price && (
-                      <span className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-white/95 text-soft-black text-sm md:text-base font-sans tracking-[0.2em] px-6 py-3 opacity-0 group-hover/image:opacity-100 transition-opacity duration-500 backdrop-blur-md shadow-md border border-soft-black/10">
-                        ${art.price.toLocaleString()}
-                      </span>
-                    )}
+                            <span className="font-serif font-bold italic text-3xl md:text-4xl text-white bg-[#7D1818] shadow-xl -rotate-12 tracking-widest px-6 py-2">
+                              SOLD
+                            </span>
+                            <span className="mt-16 font-sans text-[8px] md:text-xs text-white tracking-[0.2em] uppercase font-medium drop-shadow-md">
+                              Looking for something similar?
+                            </span>
+                          </span>
+                        )}
+                        {art.status === "available" && art.price && (
+                          <span className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-white/95 text-soft-black text-sm md:text-base font-sans tracking-[0.2em] px-6 py-3 opacity-0 group-hover/image:opacity-100 transition-opacity duration-500 backdrop-blur-md shadow-md border border-soft-black/10">
+                            ${art.price.toLocaleString()}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <div className="w-full max-w-[85%] md:max-w-[75%] mx-auto relative z-0 mt-8 md:mt-12 flex flex-col items-center text-center">
+                      <MuseumPlaque
+                        title={art.title}
+                        artist={art.artist}
+                        medium={art.material}
+                        dimensions={art.dimensions}
+                        year={art.year}
+                        showButton={true}
+                        className=""
+                      />
+                    </div>
                   </div>
-                </div>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        )}
 
-                {/* 2. THE PLAQUE ZONE (Centered, Kept Compact) */}
-                {/* Mobile: max-w-[85%] (same as before). Desktop: max-w-[75%] */}
-                <div className="w-full max-w-[85%] md:max-w-[75%] mx-auto relative z-0 mt-8 md:mt-12 flex flex-col items-center text-center">
-                  <MuseumPlaque
-                    title={art.title}
-                    artist={art.artist}
-                    medium={art.material}
-                    dimensions={art.dimensions}
-                    year={art.year}
-                    showButton={true}
-                    className=""
-                  />
-                </div>
-
+        {/* VIEW: GRID (JS Masonry - 2 Columns) */}
+        {layout === "grid" && (
+          <div className="max-w-[1800px] mx-auto flex flex-col md:flex-row gap-12 items-start">
+            {/* Split into 2 columns for Desktop Masonry */}
+            {[0, 1].map((colIndex) => (
+              <div key={colIndex} className="flex-1 flex flex-col gap-12 w-full">
+                {artworks
+                  .filter((_, index) => index % 2 === colIndex)
+                  .map((art, index) => (
+                    <motion.div
+                      key={art._id}
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 1 }}
+                      transition={{ duration: 0.8, delay: index * 0.1 }}
+                      viewport={{ once: true, margin: "-50px" }}
+                      className="w-full relative z-10"
+                    >
+                      <Link href={`/artwork/${art.slug}`} className="block cursor-pointer no-underline group/card">
+                        <div className="w-full mx-auto">
+                          <div className="w-full md:max-w-[75%] mx-auto relative group/image">
+                            <MuseumFrame aspectRatio={art.aspectRatio} hasMat={showMat}>
+                              {art.imageUrl && (
+                                <div className="absolute inset-0 w-full h-full">
+                                  <Image
+                                    src={art.imageUrl}
+                                    alt={art.title}
+                                    fill
+                                    sizes="(max-width: 768px) 100vw, 50vw"
+                                    className={`object-cover transition-all duration-700 ease-out scale-100 group-hover/image:scale-105
+                                  ${(art.status === "sold" || art.status === "private")
+                                        ? "grayscale-[0.2] group-hover/image:grayscale group-hover/image:opacity-40"
+                                        : "grayscale-[0.2] group-hover/image:grayscale-0"
+                                      }
+                                `}
+                                  />
+                                </div>
+                              )}
+                            </MuseumFrame>
+                            <div className="absolute inset-0 pointer-events-none p-4 md:p-6">
+                              {art.status === "sold" && (
+                                <span className={`
+                            absolute inset-0 flex flex-col items-center justify-center z-20
+                            opacity-0 group-hover/image:opacity-100 transition-opacity duration-500
+                          `}>
+                                  <span className="font-serif font-bold italic text-3xl md:text-4xl text-white bg-[#7D1818] shadow-xl -rotate-12 tracking-widest px-6 py-2">
+                                    SOLD
+                                  </span>
+                                  <span className="mt-16 font-sans text-[8px] md:text-xs text-white tracking-[0.2em] uppercase font-medium drop-shadow-md">
+                                    Looking for something similar?
+                                  </span>
+                                </span>
+                              )}
+                              {art.status === "available" && art.price && (
+                                <span className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-white/95 text-soft-black text-sm md:text-base font-sans tracking-[0.2em] px-6 py-3 opacity-0 group-hover/image:opacity-100 transition-opacity duration-500 backdrop-blur-md shadow-md border border-soft-black/10">
+                                  ${art.price.toLocaleString()}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                          <div className="w-full max-w-[85%] md:max-w-[75%] mx-auto relative z-0 mt-8 md:mt-12 flex flex-col items-center text-center">
+                            <MuseumPlaque
+                              title={art.title}
+                              artist={art.artist}
+                              medium={art.material}
+                              dimensions={art.dimensions}
+                              year={art.year}
+                              showButton={true}
+                              className=""
+                            />
+                          </div>
+                        </div>
+                      </Link>
+                    </motion.div>
+                  ))}
               </div>
-            </Link>
-          </motion.div>
-        ))}
+            ))}
+          </div>
+        )}
+
       </div >
     </>
   );
