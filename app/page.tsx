@@ -18,6 +18,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "ArtGallery",
