@@ -79,12 +79,12 @@ export function Navbar() {
 
         {/* LOGO */}
         <Link href="/" className="z-50 group pointer-events-auto">
-          <h1 className={`font-serif tracking-[0.3em] relative font-thin transition-all duration-500 ${textColor}
+          <div className={`font-serif tracking-[0.3em] relative font-thin transition-all duration-500 ${textColor}
             ${isScrolled ? "text-xl md:text-2xl" : "text-2xl md:text-3xl"}
           `}>
             SHAKYA
             <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-current transition-all duration-500 group-hover:w-full" />
-          </h1>
+          </div>
         </Link>
 
         {/* DESKTOP LINKS */}
