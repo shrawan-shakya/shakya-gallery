@@ -19,6 +19,15 @@ export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const { scrollY } = useScroll();
 
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+
+  // Dynamic Text Color Logic
+  // Home & Top: White
+  // Scrolled OR Not Home: Soft Black
+  const textColor = (isHome && !isScrolled) ? "text-white" : "text-soft-black";
+  const hoverColor = (isHome && !isScrolled) ? "hover:text-white/70" : "hover:text-gray-500";
+
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious() || 0;
 
@@ -70,7 +79,7 @@ export function Navbar() {
 
         {/* LOGO */}
         <Link href="/" className="z-50 group pointer-events-auto">
-          <h1 className={`font-serif tracking-[0.3em] relative font-thin transition-all duration-500 text-soft-black
+          <h1 className={`font-serif tracking-[0.3em] relative font-thin transition-all duration-500 ${textColor}
             ${isScrolled ? "text-xl md:text-2xl" : "text-2xl md:text-3xl"}
           `}>
             SHAKYA
@@ -79,12 +88,12 @@ export function Navbar() {
         </Link>
 
         {/* DESKTOP LINKS */}
-        <div className="hidden md:flex gap-12 items-center font-thin text-soft-black pointer-events-auto">
+        <div className={`hidden md:flex gap-12 items-center font-thin pointer-events-auto ${textColor}`}>
           {links.map((link) => (
             <Link
               key={link.name}
               href={link.href}
-              className="font-sans text-sm tracking-[0.25em] uppercase hover:text-gray-500 transition-colors"
+              className={`font-sans text-sm tracking-[0.25em] uppercase ${hoverColor} transition-colors`}
             >
               {link.name}
             </Link>
@@ -94,11 +103,11 @@ export function Navbar() {
         {/* MOBILE HAMBURGER */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden z-50 w-8 h-8 flex flex-col justify-center items-end gap-1.5 text-soft-black pointer-events-auto"
+          className={`md:hidden z-50 w-8 h-8 flex flex-col justify-center items-end gap-1.5 pointer-events-auto ${textColor}`}
         >
           <motion.span
             animate={isOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
-            className="w-8 h-[1px] bg-current block"
+            className={`w-8 h-[1px] bg-current block ${isOpen ? "bg-soft-black" : "bg-current"}`}
           />
           <motion.span
             animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
@@ -106,7 +115,7 @@ export function Navbar() {
           />
           <motion.span
             animate={isOpen ? { rotate: -45, y: -6, width: 32 } : { rotate: 0, y: 0, width: 16 }}
-            className="w-4 h-[1px] bg-current block"
+            className={`w-4 h-[1px] bg-current block ${isOpen ? "bg-soft-black" : "bg-current"}`}
           />
         </button>
       </motion.nav>
