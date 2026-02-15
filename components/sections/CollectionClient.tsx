@@ -327,89 +327,91 @@ export function CollectionClient({
             </button>
           </div>
 
-          {/* THE GRID (Masonry) */}
-          <motion.div
-            className={`block transition-all duration-700
-              ${gridCols === 2 ? "md:columns-2 gap-12" : "md:columns-3 gap-8"}
-            `}
-          >
-            <AnimatePresence>
-              {filteredArtworks.map((art) => (
-                <motion.div
-                  key={art._id}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.5 }}
-                  className={`relative z-10 break-inside-avoid block w-full align-top mt-0 ${gridCols === 2 ? "mb-12" : "mb-8"}`}
-                >
-                  <Link href={`/artwork/${art.slug}`} className="block cursor-pointer group/card">
+          {/* THE GRID (JS Masonry) */}
+          <div className="flex gap-8 lg:gap-12 items-start transition-all duration-700">
+            {Array.from({ length: gridCols }).map((_, colIndex) => (
+              <div key={colIndex} className="flex-1 flex flex-col gap-12 lg:gap-16">
+                <AnimatePresence>
+                  {filteredArtworks
+                    .filter((_, index) => index % gridCols === colIndex)
+                    .map((art) => (
+                      <motion.div
+                        key={art._id}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.5 }}
+                        className="relative z-10 w-full"
+                      >
+                        <Link href={`/artwork/${art.slug}`} className="block cursor-pointer group/card">
 
-                    {/* IMAGE FRAME */}
-                    <div className="relative group/image">
-                      <MuseumFrame className="h-auto" hasMat={showMat} aspectRatio={art.aspectRatio}>
-                        {art.imageUrl && (
-                          <Image
-                            src={art.imageUrl}
-                            alt={art.title}
-                            fill
-                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            className={`object-cover transition-all duration-700 ease-out scale-100 group-hover/image:scale-105
+                          {/* IMAGE FRAME */}
+                          <div className="relative group/image">
+                            <MuseumFrame className="h-auto" hasMat={showMat} aspectRatio={art.aspectRatio}>
+                              {art.imageUrl && (
+                                <Image
+                                  src={art.imageUrl}
+                                  alt={art.title}
+                                  fill
+                                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                  className={`object-cover transition-all duration-700 ease-out scale-100 group-hover/image:scale-105
                               ${(art.status === "sold" || art.status === "private")
-                                ? "grayscale-[0.2] group-hover/image:grayscale group-hover/image:opacity-40"
-                                : "grayscale-[0.2] group-hover/image:grayscale-0"
-                              }
+                                      ? "grayscale-[0.2] group-hover/image:grayscale group-hover/image:opacity-40"
+                                      : "grayscale-[0.2] group-hover/image:grayscale-0"
+                                    }
                             `}
-                          />
-                        )}
-                      </MuseumFrame>
+                                />
+                              )}
+                            </MuseumFrame>
 
-                      {/* BADGES */}
-                      <div className="absolute inset-0 pointer-events-none p-6">
-                        {art.status === "sold" && (
-                          <span className={`
+                            {/* BADGES */}
+                            <div className="absolute inset-0 pointer-events-none p-6">
+                              {art.status === "sold" && (
+                                <span className={`
                             absolute inset-0 flex flex-col items-center justify-center z-20
                             opacity-0 group-hover/image:opacity-100 transition-opacity duration-500
                           `}>
-                            <span className="font-serif font-bold italic text-2xl md:text-3xl text-white bg-[#7D1818] shadow-xl -rotate-12 tracking-widest px-5 py-2">
-                              SOLD
-                            </span>
-                            <span className={`mt-16 font-sans text-white tracking-[0.2em] uppercase font-medium drop-shadow-md text-center px-4
+                                  <span className="font-serif font-bold italic text-2xl md:text-3xl text-white bg-[#7D1818] shadow-xl -rotate-12 tracking-widest px-5 py-2">
+                                    SOLD
+                                  </span>
+                                  <span className={`mt-16 font-sans text-white tracking-[0.2em] uppercase font-medium drop-shadow-md text-center px-4
                               ${gridCols === 2 ? "text-[10px]" : "text-[9px] leading-tight"}
                             `}>
-                              Looking for something similar?
-                            </span>
-                          </span>
-                        )}
+                                    Looking for something similar?
+                                  </span>
+                                </span>
+                              )}
 
-                        {art.status === "available" && art.price && (
-                          <span className={`
+                              {art.status === "available" && art.price && (
+                                <span className={`
                              absolute bg-white/95 text-soft-black font-sans tracking-[0.2em] opacity-0 group-hover/image:opacity-100 transition-opacity duration-500 backdrop-blur-md shadow-md border border-soft-black/10 left-1/2 -translate-x-1/2
                              ${gridCols === 2 ? "bottom-8 text-lg px-8 py-4" : "bottom-4 text-sm px-5 py-2.5"}
                            `}>
-                            ${art.price.toLocaleString()}
-                          </span>
-                        )}
-                      </div>
-                    </div>
+                                  ${art.price.toLocaleString()}
+                                </span>
+                              )}
+                            </div>
+                          </div>
 
-                    {/* PLAQUE */}
-                    <div className="mt-8">
-                      <MuseumPlaque
-                        title={art.title}
-                        artist={art.artist}
-                        medium={art.material}
-                        dimensions={art.dimensions}
-                        year={art.year}
-                        showButton={false}
-                      />
-                    </div>
+                          {/* PLAQUE */}
+                          <div className="mt-8">
+                            <MuseumPlaque
+                              title={art.title}
+                              artist={art.artist}
+                              medium={art.material}
+                              dimensions={art.dimensions}
+                              year={art.year}
+                              showButton={false}
+                            />
+                          </div>
 
-                  </Link>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </motion.div>
+                        </Link>
+                      </motion.div>
+                    ))}
+                </AnimatePresence>
+              </div>
+            ))}
+          </div>
 
           {/* EMPTY STATE */}
           {filteredArtworks.length === 0 && (
