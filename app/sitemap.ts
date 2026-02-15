@@ -6,15 +6,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     // 1. Static Pages
     const routes = [
-        "",
-        "/collection",
-        "/contact",
-        "/legacy",
+        { url: "", priority: 1.0, changeFrequency: "weekly" as const },
+        { url: "/collection", priority: 0.9, changeFrequency: "weekly" as const },
+        { url: "/journal", priority: 0.8, changeFrequency: "weekly" as const },
+        { url: "/guide/buying-art", priority: 0.8, changeFrequency: "monthly" as const },
+        { url: "/legacy", priority: 0.7, changeFrequency: "yearly" as const },
+        { url: "/contact", priority: 0.6, changeFrequency: "yearly" as const },
     ].map((route) => ({
-        url: `${baseUrl}${route}`,
+        url: `${baseUrl}${route.url}`,
         lastModified: new Date(),
-        changeFrequency: "monthly" as const,
-        priority: route === "" ? 1 : 0.8,
+        changeFrequency: route.changeFrequency,
+        priority: route.priority,
     }));
 
     // 2. Dynamic Artworks

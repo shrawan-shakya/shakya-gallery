@@ -3,8 +3,8 @@ import { CollectionClient } from "@/components/sections/CollectionClient";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Buy Paintings in Nepal | Curated Collection of Nepali Art",
-  description: "Explore our curated selection of original paintings for sale in Nepal. Authentic Paubha, Thangka, and modern works available for acquisition.",
+  title: "Buy Original Fine Arts | Abstracts, Landscapes & Portraits",
+  description: "Explore our curated collection of fine art paintings. Buy original abstracts, landscapes, portraits, still lifes, and historical scenes from Nepal's finest artists.",
   alternates: {
     canonical: "https://shakyagallery.com/collection",
   },
@@ -50,7 +50,7 @@ export default async function CollectionPage() {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     "name": "Shakya Gallery Collection",
-    "description": "Explore our curated selection of original paintings for sale in Nepal.",
+    "description": "Explore our curated collection of fine art paintings, including abstracts, landscapes, and portraits.",
     "url": "https://shakyagallery.com/collection",
     "numberOfItems": artworks.length,
     "itemListElement": artworks.map((art: any, index: number) => ({

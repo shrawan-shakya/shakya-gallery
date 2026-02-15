@@ -8,8 +8,8 @@ import { AnimatedHero } from "@/components/sections/AnimatedHero";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "SHAKYA | Premier Art Gallery in Nepal - Traditional & Contemporary Masterpieces",
-  description: "Discover the finest collection of Nepalese art at Shakya Gallery. From traditional Paubha to contemporary paintings, buy authenticated masterpieces in Nepal.",
+  title: "SHAKYA | Exclusive Fine Arts Gallery in Nepal - Abstracts, Landscapes & Portraits",
+  description: "Experience the emotion of fine art. Shakya Gallery offers a curated selection of expressive abstracts, serene landscapes, and intimate portraits by Nepal's finest artists.",
   alternates: {
     canonical: "https://shakyagallery.com",
   },
@@ -20,8 +20,9 @@ export default async function Home() {
     "@context": "https://schema.org",
     "@type": "ArtGallery",
     "name": "Shakya Gallery",
-    "image": "https://shakyagallery.com/opengraph-image.png", // We'll need to ensure this exists or use a hero image
-    "description": "Premier Art Gallery in Nepal specializing in traditional Paubha and contemporary masterpieces.",
+    "image": "https://shakyagallery.com/opengraph-image.png",
+    "logo": "https://shakyagallery.com/icon.png",
+    "description": "Exclusive Fine Arts Gallery in Nepal specializing in abstract, landscape, and portrait paintings that capture emotion and beauty.",
     "url": "https://shakyagallery.com",
     "telephone": "+977-9841234567" // Placeholder, user can update
   };

@@ -39,7 +39,7 @@ export default defineType({
       name: 'description',
       title: 'Description',
       type: 'text',
-      description: 'Optional text for SEO pages (e.g. "Browse our collection of Thangka paintings...")',
+      description: 'Optional text for SEO pages (e.g. "Browse our collection of Fine Art paintings...")',
     }),
   ],
 })

@@ -36,11 +36,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   }
 
   return {
-    title: `${art.title} by ${art.artist} | Buy Original Art in Nepal`,
-    description: `Buy ${art.title}, an original artwork by ${art.artist}. ${art.material}, ${art.year}. Available at Shakya Gallery, Nepal's premier art destination.`,
+    title: `${art.title} - Buy Original Nepali Art Online | SHAKYA`,
+    description: `Buy ${art.title}, an original ${art.material} painting by ${art.artist}. ${art.year}. authentic Nepali art for sale with certificate of authenticity.`,
     openGraph: {
-      title: `${art.title} (${art.year}) | SHAKYA Gallery`,
-      description: `View ${art.title} by ${art.artist}. ${art.dimensions}. Available now.`,
+      title: `${art.title} - Buy Original Nepali Art Online | SHAKYA`,
+      description: `Buy ${art.title}, an original ${art.material} painting by ${art.artist}. Available now at Shakya Gallery.`,
       images: [art.imageUrl],
       type: "article",
     },
@@ -73,7 +73,7 @@ export default async function ArtworkPage({
   // JSON-LD for Artwork/Product
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": ["VisualArtwork", "Product"],
+    "@type": ["Product", "VisualArtwork"],
     "name": art.title,
     "image": art.imageUrl,
     "description": art.description,
@@ -81,6 +81,14 @@ export default async function ArtworkPage({
     "brand": {
       "@type": "Brand",
       "name": "Shakya Gallery"
+    },
+    "offers": {
+      "@type": "Offer",
+      "url": `https://shakyagallery.com/artwork/${slug}`,
+      "priceCurrency": "USD",
+      "price": art.price,
+      "availability": isSold ? "https://schema.org/SoldOut" : "https://schema.org/InStock",
+      "itemCondition": "https://schema.org/NewCondition"
     },
     "creator": {
       "@type": "Person",

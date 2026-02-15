@@ -9,3 +9,5 @@ const builder = createImageUrlBuilder({
 export const urlFor = (source: any) => {
   return builder.image(source)
 }
+
+export const urlForImage = urlFor;

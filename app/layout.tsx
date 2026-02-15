@@ -27,11 +27,11 @@ export const metadata: Metadata = {
     default: "SHAKYA | Premier Art Gallery in Nepal",
     template: "%s | SHAKYA Gallery",
   },
-  description: "A luxury archive of Himalayan art. Discover authentic Paubha paintings and masterpieces from Nepal's most revered artists.",
-  keywords: ["Nepal Art", "Paubha", "Thangka", "Buy Art Nepal", "Kathmandu Art Gallery", "Nepali Paintings", "Traditional Art"],
+  description: "Browse a curated collection of fine art paintings that capture emotion and beauty. Discover expressive abstracts, serene landscapes, intimate portraits, and powerful storytelling scenes.",
+  keywords: ["Fine Art Nepal", "Abstract Paintings", "Landscape Art", "Portrait Paintings", "Still Life", "Historical Art", "Expressive Art", "Buy Original Art Online", "Nepali Artists"],
   openGraph: {
-    title: "SHAKYA | Premier Art Gallery in Nepal",
-    description: "A luxury archive of Himalayan art. Discover authentic Paubha paintings and masterpieces from Nepal's most revered artists.",
+    title: "SHAKYA | Exclusive Fine Arts Gallery in Nepal",
+    description: "Browse a curated collection of fine art paintings that capture emotion and beauty. Discover expressive abstracts, serene landscapes, and intimate portraits.",
     url: "https://shakyagallery.com",
     siteName: "Shakya Gallery",
     locale: "en_US",
@@ -50,8 +50,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "SHAKYA | Premier Art Gallery in Nepal",
-    description: "A luxury archive of Himalayan art. Discover authentic Paubha paintings and masterpieces from Nepal's most revered artists.",
+    title: "SHAKYA | Exclusive Fine Arts Gallery in Nepal",
+    description: "Browse a curated collection of fine art paintings that capture emotion and beauty. Capturing emotion through expressive abstracts, landscapes, and portraits.",
     creator: "@shakyagallery", // Placeholder
     images: ["https://shakyagallery.com/opengraph-image.png"], // Placeholder
   },
