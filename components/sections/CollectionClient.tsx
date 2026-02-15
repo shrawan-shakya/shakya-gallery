@@ -329,8 +329,8 @@ export function CollectionClient({
 
           {/* THE GRID (Masonry) */}
           <motion.div
-            className={`block gap-8 space-y-8 transition-all duration-700
-              ${gridCols === 2 ? "md:columns-2 gap-12 space-y-12" : "md:columns-3 gap-8 space-y-8"}
+            className={`block transition-all duration-700
+              ${gridCols === 2 ? "md:columns-2 gap-12" : "md:columns-3 gap-8"}
             `}
           >
             <AnimatePresence>
@@ -342,7 +342,7 @@ export function CollectionClient({
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.5 }}
-                  className="relative z-0 break-inside-avoid mb-8"
+                  className={`relative z-0 break-inside-avoid ${gridCols === 2 ? "mb-12" : "mb-8"}`}
                 >
                   <Link href={`/artwork/${art.slug}`} className="block cursor-pointer group/card">
 

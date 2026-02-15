@@ -91,7 +91,7 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
         className={cn(
           "mx-auto items-start px-6 pb-40 transition-all duration-700 ease-in-out",
           layout === "grid"
-            ? "max-w-[1800px] block columns-1 md:columns-2 gap-12 space-y-12"
+            ? "max-w-[1800px] block columns-1 md:columns-2 gap-12"
             : "max-w-[800px] grid grid-cols-1 gap-y-32 md:gap-y-48"
         )}
       >
