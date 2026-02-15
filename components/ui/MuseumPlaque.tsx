@@ -29,7 +29,7 @@ export function MuseumPlaque({
         "border-[0.5px] border-[#D8D8D8]",
         "shadow-[0_10px_25px_rgba(0,0,0,0.06)]",
         // UPDATED: Compact Design
-        "px-8 py-6 w-full max-w-[300px]",
+        "px-2 py-3 md:px-8 md:py-6 w-full max-w-[140px] md:max-w-[300px]",
         "overflow-hidden isolation-auto backface-hidden",
         className
       )}
@@ -49,33 +49,33 @@ export function MuseumPlaque({
       <div className="relative z-10 flex flex-col items-center gap-1.5">
 
         {/* Artist */}
-        <h3 className="font-sans text-[10px] tracking-[0.45em] uppercase text-[#999999] font-semibold whitespace-nowrap">
+        <h3 className="font-sans text-[8px] md:text-[10px] tracking-[0.2em] md:tracking-[0.45em] uppercase text-[#999999] font-semibold whitespace-nowrap">
           {artist}
         </h3>
 
         {/* Title */}
-        <h1 className="font-serif text-xl text-[#1A1A1A] font-bold italic leading-none my-0.5">
+        <h1 className="font-serif text-sm md:text-xl text-[#1A1A1A] font-bold italic leading-none my-0.5">
           {title}
         </h1>
 
         {/* Medium */}
-        <p className="font-sans text-[10px] tracking-[0.2em] uppercase text-[#666666] font-light">
+        <p className="font-sans text-[8px] md:text-[10px] tracking-[0.1em] md:tracking-[0.2em] uppercase text-[#666666] font-light">
           {medium}
         </p>
 
         {/* Separator */}
-        <div className="w-[30px] h-[0.5px] bg-[#CCCCCC] my-1" />
+        <div className="w-[15px] md:w-[30px] h-[0.5px] bg-[#CCCCCC] my-1" />
 
         {/* Year */}
-        <p className="font-sans text-[10px] tracking-[0.2em] uppercase text-[#666666] font-light">
+        <p className="font-sans text-[8px] md:text-[10px] tracking-[0.1em] md:tracking-[0.2em] uppercase text-[#666666] font-light">
           {dimensions ? `${dimensions} • ` : ""}{year}
         </p>
 
         {/* Button */}
         {showButton && (
-          <button className="mt-4 px-8 py-2 border border-[#1A1A1A]/20 hover:border-[#003153] hover:bg-[#003153] hover:text-white transition-all duration-300 bg-transparent group/btn w-full flex items-center justify-center">
-            <span className="font-sans text-xs tracking-[0.25em] uppercase text-[#1A1A1A] group-hover/btn:text-white transition-colors font-medium ml-1">
-              Private Inquiry
+          <button className="mt-2 md:mt-4 px-4 py-1 md:px-8 md:py-2 border border-[#1A1A1A]/20 hover:border-[#003153] hover:bg-[#003153] hover:text-white transition-all duration-300 bg-transparent group/btn w-full flex items-center justify-center">
+            <span className="font-sans text-[8px] md:text-xs tracking-[0.15em] md:tracking-[0.25em] uppercase text-[#1A1A1A] group-hover/btn:text-white transition-colors font-medium ml-1">
+              Inquire
             </span>
           </button>
         )}

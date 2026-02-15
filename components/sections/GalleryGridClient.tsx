@@ -164,10 +164,10 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
 
         {/* VIEW: GRID (JS Masonry - 2 Columns) */}
         {layout === "grid" && (
-          <div className="max-w-[1800px] mx-auto flex flex-col md:flex-row gap-12 items-start">
+          <div className="max-w-[1800px] mx-auto flex flex-row gap-4 md:gap-12 items-start">
             {/* Split into 2 columns for Desktop Masonry */}
             {[0, 1].map((colIndex) => (
-              <div key={colIndex} className="flex-1 flex flex-col gap-12 w-full">
+              <div key={colIndex} className="flex-1 flex flex-col gap-4 md:gap-12 w-full">
                 {artworks
                   .filter((_, index) => index % 2 === colIndex)
                   .map((art, index) => (
