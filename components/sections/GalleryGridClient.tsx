@@ -144,7 +144,7 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                         )}
                       </div>
                     </div>
-                    <div className="w-full max-w-[85%] md:max-w-[75%] mx-auto relative z-0 mt-8 md:mt-12 flex flex-col items-center text-center">
+                    <div className="w-full md:max-w-[75%] mx-auto relative z-0 mt-8 md:mt-12 flex flex-col items-center text-center">
                       <MuseumPlaque
                         title={art.title}
                         artist={art.artist}
@@ -221,7 +221,7 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                               )}
                             </div>
                           </div>
-                          <div className="w-full max-w-[85%] md:max-w-[75%] mx-auto relative z-0 mt-8 md:mt-12 flex flex-col items-center text-center">
+                          <div className="w-full md:max-w-[75%] mx-auto relative z-0 mt-8 md:mt-12 flex flex-col items-center text-center">
                             <MuseumPlaque
                               title={art.title}
                               artist={art.artist}

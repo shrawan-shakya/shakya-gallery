@@ -28,8 +28,8 @@ export function MuseumPlaque({
         "bg-[linear-gradient(135deg,#F8F8F8_0%,#FFFFFF_50%,#EBEBEB_100%)]",
         "border-[0.5px] border-[#D8D8D8]",
         "shadow-[0_10px_25px_rgba(0,0,0,0.06)]",
-        // UPDATED: Compact Design
-        "px-2 py-3 md:px-8 md:py-6 w-full max-w-[140px] md:max-w-[300px]",
+        // UPDATED: Adaptive Width (Mobile) / Constrained (Desktop)
+        "px-2 py-3 md:px-8 md:py-6 w-full md:max-w-[300px]",
         "overflow-hidden isolation-auto backface-hidden",
         className
       )}
