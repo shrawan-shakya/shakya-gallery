@@ -13,7 +13,8 @@ export default function ContactPage() {
     name: "",
     email: "",
     message: "",
-    interest: "Acquiring Art" // Default interest
+    interest: "Acquiring Art", // Default interest
+    _honey: "" // Anti-spam honeypot
   });
 
   // --- HANDLE INPUT CHANGES ---
@@ -40,7 +41,7 @@ export default function ContactPage() {
 
       if (result.success) {
         setIsSuccess(true);
-        setFormData({ name: "", email: "", message: "", interest: "Acquiring Art" }); // Clear form
+        setFormData({ name: "", email: "", message: "", interest: "Acquiring Art", _honey: "" }); // Clear form
       } else {
         alert("Something went wrong. Please try again.");
       }
@@ -137,6 +138,17 @@ export default function ContactPage() {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {/* HONEYPOT (Hidden) */}
+                <div className="hidden">
+                  <input
+                    name="_honey"
+                    value={(formData as any)._honey}
+                    onChange={handleChange}
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
+                </div>
+
                 <div className="space-y-2">
                   <label className="font-sans text-[10px] tracking-[0.2em] text-gray-400 uppercase">Name</label>
                   <input

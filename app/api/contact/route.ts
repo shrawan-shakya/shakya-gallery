@@ -2,10 +2,33 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { ContactEmail } from '@/components/emails/ContactEmail';
+import { z } from 'zod';
+
+// Validation Schema
+const ContactSchema = z.object({
+    name: z.string().min(1, "Name is required"),
+    email: z.string().email("Invalid email"),
+    message: z.string().min(1, "Message is required"),
+    interest: z.string().optional(),
+    _honey: z.string().optional(),
+});
 
 export async function POST(request: Request) {
     try {
-        const { name, email, interest, message } = await request.json();
+        const body = await request.json();
+
+        // 1. SPAM CHECK
+        if (body._honey) {
+            return NextResponse.json({ success: true, message: 'Message sent successfully' });
+        }
+
+        // 2. VALIDATION
+        const result = ContactSchema.safeParse(body);
+        if (!result.success) {
+            return NextResponse.json({ success: false, message: 'Invalid Input' }, { status: 400 });
+        }
+
+        const { name, email, interest, message } = result.data;
 
         // Retrieve Resend API Key
         const resendApiKey = process.env.RESEND_API_KEY;

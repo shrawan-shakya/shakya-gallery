@@ -40,6 +40,7 @@ export function ArtworkInquiry({ artwork, isSold = false }: { artwork: any, isSo
   const [country, setCountry] = useState("");
 
   const [file, setFile] = useState<File | null>(null);
+  const [honeypot, setHoneypot] = useState(""); // Anti-spam field
 
   const countryCodes = [
     { code: "+977", iso: "NP", country: "Nepal" },
@@ -89,6 +90,12 @@ export function ArtworkInquiry({ artwork, isSold = false }: { artwork: any, isSo
       ${country}
     `;
     formData.append("Shipping Address", fullAddress);
+
+    // HONEYPOT (Spam Protection)
+    // If this field is filled, the backend will reject it silently.
+    if (honeypot) {
+      formData.append("_honey", honeypot);
+    }
 
     if (file) {
       formData.append("Virtual Preview", file);
@@ -214,6 +221,18 @@ export function ArtworkInquiry({ artwork, isSold = false }: { artwork: any, isSo
 
                     {/* FIELDS */}
                     <div className="space-y-6">
+
+                      {/* HONEYPOT (Hidden from humans) */}
+                      <div className="hidden">
+                        <input
+                          type="text"
+                          name="_honey"
+                          value={honeypot}
+                          onChange={(e) => setHoneypot(e.target.value)}
+                          tabIndex={-1}
+                          autoComplete="off"
+                        />
+                      </div>
 
                       {/* Name & Email */}
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

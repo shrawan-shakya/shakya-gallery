@@ -19,16 +19,26 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: route.priority,
     }));
 
-    // 2. Dynamic Artworks
-    const query = `*[_type == "artwork"] { "slug": slug.current, _updatedAt }`;
-    const artworks = await client.fetch(query);
+    // 2. Dynamic Content (Artworks & Journal)
+    const query = `{
+        "artworks": *[_type == "artwork"] { "slug": slug.current, _updatedAt },
+        "articles": *[_type == "article"] { "slug": slug.current, _updatedAt }
+    }`;
+    const data = await client.fetch(query);
 
-    const artworkRoutes = artworks.map((art: any) => ({
+    const artworkRoutes = data.artworks.map((art: any) => ({
         url: `${baseUrl}/artwork/${art.slug}`,
         lastModified: new Date(art._updatedAt),
         changeFrequency: "weekly" as const,
         priority: 0.9,
     }));
 
-    return [...routes, ...artworkRoutes];
+    const articleRoutes = data.articles.map((post: any) => ({
+        url: `${baseUrl}/journal/${post.slug}`,
+        lastModified: new Date(post._updatedAt),
+        changeFrequency: "monthly" as const,
+        priority: 0.8,
+    }));
+
+    return [...routes, ...artworkRoutes, ...articleRoutes];
 }

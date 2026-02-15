@@ -28,7 +28,8 @@
     "sanity": "^4.22.0",
     "styled-components": "^6.3.8",
     "tailwind-merge": "^2.6.1",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@types/node": "^20.19.33",
