@@ -115,7 +115,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                                             transition={{ delay: i * 0.05 }}
                                         >
                                             <Link
-                                                href={`/collection/${art.slug.current}`}
+                                                href={`/artwork/${art.slug.current}`}
                                                 onClick={onClose}
                                                 className="group flex gap-4 items-start"
                                             >
