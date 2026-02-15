@@ -336,11 +336,10 @@ export function CollectionClient({
             <AnimatePresence>
               {filteredArtworks.map((art) => (
                 <motion.div
-                  layout
                   key={art._id}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
                   transition={{ duration: 0.5 }}
                   className={`relative z-10 break-inside-avoid block w-full align-top mt-0 ${gridCols === 2 ? "mb-12" : "mb-8"}`}
                 >
