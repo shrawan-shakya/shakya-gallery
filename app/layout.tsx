@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond, Montserrat } from "next/font/google";
 import "./globals.css";
 import { ClientLayout } from "@/components/layout/ClientLayout";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 // 1. The Elegant Serif (Headings)
 const cormorant = Cormorant_Garamond({
@@ -50,11 +51,10 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "SHAKYA | Exclusive Fine Arts Gallery in Nepal",
     description: "Browse a curated collection of fine art paintings that capture emotion and beauty. Capturing emotion through expressive abstracts, landscapes, and portraits.",
-    creator: "@shakyagallery", // Placeholder
-    images: ["https://shakyagallery.com/opengraph-image.png"], // Placeholder
+    images: ["/hero-1.jpg"], // Fallback to hero image
   },
   verification: {
-    google: "google-site-verification=YOUR_CODE", // Placeholder
+    google: "zko8TNCFd-4MtnBqeyTU14V1ox8YIOvl3LsNg2Z0FlE",
   },
 };
 
@@ -70,6 +70,7 @@ export default function RootLayout({
         <ClientLayout>
           {children}
         </ClientLayout>
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID || ""} />
       </body>
     </html>
   );
