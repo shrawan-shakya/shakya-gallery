@@ -22,7 +22,7 @@ export function MuseumFrame({
       {...props}
     >
       {/* 1. The Outer Frame (Ebony Gradient + Bevel) */}
-      <div className="relative w-full flex-1 flex flex-col p-[12px] md:p-[22px]
+      <div className="relative w-full flex-1 flex flex-col p-[8px] md:p-[22px]
         bg-gradient-to-br from-[#2d2d2d] via-[#111111] to-[#050505]
         shadow-[0_15px_30px_rgba(0,0,0,0.5),inset_1px_1px_0px_rgba(255,255,255,0.15),inset_-1px_-1px_0px_rgba(0,0,0,0.5)]"
       >
@@ -35,7 +35,7 @@ export function MuseumFrame({
           {/* 3. The Matting (With Deep Inner Shadow) */}
           <div className={cn(
             "relative flex-1 flex flex-col transition-all duration-300",
-            hasMat ? "bg-[#FCFCFC] p-[12px] md:p-[20px] shadow-[inset_0_0_15px_rgba(0,0,0,0.4)]" : "bg-transparent p-0"
+            hasMat ? "bg-[#FCFCFC] p-[4px] md:p-[20px] shadow-[inset_0_0_15px_rgba(0,0,0,0.4)]" : "bg-transparent p-0"
           )}>
 
             {/* 4. Artwork Container (With Bevel Shadow) */}
