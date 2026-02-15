@@ -46,7 +46,7 @@ export default function BuyingGuidePage() {
                         text={
                             <>
                                 Begin by exploring our digital collection. When a piece speaks to you—whether an expressive abstract or a serene landscape—read its story. Art is personal; trust your instinct. {" "}
-                                <Link href="/journal/how-to-choose-art" className="underline hover:text-soft-black transition-colors">
+                                <Link href="/coming-soon" className="underline hover:text-soft-black transition-colors">
                                     Read our guide on how to choose art.
                                 </Link>
                             </>

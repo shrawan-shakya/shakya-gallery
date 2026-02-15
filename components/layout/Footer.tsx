@@ -127,14 +127,14 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <span className="font-serif text-lg text-white/40 cursor-not-allowed" title="Coming Soon">
+                <Link href="/coming-soon" className="font-serif text-lg text-white/40 hover:text-white hover:italic transition-all">
                   Exhibitions
-                </span>
+                </Link>
               </li>
               <li>
-                <span className="font-serif text-lg text-white/40 cursor-not-allowed" title="Coming Soon">
+                <Link href="/coming-soon" className="font-serif text-lg text-white/40 hover:text-white hover:italic transition-all">
                   Viewing Rooms
-                </span>
+                </Link>
               </li>
             </ul>
           </div >
@@ -145,9 +145,9 @@ export function Footer() {
             <ul className="space-y-4">
               {["Advisory", "Valuation", "Consignment", "Logistics"].map((item) => (
                 <li key={item}>
-                  <span className="font-serif text-lg text-white/40 cursor-not-allowed" title="Private Service Only">
+                  <Link href="/coming-soon" className="font-serif text-lg text-white/40 hover:text-white hover:italic transition-all">
                     {item}
-                  </span>
+                  </Link>
                 </li>
               ))}
             </ul>
