@@ -131,7 +131,7 @@ export function Navbar() {
             className="w-8 h-8 flex flex-col justify-center items-end gap-1.5"
           >
             <motion.span
-              animate={isOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
+              animate={isOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
               className={`w-8 h-[1px] bg-current block ${isOpen ? "bg-soft-black" : "bg-current"}`}
             />
             <motion.span
@@ -139,7 +139,7 @@ export function Navbar() {
               className="w-6 h-[1px] bg-current block"
             />
             <motion.span
-              animate={isOpen ? { rotate: -45, y: -6, width: 32 } : { rotate: 0, y: 0, width: 16 }}
+              animate={isOpen ? { rotate: -45, y: -8, width: 32 } : { rotate: 0, y: 0, width: 16 }}
               className={`w-4 h-[1px] bg-current block ${isOpen ? "bg-soft-black" : "bg-current"}`}
             />
           </button>

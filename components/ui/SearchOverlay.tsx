@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Search as SearchIcon, ArrowRight, Loader2 } from "lucide-react";
+import { Search as SearchIcon, ArrowRight, Loader2 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
@@ -71,9 +71,10 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                     <div className="flex justify-end p-6 md:p-12">
                         <button
                             onClick={onClose}
-                            className="p-2 rounded-full hover:bg-black/5 transition-colors group"
+                            className="w-8 h-8 flex items-center justify-center relative group"
                         >
-                            <X className="w-8 h-8 text-soft-black group-hover:rotate-90 transition-transform duration-300" />
+                            <span className="absolute w-8 h-[1px] bg-soft-black rotate-45 transition-colors duration-300 group-hover:bg-soft-black/60" />
+                            <span className="absolute w-8 h-[1px] bg-soft-black -rotate-45 transition-colors duration-300 group-hover:bg-soft-black/60" />
                         </button>
                     </div>
 
