@@ -13,7 +13,7 @@ export function HeritagePreview() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="font-sans text-[10px] md:text-xs tracking-[0.3em] text-primary uppercase mb-8 font-bold"
+          className="font-sans text-[10px] md:text-xs tracking-[0.3em] text-primary uppercase mb-8 font-medium"
         >
           Our Heritage
         </motion.p>

@@ -30,7 +30,7 @@ export async function GalleryGrid({ limit }: { limit?: number }) {
 
       {/* 2. THE HEADER */}
       <div className="max-w-4xl mx-auto text-center flex flex-col items-center mb-24 md:mb-32">
-        <p className="font-sans text-[8px] md:text-xs tracking-[0.3em] text-gray-400 uppercase mb-8 font-medium">
+        <p className="font-sans text-[10px] md:text-xs tracking-[0.3em] text-gray-400 uppercase mb-8 font-medium">
           The Collection
         </p>
         <h2 className="font-serif text-4xl md:text-6xl tracking-[0.1em] text-soft-black leading-tight mb-8">

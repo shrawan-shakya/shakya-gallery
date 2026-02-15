@@ -71,7 +71,7 @@ export function Navbar() {
         // 3. pointer-events-none: Allows clicking THROUGH the transparent navbar
         className={`fixed top-0 left-0 right-0 z-50 px-6 md:px-12 flex justify-between items-center w-full transition-all duration-500 ease-in-out pointer-events-none
           ${isScrolled
-            ? "py-4 bg-[#FDFCF8] border-b border-black/5 shadow-sm" // Scrolled: Solid & Compact
+            ? "py-4 bg-bone border-b border-black/5 shadow-sm" // Scrolled: Solid & Compact
             : "py-6 md:py-10 bg-transparent border-none shadow-none" // Top: Invisible Background
           }
         `}
@@ -128,7 +128,7 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: "-100%" }}
             transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
-            className="fixed inset-0 bg-[#FDFCF8] z-40 flex flex-col justify-center items-center"
+            className="fixed inset-0 bg-bone z-40 flex flex-col justify-center items-center"
           >
             <div className="flex flex-col gap-8 text-center">
               {links.map((link, i) => (

@@ -2,6 +2,8 @@ import { client } from "@/sanity/lib/client";
 import { HeritagePreview } from "@/components/sections/HeritagePreview";
 import { GalleryGrid } from "@/components/sections/GalleryGrid";
 import { AnimatedHero } from "@/components/sections/AnimatedHero";
+import { WhyBuy } from "@/components/sections/WhyBuy";
+import { FAQ } from "@/components/sections/FAQ";
 
 
 
@@ -9,7 +11,7 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "SHAKYA | Exclusive Fine Arts Gallery in Nepal - Abstracts, Landscapes & Portraits",
-  description: "Experience the emotion of fine art. Shakya Gallery offers a curated selection of expressive abstracts, serene landscapes, and intimate portraits by Nepal's finest artists.",
+  description: "Fine art from Kathmandu. Explore expressive abstracts, serene landscapes, and intimate portraits by Nepal’s finest local artists.",
   alternates: {
     canonical: "https://shakyagallery.com",
   },
@@ -44,6 +46,10 @@ export default async function Home() {
       <section className="min-h-screen w-full bg-bone pt-20">
         <GalleryGrid limit={6} />
       </section>
+
+      <WhyBuy />
+
+      <FAQ />
     </div>
   );
 }

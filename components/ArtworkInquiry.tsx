@@ -126,7 +126,7 @@ export function ArtworkInquiry({ artwork, isSold = false }: { artwork: any, isSo
       {/* 1. THE TRIGGER BUTTON */}
       <button
         onClick={() => setIsOpen(true)}
-        className="group w-full md:w-auto inline-flex items-center justify-center gap-4 px-8 py-4 bg-soft-black text-white hover:bg-gray-800 transition-all duration-300 cursor-pointer shadow-lg hover:shadow-xl"
+        className="group w-full md:w-auto inline-flex items-center justify-center gap-4 px-8 py-4 bg-soft-black text-white hover:bg-black transition-all duration-300 cursor-pointer shadow-lg hover:shadow-xl"
       >
         <span className="font-sans text-xs tracking-[0.3em] uppercase">
           {isSold ? "Contact Concierge" : "Inquire to Acquire"}
@@ -299,7 +299,7 @@ export function ArtworkInquiry({ artwork, isSold = false }: { artwork: any, isSo
 
                     </div>
 
-                    <button type="submit" disabled={isSubmitting} className="w-full bg-soft-black text-white py-4 font-sans text-xs tracking-[0.2em] uppercase hover:bg-gray-800 transition-colors disabled:opacity-50">
+                    <button type="submit" disabled={isSubmitting} className="w-full bg-soft-black text-white py-4 font-sans text-xs tracking-[0.2em] uppercase hover:bg-black transition-colors disabled:opacity-50">
                       {isSubmitting ? "Processing..." : "Submit Inquiry"}
                     </button>
 
