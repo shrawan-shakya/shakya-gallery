@@ -73,8 +73,8 @@ export function MuseumPlaque({
 
         {/* Button */}
         {showButton && (
-          <button className="mt-2 md:mt-4 px-4 py-1 md:px-8 md:py-2 border border-soft-black/20 hover:border-soft-black hover:bg-soft-black hover:text-white transition-all duration-300 bg-transparent group/btn w-full flex items-center justify-center">
-            <span className="font-sans text-[8px] md:text-xs tracking-[0.15em] md:tracking-[0.25em] uppercase text-soft-black group-hover/btn:text-white transition-colors font-medium ml-1">
+          <button className="mt-2 md:mt-4 px-4 py-1 md:px-6 md:py-1.5 border border-soft-black/20 hover:border-soft-black hover:bg-soft-black hover:text-white transition-all duration-300 bg-transparent group/btn w-auto min-w-[100px] flex items-center justify-center mx-auto">
+            <span className="font-sans text-[8px] md:text-[10px] tracking-[0.15em] md:tracking-[0.2em] uppercase text-soft-black group-hover/btn:text-white transition-colors font-medium ml-1">
               Inquire
             </span>
           </button>

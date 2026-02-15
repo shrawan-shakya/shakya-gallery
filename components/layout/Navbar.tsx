@@ -119,10 +119,10 @@ export function Navbar() {
           {/* SEARCH ICON (Mobile) */}
           <button
             onClick={() => setIsSearchOpen(true)}
-            className="p-1"
+            className="w-8 h-8 flex items-center justify-center"
             aria-label="Search"
           >
-            <Search className="w-6 h-6" />
+            <Search className="w-5 h-5" />
           </button>
 
           {/* HAMBURGER */}
