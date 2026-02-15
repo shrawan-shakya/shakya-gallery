@@ -11,7 +11,7 @@ interface MuseumFrameProps extends React.HTMLAttributes<HTMLDivElement> {
 export function MuseumFrame({
   children,
   className,
-  aspectRatio,
+  aspectRatio = 1,
   hasMat = true,
   ...props
 }: MuseumFrameProps) {
