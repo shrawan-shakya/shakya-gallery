@@ -4,6 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 import { useState, useEffect } from "react";
+import { Search } from "lucide-react";
+import { SearchOverlay } from "@/components/ui/SearchOverlay";
 
 const links = [
   { name: "Collection", href: "/collection" },
@@ -15,6 +17,7 @@ const links = [
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { scrollY } = useScroll();
@@ -48,15 +51,17 @@ export function Navbar() {
   });
 
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen || isSearchOpen) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
     }
-  }, [isOpen]);
+  }, [isOpen, isSearchOpen]);
 
   return (
     <>
+      <SearchOverlay isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+
       <motion.nav
         variants={{
           visible: { y: 0 },
@@ -98,26 +103,47 @@ export function Navbar() {
               {link.name}
             </Link>
           ))}
+
+          {/* SEARCH ICON (Desktop) */}
+          <button
+            onClick={() => setIsSearchOpen(true)}
+            className={`${hoverColor} transition-colors`}
+            aria-label="Search"
+          >
+            <Search className="w-5 h-5" />
+          </button>
         </div>
 
-        {/* MOBILE HAMBURGER */}
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className={`md:hidden z-50 w-8 h-8 flex flex-col justify-center items-end gap-1.5 pointer-events-auto ${textColor}`}
-        >
-          <motion.span
-            animate={isOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
-            className={`w-8 h-[1px] bg-current block ${isOpen ? "bg-soft-black" : "bg-current"}`}
-          />
-          <motion.span
-            animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
-            className="w-6 h-[1px] bg-current block"
-          />
-          <motion.span
-            animate={isOpen ? { rotate: -45, y: -6, width: 32 } : { rotate: 0, y: 0, width: 16 }}
-            className={`w-4 h-[1px] bg-current block ${isOpen ? "bg-soft-black" : "bg-current"}`}
-          />
-        </button>
+        {/* MOBILE CONTROLS */}
+        <div className={`md:hidden z-50 flex items-center gap-6 pointer-events-auto ${textColor}`}>
+          {/* SEARCH ICON (Mobile) */}
+          <button
+            onClick={() => setIsSearchOpen(true)}
+            className="p-1"
+            aria-label="Search"
+          >
+            <Search className="w-6 h-6" />
+          </button>
+
+          {/* HAMBURGER */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="w-8 h-8 flex flex-col justify-center items-end gap-1.5"
+          >
+            <motion.span
+              animate={isOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
+              className={`w-8 h-[1px] bg-current block ${isOpen ? "bg-soft-black" : "bg-current"}`}
+            />
+            <motion.span
+              animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
+              className="w-6 h-[1px] bg-current block"
+            />
+            <motion.span
+              animate={isOpen ? { rotate: -45, y: -6, width: 32 } : { rotate: 0, y: 0, width: 16 }}
+              className={`w-4 h-[1px] bg-current block ${isOpen ? "bg-soft-black" : "bg-current"}`}
+            />
+          </button>
+        </div>
       </motion.nav>
 
       {/* MOBILE MENU (Matches Bone Color) */}
