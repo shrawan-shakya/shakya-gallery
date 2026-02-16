@@ -10,7 +10,7 @@ import { FAQ } from "@/components/sections/FAQ";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "SHAKYA | Exclusive Fine Arts Gallery in Nepal - Abstracts, Landscapes & Portraits",
+  title: "SHAKYA | Exclusive Fine Art Gallery in Kathmandu, Nepal",
   description: "Fine art from Kathmandu. Explore expressive abstracts, serene landscapes, and intimate portraits by Nepal’s finest local artists.",
   alternates: {
     canonical: "https://shakyagallery.com",
