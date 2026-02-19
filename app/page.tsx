@@ -10,8 +10,8 @@ import { FAQ } from "@/components/sections/FAQ";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "SHAKYA | Exclusive Fine Art Gallery in Kathmandu, Nepal",
-  description: "Fine art from Kathmandu. Explore expressive abstracts, serene landscapes, and intimate portraits by Nepal’s finest local artists.",
+  title: "SHAKYA | Buy Original Art in Nepal | Premier Art Gallery Kathmandu",
+  description: "Experience the legacy of fine art in Nepal. Buy original abstract, landscape, and portrait paintings from Kathmandu's leading art gallery. Certified authenticity and global shipping.",
   alternates: {
     canonical: "https://shakyagallery.com",
   },
@@ -23,11 +23,25 @@ export default async function Home() {
     "@context": "https://schema.org",
     "@type": "ArtGallery",
     "name": "Shakya Gallery",
-    "image": "https://shakyagallery.com/opengraph-image.png",
+    "image": "https://shakyagallery.com/hero-1.jpg",
     "logo": "https://shakyagallery.com/icon.png",
-    "description": "Exclusive Fine Arts Gallery in Nepal specializing in abstract, landscape, and portrait paintings that capture emotion and beauty.",
+    "description": "Exclusive Fine Arts Gallery in Nepal specializing in abstract, landscape, and portrait paintings. Established in 1998, we represent master Nepali artists.",
     "url": "https://shakyagallery.com",
-    "telephone": "+977-9841234567" // Placeholder, user can update
+    "telephone": "+977-9801234567",
+    "priceRange": "$$$",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Boudha",
+      "addressLocality": "Kathmandu",
+      "addressRegion": "Bagmati",
+      "postalCode": "44600",
+      "addressCountry": "NP"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "27.7215",
+      "longitude": "85.3620"
+    }
   };
 
   return (

@@ -109,7 +109,7 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                           <div className="absolute inset-0 w-full h-full">
                             <Image
                               src={art.imageUrl}
-                              alt={art.title}
+                              alt={`Buy ${art.title} - Original Nepali fine art at Shakya Gallery`}
                               fill
                               sizes="(max-width: 768px) 100vw, 50vw"
                               className={`object-cover transition-all duration-700 ease-out scale-100 group-hover/image:scale-105

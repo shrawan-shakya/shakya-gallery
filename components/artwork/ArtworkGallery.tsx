@@ -53,7 +53,7 @@ export function ArtworkGallery({ mainImage, relatedImages, title }: ArtworkGalle
                                 >
                                     <Image
                                         src={currentImage.url}
-                                        alt={`${title} - view ${currentIndex + 1}`}
+                                        alt={`Buy ${title} - View of original painting at Shakya Gallery Nepal`}
                                         fill
                                         className="object-cover"
                                         priority

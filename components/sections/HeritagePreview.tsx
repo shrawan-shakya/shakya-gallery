@@ -43,7 +43,6 @@ export function HeritagePreview() {
           </p>
         </motion.div>
 
-        {/* 4. The Body Text (Sans Serif) */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -52,7 +51,7 @@ export function HeritagePreview() {
           className="max-w-3xl"
         >
           <p className="font-sans text-sm md:text-lg leading-loose text-gray-800 font-light">
-            Established in 1998 as the Mountain Art Gallery, our transition to the Shakya digital platform marks a significant new era. We have dedicated more than twenty-five years to the curation of Nepalese artistry, moving from a local physical shop in Kathmandu to an international stage. Today, SHAKYA continues to represent the profound masters of Nepalese art, ensuring their legacy is preserved and recognized by collectors worldwide.
+            Established in 1998 as the Mountain Art Gallery, our transition to the Shakya digital platform marks a significant new era for our Kathmandu art gallery. We have dedicated more than twenty-five years to the curation of Nepalese artistry, moving from a local physical shop in Kathmandu to an international stage. Today, SHAKYA continues to represent the profound masters of Nepalese art, ensuring their legacy is preserved and recognized by collectors worldwide.
           </p>
         </motion.div>
 

@@ -23,11 +23,11 @@ const montserrat = Montserrat({
 export const metadata: Metadata = {
   metadataBase: new URL("https://shakyagallery.com"),
   title: {
-    default: "SHAKYA | Premier Art Gallery in Nepal",
-    template: "%s | SHAKYA Gallery",
+    default: "SHAKYA | Buy Original Fine Art in Nepal | Art Gallery Kathmandu",
+    template: "%s | SHAKYA Gallery Nepal",
   },
-  description: "Browse a curated collection of fine art paintings that capture emotion and beauty. Discover expressive abstracts, serene landscapes, intimate portraits, and powerful storytelling scenes.",
-  keywords: ["Fine Art Nepal", "Abstract Paintings", "Landscape Art", "Portrait Paintings", "Still Life", "Historical Art", "Expressive Art", "Buy Original Art Online", "Nepali Artists"],
+  description: "Discover and buy original fine art in Nepal. SHAKYA Gallery features a curated collection of abstract, landscape, and portrait paintings by master Nepali artists. Secure global shipping available.",
+  keywords: ["Buy Art Nepal", "Art Gallery Kathmandu", "Fine Art Nepal", "Nepali Artists", "Original Paintings Nepal", "Abstract Art Nepal", "Landscape Paintings Nepal", "Art Online Nepal", "Shakya Gallery"],
   openGraph: {
     title: "SHAKYA | Exclusive Fine Arts Gallery in Nepal",
     description: "Browse a curated collection of fine art paintings that capture emotion and beauty. Discover expressive abstracts, serene landscapes, and intimate portraits.",
