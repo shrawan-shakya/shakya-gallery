@@ -1,4 +1,4 @@
-import { client } from "@/sanity/lib/client";
+import { sanityFetch } from "@/sanity/lib/live";
 import { CollectionClient } from "@/components/sections/CollectionClient";
 import { Metadata } from "next";
 
@@ -28,7 +28,8 @@ async function getArtworks() {
       "aspectRatio": mainImage.asset->metadata.dimensions.aspectRatio
     }
   `;
-  return await client.fetch(query);
+  const { data } = await sanityFetch({ query });
+  return data;
 }
 
 // 2. Fetch Categories (For the Sidebar)
@@ -39,7 +40,8 @@ async function getCategories() {
       type
     }
   `;
-  return await client.fetch(query);
+  const { data } = await sanityFetch({ query });
+  return data;
 }
 
 export default async function CollectionPage() {

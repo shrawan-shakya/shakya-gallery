@@ -3,6 +3,7 @@ import { Cormorant_Garamond, Montserrat } from "next/font/google";
 import "./globals.css";
 import { ClientLayout } from "@/components/layout/ClientLayout";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import { SanityLive } from "@/sanity/lib/live";
 
 // 1. The Elegant Serif (Headings)
 const cormorant = Cormorant_Garamond({
@@ -71,6 +72,7 @@ export default function RootLayout({
           {children}
         </ClientLayout>
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID || ""} />
+        <SanityLive />
       </body>
     </html>
   );

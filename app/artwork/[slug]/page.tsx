@@ -1,4 +1,4 @@
-import { client } from "@/sanity/lib/client";
+import { sanityFetch } from "@/sanity/lib/live";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArtworkInquiry } from "@/components/ArtworkInquiry";
@@ -27,7 +27,8 @@ async function getArtwork(slug: string) {
       }
     }
   `;
-  return await client.fetch(query, { slug });
+  const { data } = await sanityFetch({ query, params: { slug } });
+  return data;
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
