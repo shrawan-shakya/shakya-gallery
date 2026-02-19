@@ -106,11 +106,11 @@ export default async function JournalPage() {
 
             <div className="max-w-[1400px] mx-auto px-6 md:px-12">
 
-                {/* 2. EMPTY STATE */}
+                {/* 2. EMPTY STATE - Simpler message since series is at the bottom */}
                 {articles.length === 0 && (
-                    <div className="py-20 text-center border-y border-black/5">
+                    <div className="py-20 text-center border-y border-black/5 mb-20">
                         <p className="font-sans text-sm text-gray-500 tracking-wide">
-                            No articles published yet. Check back soon.
+                            Our primary journal entries are being curated. Scroll down to see our upcoming roadmap.
                         </p>
                     </div>
                 )}
@@ -152,12 +152,75 @@ export default async function JournalPage() {
 
                 {/* 4. THE GRID */}
                 {others.length > 0 && (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16 border-t border-black/10 pt-16">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16 border-t border-black/10 pt-16 mb-40">
                         {others.map((article: any, i: number) => (
                             <ArticleCard key={article.slug} article={article} index={i} />
                         ))}
                     </div>
                 )}
+
+                {/* 5. UPCOMING SERIES (Always Visible for SEO Authority) */}
+                <div className="space-y-24 mt-24">
+                    <div className="w-full h-[1px] bg-black/5" />
+
+                    {/* Featured Series Header */}
+                    <div className="max-w-3xl mx-auto text-center">
+                        <h2 className="font-serif text-3xl text-soft-black mb-6 italic">The Collector&apos;s Roadmap</h2>
+                        <p className="font-sans text-sm text-gray-500 leading-relaxed tracking-wide">
+                            We are currently preparing a series of expert insights designed for international and local collectors.
+                            These upcoming guides will cover everything from acquisition strategies to the preservation of Himalayan masterworks.
+                        </p>
+                    </div>
+
+                    {/* Placeholder Grid with SEO Targets */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+                        {[
+                            {
+                                title: "A Collector's Guide: How to Buy Original Art in Kathmandu",
+                                excerpt: "Navigating the local art scene and identifying authentic masterpieces in the heart of the valley.",
+                                category: "Guide"
+                            },
+                            {
+                                title: "The Investment Potential of Contemporary Nepali Paintings",
+                                excerpt: "Why modern Himalayan fine art is becoming a staple for discerning global collectors.",
+                                category: "Market Insights"
+                            },
+                            {
+                                title: "Authenticity & Provenance in the Himalayan Art Market",
+                                excerpt: "The importance of certification and the legacy of the Shakya Gallery promise.",
+                                category: "Advice"
+                            }
+                        ].map((item, i) => (
+                            <div key={i} className="flex flex-col gap-6 opacity-60 group hover:opacity-100 transition-opacity duration-500">
+                                <div className="aspect-[4/3] bg-black/[0.03] border border-black/5 flex items-center justify-center relative overflow-hidden">
+                                    <span className="font-sans text-[10px] tracking-[0.3em] uppercase text-gray-300">Coming Soon</span>
+                                    <div className="absolute inset-0 bg-gradient-to-tr from-black/[0.02] to-transparent" />
+                                </div>
+                                <div className="space-y-4">
+                                    <div className="flex items-center gap-2">
+                                        <span className="w-8 h-[1px] bg-black/10" />
+                                        <span className="font-sans text-[10px] tracking-widest uppercase text-gray-400">{item.category}</span>
+                                    </div>
+                                    <h3 className="font-serif text-2xl text-soft-black leading-tight">{item.title}</h3>
+                                    <p className="font-sans text-xs text-gray-500 leading-relaxed">{item.excerpt}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Newsletter CTA */}
+                    <div className="bg-soft-black p-12 text-center space-y-8 mb-20">
+                        <h3 className="font-serif text-3xl text-white italic">Be the First to Know</h3>
+                        <p className="font-sans text-sm text-gray-400 max-w-md mx-auto leading-relaxed">
+                            Join our Collector&apos;s Circle to receive these guides directly in your inbox as they are released.
+                        </p>
+                        <div className="pt-4">
+                            <Link href="/contact" className="inline-block px-12 py-4 border border-white/20 text-white font-sans text-xs tracking-[0.3em] uppercase hover:bg-white hover:text-soft-black transition-all">
+                                Join The Inner Circle
+                            </Link>
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </main>
