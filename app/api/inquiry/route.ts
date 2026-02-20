@@ -10,7 +10,7 @@ const InquirySchema = z.object({
     name: z.string().min(1, "Name is required"),
     email: z.string().email("Invalid email address"),
     mobile: z.string().min(5, "Mobile number is too short"),
-    _honey: z.string().optional(), // Honeypot field
+    _honey: z.string().nullable().optional(), // Allow null specifically
 });
 
 export async function POST(request: Request) {
@@ -18,11 +18,13 @@ export async function POST(request: Request) {
         const formData = await request.formData();
 
         // Extract Fields for Validation
+        // Using || undefined to turn 'null' from FormData into undefined for Zod if needed,
+        // but schema now allows null.
         const rawData = {
-            name: formData.get("Name") as string,
-            email: formData.get("Email") as string,
-            mobile: formData.get("Mobile") as string,
-            _honey: formData.get("_honey") as string,
+            name: (formData.get("Name") as string) || "",
+            email: (formData.get("Email") as string) || "",
+            mobile: (formData.get("Mobile") as string) || "",
+            _honey: formData.get("_honey") as string | null,
         };
 
         // 1. SPAM CHECK (Honeypot)
@@ -34,8 +36,13 @@ export async function POST(request: Request) {
         // 2. INPUT VALIDATION
         const result = InquirySchema.safeParse(rawData);
         if (!result.success) {
+            console.error('Validation Failed:', result.error.format()); // LOG THE ERROR
             return NextResponse.json(
-                { success: false, message: 'Invalid input', errors: result.error.flatten() },
+                {
+                    success: false,
+                    message: 'Invalid input',
+                    errors: result.error.flatten().fieldErrors
+                },
                 { status: 400 }
             );
         }
