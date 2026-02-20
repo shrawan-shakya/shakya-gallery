@@ -74,10 +74,10 @@ export function Navbar() {
         // 1. At Top: bg-transparent (Let Hero color show through)
         // 2. Scrolled: bg-[#FDFCF8] (Solid Bone color)
         // 3. pointer-events-none: Allows clicking THROUGH the transparent navbar
-        className={`fixed top-0 left-0 right-0 z-50 px-6 md:px-12 flex justify-between items-center w-full transition-all duration-500 ease-in-out pointer-events-none
+        className={`fixed top-0 left-0 right-0 z-50 px-6 lg:px-12 flex justify-between items-center w-full transition-all duration-500 ease-in-out pointer-events-none
           ${isScrolled
             ? "py-4 bg-bone border-b border-black/5 shadow-sm" // Scrolled: Solid & Compact
-            : "py-6 md:py-10 bg-transparent border-none shadow-none" // Top: Invisible Background
+            : "py-6 lg:py-10 bg-transparent border-none shadow-none" // Top: Invisible Background
           }
         `}
       >
@@ -85,7 +85,7 @@ export function Navbar() {
         {/* LOGO */}
         <Link href="/" className="z-50 group pointer-events-auto">
           <div className={`font-serif tracking-[0.3em] relative font-thin transition-all duration-500 ${textColor}
-            ${isScrolled ? "text-xl md:text-2xl" : "text-2xl md:text-3xl"}
+            ${isScrolled ? "text-xl lg:text-2xl" : "text-2xl lg:text-3xl"}
           `}>
             SHAKYA
             <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-current transition-all duration-500 group-hover:w-full" />
@@ -93,7 +93,7 @@ export function Navbar() {
         </Link>
 
         {/* DESKTOP LINKS */}
-        <div className={`hidden md:flex gap-12 items-center font-thin pointer-events-auto ${textColor}`}>
+        <div className={`hidden lg:flex gap-12 items-center font-thin pointer-events-auto ${textColor}`}>
           {links.map((link) => (
             <Link
               key={link.name}
@@ -115,7 +115,7 @@ export function Navbar() {
         </div>
 
         {/* MOBILE CONTROLS */}
-        <div className={`md:hidden z-50 flex items-center gap-6 pointer-events-auto ${textColor}`}>
+        <div className={`lg:hidden z-50 flex items-center gap-6 pointer-events-auto ${textColor}`}>
           {/* SEARCH ICON (Mobile) */}
           <button
             onClick={() => setIsSearchOpen(true)}
