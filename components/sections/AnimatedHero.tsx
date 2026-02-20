@@ -36,7 +36,7 @@ export function AnimatedHero() {
         <p className="font-sans text-[10px] md:text-xs tracking-[2em] text-white/80 uppercase mb-6 ml-2">Est. 1998</p>
 
         <h1 className="sr-only">
-          Shakya Gallery | Buy Original Fine Art in Nepal | Premier Art Gallery Kathmandu
+          Buy Original Nepalese Fine Art
         </h1>
 
         {/* Visual Title (Decorative) */}
