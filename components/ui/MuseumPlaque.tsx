@@ -49,7 +49,7 @@ export function MuseumPlaque({
       <div className="relative z-10 flex flex-col items-center gap-1.5">
 
         {/* Artist */}
-        <h3 className="font-sans text-[8px] md:text-[10px] tracking-[0.2em] md:tracking-[0.45em] uppercase text-[#999999] font-semibold whitespace-nowrap">
+        <h3 className="font-sans text-[8px] md:text-[10px] tracking-[0.2em] md:tracking-[0.45em] uppercase text-[#666666] font-semibold whitespace-nowrap">
           {artist}
         </h3>
 
@@ -59,15 +59,15 @@ export function MuseumPlaque({
         </h3>
 
         {/* Medium */}
-        <p className="font-sans text-[8px] md:text-[10px] tracking-[0.1em] md:tracking-[0.2em] uppercase text-[#666666] font-light">
+        <p className="font-sans text-[8px] md:text-[10px] tracking-[0.1em] md:tracking-[0.2em] uppercase text-[#444444] font-medium">
           {medium}
         </p>
 
         {/* Separator */}
-        <div className="w-[15px] md:w-[30px] h-[0.5px] bg-[#CCCCCC] my-1" />
+        <div className="w-[15px] md:w-[30px] h-[0.5px] bg-[#BBBBBB] my-1" />
 
         {/* Year */}
-        <p className="font-sans text-[8px] md:text-[10px] tracking-[0.1em] md:tracking-[0.2em] uppercase text-[#666666] font-light">
+        <p className="font-sans text-[8px] md:text-[10px] tracking-[0.1em] md:tracking-[0.2em] uppercase text-[#444444] font-medium">
           {dimensions ? `${dimensions} • ` : ""}{year}
         </p>
 
