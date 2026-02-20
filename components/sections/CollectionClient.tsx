@@ -157,15 +157,17 @@ const FilterPanel = ({
 
 export function CollectionClient({
   artworks,
-  allCategories
+  allCategories,
+  initialCategory = null
 }: {
   artworks: Artwork[],
-  allCategories: Category[]
+  allCategories: Category[],
+  initialCategory?: string | null
 }) {
 
   // --- STATE ---
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(initialCategory);
   const [statusFilter, setStatusFilter] = useState<"all" | "available" | "sold">("all");
   const [sortOption, setSortOption] = useState<"newest" | "price_asc" | "price_desc">("newest");
   const [showMat, setShowMat] = useState(true);
@@ -334,7 +336,7 @@ export function CollectionClient({
                 <AnimatePresence>
                   {filteredArtworks
                     .filter((_, index) => index % gridCols === colIndex)
-                    .map((art) => (
+                    .map((art, index) => (
                       <motion.div
                         key={art._id}
                         initial={{ opacity: 0 }}
@@ -353,6 +355,7 @@ export function CollectionClient({
                                   src={art.imageUrl}
                                   alt={art.title}
                                   fill
+                                  priority={index < 2}
                                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                   className={`object-cover transition-all duration-700 ease-out scale-100 group-hover/image:scale-105
                               ${(art.status === "sold" || art.status === "private")

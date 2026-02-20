@@ -1,0 +1,43 @@
+﻿
+> shakya-gallery@0.1.0 build
+> next build
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 25.5s
+  Running TypeScript ...
+  Collecting page data using 7 workers ...
+  Generating static pages using 7 workers (0/17) ...
+  Generating static pages using 7 workers (4/17) 
+  Generating static pages using 7 workers (8/17) 
+  Generating static pages using 7 workers (12/17) 
+Γ£ô Generating static pages using 7 workers (17/17) in 843.4ms
+  Finalizing page optimization ...
+
+Route (app)
+Γöî Γùï /
+Γö£ Γùï /_not-found
+Γö£ ╞Æ /api/contact
+Γö£ ╞Æ /api/inquiry
+Γö£ ╞Æ /artwork/[slug]
+Γö£ Γùï /collection
+Γö£ Γùï /coming-soon
+Γö£ Γùï /contact
+Γö£ Γùï /guide/buying-art
+Γö£ Γùï /icon
+Γö£ Γùï /journal
+Γö£ ╞Æ /journal/[slug]
+Γö£ Γùï /legacy
+Γö£ Γùï /manifest.webmanifest
+Γö£ Γùï /privacy-policy
+Γö£ Γùï /robots.txt
+Γö£ Γùï /sitemap.xml
+Γö£ Γùï /studio/[[...tool]]
+Γöö Γùï /terms
+
+
+Γùï  (Static)   prerendered as static content
+╞Æ  (Dynamic)  server-rendered on demand
+

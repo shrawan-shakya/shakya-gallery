@@ -80,7 +80,7 @@ export default async function ArtworkPage({
   // JSON-LD for Artwork/Product
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": ["Product", "VisualArtwork"],
+    "@type": ["VisualArtwork"],
     "name": art.title,
     "image": art.mainImage.url,
     "description": art.description,
@@ -103,7 +103,8 @@ export default async function ArtworkPage({
     },
     "artMedium": art.material,
     "artDimensions": art.dimensions,
-    "dateCreated": art.year
+    "dateCreated": art.year,
+    "material": art.material
   };
 
   return (
@@ -212,7 +213,22 @@ export default async function ArtworkPage({
                 </div>
               </div>
 
-              {/* 5. STATIC INFORMATION */}
+              {/* 5. FROM THE GALLERY (INTERNAL LINK HUB) */}
+              <div className="pt-8 border-t border-black/5">
+                <h3 className="font-sans text-[11px] tracking-[0.2em] uppercase text-gray-400 mb-6">From The Gallery</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <Link href="/legacy" className="group p-4 bg-white border border-black/5 hover:border-black/20 transition-all">
+                    <h4 className="font-serif text-lg italic text-soft-black mb-1 group-hover:text-soft-black/70 transition-colors">Our 20-Year Legacy</h4>
+                    <p className="font-sans text-[10px] tracking-wider text-gray-400 uppercase">Learn about our heritage</p>
+                  </Link>
+                  <Link href="/guide/buying-art" className="group p-4 bg-white border border-black/5 hover:border-black/20 transition-all">
+                    <h4 className="font-serif text-lg italic text-soft-black mb-1 group-hover:text-soft-black/70 transition-colors">Art Advisory</h4>
+                    <p className="font-sans text-[10px] tracking-wider text-gray-400 uppercase">Collector's Guide</p>
+                  </Link>
+                </div>
+              </div>
+
+              {/* 6. STATIC INFORMATION */}
               <div className="space-y-6 pt-8 border-t border-black/5">
                 <div className="space-y-2">
                   <h4 className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-400">Authenticity</h4>

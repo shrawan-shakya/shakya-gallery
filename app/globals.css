@@ -120,9 +120,22 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  /* Ensure minimum tap target size for standard interactive elements */
+  @media (max-width: 1024px) {
+
+    button,
+    a,
+    input[type="button"],
+    input[type="submit"] {
+      min-height: 44px;
+      min-width: 44px;
+    }
+  }
 }
 
 @layer utilities {
+
   /* Screen Reader Only - SEO & Accessibility */
   .sr-only {
     position: absolute;
@@ -167,4 +180,4 @@
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     @apply bg-gray-400;
   }
-} 
+}

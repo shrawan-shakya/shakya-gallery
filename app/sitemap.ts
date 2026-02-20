@@ -22,7 +22,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // 2. Dynamic Content (Artworks & Journal)
     const query = `{
         "artworks": *[_type == "artwork"] { "slug": slug.current, _updatedAt },
-        "articles": *[_type == "article"] { "slug": slug.current, _updatedAt }
+        "articles": *[_type == "article"] { "slug": slug.current, _updatedAt },
+        "categories": *[_type == "category"] { "slug": slug.current, _updatedAt }
     }`;
     const data = await client.fetch(query);
 
@@ -40,5 +41,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 0.8,
     }));
 
-    return [...routes, ...artworkRoutes, ...articleRoutes];
+    const categoryRoutes = data.categories.map((cat: any) => ({
+        url: `${baseUrl}/collection/${cat.slug}`,
+        lastModified: new Date(cat._updatedAt || new Date()),
+        changeFrequency: "weekly" as const,
+        priority: 0.8,
+    }));
+
+    return [...routes, ...artworkRoutes, ...articleRoutes, ...categoryRoutes];
 }

@@ -19,6 +19,28 @@ interface ArtworkGalleryProps {
     orientation?: 'landscape' | 'portrait' | 'square';
 }
 
+const getDescriptiveAlt = (title: string, index?: number) => {
+    const lowerTitle = title.toLowerCase();
+    const isBuddha = lowerTitle.includes('buddha') || lowerTitle.includes('zen');
+
+    if (isBuddha) {
+        // Targeted descriptive keywords for Buddha paintings
+        const keywords = [
+            "serene meditative Buddha painting with intricate textures",
+            "modern Zen statement piece featuring Buddha iconography",
+            "hand-painted Buddha artwork with rich gold and copper leaf accents",
+            "spiritual Nepalese fine art portraying enlightenment and peace",
+            "contemporary Buddha canvas for mindful interior design",
+            "authentic Himalayan Buddha portrait with traditional symbolic details"
+        ];
+        // Use index to vary the keywords for the gallery images
+        const keyword = keywords[(index || 0) % keywords.length];
+        return `Buy ${title} - ${keyword} at Shakya Gallery Nepal`;
+    }
+
+    return `Buy ${title} - Original fine art painting at Shakya Gallery Nepal`;
+};
+
 export function ArtworkGallery({ mainImage, relatedImages, title, orientation }: ArtworkGalleryProps) {
     const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -74,7 +96,7 @@ export function ArtworkGallery({ mainImage, relatedImages, title, orientation }:
                                     >
                                         <Image
                                             src={currentImage.url}
-                                            alt={`Buy ${title} - View of original painting at Shakya Gallery Nepal`}
+                                            alt={getDescriptiveAlt(title, 0)}
                                             fill
                                             className="object-cover"
                                             priority
@@ -104,7 +126,7 @@ export function ArtworkGallery({ mainImage, relatedImages, title, orientation }:
                                     >
                                         <Image
                                             src={currentImage.url}
-                                            alt={`${title} - view ${currentIndex + 1}`}
+                                            alt={getDescriptiveAlt(title, currentIndex)}
                                             fill
                                             className="object-contain"
                                             priority
@@ -122,17 +144,17 @@ export function ArtworkGallery({ mainImage, relatedImages, title, orientation }:
                     <>
                         <button
                             onClick={handlePrev}
-                            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 flex items-center justify-center rounded-full bg-white/80 hover:bg-white text-soft-black backdrop-blur-sm transition-all shadow-sm opacity-0 group-hover:opacity-100"
+                            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 flex items-center justify-center rounded-full bg-white/80 hover:bg-white text-soft-black backdrop-blur-sm transition-all shadow-sm opacity-0 group-hover:opacity-100"
                             aria-label="Previous image"
                         >
-                            <ChevronLeft size={20} />
+                            <ChevronLeft size={24} />
                         </button>
                         <button
                             onClick={handleNext}
-                            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 flex items-center justify-center rounded-full bg-white/80 hover:bg-white text-soft-black backdrop-blur-sm transition-all shadow-sm opacity-0 group-hover:opacity-100"
+                            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 flex items-center justify-center rounded-full bg-white/80 hover:bg-white text-soft-black backdrop-blur-sm transition-all shadow-sm opacity-0 group-hover:opacity-100"
                             aria-label="Next image"
                         >
-                            <ChevronRight size={20} />
+                            <ChevronRight size={24} />
                         </button>
                     </>
                 )}
@@ -154,7 +176,7 @@ export function ArtworkGallery({ mainImage, relatedImages, title, orientation }:
                         >
                             <Image
                                 src={img.url}
-                                alt={`Thumbnail ${idx + 1}`}
+                                alt={`Thumbnail view ${idx + 1} of ${title}`}
                                 fill
                                 className="object-cover"
                             />

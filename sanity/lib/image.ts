@@ -7,7 +7,7 @@ const builder = createImageUrlBuilder({
 })
 
 export const urlFor = (source: any) => {
-  return builder.image(source)
+  return builder.image(source).auto('format')
 }
 
 export const urlForImage = urlFor;

@@ -112,6 +112,7 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                               src={art.imageUrl}
                               alt={`Buy ${art.title} - Original Nepali fine art at Shakya Gallery`}
                               fill
+                              priority={index === 0}
                               sizes="(max-width: 768px) 100vw, 50vw"
                               className={`object-cover transition-all duration-700 ease-out scale-100 group-hover/image:scale-105
                             ${(art.status === "sold" || art.status === "private")
