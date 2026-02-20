@@ -133,7 +133,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
 
                                                 {/* Text Info */}
                                                 <div className="flex flex-col">
-                                                    <h3 className="font-serif text-xl text-soft-black group-hover:underline decoration-1 underline-offset-4">
+                                                    <h3 className="font-serif text-xl text-soft-black group-hover:underline decoration-1 underline-offset-4 line-clamp-2">
                                                         {art.title}
                                                     </h3>
                                                     <p className="text-sm text-soft-black/60 uppercase tracking-wider mt-1">

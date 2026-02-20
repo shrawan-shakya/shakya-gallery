@@ -54,7 +54,7 @@ export function MuseumPlaque({
         </h3>
 
         {/* Title */}
-        <h3 className="font-serif text-sm md:text-xl text-[#1A1A1A] font-bold italic leading-none my-0.5">
+        <h3 className="font-serif text-sm md:text-xl text-[#1A1A1A] font-bold italic leading-tight my-0.5 line-clamp-2">
           {title}
         </h3>
 

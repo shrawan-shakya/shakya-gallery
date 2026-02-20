@@ -152,7 +152,7 @@ export default async function ArtworkPage({
                   </div>
                 )}
 
-                <h1 className="font-serif text-3xl md:text-5xl text-soft-black leading-none">
+                <h1 className="font-serif text-3xl md:text-5xl text-soft-black leading-tight line-clamp-2">
                   {art.title}
                 </h1>
                 <div className="flex justify-between items-baseline mt-2 mb-6">
