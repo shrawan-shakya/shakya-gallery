@@ -17,6 +17,7 @@ async function getArtwork(slug: string) {
       artist,
       status, 
       price,
+      orientation,
       "mainImage": {
         "url": mainImage.asset->url,
         "aspectRatio": mainImage.asset->metadata.dimensions.aspectRatio
@@ -128,6 +129,7 @@ export default async function ArtworkPage({
               mainImage={art.mainImage}
               relatedImages={art.relatedImages}
               title={art.title}
+              orientation={art.orientation}
             />
 
           </div>

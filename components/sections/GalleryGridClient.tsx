@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import Link from "next/link";
 import Image from "next/image";
 import { MuseumFrame } from "@/components/ui/MuseumFrame";
@@ -89,7 +89,7 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
       {/* THE OUTER GRID */}
       <div className="mx-auto px-6 pb-40 transition-all duration-700 ease-in-out">
 
-        {/* VIEW: SINGLE ROW (Unchanged) */}
+        {/* VIEW: SINGLE ROW */}
         {layout === "single" && (
           <div className="max-w-[800px] mx-auto grid grid-cols-1 gap-y-32 md:gap-y-48">
             {artworks.map((art, index) => (
@@ -104,7 +104,8 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                 <Link href={`/artwork/${art.slug}`} className="block cursor-pointer no-underline group/card">
                   <div className="w-full mx-auto">
                     <div className="w-full md:max-w-[75%] mx-auto relative group/image">
-                      <MuseumFrame aspectRatio={art.aspectRatio} hasMat={showMat}>
+                      {/* GRIDS: Use w-full h-auto. Grid frame will calculate height. */}
+                      <MuseumFrame aspectRatio={art.aspectRatio} hasMat={showMat} className="w-full h-auto">
                         {art.imageUrl && (
                           <div className="absolute inset-0 w-full h-full">
                             <Image
@@ -181,8 +182,9 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                     >
                       <Link href={`/artwork/${art.slug}`} className="block cursor-pointer no-underline group/card">
                         <div className="w-full mx-auto">
-                          <div className="w-full md:max-w-[75%] mx-auto relative group/image">
-                            <MuseumFrame aspectRatio={art.aspectRatio} hasMat={showMat}>
+                          <div className="w-full relative group/image">
+                            {/* GRIDS: Use w-full h-auto. The grid-based frame will expand height naturally. */}
+                            <MuseumFrame aspectRatio={art.aspectRatio} hasMat={showMat} className="w-full h-auto">
                               {art.imageUrl && (
                                 <div className="absolute inset-0 w-full h-full">
                                   <Image
@@ -221,7 +223,7 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                               )}
                             </div>
                           </div>
-                          <div className="w-full md:max-w-[75%] mx-auto relative z-0 mt-8 md:mt-12 flex flex-col items-center text-center">
+                          <div className="w-full relative z-0 mt-8 md:mt-12 flex flex-col items-center text-center">
                             <MuseumPlaque
                               title={art.title}
                               artist={art.artist}

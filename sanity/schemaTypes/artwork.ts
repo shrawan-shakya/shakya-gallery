@@ -93,6 +93,21 @@ export default defineType({
       initialValue: false,
       description: 'Toggle this to mark as a special offer or featured item',
     }),
+    defineField({
+      name: 'orientation',
+      title: 'Orientation Override',
+      type: 'string',
+      description: 'Force the layout to treat this as Landscape (width-bound) or Portrait (height-bound). Leave empty for auto-detection.',
+      options: {
+        list: [
+          { title: 'Landscape', value: 'landscape' },
+          { title: 'Portrait', value: 'portrait' },
+          { title: 'Square', value: 'square' },
+        ],
+        layout: 'dropdown',
+      },
+      initialValue: 'landscape',
+    }),
 
     // --- 5. MEDIA ---
     defineField({
