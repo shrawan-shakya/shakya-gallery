@@ -137,7 +137,7 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                             </span>
                           </span>
                         )}
-                        {art.status === "available" && art.price && (
+                        {art.status === "available" && !!art.price && (
                           <span className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-white/95 text-soft-black text-sm md:text-base font-sans tracking-[0.2em] px-6 py-3 opacity-0 group-hover/image:opacity-100 transition-opacity duration-500 backdrop-blur-md shadow-md border border-soft-black/10">
                             ${art.price.toLocaleString()}
                           </span>
@@ -214,7 +214,7 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                                   </span>
                                 </span>
                               )}
-                              {art.status === "available" && art.price && (
+                              {art.status === "available" && !!art.price && (
                                 <span className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-white/95 text-soft-black text-sm md:text-base font-sans tracking-[0.2em] px-6 py-3 opacity-0 group-hover/image:opacity-100 transition-opacity duration-500 backdrop-blur-md shadow-md border border-soft-black/10">
                                   ${art.price.toLocaleString()}
                                 </span>

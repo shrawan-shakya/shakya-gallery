@@ -1,4 +1,4 @@
-import { client } from "@/sanity/lib/client";
+import { sanityFetch } from "@/sanity/lib/live";
 import { GalleryGridClient } from "./GalleryGridClient";
 import Link from "next/link";
 
@@ -19,7 +19,8 @@ async function getArtworks(limit?: number) {
       "aspectRatio": mainImage.asset->metadata.dimensions.aspectRatio
     }
   `;
-  return await client.fetch(query);
+  const { data } = await sanityFetch({ query });
+  return data;
 }
 
 export async function GalleryGrid({ limit }: { limit?: number }) {

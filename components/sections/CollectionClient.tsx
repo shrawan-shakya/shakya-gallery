@@ -382,7 +382,7 @@ export function CollectionClient({
                                 </span>
                               )}
 
-                              {art.status === "available" && art.price && (
+                              {art.status === "available" && !!art.price && (
                                 <span className={`
                              absolute bg-white/95 text-soft-black font-sans tracking-[0.2em] opacity-0 group-hover/image:opacity-100 transition-opacity duration-500 backdrop-blur-md shadow-md border border-soft-black/10 left-1/2 -translate-x-1/2
                              ${gridCols === 2 ? "bottom-8 text-lg px-8 py-4" : "bottom-4 text-sm px-5 py-2.5"}
