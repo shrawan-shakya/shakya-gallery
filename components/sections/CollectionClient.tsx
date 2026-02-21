@@ -338,7 +338,7 @@ export function CollectionClient({
 
           {/* THE GRID - Key forces a reset on filter change to trigger animations */}
           <div
-            key={`${searchQuery}-${selectedCategory}-${statusFilter}-${sortOption}`}
+            key={`${searchQuery}-${selectedCategory}-${statusFilter}-${sortOption}-${gridCols}`}
             className="flex gap-8 lg:gap-12 items-start transition-all duration-700"
           >
             {filteredArtworks.length > 0 ? (
@@ -401,6 +401,7 @@ export function CollectionClient({
                                 medium={art.material}
                                 dimensions={art.dimensions}
                                 showButton={false}
+                                showMedium={false}
                               />
                             </div>
                           </Link>

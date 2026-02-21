@@ -9,6 +9,7 @@ interface MuseumPlaqueProps {
   dimensions?: string;
   year?: string;
   showButton?: boolean;
+  showMedium?: boolean;
   className?: string;
 }
 
@@ -19,6 +20,7 @@ export function MuseumPlaque({
   dimensions,
   year,
   showButton = true,
+  showMedium = true,
   className
 }: MuseumPlaqueProps) {
   return (
@@ -59,9 +61,11 @@ export function MuseumPlaque({
         </h3>
 
         {/* Medium */}
-        <p className="font-sans text-[8px] md:text-[10px] tracking-[0.1em] md:tracking-[0.2em] uppercase text-[#444444] font-medium">
-          {medium}
-        </p>
+        {showMedium && (
+          <p className="font-sans text-[8px] md:text-[10px] tracking-[0.1em] md:tracking-[0.2em] uppercase text-[#444444] font-medium">
+            {medium}
+          </p>
+        )}
 
         {/* Separator */}
         <div className="w-[15px] md:w-[30px] h-[0.5px] bg-[#BBBBBB] my-1" />
