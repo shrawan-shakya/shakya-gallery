@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
         rules: {
             userAgent: "*",
             allow: "/",
-            disallow: ["/studio/", "/api/"],
+            disallow: ["/api/"],
         },
         sitemap: "https://shakyagallery.com/sitemap.xml",
     };

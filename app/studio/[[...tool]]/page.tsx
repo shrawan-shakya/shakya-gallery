@@ -9,11 +9,52 @@
 
 import { NextStudio } from 'next-sanity/studio'
 import config from '../../../sanity.config'
+import { cookies } from 'next/headers'
+import { notFound } from 'next/navigation'
+import { Metadata } from 'next'
 
-export const dynamic = 'force-static'
+// The secret word to unlock the studio
+const UNLOCK_KEY = process.env.STUDIO_UNLOCK_KEY || "shakyagallerystudio";
 
-export { metadata, viewport } from 'next-sanity/studio'
+export const dynamic = 'force-dynamic'
 
-export default function StudioPage() {
-  return <NextStudio config={config} />
+// Ensure search engines never index the studio
+export const metadata: Metadata = {
+  title: 'Admin Studio | SHAKYA',
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+  }
+}
+
+export default async function StudioPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}) {
+  const sParams = await searchParams;
+  const cookieStore = await cookies();
+
+  const hasAccessCookie = cookieStore.get('SHAKYA_STUDIO_ACCESS')?.value === 'true';
+  const isUnlocking = sParams.unlock === UNLOCK_KEY;
+
+  // If no cookie and no secret key, return 404
+  if (!hasAccessCookie && !isUnlocking) {
+    return notFound();
+  }
+
+  return (
+    <>
+      {/* If unlocking, we inject a small script to set the long-term cookie */}
+      {isUnlocking && (
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `document.cookie = "SHAKYA_STUDIO_ACCESS=true; path=/; max-age=31536000; SameSite=Lax";`
+          }}
+        />
+      )}
+      <NextStudio config={config} />
+    </>
+  );
 }
