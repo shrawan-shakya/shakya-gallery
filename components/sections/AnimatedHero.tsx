@@ -1,22 +1,41 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { fadeInUp, LUXURY_DURATION, LUXURY_EASE } from "@/lib/motion-variants";
 
 export function AnimatedHero() {
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+
   return (
     <div className="relative h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-bone">
 
+      {/* POSTER / FALLBACK BACKGROUND */}
+      <div
+        className={`absolute inset-0 z-0 transition-opacity duration-1000 ${isVideoLoaded ? 'opacity-0' : 'opacity-100'}`}
+        style={{
+          backgroundImage: 'url("/hero-1.jpg")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        }}
+      />
+
       {/* VIDEO BACKGROUND */}
-      <video
+      <motion.video
         autoPlay
         loop
         muted
         playsInline
+        preload="auto"
+        poster="/hero-1.jpg"
+        onLoadedData={() => setIsVideoLoaded(true)}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: isVideoLoaded ? 1 : 0 }}
+        transition={{ duration: 1.5, ease: LUXURY_EASE }}
         className="absolute inset-0 w-full h-full object-cover z-0"
       >
         <source src="/hero intro.mp4" type="video/mp4" />
-      </video>
+      </motion.video>
 
       {/* OVERLAY */}
       <div className="absolute inset-0 bg-black/20 z-0" />
