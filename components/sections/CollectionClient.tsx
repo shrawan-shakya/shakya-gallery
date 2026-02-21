@@ -67,21 +67,23 @@ const FilterPanel = ({
   searchQuery,
   setSearchQuery,
   categoriesByType,
-  selectedCategory,
-  setSelectedCategory,
+  selectedCategories,
+  toggleCategory,
   statusFilter,
   setStatusFilter,
   sortOption,
   setSortOption,
   openSections,
   toggleSection,
-  categoryCounts
+  categoryCounts,
+  clearFilters,
+  hasActiveFilters,
 }: {
   searchQuery: string;
   setSearchQuery: (val: string) => void;
   categoriesByType: Record<string, string[]>;
-  selectedCategory: string | null;
-  setSelectedCategory: (val: string | null) => void;
+  selectedCategories: string[];
+  toggleCategory: (val: string) => void;
   statusFilter: string;
   setStatusFilter: (val: any) => void;
   sortOption: string;
@@ -89,18 +91,11 @@ const FilterPanel = ({
   openSections: Record<string, boolean>;
   toggleSection: (key: string) => void;
   categoryCounts: Record<string, number>;
+  clearFilters: () => void;
+  hasActiveFilters: boolean;
 }) => {
   return (
     <>
-      <FilterSection title="Search" isOpen={openSections["search"]} onToggle={() => toggleSection("search")}>
-        <input
-          type="text"
-          placeholder="Artist or Title..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full bg-transparent border-b border-black/20 py-2 font-sans text-sm tracking-wide outline-none placeholder:text-gray-500 focus:border-black transition-colors"
-        />
-      </FilterSection>
 
       {Object.entries(categoriesByType).map(([type, titles]) => (
         <FilterSection
@@ -111,12 +106,13 @@ const FilterPanel = ({
         >
           {titles.map((title) => {
             const count = categoryCounts[title] || 0;
+            const isSelected = selectedCategories.includes(title);
             return (
               <button
                 key={title}
-                onClick={() => setSelectedCategory(selectedCategory === title ? null : title)}
+                onClick={() => toggleCategory(title)}
                 className={`text-left font-sans text-xs tracking-[0.2em] uppercase py-1 transition-all duration-300 flex justify-between items-center group/btn
-                  ${selectedCategory === title ? "text-soft-black font-semibold pl-2 border-l-2 border-soft-black" : "text-gray-500 hover:text-soft-black"}
+                  ${isSelected ? "text-soft-black font-semibold pl-2 border-l-2 border-soft-black" : "text-gray-500 hover:text-soft-black"}
                 `}
               >
                 <span>{title}</span>
@@ -126,6 +122,15 @@ const FilterPanel = ({
           })}
         </FilterSection>
       ))}
+
+      {hasActiveFilters && (
+        <button
+          onClick={clearFilters}
+          className="mt-4 text-left font-sans text-[10px] tracking-[0.2em] uppercase text-gray-400 hover:text-soft-black underline transition-colors"
+        >
+          Clear All Filters
+        </button>
+      )}
 
       <FilterSection title="Availability" isOpen={openSections["availability"]} onToggle={() => toggleSection("availability")}>
         {["all", "available", "sold"].map((status) => (
@@ -165,7 +170,11 @@ export function CollectionClient({
 
   // --- PARSE URL PARAMS ---
   const searchQuery = searchParams.get("q") || "";
-  const selectedCategory = searchParams.get("category") || initialCategory;
+  const selectedCategories = useMemo(() => {
+    const fromUrl = searchParams.get("category");
+    if (fromUrl) return fromUrl.split(",").filter(Boolean);
+    return initialCategory ? [initialCategory] : [];
+  }, [searchParams, initialCategory]);
   const statusFilter = (searchParams.get("status") as any) || "all";
   const sortOption = (searchParams.get("sort") as any) || "newest";
 
@@ -174,7 +183,7 @@ export function CollectionClient({
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const [gridCols, setGridCols] = useState<2 | 3>(2);
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
-    search: true,
+    theme: true,
     availability: false,
     sort: false,
   });
@@ -188,11 +197,36 @@ export function CollectionClient({
       params.delete(name);
     }
 
-    // URL-First Logic: Push updates to trigger re-render and animations
-    // Use replace for search (to avoid flooding history) and push for others
     const method = name === "q" ? "replace" : "push";
     router[method](`${pathname}?${params.toString()}`, { scroll: false });
   };
+
+  const toggleCategory = (category: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    let current = params.get("category")?.split(",").filter(Boolean) || [];
+    if (initialCategory && !params.has("category")) {
+      current = [initialCategory];
+    }
+
+    if (current.includes(category)) {
+      current = current.filter(c => c !== category);
+    } else {
+      current = [...current, category];
+    }
+
+    if (current.length > 0) {
+      params.set("category", current.join(","));
+    } else {
+      params.delete("category");
+    }
+    router.push(`${pathname}?${params.toString()}`, { scroll: false });
+  };
+
+  const clearFilters = () => {
+    router.push(pathname, { scroll: false });
+  };
+
+  const hasActiveFilters = searchQuery !== "" || selectedCategories.length > 0 || statusFilter !== "all" || sortOption !== "newest";
 
   const toggleSection = (key: string) => {
     setOpenSections(prev => ({ ...prev, [key]: !prev[key] }));
@@ -212,11 +246,11 @@ export function CollectionClient({
   const filteredArtworks = useMemo(() => {
     return filterArtworks(artworks, {
       searchQuery,
-      selectedCategory,
+      selectedCategories,
       statusFilter,
       sortOption
     });
-  }, [artworks, searchQuery, selectedCategory, statusFilter, sortOption]);
+  }, [artworks, searchQuery, selectedCategories, statusFilter, sortOption]);
 
   const categoriesByType = allCategories.reduce((acc, cat) => {
     if (!acc[cat.type]) acc[cat.type] = [];
@@ -239,15 +273,17 @@ export function CollectionClient({
     searchQuery,
     setSearchQuery: (val: string) => updateQueryParam("q", val),
     categoriesByType,
-    selectedCategory,
-    setSelectedCategory: (val: string | null) => updateQueryParam("category", val),
+    selectedCategories,
+    toggleCategory,
     statusFilter,
     setStatusFilter: (val: any) => updateQueryParam("status", val),
     sortOption,
     setSortOption: (val: any) => updateQueryParam("sort", val),
     openSections,
     toggleSection,
-    categoryCounts
+    categoryCounts,
+    clearFilters,
+    hasActiveFilters
   };
 
   return (
@@ -338,7 +374,7 @@ export function CollectionClient({
 
           {/* THE GRID - Key forces a reset on filter change to trigger animations */}
           <div
-            key={`${searchQuery}-${selectedCategory}-${statusFilter}-${sortOption}-${gridCols}`}
+            key={`${searchQuery}-${selectedCategories.join("-")}-${statusFilter}-${sortOption}-${gridCols}`}
             className="flex gap-8 lg:gap-12 items-start transition-all duration-700"
           >
             {filteredArtworks.length > 0 ? (

@@ -21,7 +21,7 @@ export type Artwork = {
 
 export type FilterOptions = {
     searchQuery: string;
-    selectedCategory: string | null;
+    selectedCategories: string[];
     statusFilter: "all" | "available" | "sold";
     sortOption: "newest" | "price_asc" | "price_desc";
 };
@@ -33,7 +33,7 @@ export type FilterOptions = {
 export function filterArtworks(artworks: Artwork[], options: Partial<FilterOptions>): Artwork[] {
     const {
         searchQuery = "",
-        selectedCategory = null,
+        selectedCategories = [],
         statusFilter = "all",
         sortOption = "newest"
     } = options;
@@ -45,8 +45,11 @@ export function filterArtworks(artworks: Artwork[], options: Partial<FilterOptio
                 art.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                 (art.artist?.toLowerCase() || "").includes(searchQuery.toLowerCase());
 
-            // 2. Category Filter
-            const matchCategory = selectedCategory ? art.categories?.includes(selectedCategory) : true;
+            // 2. Category Filter (OR logic: match if artwork has ANY of the selected categories)
+            const matchCategory =
+                selectedCategories.length === 0
+                    ? true
+                    : selectedCategories.some((cat) => art.categories?.includes(cat));
 
             // 3. Status Filter
             const matchStatus =
