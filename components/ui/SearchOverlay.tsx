@@ -39,6 +39,19 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
         return () => clearTimeout(timeoutId);
     }, [query]);
 
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    // Focus input when overlay opens
+    useEffect(() => {
+        if (isOpen) {
+            // Small delay to ensure the animation doesn't jitter
+            const timer = setTimeout(() => {
+                inputRef.current?.focus();
+            }, 100);
+            return () => clearTimeout(timer);
+        }
+    }, [isOpen]);
+
     // Prevent background scrolling when open
     useEffect(() => {
         if (isOpen) {
@@ -89,12 +102,12 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                             className="relative mb-12"
                         >
                             <input
+                                ref={inputRef}
                                 type="text"
                                 value={query}
                                 onChange={(e) => setQuery(e.target.value)}
                                 placeholder="Search artists, titles, or styles..."
                                 className="w-full bg-transparent border-b-2 border-soft-black/20 text-3xl md:text-5xl lg:text-6xl font-serif text-soft-black placeholder:text-soft-black/30 py-4 focus:outline-none focus:border-soft-black transition-colors"
-                                autoFocus
                             />
                             {isSearching && (
                                 <div className="absolute right-0 top-1/2 -translate-y-1/2">

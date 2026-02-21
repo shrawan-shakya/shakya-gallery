@@ -108,13 +108,13 @@ export function Footer() {
               </p>
             )}
           </div>
-        </div >
+        </div>
 
         {/* 2. SITEMAP (Col 6-12) */}
-        < div className="lg:col-span-7 grid grid-cols-2 md:grid-cols-3 gap-12 lg:gap-8" >
+        <div className="lg:col-span-7 grid grid-cols-2 md:grid-cols-3 gap-12 lg:gap-8">
 
           {/* Column A: Explore */}
-          < div className="space-y-8" >
+          <div className="space-y-8">
             <h4 className="font-sans text-xs tracking-[0.2em] text-gray-500 uppercase">Explore</h4>
             <ul className="space-y-4">
               <li>
@@ -138,10 +138,10 @@ export function Footer() {
                 </Link>
               </li>
             </ul>
-          </div >
+          </div>
 
           {/* Column B: Services */}
-          < div className="space-y-8" >
+          <div className="space-y-8">
             <h4 className="font-sans text-xs tracking-[0.2em] text-gray-500 uppercase">Services</h4>
             <ul className="space-y-4">
               {["Advisory", "Valuation", "Consignment", "Logistics"].map((item) => (
@@ -152,10 +152,10 @@ export function Footer() {
                 </li>
               ))}
             </ul>
-          </div >
+          </div>
 
           {/* Column C: Contact & Social */}
-          < div className="space-y-8" >
+          <div className="space-y-8">
             <h4 className="font-sans text-xs tracking-[0.2em] text-gray-500 uppercase">Connect</h4>
             <ul className="space-y-4">
               <li>
@@ -174,13 +174,13 @@ export function Footer() {
                 </a>
               </li>
             </ul>
-          </div >
+          </div>
 
-        </div >
-      </div >
+        </div>
+      </div>
 
       {/* 3. SUB-FOOTER (Copyright) */}
-      < div className="max-w-[1400px] mx-auto mt-24 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6" >
+      <div className="max-w-[1400px] mx-auto mt-24 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
         <p className="font-sans text-xs tracking-[0.2em] text-gray-600 uppercase">
           © {new Date().getFullYear()} Shakya Gallery. All Rights Reserved.
         </p>
@@ -188,8 +188,8 @@ export function Footer() {
           <Link href="/privacy-policy" className="font-sans text-xs tracking-[0.2em] text-gray-600 uppercase hover:text-white transition-colors">Privacy</Link>
           <Link href="/terms" className="font-sans text-xs tracking-[0.2em] text-gray-600 uppercase hover:text-white transition-colors">Terms</Link>
         </div>
-      </div >
+      </div>
 
-    </footer >
+    </footer>
   );
 }
