@@ -100,12 +100,12 @@ export default async function ArtworkPage({
 
   // Reusable Breadcrumbs
   const Breadcrumbs = ({ className }: { className?: string }) => (
-    <nav className={`flex items-center gap-3 font-sans text-[11px] tracking-[0.2em] uppercase text-gray-400 ${className}`}>
+    <nav className={`flex flex-wrap items-baseline gap-3 font-sans text-[11px] tracking-[0.2em] uppercase text-gray-400 ${className}`}>
       <Link href="/" className="hover:text-soft-black transition-colors">Home</Link>
       <span className="text-gray-300">/</span>
       <Link href="/collection" className="hover:text-soft-black transition-colors">Collection</Link>
       <span className="text-gray-300">/</span>
-      <span className="text-soft-black line-clamp-1 border-b border-black/20 pb-0.5">Current Work</span>
+      <span className="text-soft-black border-b border-black/20 pb-0.5">Current Work</span>
     </nav>
   );
 
@@ -149,7 +149,7 @@ export default async function ArtworkPage({
 
 
         {/* MOBILE BREADCRUMBS */}
-        <div className="lg:hidden px-6 mb-10">
+        <div className="max-w-[1400px] mx-auto px-6 lg:hidden mb-10">
           <Breadcrumbs />
         </div>
 
@@ -185,7 +185,7 @@ export default async function ArtworkPage({
                   </div>
                 )}
 
-                <h1 className="font-serif text-3xl md:text-5xl text-soft-black leading-tight line-clamp-2">
+                <h1 className="font-serif text-3xl md:text-5xl text-soft-black leading-tight line-clamp-2 mt-4 md:mt-6">
                   {art.title}
                 </h1>
                 <div className="flex justify-between items-baseline mt-2 mb-6">

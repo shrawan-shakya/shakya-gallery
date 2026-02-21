@@ -52,7 +52,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
 
             {/* HEADER */}
             <div className="max-w-3xl mx-auto px-6 text-center mb-16">
-                <div className="flex items-center justify-center gap-4 mb-8">
+                <div className="flex flex-wrap items-baseline justify-center gap-4 mb-8">
                     <Link href="/journal" className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-400 hover:text-soft-black transition-colors">
                         The Journal
                     </Link>

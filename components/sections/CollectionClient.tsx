@@ -254,12 +254,12 @@ export function CollectionClient({
     <div className="min-h-screen bg-bone pt-32 pb-20 px-6 md:px-12">
 
       {/* MOBILE FILTER BUTTON */}
-      <div className="lg:hidden mb-12 flex justify-between items-end border-b border-black/5 pb-4">
+      <div className="lg:hidden mb-12 flex justify-between items-baseline border-b border-black/5 pb-4">
         <button
           onClick={() => setIsMobileFilterOpen(true)}
-          className="group flex items-center gap-2"
+          className="group flex items-center gap-2 border-b border-black/20 pb-0.5"
         >
-          <span className="font-sans text-xs tracking-[0.2em] uppercase text-soft-black group-hover:text-gray-600 transition-colors border-b border-black/20 pb-0.5">
+          <span className="font-sans text-xs tracking-[0.2em] uppercase text-soft-black group-hover:text-gray-600 transition-colors">
             Filter + Sort
           </span>
         </button>
@@ -400,6 +400,7 @@ export function CollectionClient({
                                 year={art.year}
                                 medium={art.material}
                                 dimensions={art.dimensions}
+                                showButton={false}
                               />
                             </div>
                           </Link>
