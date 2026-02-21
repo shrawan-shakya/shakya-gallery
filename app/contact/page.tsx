@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { siteConfig } from "@/lib/config";
 
 export default function ContactPage() {
   const [activeTab, setActiveTab] = useState<"inquiry" | "visit">("inquiry");
@@ -69,8 +70,8 @@ export default function ContactPage() {
           <div className="space-y-8">
             <h3 className="font-sans text-xs tracking-[0.2em] text-soft-black border-b border-black/10 pb-4 uppercase">Direct Lines</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div><p className="font-serif text-lg italic text-gray-500 mb-2">Acquisitions</p><a href="mailto:concierge@shakyagallery.com" className="font-sans text-sm tracking-wide text-soft-black hover:opacity-70 transition-opacity">concierge@shakyagallery.com</a></div>
-              <div><p className="font-serif text-lg italic text-gray-500 mb-2">General</p><a href="mailto:mag.boudha@gmail.com" className="font-sans text-sm tracking-wide text-soft-black hover:opacity-70 transition-opacity">mag.boudha@gmail.com</a></div>
+              <div><p className="font-serif text-lg italic text-gray-500 mb-2">Acquisitions</p><a href={`mailto:${siteConfig.contact.email}`} className="font-sans text-sm tracking-wide text-soft-black hover:opacity-70 transition-opacity">{siteConfig.contact.email}</a></div>
+              <div><p className="font-serif text-lg italic text-gray-500 mb-2">General</p><a href={`mailto:${siteConfig.contact.secondaryEmail}`} className="font-sans text-sm tracking-wide text-soft-black hover:opacity-70 transition-opacity">{siteConfig.contact.secondaryEmail}</a></div>
             </div>
           </div>
 
@@ -79,8 +80,7 @@ export default function ContactPage() {
             <h3 className="font-sans text-xs tracking-[0.2em] text-soft-black border-b border-black/10 pb-4 uppercase">Visit The Gallery</h3>
             <div className="space-y-4">
               <p className="font-serif text-2xl text-soft-black leading-relaxed">
-                Kathmandu,<br />
-                Nepal
+                {siteConfig.contact.address.full}
               </p>
               <a
                 href="https://maps.google.com/?q=Shakya+Gallery+Kathmandu"

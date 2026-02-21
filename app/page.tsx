@@ -4,16 +4,18 @@ import { GalleryGrid } from "@/components/sections/GalleryGrid";
 import { AnimatedHero } from "@/components/sections/AnimatedHero";
 import { WhyBuy } from "@/components/sections/WhyBuy";
 import { FAQ } from "@/components/sections/FAQ";
+import { siteConfig } from "@/lib/config";
+import { SectionErrorBoundary } from "@/components/ui/SectionErrorBoundary";
 
 
 
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Shakya Gallery | Original Nepalese Fine Art & Modern Abstract Collection",
-  description: "Experience the legacy of fine art in Nepal. Buy original abstract, landscape, and portrait paintings from Kathmandu's leading art gallery. Certified authenticity and global shipping.",
+  title: `${siteConfig.name} | Original Nepalese Fine Art & Modern Abstract Collection`,
+  description: siteConfig.description,
   alternates: {
-    canonical: "https://shakyagallery.com",
+    canonical: siteConfig.url,
   },
 };
 
@@ -22,25 +24,25 @@ export default async function Home() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "ArtGallery",
-    "name": "Shakya Gallery",
-    "image": "https://shakyagallery.com/hero-1.jpg",
-    "logo": "https://shakyagallery.com/icon.png",
-    "description": "Exclusive Fine Arts Gallery in Nepal specializing in abstract, landscape, and portrait paintings. Established in 1998, we represent master Nepali artists.",
-    "url": "https://shakyagallery.com",
-    "telephone": "+977-9801234567",
+    "name": siteConfig.name,
+    "image": `${siteConfig.url}/hero-1.jpg`,
+    "logo": `${siteConfig.url}/icon.png`,
+    "description": siteConfig.description,
+    "url": siteConfig.url,
+    "telephone": siteConfig.contact.phone,
     "priceRange": "$$$",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Boudha",
-      "addressLocality": "Kathmandu",
-      "addressRegion": "Bagmati",
-      "postalCode": "44600",
-      "addressCountry": "NP"
+      "streetAddress": siteConfig.contact.address.street,
+      "addressLocality": siteConfig.contact.address.city,
+      "addressRegion": siteConfig.contact.address.region,
+      "postalCode": siteConfig.contact.address.postalCode,
+      "addressCountry": siteConfig.contact.address.country
     },
     "geo": {
       "@type": "GeoCoordinates",
-      "latitude": "27.7215",
-      "longitude": "85.3620"
+      "latitude": siteConfig.contact.geo.latitude,
+      "longitude": siteConfig.contact.geo.longitude
     }
   };
 
@@ -51,20 +53,30 @@ export default async function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <section className="h-screen w-full">
-        <AnimatedHero />
+        <SectionErrorBoundary sectionName="Hero Section">
+          <AnimatedHero />
+        </SectionErrorBoundary>
       </section>
 
       <section className="min-h-screen w-full flex items-center justify-center bg-bone">
-        <HeritagePreview />
+        <SectionErrorBoundary sectionName="Heritage Preview">
+          <HeritagePreview />
+        </SectionErrorBoundary>
       </section>
 
       <section className="min-h-screen w-full bg-bone pt-20">
-        <GalleryGrid limit={6} />
+        <SectionErrorBoundary sectionName="Gallery Preview">
+          <GalleryGrid limit={6} />
+        </SectionErrorBoundary>
       </section>
 
-      <WhyBuy />
+      <SectionErrorBoundary sectionName="Why Buy Section">
+        <WhyBuy />
+      </SectionErrorBoundary>
 
-      <FAQ />
+      <SectionErrorBoundary sectionName="FAQ Section">
+        <FAQ />
+      </SectionErrorBoundary>
     </div>
   );
 }

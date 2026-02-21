@@ -4,6 +4,17 @@ import Link from "next/link";
 import { ArtworkInquiry } from "@/components/ArtworkInquiry";
 import { ArtworkGallery } from "@/components/artwork/ArtworkGallery";
 
+export const dynamicParams = true; // Ensure new items show up immediately
+
+// FETCH SLUGS FOR STATIC GENERATION
+export async function generateStaticParams() {
+  const query = `*[_type == "artwork"] { "slug": slug.current }`;
+  const artworks = await sanityFetch({ query, perspective: "published" });
+  return artworks.data.map((art: { slug: string }) => ({
+    slug: art.slug,
+  }));
+}
+
 // FETCH DATA
 async function getArtwork(slug: string) {
   const query = `
@@ -42,15 +53,36 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     };
   }
 
+  const artist = art.artist || "Master Artist";
+  const material = art.material || "Fine Art";
+  const title = `${art.title} by ${artist} | Original Nepali Art`;
+
+  const description = art.description ?
+    art.description.length > 160 ? `${art.description.substring(0, 157)}...` : art.description
+    : `Buy ${art.title}, an original ${material} painting by ${artist}. Authentic Nepali art for sale at SHAKYA Gallery.`;
+
   return {
-    title: `${art.title} - Buy Original Nepali Art Online | SHAKYA`,
-    description: `Buy ${art.title}, an original ${art.material} painting by ${art.artist}. ${art.year}. authentic Nepali art for sale with certificate of authenticity.`,
+    title: `${title} | SHAKYA Gallery`,
+    description,
     openGraph: {
-      title: `${art.title} - Buy Original Nepali Art Online | SHAKYA`,
-      description: `Buy ${art.title}, an original ${art.material} painting by ${art.artist}. Available now at Shakya Gallery.`,
-      images: [art.mainImage.url],
-      type: "article",
+      title,
+      description,
+      images: [
+        {
+          url: art.mainImage.url,
+          width: 1200,
+          height: 630,
+          alt: art.title,
+        }
+      ],
+      type: "website",
     },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [art.mainImage.url],
+    }
   };
 }
 

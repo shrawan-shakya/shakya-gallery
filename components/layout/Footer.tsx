@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { siteConfig } from "@/lib/config";
 
 export function Footer() {
   const [email, setEmail] = useState("");
@@ -19,7 +20,7 @@ export function Footer() {
         Accept: "application/json",
       },
       body: JSON.stringify({
-        access_key: "dd980e1f-daa2-4f43-a832-3b887232392b", // <--- Your Real Key
+        access_key: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY, // <--- Use Env Variable
         subject: "New Newsletter Subscriber",
         from_name: "Shakya Gallery Footer",
         email: email, // The user's email
@@ -53,7 +54,7 @@ export function Footer() {
               SHAKYA
             </h2>
             <p className="font-sans text-xs tracking-[0.2em] text-gray-400 uppercase leading-relaxed max-w-sm">
-              Curating Himalayan Masterworks<br />Since 1998.
+              Curating Himalayan Masterworks<br />Since {siteConfig.since}.
             </p>
           </div>
 
@@ -163,12 +164,12 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <a href="https://instagram.com" target="_blank" className="font-serif text-lg text-white/80 hover:text-white hover:italic transition-all">
+                <a href={siteConfig.links.instagram} target="_blank" rel="noopener noreferrer" className="font-serif text-lg text-white/80 hover:text-white hover:italic transition-all">
                   Instagram
                 </a>
               </li>
               <li>
-                <a href="https://linkedin.com" target="_blank" className="font-serif text-lg text-white/80 hover:text-white hover:italic transition-all">
+                <a href={siteConfig.links.linkedin} target="_blank" rel="noopener noreferrer" className="font-serif text-lg text-white/80 hover:text-white hover:italic transition-all">
                   LinkedIn
                 </a>
               </li>

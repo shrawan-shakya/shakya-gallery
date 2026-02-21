@@ -1,8 +1,9 @@
 import { MetadataRoute } from "next";
 import { client } from "@/sanity/lib/client";
+import { siteConfig } from "@/lib/config";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-    const baseUrl = "https://shakyagallery.com";
+    const baseUrl = siteConfig.url;
 
     // 1. Static Pages
     const routes = [

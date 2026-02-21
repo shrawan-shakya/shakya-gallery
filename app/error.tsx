@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { siteConfig } from "@/lib/config";
 
 export default function Error({
     error,
@@ -30,7 +31,7 @@ export default function Error({
                 <p className="font-sans text-sm md:text-base tracking-wide text-gray-600 mb-8 leading-relaxed">
                     We encountered an unexpected error while loading this page.
                     <br />
-                    Our team has been notified.
+                    If the issue persists, please contact us at <a href={`mailto:${siteConfig.contact.email}`} className="text-soft-black underline">{siteConfig.contact.email}</a>.
                 </p>
 
                 <div className="flex flex-col md:flex-row gap-4 justify-center">

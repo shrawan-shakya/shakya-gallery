@@ -6,27 +6,17 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { MuseumFrame } from "@/components/ui/MuseumFrame";
 import { MuseumPlaque } from "@/components/ui/MuseumPlaque";
-
-// --- TYPES ---
-type Category = {
-  title: string;
-  type: "style" | "subject" | "medium" | "collection";
-};
-
-type Artwork = {
-  _id: string;
-  title: string;
-  artist?: string;
-  year?: string;
-  slug: string;
-  imageUrl: string;
-  aspectRatio: number;
-  status?: "available" | "sold" | "private";
-  price?: number;
-  categories?: string[];
-  dimensions?: string;
-  material?: string;
-};
+import { EmptyState } from "@/components/ui/EmptyState";
+import { SanityImage } from "@/components/ui/SanityImage";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { FeaturedCollection } from "./FeaturedCollection";
+import {
+  Artwork,
+  Category,
+  filterArtworks
+} from "@/lib/artworks";
+import { accordion, staggerContainer, staggerItem } from "@/lib/motion-variants";
 
 // --- REUSABLE COMPONENT: ACCORDION SECTION ---
 const FilterSection = ({
@@ -46,9 +36,9 @@ const FilterSection = ({
         onClick={onToggle}
         className="w-full flex justify-between items-center py-5 group bg-transparent"
       >
-        <span className="font-serif text-lg italic text-soft-black group-hover:text-gray-600 transition-colors">
+        <h3 className="font-sans text-[10px] tracking-[0.3em] uppercase text-gray-600 group-hover:text-soft-black transition-colors">
           {title}
-        </span>
+        </h3>
         <span className="font-sans text-lg text-soft-black/40 font-light group-hover:text-soft-black transition-colors">
           {isOpen ? "−" : "+"}
         </span>
@@ -56,10 +46,10 @@ const FilterSection = ({
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            variants={accordion}
+            initial="initial"
+            animate="animate"
+            exit="exit"
             className="overflow-hidden"
           >
             <div className="pb-6 pt-1 flex flex-col gap-3">
@@ -73,7 +63,6 @@ const FilterSection = ({
 };
 
 // --- EXTRACTED COMPONENT: FILTER PANEL ---
-// Defined OUTSIDE so it doesn't re-render and lose focus
 const FilterPanel = ({
   searchQuery,
   setSearchQuery,
@@ -85,7 +74,8 @@ const FilterPanel = ({
   sortOption,
   setSortOption,
   openSections,
-  toggleSection
+  toggleSection,
+  categoryCounts
 }: {
   searchQuery: string;
   setSearchQuery: (val: string) => void;
@@ -98,6 +88,7 @@ const FilterPanel = ({
   setSortOption: (val: any) => void;
   openSections: Record<string, boolean>;
   toggleSection: (key: string) => void;
+  categoryCounts: Record<string, number>;
 }) => {
   return (
     <>
@@ -107,7 +98,7 @@ const FilterPanel = ({
           placeholder="Artist or Title..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full bg-transparent border-b border-black/20 py-2 font-sans text-sm tracking-wide outline-none placeholder:text-gray-400 focus:border-black transition-colors"
+          className="w-full bg-transparent border-b border-black/20 py-2 font-sans text-sm tracking-wide outline-none placeholder:text-gray-500 focus:border-black transition-colors"
         />
       </FilterSection>
 
@@ -118,17 +109,21 @@ const FilterPanel = ({
           isOpen={openSections[type] || false}
           onToggle={() => toggleSection(type)}
         >
-          {titles.map((title) => (
-            <button
-              key={title}
-              onClick={() => setSelectedCategory(selectedCategory === title ? null : title)}
-              className={`text-left font-sans text-xs tracking-[0.2em] uppercase py-1 transition-all duration-300
-                ${selectedCategory === title ? "text-soft-black font-semibold pl-2 border-l-2 border-soft-black" : "text-gray-400 hover:text-soft-black"}
-              `}
-            >
-              {title}
-            </button>
-          ))}
+          {titles.map((title) => {
+            const count = categoryCounts[title] || 0;
+            return (
+              <button
+                key={title}
+                onClick={() => setSelectedCategory(selectedCategory === title ? null : title)}
+                className={`text-left font-sans text-xs tracking-[0.2em] uppercase py-1 transition-all duration-300 flex justify-between items-center group/btn
+                  ${selectedCategory === title ? "text-soft-black font-semibold pl-2 border-l-2 border-soft-black" : "text-gray-500 hover:text-soft-black"}
+                `}
+              >
+                <span>{title}</span>
+                <span className="text-[10px] opacity-60 group-hover/btn:opacity-100 transition-opacity ml-2">({count})</span>
+              </button>
+            );
+          })}
         </FilterSection>
       ))}
 
@@ -138,7 +133,7 @@ const FilterPanel = ({
             key={status}
             onClick={() => setStatusFilter(status as any)}
             className={`text-left font-sans text-xs tracking-[0.2em] uppercase py-1 transition-all duration-300
-              ${statusFilter === status ? "text-soft-black font-semibold pl-2 border-l-2 border-soft-black" : "text-gray-400 hover:text-soft-black"}
+              ${statusFilter === status ? "text-soft-black font-semibold pl-2 border-l-2 border-soft-black" : "text-gray-500 hover:text-soft-black"}
             `}
           >
             {status}
@@ -147,9 +142,9 @@ const FilterPanel = ({
       </FilterSection>
 
       <FilterSection title="Sort" isOpen={openSections["sort"]} onToggle={() => toggleSection("sort")}>
-        <button onClick={() => setSortOption("newest")} className={`text-left font-sans text-xs tracking-[0.2em] uppercase py-1 ${sortOption === "newest" ? "text-soft-black font-semibold" : "text-gray-400"}`}>Newest</button>
-        <button onClick={() => setSortOption("price_asc")} className={`text-left font-sans text-xs tracking-[0.2em] uppercase py-1 ${sortOption === "price_asc" ? "text-soft-black font-semibold" : "text-gray-400"}`}>Price: Low to High</button>
-        <button onClick={() => setSortOption("price_desc")} className={`text-left font-sans text-xs tracking-[0.2em] uppercase py-1 ${sortOption === "price_desc" ? "text-soft-black font-semibold" : "text-gray-400"}`}>Price: High to Low</button>
+        <button onClick={() => setSortOption("newest")} className={`text-left font-sans text-xs tracking-[0.2em] uppercase py-1 ${sortOption === "newest" ? "text-soft-black font-semibold pl-2 border-l-2 border-soft-black" : "text-gray-500 hover:text-soft-black"}`}>Newest</button>
+        <button onClick={() => setSortOption("price_asc")} className={`text-left font-sans text-xs tracking-[0.2em] uppercase py-1 ${sortOption === "price_asc" ? "text-soft-black font-semibold pl-2 border-l-2 border-soft-black" : "text-gray-500 hover:text-soft-black"}`}>Price: Low to High</button>
+        <button onClick={() => setSortOption("price_desc")} className={`text-left font-sans text-xs tracking-[0.2em] uppercase py-1 ${sortOption === "price_desc" ? "text-soft-black font-semibold pl-2 border-l-2 border-soft-black" : "text-gray-500 hover:text-soft-black"}`}>Price: High to Low</button>
       </FilterSection>
     </>
   );
@@ -164,23 +159,40 @@ export function CollectionClient({
   allCategories: Category[],
   initialCategory?: string | null
 }) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
-  // --- STATE ---
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(initialCategory);
-  const [statusFilter, setStatusFilter] = useState<"all" | "available" | "sold">("all");
-  const [sortOption, setSortOption] = useState<"newest" | "price_asc" | "price_desc">("newest");
+  // --- PARSE URL PARAMS ---
+  const searchQuery = searchParams.get("q") || "";
+  const selectedCategory = searchParams.get("category") || initialCategory;
+  const statusFilter = (searchParams.get("status") as any) || "all";
+  const sortOption = (searchParams.get("sort") as any) || "newest";
+
+  // --- UI STATE (Still local) ---
   const [showMat, setShowMat] = useState(true);
-
-  // UI State
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const [gridCols, setGridCols] = useState<2 | 3>(2);
-
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
     search: true,
     availability: false,
     sort: false,
   });
+
+  // --- HELPERS ---
+  const updateQueryParam = (name: string, value: string | null) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (value) {
+      params.set(name, value);
+    } else {
+      params.delete(name);
+    }
+
+    // URL-First Logic: Push updates to trigger re-render and animations
+    // Use replace for search (to avoid flooding history) and push for others
+    const method = name === "q" ? "replace" : "push";
+    router[method](`${pathname}?${params.toString()}`, { scroll: false });
+  };
 
   const toggleSection = (key: string) => {
     setOpenSections(prev => ({ ...prev, [key]: !prev[key] }));
@@ -198,24 +210,12 @@ export function CollectionClient({
 
   // --- FILTER LOGIC ---
   const filteredArtworks = useMemo(() => {
-    return artworks
-      .filter((art) => {
-        const matchSearch =
-          art.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          art.artist?.toLowerCase().includes(searchQuery.toLowerCase());
-        const matchCategory = selectedCategory ? art.categories?.includes(selectedCategory) : true;
-        const matchStatus =
-          statusFilter === "all" ? true :
-            statusFilter === "available" ? art.status === "available" :
-              (art.status === "sold" || art.status === "private");
-
-        return matchSearch && matchCategory && matchStatus;
-      })
-      .sort((a, b) => {
-        if (sortOption === "price_asc") return (a.price || 0) - (b.price || 0);
-        if (sortOption === "price_desc") return (b.price || 0) - (a.price || 0);
-        return 0;
-      });
+    return filterArtworks(artworks, {
+      searchQuery,
+      selectedCategory,
+      statusFilter,
+      sortOption
+    });
   }, [artworks, searchQuery, selectedCategory, statusFilter, sortOption]);
 
   const categoriesByType = allCategories.reduce((acc, cat) => {
@@ -224,26 +224,36 @@ export function CollectionClient({
     return acc;
   }, {} as Record<string, string[]>);
 
-  // --- PREPARE PROPS FOR FILTER PANEL ---
-  // We bundle these so we can pass them cleanly to the mobile drawer and sidebar
+  // --- ITEM COUNTS ---
+  const categoryCounts = useMemo(() => {
+    const counts: Record<string, number> = {};
+    artworks.forEach((art) => {
+      art.categories?.forEach((cat) => {
+        counts[cat] = (counts[cat] || 0) + 1;
+      });
+    });
+    return counts;
+  }, [artworks]);
+
   const filterProps = {
     searchQuery,
-    setSearchQuery,
+    setSearchQuery: (val: string) => updateQueryParam("q", val),
     categoriesByType,
     selectedCategory,
-    setSelectedCategory,
+    setSelectedCategory: (val: string | null) => updateQueryParam("category", val),
     statusFilter,
-    setStatusFilter,
+    setStatusFilter: (val: any) => updateQueryParam("status", val),
     sortOption,
-    setSortOption,
+    setSortOption: (val: any) => updateQueryParam("sort", val),
     openSections,
-    toggleSection
+    toggleSection,
+    categoryCounts
   };
 
   return (
     <div className="min-h-screen bg-bone pt-32 pb-20 px-6 md:px-12">
 
-      {/* MOBILE FILTER BUTTON (Static) */}
+      {/* MOBILE FILTER BUTTON */}
       <div className="lg:hidden mb-12 flex justify-between items-end border-b border-black/5 pb-4">
         <button
           onClick={() => setIsMobileFilterOpen(true)}
@@ -273,7 +283,6 @@ export function CollectionClient({
               <button onClick={() => setIsMobileFilterOpen(false)} className="p-2 hover:opacity-50 transition-opacity"><span className="font-sans text-xl">✕</span></button>
             </div>
             <div className="flex-1 overflow-y-auto p-6 pb-32" data-lenis-prevent>
-              {/* --- FIX IS HERE: Using the external component --- */}
               <FilterPanel {...filterProps} />
             </div>
             <div className="p-6 border-t border-black/5 bg-bone">
@@ -285,16 +294,15 @@ export function CollectionClient({
 
       <div className="flex flex-col lg:flex-row gap-12 lg:gap-16">
 
-        {/* DESKTOP SIDEBAR (Sticky) */}
+        {/* DESKTOP SIDEBAR */}
         <aside
           className="hidden lg:block w-64 flex-shrink-0 sticky top-32 h-[calc(100vh-8rem)] overflow-y-auto custom-scrollbar"
           data-lenis-prevent
         >
           <div className="pb-8">
             <div className="mb-8 pb-4 border-b border-black/5">
-              <p className="font-sans text-[11px] tracking-widest text-gray-400 uppercase">{filteredArtworks.length} Results</p>
+              <p className="font-sans text-[11px] tracking-widest text-gray-500 uppercase">{filteredArtworks.length} Results</p>
             </div>
-            {/* --- FIX IS HERE: Using the external component --- */}
             <FilterPanel {...filterProps} />
           </div>
         </aside>
@@ -302,9 +310,8 @@ export function CollectionClient({
         {/* MAIN CONTENT AREA */}
         <div className="flex-1">
 
-          {/* GRID TOGGLE (Desktop Only) */}
+          {/* GRID TOGGLE */}
           <div className="hidden lg:flex justify-end mb-8 items-center gap-4">
-            {/* MAT TOGGLE */}
             <div className="flex items-center gap-4 border-r border-black/10 pr-6 mr-2">
               <button
                 onClick={() => setShowMat(true)}
@@ -329,104 +336,97 @@ export function CollectionClient({
             </button>
           </div>
 
-          {/* THE GRID (JS Masonry) */}
-          <div className="flex gap-8 lg:gap-12 items-start transition-all duration-700">
-            {Array.from({ length: gridCols }).map((_, colIndex) => (
-              <div key={colIndex} className="flex-1 flex flex-col gap-12 lg:gap-16">
-                <AnimatePresence>
-                  {filteredArtworks
-                    .filter((_, index) => index % gridCols === colIndex)
-                    .map((art, index) => (
-                      <motion.div
-                        key={art._id}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.5 }}
-                        className="relative z-10 w-full"
-                      >
-                        <Link href={`/artwork/${art.slug}`} className="block cursor-pointer group/card">
-
-                          {/* IMAGE FRAME */}
-                          <div className="relative group/image">
-                            <MuseumFrame className="h-auto" hasMat={showMat} aspectRatio={art.aspectRatio}>
-                              {art.imageUrl && (
-                                <Image
-                                  src={art.imageUrl}
-                                  alt={art.title}
-                                  fill
-                                  priority={index < 2}
-                                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                  className={`object-cover transition-all duration-700 ease-out scale-100 group-hover/image:scale-105
-                              ${(art.status === "sold" || art.status === "private")
-                                      ? "grayscale-[0.2] group-hover/image:grayscale group-hover/image:opacity-40"
-                                      : "grayscale-[0.2] group-hover/image:grayscale-0"
-                                    }
-                            `}
-                                />
-                              )}
-                            </MuseumFrame>
-
-                            {/* BADGES */}
-                            <div className="absolute inset-0 pointer-events-none p-6">
-                              {art.status === "sold" && (
-                                <span className={`
-                            absolute inset-0 flex flex-col items-center justify-center z-20
-                            opacity-0 group-hover/image:opacity-100 transition-opacity duration-500
-                          `}>
-                                  <span className="font-serif font-bold italic text-2xl md:text-3xl text-white bg-[#7D1818] shadow-xl -rotate-12 tracking-widest px-5 py-2">
-                                    SOLD
+          {/* THE GRID - Key forces a reset on filter change to trigger animations */}
+          <div
+            key={`${searchQuery}-${selectedCategory}-${statusFilter}-${sortOption}`}
+            className="flex gap-8 lg:gap-12 items-start transition-all duration-700"
+          >
+            {filteredArtworks.length > 0 ? (
+              Array.from({ length: gridCols }).map((_, colIndex) => (
+                <motion.div
+                  key={colIndex}
+                  variants={staggerContainer}
+                  initial="initial"
+                  whileInView="animate"
+                  viewport={{ once: true }}
+                  className="flex-1 flex flex-col gap-12 lg:gap-16"
+                >
+                  <AnimatePresence mode="popLayout">
+                    {filteredArtworks
+                      .filter((_, index) => index % gridCols === colIndex)
+                      .map((art, index) => (
+                        <motion.div
+                          key={art._id}
+                          variants={staggerItem}
+                          layout
+                          className="relative z-10 w-full"
+                        >
+                          <Link href={`/artwork/${art.slug}`} className="block cursor-pointer group/card">
+                            <div className="relative group/image">
+                              <SanityImage
+                                src={art.imageUrl}
+                                alt={art.title}
+                                lqip={art.lqip}
+                                aspectRatio={art.aspectRatio}
+                                hasMat={showMat}
+                                priority={index < 2}
+                                imageClassName={cn(
+                                  (art.status === "sold" || art.status === "private")
+                                    ? "grayscale-[0.2] group-hover/image:grayscale group-hover/image:opacity-40"
+                                    : "grayscale-[0.2] group-hover/image:grayscale-0"
+                                )}
+                              />
+                              <div className="absolute inset-0 pointer-events-none p-6">
+                                {art.status === "sold" && (
+                                  <span className={`
+                                    absolute inset-0 flex flex-col items-center justify-center z-20
+                                    opacity-0 group-hover/image:opacity-100 transition-opacity duration-500
+                                  `}>
+                                    <span className="font-serif font-bold italic text-2xl md:text-3xl text-white bg-[#7D1818] shadow-xl -rotate-12 tracking-widest px-5 py-2">
+                                      SOLD
+                                    </span>
+                                    <span className="mt-16 font-sans text-white tracking-[0.2em] uppercase font-medium drop-shadow-md text-center px-4 text-[10px] md:text-xs leading-relaxed max-w-[200px]">
+                                      Commission a similar piece
+                                    </span>
                                   </span>
-                                  <span className={`mt-16 font-sans text-white tracking-[0.2em] uppercase font-medium drop-shadow-md text-center px-4
-                              ${gridCols === 2 ? "text-[10px]" : "text-[9px] leading-tight"}
-                            `}>
-                                    Looking for something similar?
-                                  </span>
-                                </span>
-                              )}
-
-                              {art.status === "available" && !!art.price && (
-                                <span className={`
-                             absolute bg-white/95 text-soft-black font-sans tracking-[0.2em] opacity-0 group-hover/image:opacity-100 transition-opacity duration-500 backdrop-blur-md shadow-md border border-soft-black/10 left-1/2 -translate-x-1/2
-                             ${gridCols === 2 ? "bottom-8 text-lg px-8 py-4" : "bottom-4 text-sm px-5 py-2.5"}
-                           `}>
-                                  ${art.price.toLocaleString()}
-                                </span>
-                              )}
+                                )}
+                              </div>
                             </div>
-                          </div>
 
-                          {/* PLAQUE */}
-                          <div className="mt-8">
-                            <MuseumPlaque
-                              title={art.title}
-                              artist={art.artist}
-                              medium={art.material}
-                              dimensions={art.dimensions}
-                              year={art.year}
-                              showButton={false}
-                            />
-                          </div>
+                            <div className="mt-8">
+                              <MuseumPlaque
+                                title={art.title}
+                                artist={art.artist}
+                                year={art.year}
+                                medium={art.material}
+                                dimensions={art.dimensions}
+                              />
+                            </div>
+                          </Link>
+                        </motion.div>
+                      ))}
+                  </AnimatePresence>
+                </motion.div>
+              ))
+            ) : (
+              <div className="w-full">
+                <FeaturedCollection
+                  artworks={artworks}
+                  heading="While we curate more pieces for this category, explore our featured masterpieces."
+                />
 
-                        </Link>
-                      </motion.div>
-                    ))}
-                </AnimatePresence>
+                <div className="flex justify-center mt-12 mb-20 relative z-20">
+                  <button
+                    onClick={() => router.push(pathname)}
+                    className="font-sans text-[10px] underline uppercase tracking-[0.3em] text-soft-black hover:opacity-60 transition-opacity"
+                  >
+                    Reset Everything
+                  </button>
+                </div>
               </div>
-            ))}
+            )}
           </div>
-
-          {/* EMPTY STATE */}
-          {filteredArtworks.length === 0 && (
-            <div className="h-[50vh] flex flex-col items-center justify-center text-center">
-              <p className="font-serif text-2xl italic text-gray-400 mb-4">No artworks found.</p>
-              <button onClick={() => { setSearchQuery(""); setSelectedCategory(null); setStatusFilter("all"); }} className="font-sans text-xs underline uppercase tracking-widest text-soft-black">
-                Reset Filters
-              </button>
-            </div>
-          )}
         </div>
-
       </div>
     </div>
   );

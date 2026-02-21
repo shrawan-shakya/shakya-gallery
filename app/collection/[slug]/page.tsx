@@ -2,6 +2,7 @@ import { sanityFetch } from "@/sanity/lib/live";
 import { CollectionClient } from "@/components/sections/CollectionClient";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 
 interface Props {
     params: Promise<{ slug: string }>;
@@ -22,6 +23,7 @@ async function getArtworks(categorySlug: string) {
       "categories": categories[]->title,
       "slug": slug.current,
       "imageUrl": mainImage.asset->url,
+      "lqip": mainImage.asset->metadata.lqip,
       "aspectRatio": mainImage.asset->metadata.dimensions.aspectRatio
     }
   `;
@@ -68,10 +70,12 @@ export default async function CategoryPage({ params }: Props) {
     const allCategories = await getAllCategories();
 
     return (
-        <CollectionClient
-            artworks={artworks}
-            allCategories={allCategories}
-            initialCategory={category.title}
-        />
+        <Suspense fallback={<div className="min-h-screen bg-bone pt-32 px-12 font-serif italic text-soft-black/40">Loading collection...</div>}>
+            <CollectionClient
+                artworks={artworks}
+                allCategories={allCategories}
+                initialCategory={category.title}
+            />
+        </Suspense>
     );
 }

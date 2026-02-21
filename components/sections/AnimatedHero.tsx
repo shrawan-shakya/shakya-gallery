@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
 import { motion } from "framer-motion";
+import { fadeInUp, LUXURY_DURATION, LUXURY_EASE } from "@/lib/motion-variants";
 
 export function AnimatedHero() {
   return (
@@ -18,19 +18,18 @@ export function AnimatedHero() {
         <source src="/hero intro.mp4" type="video/mp4" />
       </video>
 
-      {/* OVERLAY (For Text Readability) - Adjusted opacity for video */}
+      {/* OVERLAY */}
       <div className="absolute inset-0 bg-black/20 z-0" />
 
-      {/* Background Watermark (Centered) - Lower opacity for video */}
+      {/* Background Watermark */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
         <span className="font-serif text-[40vw] leading-none text-white/5 opacity-30 blur-[1px] translate-y-4">S</span>
       </div>
 
-      {/* Main Content */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
+        variants={fadeInUp}
+        initial="initial"
+        animate="animate"
         className="flex flex-col items-center text-center z-10 px-4 mt-[15vh] md:mt-[22vh]"
       >
         <p className="font-sans text-[10px] md:text-xs tracking-[2em] text-white/80 uppercase mb-6 ml-2">Est. 1998</p>
@@ -39,7 +38,6 @@ export function AnimatedHero() {
           Buy Original Nepalese Fine Art
         </h1>
 
-        {/* Visual Title (Decorative) */}
         <div className="font-serif font-bold text-7xl md:text-9xl text-white tracking-wide leading-none drop-shadow-md">
           SHAKYA
         </div>
@@ -48,11 +46,10 @@ export function AnimatedHero() {
           <div className="w-16 h-[1px] bg-white/50 mt-10 mb-8" />
         </div>
 
-        {/* Scroll Indicator */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.0, duration: 1.0 }}
+          transition={{ delay: 1.0, duration: LUXURY_DURATION, ease: LUXURY_EASE }}
           className="flex flex-col items-center gap-4 mt-8"
         >
           <p className="font-sans text-[9px] tracking-[0.3em] uppercase text-white/70 ml-1">Scroll</p>
@@ -65,7 +62,6 @@ export function AnimatedHero() {
           </div>
         </motion.div>
       </motion.div>
-
     </div>
   );
 }

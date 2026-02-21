@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { MuseumFrame } from "@/components/ui/MuseumFrame";
 import { MuseumPlaque } from "@/components/ui/MuseumPlaque";
+import { EmptyState } from "@/components/ui/EmptyState";
+import { SanityImage } from "@/components/ui/SanityImage";
 import { cn } from "@/lib/utils";
 
 interface Artwork {
@@ -16,11 +18,14 @@ interface Artwork {
   material?: string;
   year: string;
   imageUrl: string;
+  lqip?: string;
   slug: string;
   aspectRatio: number;
   status?: "available" | "sold" | "private";
   price?: number;
 }
+
+import { staggerContainer, staggerItem } from "@/lib/motion-variants";
 
 export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
   const [layout, setLayout] = useState<"grid" | "single">("single");
@@ -28,7 +33,7 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
 
   return (
     <>
-      {/* LAYOUT & MAT TOGGLE BAR (Desktop Only) */}
+      {/* ... toggle bar ... */}
       <div className="sticky top-0 z-40 w-full bg-bone/95 backdrop-blur-sm border-b border-[#1A1A1A]/5 transition-all duration-300 mb-12 hidden md:block">
         <div className="flex justify-between max-w-[1800px] mx-auto px-8 py-4">
 
@@ -49,7 +54,7 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
               onClick={() => setShowMat(false)}
               className={cn(
                 "font-sans text-[10px] tracking-[0.25em] uppercase transition-all duration-300",
-                !showMat
+                !process.env.NEXT_PHASE && !showMat
                   ? "text-soft-black font-semibold border-b border-soft-black"
                   : "text-gray-400 hover:text-soft-black border-b border-transparent"
               )}
@@ -91,20 +96,22 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
 
         {/* VIEW: SINGLE ROW */}
         {layout === "single" && (
-          <div className="max-w-[800px] mx-auto grid grid-cols-1 gap-y-32 md:gap-y-48">
+          <motion.div
+            variants={staggerContainer}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true, margin: "-50px" }}
+            className="max-w-[800px] mx-auto grid grid-cols-1 gap-y-32 md:gap-y-48"
+          >
             {artworks.map((art, index) => (
               <motion.div
                 key={art._id}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
-                viewport={{ once: true, margin: "-50px" }}
+                variants={staggerItem}
                 className="w-full relative z-10"
               >
                 <Link href={`/artwork/${art.slug}`} className="block cursor-pointer no-underline group/card">
                   <div className="w-full mx-auto">
                     <div className="w-full md:max-w-[75%] mx-auto relative group/image">
-                      {/* GRIDS: Use w-full h-auto. Grid frame will calculate height. */}
                       <MuseumFrame aspectRatio={art.aspectRatio} hasMat={showMat} className="w-full h-auto">
                         {art.imageUrl && (
                           <div className="absolute inset-0 w-full h-full">
@@ -161,7 +168,7 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                 </Link>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         )}
 
         {/* VIEW: GRID (JS Masonry - 2 Columns) */}
@@ -169,40 +176,39 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
           <div className="max-w-[1800px] mx-auto flex flex-row gap-4 md:gap-12 items-start">
             {/* Split into 2 columns for Desktop Masonry */}
             {[0, 1].map((colIndex) => (
-              <div key={colIndex} className="flex-1 flex flex-col gap-4 md:gap-12 w-full">
+              <motion.div
+                key={colIndex}
+                variants={staggerContainer}
+                initial="initial"
+                whileInView="animate"
+                viewport={{ once: true, margin: "-50px" }}
+                className="flex-1 flex flex-col gap-4 md:gap-12 w-full"
+              >
                 {artworks
                   .filter((_, index) => index % 2 === colIndex)
                   .map((art, index) => (
                     <motion.div
                       key={art._id}
-                      initial={{ opacity: 0 }}
-                      whileInView={{ opacity: 1 }}
-                      transition={{ duration: 0.8, delay: index * 0.1 }}
-                      viewport={{ once: true, margin: "-50px" }}
+                      variants={staggerItem}
                       className="w-full relative z-10"
                     >
                       <Link href={`/artwork/${art.slug}`} className="block cursor-pointer no-underline group/card">
                         <div className="w-full mx-auto">
                           <div className="w-full relative group/image">
                             {/* GRIDS: Use w-full h-auto. The grid-based frame will expand height naturally. */}
-                            <MuseumFrame aspectRatio={art.aspectRatio} hasMat={showMat} className="w-full h-auto">
-                              {art.imageUrl && (
-                                <div className="absolute inset-0 w-full h-full">
-                                  <Image
-                                    src={art.imageUrl}
-                                    alt={art.title}
-                                    fill
-                                    sizes="(max-width: 768px) 100vw, 50vw"
-                                    className={`object-cover transition-all duration-700 ease-out scale-100 group-hover/image:scale-105
-                                  ${(art.status === "sold" || art.status === "private")
-                                        ? "grayscale-[0.2] group-hover/image:grayscale group-hover/image:opacity-40"
-                                        : "grayscale-[0.2] group-hover/image:grayscale-0"
-                                      }
-                                `}
-                                  />
-                                </div>
+                            <SanityImage
+                              src={art.imageUrl}
+                              alt={art.title}
+                              lqip={art.lqip}
+                              aspectRatio={art.aspectRatio}
+                              hasMat={showMat}
+                              priority={index < 2}
+                              imageClassName={cn(
+                                (art.status === "sold" || art.status === "private")
+                                  ? "grayscale-[0.2] group-hover/image:grayscale group-hover/image:opacity-40"
+                                  : "grayscale-[0.2] group-hover/image:grayscale-0"
                               )}
-                            </MuseumFrame>
+                            />
                             <div className="absolute inset-0 pointer-events-none p-4 md:p-6">
                               {art.status === "sold" && (
                                 <span className={`
@@ -239,9 +245,14 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                       </Link>
                     </motion.div>
                   ))}
-              </div>
+              </motion.div>
             ))}
           </div>
+        )}
+
+        {/* EMPTY STATE FALLBACK */}
+        {artworks.length === 0 && (
+          <EmptyState />
         )}
 
       </div >

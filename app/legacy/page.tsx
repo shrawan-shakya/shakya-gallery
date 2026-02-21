@@ -125,7 +125,7 @@ export default function LegacyPage() {
         year="1998"
         title="Mountain Art Gallery"
         text="For over two decades, Mountain Art Gallery has been a bridge for the local artists of Kathmandu. By helping Nepalese creators share their work with international tourists and dedicated collectors, we ensure that our rich artistic heritage finds a home around the world. We are proud to connect the spirit of the Himalayas with those who value true, local art."
-        image="http://lhassoadventure.com/wp-content/uploads/2024/09/a.jpg" // Placeholder: Vintage Kathmandu Vibe
+        image="/legacy-1.jpg" // Localized historical Kathmandu image
         alignment="left"
       />
 

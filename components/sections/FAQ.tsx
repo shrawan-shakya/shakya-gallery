@@ -4,28 +4,11 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Minus } from "lucide-react";
 
-const faqs = [
-    {
-        question: "How do I pay for an artwork?",
-        answer: "We facilitate secure transactions for all clients. International collectors can pay via Bank Wire Transfer (SWIFT) or International Credit Card (upon request). For local clients in Nepal, we accept Bank Transfer, Digital Wallets (Fonepay/eSewa), or Cash on Delivery."
-    },
-    {
-        question: "Do you offer international shipping?",
-        answer: "Yes, we specialize in global logistics. For international orders, we provide custom crating, export documentation, and insured shipping via DHL/FedEx. For local clients in Kathmandu, we offer complimentary hand-delivery or gallery pickup."
-    },
-    {
-        question: "Can I see the artwork before buying?",
-        answer: "Absolutely. For local clients, we invite you to a private viewing at our Kathmandu gallery. For international collectors, we offer high-resolution detail shots and a 'Virtual Preview' service—just send us a photo of your wall, and we will digitally place the artwork for you."
-    },
-    {
-        question: "Is every artwork an original piece?",
-        answer: "Yes, Shakya Gallery exclusively represents original fine art. Whether it is an expressive abstract or a detailed Paubha, every piece is a unique creation by a master artist, accompanied by a signed Certificate of Authenticity."
-    },
-    {
-        question: "How do you support Nepalese artists?",
-        answer: "Since 1998, our mission has been to provide a global platform for local talent. By acquiring art through SHAKYA, you are directly supporting the livelihoods of traditional and contemporary artists in Nepal, helping to preserve our rich cultural heritage."
-    }
-];
+import { accordion } from "@/lib/motion-variants";
+
+import { siteConfig } from "@/lib/config";
+
+const faqs = siteConfig.faqs;
 
 export function FAQ() {
     const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -57,10 +40,10 @@ export function FAQ() {
                             <AnimatePresence>
                                 {openIndex === index && (
                                     <motion.div
-                                        initial={{ height: 0, opacity: 0 }}
-                                        animate={{ height: "auto", opacity: 1 }}
-                                        exit={{ height: 0, opacity: 0 }}
-                                        transition={{ duration: 0.3 }}
+                                        variants={accordion}
+                                        initial="initial"
+                                        animate="animate"
+                                        exit="exit"
                                         className="overflow-hidden"
                                     >
                                         <p className="font-sans text-sm md:text-base text-gray-600 leading-relaxed pb-8 pr-8">

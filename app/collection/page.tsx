@@ -1,6 +1,7 @@
 import { sanityFetch } from "@/sanity/lib/live";
 import { CollectionClient } from "@/components/sections/CollectionClient";
 import { Metadata } from "next";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Buy Original Fine Art in Nepal | Abstracts, Landscapes & Portraits",
@@ -25,6 +26,7 @@ async function getArtworks() {
       "categories": categories[]->title, // Get category names
       "slug": slug.current,
       "imageUrl": mainImage.asset->url,
+      "lqip": mainImage.asset->metadata.lqip,
       "aspectRatio": mainImage.asset->metadata.dimensions.aspectRatio
     }
   `;
@@ -69,7 +71,9 @@ export default async function CollectionPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <CollectionClient artworks={artworks} allCategories={categories} />
+      <Suspense fallback={<div className="min-h-screen bg-bone pt-32 px-12 font-serif italic text-soft-black/40">Loading gallery...</div>}>
+        <CollectionClient artworks={artworks} allCategories={categories} />
+      </Suspense>
     </>
   );
 }

@@ -2,29 +2,20 @@
 
 import { motion } from "framer-motion";
 import { ShieldCheck, Globe, Heart, Lock } from "lucide-react";
+import { siteConfig } from "@/lib/config";
+import { staggerContainer, staggerItem } from "@/lib/motion-variants";
 
-const whyBuyItems = [
-    {
-        icon: <ShieldCheck className="w-8 h-8 text-soft-black" />,
-        title: "Certified Authenticity",
-        description: "Every artwork is accompanied by a signed Certificate of Authenticity, verifying its origin and the artist's legacy."
-    },
-    {
-        icon: <Globe className="w-8 h-8 text-soft-black" />,
-        title: "Worldwide & Local Access",
-        description: "We provide secure international crating and shipping for global collectors, and complimentary delivery within the Kathmandu Valley."
-    },
-    {
-        icon: <Heart className="w-8 h-8 text-soft-black" />,
-        title: "Support Local Artists",
-        description: "Your acquisition directly supports the livelihood of master artists in Kathmandu and the preservation of Himalayan heritage."
-    },
-    {
-        icon: <Lock className="w-8 h-8 text-soft-black" />,
-        title: "Secure Invoicing",
-        description: "We facilitate secure international Bank Transfers (SWIFT) and local digital payments, ensuring transparency for every acquisition."
-    }
-];
+const iconMap = {
+    "Certified Authenticity": <ShieldCheck className="w-8 h-8 text-soft-black" />,
+    "Worldwide & Local Access": <Globe className="w-8 h-8 text-soft-black" />,
+    "Support Local Artists": <Heart className="w-8 h-8 text-soft-black" />,
+    "Secure Invoicing": <Lock className="w-8 h-8 text-soft-black" />,
+};
+
+const whyBuyItems = siteConfig.benefits.map((benefit) => ({
+    ...benefit,
+    icon: iconMap[benefit.title as keyof typeof iconMap] || <ShieldCheck className="w-8 h-8 text-soft-black" />,
+}));
 
 export function WhyBuy() {
     return (
@@ -38,14 +29,17 @@ export function WhyBuy() {
                 </div>
 
                 {/* 2. BENEFITS GRID */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-24">
+                <motion.div
+                    variants={staggerContainer}
+                    initial="initial"
+                    whileInView="animate"
+                    viewport={{ once: true }}
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-24"
+                >
                     {whyBuyItems.map((item, index) => (
                         <motion.div
                             key={index}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: index * 0.1, duration: 0.6 }}
+                            variants={staggerItem}
                             className="flex flex-col items-center text-center space-y-4"
                         >
                             <div className="p-4 bg-bone rounded-full mb-2">
@@ -55,7 +49,7 @@ export function WhyBuy() {
                             <p className="font-sans text-sm text-gray-500 leading-relaxed max-w-xs">{item.description}</p>
                         </motion.div>
                     ))}
-                </div>
+                </motion.div>
 
             </div>
         </section>
