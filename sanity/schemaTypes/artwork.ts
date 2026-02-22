@@ -70,7 +70,14 @@ export default defineType({
       name: 'price',
       title: 'Price (USD)',
       type: 'number',
-      description: 'Leave empty if "Price on Request"',
+      description: 'Internal price or display price if shown.',
+    }),
+    defineField({
+      name: 'showPrice',
+      title: 'Show Price on Website',
+      type: 'boolean',
+      initialValue: false,
+      description: 'If toggled ON, the price will be visible to customers. If OFF, "Price on Request" will be implied.',
     }),
     defineField({
       name: 'status',
@@ -92,6 +99,25 @@ export default defineType({
       type: 'boolean',
       initialValue: false,
       description: 'Toggle this to mark as a special offer or featured item',
+    }),
+
+    // --- 5. LOGISTICS ---
+    defineField({
+      name: 'packagedWeight',
+      title: 'Packaged Weight (KG)',
+      type: 'number',
+      description: 'Weight of the artwork including the tube/packaging.',
+    }),
+    defineField({
+      name: 'shippingDimensions',
+      title: 'Shipping Dimensions (Inches)',
+      type: 'object',
+      description: 'Dimensions of the shipping container.',
+      fields: [
+        { name: 'length', title: 'Length', type: 'number' },
+        { name: 'width', title: 'Width', type: 'number' },
+        { name: 'height', title: 'Height', type: 'number' },
+      ],
     }),
     defineField({
       name: 'orientation',

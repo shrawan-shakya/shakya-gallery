@@ -28,6 +28,7 @@ async function getArtwork(slug: string) {
       artist,
       status, 
       price,
+      showPrice,
       orientation,
       "mainImage": {
         "url": mainImage.asset->url,
@@ -194,8 +195,8 @@ export default async function ArtworkPage({
                   </p>
                 </div>
 
-                {/* MOVED PRICE */}
-                {!isSold && art.price && (
+                {/* MOVED PRICE (Now respects showPrice toggle) */}
+                {!isSold && art.showPrice && art.price && (
                   <div className="mb-2">
                     <p className="font-serif text-3xl md:text-4xl text-soft-black">
                       ${art.price.toLocaleString()}
@@ -263,6 +264,13 @@ export default async function ArtworkPage({
               {/* 6. STATIC INFORMATION */}
               <div className="space-y-6 pt-8 border-t border-black/5">
                 <div className="space-y-2">
+                  <h4 className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-400">Presentation & Shipping</h4>
+                  <p className="font-sans text-xs leading-relaxed text-gray-500">
+                    To ensure maximum protection during transit, this painting arrives unframed and carefully rolled in a heavy-duty protective tube. This is the industry standard for high-value fine art, minimizing risk and optimizing international transport.
+                  </p>
+                </div>
+
+                <div className="space-y-2">
                   <h4 className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-400">Authenticity</h4>
                   <p className="font-sans text-xs leading-relaxed text-gray-500">
                     Every acquisition is accompanied by a Certificate of Authenticity signed by the Shakya Gallery curation team, guaranteeing the provenance and originality of the work.
@@ -270,9 +278,9 @@ export default async function ArtworkPage({
                 </div>
 
                 <div className="space-y-2">
-                  <h4 className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-400">Shipping & Insurance</h4>
+                  <h4 className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-400">Shipping & Optional Framing</h4>
                   <p className="font-sans text-xs leading-relaxed text-gray-500">
-                    We provide specialized art logistics for global delivery. Each piece is custom crated and fully insured during transit. Shipping costs are calculated based on destination and will be provided in your personalized quote.
+                    We provide specialized art logistics for global delivery. While paintings ship tubed by default, custom museum-grade framing is available upon request. Mounting and framing will incur additional costs for the frame itself and increased weight-based shipping. Contact us for a bespoke framing quote.
                   </p>
                 </div>
               </div>

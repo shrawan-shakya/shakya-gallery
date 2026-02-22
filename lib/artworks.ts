@@ -14,6 +14,13 @@ export type Artwork = {
     aspectRatio: number;
     status?: "available" | "sold" | "private";
     price?: number;
+    showPrice?: boolean;
+    packagedWeight?: number;
+    shippingDimensions?: {
+        length: number;
+        width: number;
+        height: number;
+    };
     categories?: string[];
     dimensions?: string;
     material?: string;

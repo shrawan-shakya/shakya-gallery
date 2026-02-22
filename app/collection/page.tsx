@@ -23,6 +23,7 @@ async function getArtworks() {
       material,
       status,
       price,
+      showPrice,
       "categories": categories[]->title, // Get category names
       "slug": slug.current,
       "imageUrl": mainImage.asset->url,

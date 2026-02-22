@@ -65,7 +65,7 @@ export default function BuyingGuidePage() {
                     <Step
                         number="04"
                         title="Professional Delivery"
-                        text="We carefully pack and ship every piece to ensure it arrives safely. Fully insured delivery brings your new artwork directly to your doorstep, ready to hang."
+                        text="Paintings are carefully rolled in protective tubes for secure, cost-effective global transport. If you prefer your artwork to arrive pre-framed, our curators can arrange custom museum-grade framing for an additional fee."
                     />
                 </div>
             </section>
