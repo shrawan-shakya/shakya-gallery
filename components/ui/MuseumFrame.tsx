@@ -16,8 +16,28 @@ export function MuseumFrame({
 }: MuseumFrameProps) {
   // GOD-TIER ARCHITECTURE: "Subgrid Dimensionality"
   // Using Grid for all layers allows dimensions to flow in BOTH directions.
-  // If the parent provides width, height is calculated. If the parent provides height, width is calculated.
-  // 'aspect-ratio' on the innermost child will force the entire grid stack to respect its proportions.
+
+  const FrameWrapper = ({ children }: { children: React.ReactNode }) => {
+    if (!hasMat) return <>{children}</>;
+
+    return (
+      /* 1. The Outer Frame (Ebony Gradient + Bevel) */
+      <div className="grid p-[8px] md:p-[20px] 
+        bg-gradient-to-br from-[#2d2d2d] via-[#111111] to-[#050505]
+        shadow-[0_15px_30px_rgba(0,0,0,0.5),inset_1px_1px_0px_rgba(255,255,255,0.15),inset_-1px_-1px_0px_rgba(0,0,0,0.5)]"
+      >
+        {/* 2. The Gold Fillet (Metallic Gradient) */}
+        <div className="grid p-[2px] shadow-sm
+          bg-gradient-to-tr from-[#997b3a] via-[#fcf6ba] to-[#aa771c]"
+        >
+          {/* 3. The Matting (With Deep Inner Shadow) */}
+          <div className="relative grid bg-[#FCFCFC] p-[4px] md:p-[16px] shadow-[inset_0_0_15px_rgba(0,0,0,0.4)] transition-all duration-300">
+            {children}
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div
@@ -27,40 +47,20 @@ export function MuseumFrame({
       )}
       {...props}
     >
-      {/* 1. The Outer Frame (Ebony Gradient + Bevel) */}
-      <div className="grid p-[8px] md:p-[20px] 
-        bg-gradient-to-br from-[#2d2d2d] via-[#111111] to-[#050505]
-        shadow-[0_15px_30px_rgba(0,0,0,0.5),inset_1px_1px_0px_rgba(255,255,255,0.15),inset_-1px_-1px_0px_rgba(0,0,0,0.5)]"
-      >
-
-        {/* 2. The Gold Fillet (Metallic Gradient) */}
-        <div className="grid p-[2px] shadow-sm
-          bg-gradient-to-tr from-[#997b3a] via-[#fcf6ba] to-[#aa771c]"
+      <FrameWrapper>
+        {/* 4. Artwork Container (The Master Proportions) */}
+        <div
+          className="relative bg-[#FCFCFC] overflow-hidden shadow-[inset_0_2px_6px_rgba(0,0,0,0.2)] w-full h-full"
+          style={{ aspectRatio }}
         >
-
-          {/* 3. The Matting (With Deep Inner Shadow) */}
-          <div className={cn(
-            "relative grid transition-all duration-300",
-            hasMat ? "bg-[#FCFCFC] p-[4px] md:p-[16px] shadow-[inset_0_0_15px_rgba(0,0,0,0.4)]" : "p-0"
-          )}>
-
-            {/* 4. Artwork Container (The Master Proportions) */}
-            {/* Aspect ratio is here. Grid will expand to fit this child perfectly. */}
-            <div
-              className="relative bg-[#FCFCFC] overflow-hidden shadow-[inset_0_2px_6px_rgba(0,0,0,0.2)] w-full h-full"
-              style={{ aspectRatio }}
-            >
-              <div className="absolute inset-0 w-full h-full flex items-center justify-center">
-                <div className="relative w-full h-full">
-                  {children}
-                </div>
-              </div>
-              <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+          <div className="absolute inset-0 w-full h-full flex items-center justify-center">
+            <div className="relative w-full h-full">
+              {children}
             </div>
-
           </div>
+          <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
         </div>
-      </div>
+      </FrameWrapper>
     </div>
   );
 }

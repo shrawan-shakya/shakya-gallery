@@ -27,65 +27,92 @@ interface Artwork {
 
 import { staggerContainer, staggerItem } from "@/lib/motion-variants";
 
+// --- ICONS ---
+const FrameIcon = ({ className }: { className?: string }) => (
+  <svg width="14" height="14" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+    <rect x="1" y="1" width="16" height="16" stroke="currentColor" strokeWidth="1.5" />
+    <rect x="4" y="4" width="10" height="10" stroke="currentColor" strokeWidth="1" opacity="0.6" />
+  </svg>
+);
+
+const CanvasIcon = ({ className }: { className?: string }) => (
+  <svg width="14" height="14" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+    <rect x="1" y="1" width="16" height="16" stroke="currentColor" strokeWidth="1.5" />
+  </svg>
+);
+
 export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
   const [layout, setLayout] = useState<"grid" | "single">("single");
   const [showMat, setShowMat] = useState(true);
 
   return (
     <>
-      {/* ... toggle bar ... */}
+      {/* ... toggle bar - Hidden on mobile, visible on desktop ... */}
       <div className="sticky top-0 z-40 w-full bg-bone/95 backdrop-blur-sm border-b border-[#1A1A1A]/5 transition-all duration-300 mb-12 hidden md:block">
         <div className="flex justify-between max-w-[1800px] mx-auto px-8 py-4">
 
-          {/* MAT TOGGLE */}
-          <div className="flex gap-6">
+          <div className="flex gap-4 md:gap-8">
             <button
               onClick={() => setShowMat(true)}
               className={cn(
-                "font-sans text-[10px] tracking-[0.25em] uppercase transition-all duration-300",
+                "flex items-center gap-2 font-sans text-[10px] tracking-[0.2em] md:tracking-[0.25em] uppercase transition-all duration-300 py-1 relative",
                 showMat
-                  ? "text-soft-black font-semibold border-b border-soft-black"
-                  : "text-gray-400 hover:text-soft-black border-b border-transparent"
+                  ? "text-soft-black font-semibold"
+                  : "text-gray-400 hover:text-soft-black"
               )}
             >
-              Mat
+              <FrameIcon />
+              <span className="hidden sm:inline">View with Frame</span>
+              {showMat && <motion.div layoutId="grid-active-mat" className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-soft-black" />}
             </button>
             <button
               onClick={() => setShowMat(false)}
               className={cn(
-                "font-sans text-[10px] tracking-[0.25em] uppercase transition-all duration-300",
-                !process.env.NEXT_PHASE && !showMat
-                  ? "text-soft-black font-semibold border-b border-soft-black"
-                  : "text-gray-400 hover:text-soft-black border-b border-transparent"
+                "flex items-center gap-2 font-sans text-[10px] tracking-[0.2em] md:tracking-[0.25em] uppercase transition-all duration-300 py-1 relative",
+                !showMat
+                  ? "text-soft-black font-semibold"
+                  : "text-gray-400 hover:text-soft-black"
               )}
             >
-              No Mat
+              <CanvasIcon />
+              <span className="hidden sm:inline">Canvas Only</span>
+              {!showMat && <motion.div layoutId="grid-active-mat" className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-soft-black" />}
             </button>
           </div>
 
           {/* LAYOUT TOGGLE */}
-          <div className="flex gap-6">
+          <div className="hidden sm:flex gap-4 md:gap-8">
             <button
               onClick={() => setLayout("grid")}
               className={cn(
-                "font-sans text-[10px] tracking-[0.25em] uppercase transition-all duration-300",
+                "flex items-center gap-2 font-sans text-[10px] tracking-[0.25em] uppercase transition-all duration-300 py-1 relative",
                 layout === "grid"
-                  ? "text-soft-black font-semibold border-b border-soft-black"
-                  : "text-gray-400 hover:text-soft-black border-b border-transparent"
+                  ? "text-soft-black font-semibold"
+                  : "text-gray-400 hover:text-soft-black"
               )}
             >
-              Grid
+              <svg width="14" height="14" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <title>Grid View</title>
+                <rect x="1" y="1" width="7" height="7" stroke="currentColor" strokeWidth="1.5" /><rect x="10" y="1" width="7" height="7" stroke="currentColor" strokeWidth="1.5" /><rect x="1" y="10" width="7" height="7" stroke="currentColor" strokeWidth="1.5" /><rect x="10" y="10" width="7" height="7" stroke="currentColor" strokeWidth="1.5" />
+              </svg>
+              <span className="hidden sm:inline">Grid</span>
+              {layout === "grid" && <motion.div layoutId="grid-active-layout" className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-soft-black" />}
             </button>
             <button
               onClick={() => setLayout("single")}
               className={cn(
-                "font-sans text-[10px] tracking-[0.25em] uppercase transition-all duration-300",
+                "flex items-center gap-2 font-sans text-[10px] tracking-[0.25em] uppercase transition-all duration-300 py-1 relative",
                 layout === "single"
-                  ? "text-soft-black font-semibold border-b border-soft-black"
-                  : "text-gray-400 hover:text-soft-black border-b border-transparent"
+                  ? "text-soft-black font-semibold"
+                  : "text-gray-400 hover:text-soft-black"
               )}
             >
-              Rows
+              <svg width="14" height="14" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <title>Row View</title>
+                <rect x="1" y="2" width="16" height="3" stroke="currentColor" strokeWidth="1.5" /><rect x="1" y="7.5" width="16" height="3" stroke="currentColor" strokeWidth="1.5" /><rect x="1" y="13" width="16" height="3" stroke="currentColor" strokeWidth="1.5" />
+              </svg>
+              <span className="hidden sm:inline">Rows</span>
+              {layout === "single" && <motion.div layoutId="grid-active-layout" className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-soft-black" />}
             </button>
           </div>
         </div>

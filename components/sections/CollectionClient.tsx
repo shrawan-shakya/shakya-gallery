@@ -18,6 +18,20 @@ import {
 } from "@/lib/artworks";
 import { accordion, staggerContainer, staggerItem } from "@/lib/motion-variants";
 
+// --- ICONS ---
+const FrameIcon = ({ className }: { className?: string }) => (
+  <svg width="16" height="16" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+    <rect x="1" y="1" width="16" height="16" stroke="currentColor" strokeWidth="1.5" />
+    <rect x="4" y="4" width="10" height="10" stroke="currentColor" strokeWidth="1" opacity="0.6" />
+  </svg>
+);
+
+const CanvasIcon = ({ className }: { className?: string }) => (
+  <svg width="16" height="16" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+    <rect x="1" y="1" width="16" height="16" stroke="currentColor" strokeWidth="1.5" />
+  </svg>
+);
+
 // --- REUSABLE COMPONENT: ACCORDION SECTION ---
 const FilterSection = ({
   title,
@@ -346,30 +360,53 @@ export function CollectionClient({
         {/* MAIN CONTENT AREA */}
         <div className="flex-1">
 
-          {/* GRID TOGGLE */}
+          {/* VIEW CONTROLS - Hidden on mobile, visible on desktop */}
           <div className="hidden lg:flex justify-end mb-8 items-center gap-4">
-            <div className="flex items-center gap-4 border-r border-black/10 pr-6 mr-2">
+            <div className="flex items-center gap-2 lg:gap-4 lg:border-r lg:border-black/10 lg:pr-6 lg:mr-2">
               <button
                 onClick={() => setShowMat(true)}
-                className={`font-sans text-[11px] tracking-widest uppercase transition-all ${showMat ? "text-soft-black font-semibold" : "text-gray-400 hover:text-gray-600"}`}
+                className={cn(
+                  "flex items-center gap-2 h-8 px-2 transition-all relative",
+                  showMat ? "text-soft-black font-semibold" : "text-gray-400 hover:text-gray-600"
+                )}
+                title="View with Frame"
               >
-                Mat
+                <FrameIcon />
+                <span className="hidden sm:block font-sans text-[11px] tracking-widest uppercase whitespace-nowrap">View with Frame</span>
+                {showMat && <motion.div layoutId="collection-active-mat" className="absolute bottom-0 left-0 right-0 h-[2px] bg-soft-black" />}
               </button>
               <button
                 onClick={() => setShowMat(false)}
-                className={`font-sans text-[11px] tracking-widest uppercase transition-all ${!showMat ? "text-soft-black font-semibold" : "text-gray-400 hover:text-gray-600"}`}
+                className={cn(
+                  "flex items-center gap-2 h-8 px-2 transition-all relative",
+                  !showMat ? "text-soft-black font-semibold" : "text-gray-400 hover:text-gray-600"
+                )}
+                title="Canvas Only"
               >
-                No Mat
+                <CanvasIcon />
+                <span className="hidden sm:block font-sans text-[11px] tracking-widest uppercase whitespace-nowrap">Canvas Only</span>
+                {!showMat && <motion.div layoutId="collection-active-mat" className="absolute bottom-0 left-0 right-0 h-[2px] bg-soft-black" />}
               </button>
             </div>
 
-            <span className="font-sans text-[11px] tracking-widest text-gray-400 uppercase mr-2">View</span>
-            <button onClick={() => setGridCols(2)} className={`p-2 transition-colors duration-300 ${gridCols === 2 ? "text-soft-black" : "text-gray-300 hover:text-gray-500"}`}>
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0.5" y="0.5" width="7" height="17" stroke="currentColor" /><rect x="10.5" y="0.5" width="7" height="17" stroke="currentColor" /></svg>
-            </button>
-            <button onClick={() => setGridCols(3)} className={`p-2 transition-colors duration-300 ${gridCols === 3 ? "text-soft-black" : "text-gray-300 hover:text-gray-500"}`}>
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="0.5" width="4" height="17" stroke="currentColor" /><rect x="7" y="0.5" width="4" height="17" stroke="currentColor" /><rect x="13" y="0.5" width="4" height="17" stroke="currentColor" /></svg>
-            </button>
+            <div className="hidden sm:flex items-center gap-2">
+              <span className="hidden lg:block font-sans text-[11px] tracking-widest text-gray-400 uppercase mr-2">View</span>
+              <button onClick={() => setGridCols(2)} className={`p-2 transition-colors duration-300 ${gridCols === 2 ? "text-soft-black" : "text-gray-300 hover:text-gray-500"}`}>
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <title>2 Columns</title>
+                  <rect x="0.5" y="0.5" width="7" height="17" stroke="currentColor" />
+                  <rect x="10.5" y="0.5" width="7" height="17" stroke="currentColor" />
+                </svg>
+              </button>
+              <button onClick={() => setGridCols(3)} className={`p-2 transition-colors duration-300 ${gridCols === 3 ? "text-soft-black" : "text-gray-300 hover:text-gray-500"}`}>
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <title>3 Columns</title>
+                  <rect x="1" y="0.5" width="4" height="17" stroke="currentColor" />
+                  <rect x="7" y="0.5" width="4" height="17" stroke="currentColor" />
+                  <rect x="13" y="0.5" width="4" height="17" stroke="currentColor" />
+                </svg>
+              </button>
+            </div>
           </div>
 
           {/* THE GRID - Key forces a reset on filter change to trigger animations */}
