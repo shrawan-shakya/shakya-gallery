@@ -1,6 +1,7 @@
 import { PortableText, PortableTextComponents } from '@portabletext/react';
 import { urlForImage } from '@/sanity/lib/image';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const components: PortableTextComponents = {
     types: {
@@ -32,6 +33,31 @@ const components: PortableTextComponents = {
     list: {
         bullet: ({ children }) => <ul className="list-disc pl-6 mb-6 font-sans text-gray-700">{children}</ul>,
         number: ({ children }) => <ol className="list-decimal pl-6 mb-6 font-sans text-gray-700">{children}</ol>,
+    },
+    marks: {
+        link: ({ children, value }: any) => {
+            const rel = !value.href.startsWith('/') ? 'noopener noreferrer' : undefined;
+            const target = !value.href.startsWith('/') ? '_blank' : undefined;
+
+            if (value.href.startsWith('/')) {
+                return (
+                    <Link href={value.href} className="text-soft-black underline decoration-black/20 hover:decoration-black transition-all">
+                        {children}
+                    </Link>
+                );
+            }
+
+            return (
+                <a
+                    href={value.href}
+                    rel={rel}
+                    target={target}
+                    className="text-soft-black underline decoration-black/20 hover:decoration-black transition-all"
+                >
+                    {children}
+                </a>
+            );
+        },
     },
 };
 
