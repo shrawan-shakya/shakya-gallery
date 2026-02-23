@@ -19,7 +19,7 @@ const sizes = [
     { id: "sm", name: "Small", desc: "Up to 60×80 cm", base: [65, 95] },
     { id: "md", name: "Medium", desc: "Up to 100×120 cm", base: [120, 180] },
     { id: "lg", name: "Large", desc: "Up to 150×180 cm", base: [280, 390] },
-    { id: "xl", name: "Extra Large", desc: "Sculpture / Oversized", base: [600, 950] },
+    { id: "xl", name: "Extra Large", desc: "Oversized Masterworks", base: [600, 950] },
 ];
 
 export function ShippingWidget() {

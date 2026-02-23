@@ -38,7 +38,7 @@ export default function ShippingPage() {
                         <div className="mt-12 p-8 bg-white border border-black/5 space-y-6">
                             <h4 className="font-serif text-xl italic text-soft-black">Direct Assistance</h4>
                             <p className="font-sans text-xs leading-relaxed text-gray-500">
-                                For oversized sculptures, multi-piece collections, or specific white-glove delivery requirements, please contact our logistics concierge directly.
+                                For oversized pieces, multi-piece collections, or specific white-glove delivery requirements, please contact our logistics concierge directly.
                             </p>
                             <Link
                                 href="/contact"
@@ -77,10 +77,10 @@ export default function ShippingPage() {
                         </section>
 
                         <section className="space-y-6">
-                            <h2 className="font-serif text-3xl text-soft-black">Custom Crating & Sculptures</h2>
+                            <h2 className="font-serif text-3xl text-soft-black">Custom Crating & Large Masterworks</h2>
                             <div className="prose prose-sm max-w-none font-sans font-light text-gray-600 leading-relaxed text-justify space-y-4">
                                 <p>
-                                    For framed works and sculptures, we utilize custom-built ISPM-15 certified wooden crates. These crates are engineered to withstand the rigors of international air freight, featuring internal shock-absorption and climate-stabilizing linings.
+                                    For framed works and oversized paintings, we utilize custom-built ISPM-15 certified wooden crates. These crates are engineered to withstand the rigors of international air freight, featuring internal shock-absorption and climate-stabilizing linings.
                                 </p>
                                 <p>
                                     Oversized masterworks may require specialized cargo handling. Our team coordinates all aspects of specialized transit, including specialized airport-to-door delivery vehicles.
