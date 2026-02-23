@@ -4,10 +4,24 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLenis } from "@studio-freight/react-lenis";
 
-export function ArtworkInquiry({ artwork, isSold = false }: { artwork: any, isSold?: boolean }) {
-  const [isOpen, setIsOpen] = useState(false);
+export function ArtworkInquiry({
+  artwork,
+  isSold = false,
+  externalOpen,
+  onOpenChange
+}: {
+  artwork: any,
+  isSold?: boolean,
+  externalOpen?: boolean,
+  onOpenChange?: (open: boolean) => void
+}) {
+  const [internalOpen, setInternalOpen] = useState(false);
+  const isOpen = externalOpen !== undefined ? externalOpen : internalOpen;
+  const setIsOpen = onOpenChange || setInternalOpen;
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+
 
   const lenis = useLenis();
 
@@ -166,7 +180,7 @@ export function ArtworkInquiry({ artwork, isSold = false }: { artwork: any, isSo
               <div className="absolute top-0 right-0 p-6 z-20 pointer-events-none">
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="pointer-events-auto text-2xl text-gray-400 hover:text-soft-black transition-colors"
+                  className="pointer-events-auto text-2xl text-gray-800 hover:text-soft-black transition-colors"
                 >
                   ✕
                 </button>
@@ -189,12 +203,12 @@ export function ArtworkInquiry({ artwork, isSold = false }: { artwork: any, isSo
 
                     <h3 className="font-serif text-3xl text-soft-black">Your inquiry is with our curators.</h3>
 
-                    <p className="font-sans text-sm leading-loose text-gray-600 max-w-md mx-auto">
+                    <p className="font-sans text-sm leading-loose text-soft-black max-w-md mx-auto">
                       We are currently calculating shipping costs and preparing your virtual preview. To maintain the quality of our service, a gallery advisor will reach out via email within 24 hours with your personalized quote.
                     </p>
 
                     <div className="pt-8 border-t border-black/5 mt-8">
-                      <p className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-400 mb-4">
+                      <p className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-800 mb-4">
                         Prefer an immediate update?
                       </p>
                       <a
@@ -212,11 +226,11 @@ export function ArtworkInquiry({ artwork, isSold = false }: { artwork: any, isSo
 
                     {/* HEADER */}
                     <div className="pr-8"> {/* Padding right to avoid overlap with close button */}
-                      <p className="font-sans text-xs tracking-[0.3em] text-gray-400 uppercase mb-2">
+                      <p className="font-sans text-xs tracking-[0.3em] text-gray-800 uppercase mb-2">
                         Bespoke Acquisition
                       </p>
                       <h2 className="font-serif text-3xl text-soft-black leading-tight">{artwork.title}</h2>
-                      <p className="font-serif text-sm italic text-gray-500 mt-1">SKU: {artwork.sku || "Unlisted"}</p>
+                      <p className="font-serif text-sm italic text-gray-800 mt-1">SKU: {artwork.sku || "Unlisted"}</p>
                     </div>
 
                     {/* FIELDS */}
@@ -237,18 +251,18 @@ export function ArtworkInquiry({ artwork, isSold = false }: { artwork: any, isSo
                       {/* Name & Email */}
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="space-y-1">
-                          <label className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-500">Full Name</label>
+                          <label className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-800">Full Name</label>
                           <input required type="text" value={name} onChange={(e) => setName(e.target.value)} className="w-full bg-transparent border-b border-black/10 py-2 font-serif text-lg outline-none focus:border-black transition-colors" />
                         </div>
                         <div className="space-y-1">
-                          <label className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-500">Email Address</label>
+                          <label className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-800">Email Address</label>
                           <input required type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full bg-transparent border-b border-black/10 py-2 font-serif text-lg outline-none focus:border-black transition-colors" />
                         </div>
                       </div>
 
                       {/* Mobile with Country Code */}
                       <div className="space-y-1">
-                        <label className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-500">Mobile Number <span className="text-red-400">*</span></label>
+                        <label className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-800">Mobile Number <span className="text-red-400">*</span></label>
                         <div className="flex gap-4">
                           <div className="relative w-1/3">
                             <select
@@ -263,7 +277,7 @@ export function ArtworkInquiry({ artwork, isSold = false }: { artwork: any, isSo
                               ))}
                             </select>
                             {/* Custom Arrow */}
-                            <span className="absolute right-0 top-1/2 -translate-y-1/2 text-xs text-gray-400 pointer-events-none">▼</span>
+                            <span className="absolute right-0 top-1/2 -translate-y-1/2 text-xs text-gray-800 pointer-events-none">▼</span>
                           </div>
                           <input
                             required
@@ -278,7 +292,7 @@ export function ArtworkInquiry({ artwork, isSold = false }: { artwork: any, isSo
 
                       {/* Detailed Shipping Address */}
                       <div className="space-y-4">
-                        <label className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-500">Shipping Destination</label>
+                        <label className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-800">Shipping Destination</label>
 
                         {/* Street */}
                         <input required type="text" placeholder="Street Address" value={street} onChange={(e) => setStreet(e.target.value)} className="w-full bg-transparent border-b border-black/10 py-2 font-serif text-lg outline-none focus:border-black transition-colors placeholder:text-gray-300 placeholder:text-sm placeholder:font-sans" />
@@ -298,7 +312,7 @@ export function ArtworkInquiry({ artwork, isSold = false }: { artwork: any, isSo
 
                       {/* File Upload */}
                       <div className="space-y-3">
-                        <label className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-500 block">Virtual Preview (Optional)</label>
+                        <label className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-600 block">Virtual Preview (Optional)</label>
                         <div className="relative border border-dashed border-black/20 hover:border-black/40 transition-colors rounded-sm p-6 text-center group cursor-pointer">
                           <input
                             type="file"
@@ -306,11 +320,11 @@ export function ArtworkInquiry({ artwork, isSold = false }: { artwork: any, isSo
                             onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)}
                             className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                           />
-                          <span className="text-2xl mb-2 block text-gray-400 group-hover:text-soft-black transition-colors">📷</span>
-                          <p className="font-serif text-sm text-gray-600">
+                          <span className="text-2xl mb-2 block text-gray-800 group-hover:text-soft-black transition-colors">📷</span>
+                          <p className="font-serif text-sm text-soft-black">
                             {file ? `Selected: ${file.name}` : "Upload a photo of your wall."}
                           </p>
-                          <p className="font-sans text-[10px] text-gray-400 mt-2">
+                          <p className="font-sans text-[10px] text-gray-800 mt-2">
                             We will digitally place the artwork for you to ensure it brings peace to your space.
                           </p>
                         </div>

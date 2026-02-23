@@ -18,7 +18,7 @@ export function FAQ() {
             <div className="max-w-3xl mx-auto">
 
                 <div className="text-center mb-16">
-                    <p className="font-sans text-[10px] md:text-xs tracking-[0.3em] text-gray-400 uppercase mb-4">Common Questions</p>
+                    <p className="font-sans text-[10px] md:text-xs tracking-[0.3em] text-gray-800 uppercase mb-4">Common Questions</p>
                     <h2 className="font-serif text-3xl md:text-4xl text-soft-black">Collector's <span className="italic">Guide</span></h2>
                 </div>
 
@@ -32,7 +32,7 @@ export function FAQ() {
                                 <span className="font-serif text-lg md:text-xl text-soft-black group-hover:text-black transition-colors">
                                     {faq.question}
                                 </span>
-                                <span className="text-gray-400 group-hover:text-black transition-colors">
+                                <span className="text-gray-600 group-hover:text-black transition-colors">
                                     {openIndex === index ? <Minus size={18} /> : <Plus size={18} />}
                                 </span>
                             </button>
@@ -46,7 +46,7 @@ export function FAQ() {
                                         exit="exit"
                                         className="overflow-hidden"
                                     >
-                                        <p className="font-sans text-sm md:text-base text-gray-600 leading-relaxed pb-8 pr-8">
+                                        <p className="font-sans text-sm md:text-base text-soft-black leading-relaxed pb-8 pr-8">
                                             {faq.answer}
                                         </p>
                                     </motion.div>

@@ -1,9 +1,11 @@
 import { sanityFetch } from "@/sanity/lib/live";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArtworkInquiry } from "@/components/ArtworkInquiry";
 import { ArtworkGallery } from "@/components/artwork/ArtworkGallery";
 import { PortableText } from "@portabletext/react";
+import { ArtworkActions } from "@/components/artwork/ArtworkActions";
+import { ArtworkTabs } from "@/components/artwork/ArtworkTabs";
+
 
 
 export const dynamicParams = true;
@@ -16,38 +18,11 @@ const components = {
     normal: ({ children }: any) => <p className="font-sans font-light text-sm leading-[2.2] tracking-wide text-gray-600 text-justify mb-6">{children}</p>,
   },
   list: {
-    bullet: ({ children }: any) => <ul className="ml-6 list-disc space-y-2 mb-6 font-sans text-sm text-gray-600">{children}</ul>,
-    number: ({ children }: any) => <ol className="ml-6 list-decimal space-y-2 mb-6 font-sans text-sm text-gray-600">{children}</ol>,
+    bullet: ({ children }: any) => <ul className="ml-6 list-disc space-y-2 mb-6 font-sans text-sm text-soft-black">{children}</ul>,
+    number: ({ children }: any) => <ol className="ml-6 list-decimal space-y-2 mb-6 font-sans text-sm text-soft-black">{children}</ol>,
   },
 };
 
-const ArtStory = ({ description, provenance }: { description?: any[]; provenance?: any[] }) => {
-  if (!description && !provenance) return null;
-
-  return (
-    <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
-      {/* 1. THE NARRATIVE */}
-      {description && description.length > 0 && (
-        <div className="pt-4 border-t border-black/5">
-          <h3 className="font-serif text-xl italic text-soft-black mb-6">About The Artwork</h3>
-          <div className="prose prose-sm max-w-none">
-            <PortableText value={description} components={components} />
-          </div>
-        </div>
-      )}
-
-      {/* 2. PROVENANCE & HISTORY */}
-      {provenance && provenance.length > 0 && (
-        <div className="pt-8 border-t-[0.5px] border-frame-gold/30">
-          <h3 className="font-serif text-xl italic text-soft-black mb-6">Provenance & History</h3>
-          <div className="prose prose-sm max-w-none">
-            <PortableText value={provenance} components={components} />
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
 
 // FETCH SLUGS FOR STATIC GENERATION
 export async function generateStaticParams() {
@@ -154,11 +129,11 @@ export default async function ArtworkPage({
 
   // Reusable Breadcrumbs
   const Breadcrumbs = ({ className }: { className?: string }) => (
-    <nav className={`flex flex-wrap items-baseline gap-3 font-sans text-[11px] tracking-[0.2em] uppercase text-gray-400 ${className}`}>
+    <nav className={`flex flex-wrap items-baseline gap-3 font-sans text-[11px] tracking-[0.2em] uppercase text-gray-800 ${className}`}>
       <Link href="/" className="hover:text-soft-black transition-colors">Home</Link>
-      <span className="text-gray-300">/</span>
+      <span className="text-gray-500">/</span>
       <Link href="/collection" className="hover:text-soft-black transition-colors">Collection</Link>
-      <span className="text-gray-300">/</span>
+      <span className="text-gray-500">/</span>
       <span className="text-soft-black border-b border-black/20 pb-0.5">Current Work</span>
     </nav>
   );
@@ -209,26 +184,22 @@ export default async function ArtworkPage({
           <Breadcrumbs />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-0 px-6 md:px-12 max-w-[1400px] mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 px-6 md:px-12 max-w-[1400px] mx-auto items-start">
 
-          {/* LEFT COLUMN: The Art */}
-          <div className="relative flex flex-col items-center justify-start lg:h-auto lg:sticky lg:top-32 gap-12 hover:group">
-
+          {/* BLOCK 1: GALLERY (Mob: 1, Desk: Col 1) */}
+          <div className="lg:col-start-1 lg:row-start-1">
             <ArtworkGallery
               mainImage={art.mainImage}
               relatedImages={art.relatedImages}
               title={art.title}
               orientation={art.orientation}
             />
-
           </div>
 
-          {/* RIGHT COLUMN: The Story */}
-          <div className="flex flex-col justify-start lg:pl-20 min-h-[50vh]">
-
-            <div className="flex flex-col gap-8 animate-in fade-in slide-in-from-bottom-8 duration-1000 max-w-lg">
-
-              {/* 1. HEADER */}
+          {/* BLOCK 2: TITLE SECTION (Mob: 2, Desk: Col 2) */}
+          <div className="lg:col-start-2 lg:row-start-1 lg:row-span-2">
+            <div className="flex flex-col gap-8 animate-in fade-in slide-in-from-bottom-8 duration-1000">
+              {/* Header */}
               <div className="flex flex-col gap-2">
                 <Breadcrumbs className="hidden lg:flex mb-8" />
 
@@ -241,16 +212,15 @@ export default async function ArtworkPage({
                   </div>
                 )}
 
-                <h1 className="font-serif text-2xl md:text-4xl text-soft-black leading-tight line-clamp-2 mt-4 md:mt-6">
+                <h1 className="font-serif text-2xl md:text-4xl text-soft-black leading-tight mt-4 md:mt-6">
                   {art.title}
                 </h1>
                 <div className="flex justify-between items-baseline mt-2 mb-6">
-                  <p className="font-serif italic text-xl md:text-2xl text-gray-500">
+                  <p className="font-serif italic text-xl md:text-2xl text-soft-black">
                     {art.artist}, {art.year}
                   </p>
                 </div>
 
-                {/* MOVED PRICE (Now respects showPrice toggle) */}
                 {!isSold && art.showPrice && art.price && (
                   <div className="mb-2">
                     <p className="font-serif text-3xl md:text-4xl text-soft-black">
@@ -260,82 +230,49 @@ export default async function ArtworkPage({
                 )}
               </div>
 
-              {/* 2. TECHNICAL DETAILS */}
+              {/* Technical Details */}
               <div className="grid grid-cols-2 gap-x-8 py-6 border-y border-black/5">
                 <div>
-                  <p className="font-sans text-[11px] tracking-widest uppercase text-gray-400 mb-1">Material</p>
+                  <p className="font-sans text-[11px] tracking-widest uppercase text-gray-800 mb-1">Material</p>
                   <p className="font-serif text-base md:text-lg text-soft-black leading-tight">{art.material || "Mixed Media"}</p>
                 </div>
                 <div>
-                  <p className="font-sans text-[11px] tracking-widest uppercase text-gray-400 mb-1">Dimensions</p>
+                  <p className="font-sans text-[11px] tracking-widest uppercase text-gray-800 mb-1">Dimensions</p>
                   <p className="font-serif text-base md:text-lg text-soft-black leading-tight">{art.dimensions || "Variable"}</p>
                 </div>
               </div>
 
-              {/* 3. THE ACTION AREA (Moved Up) */}
-              <div className="py-2">
-                {isSold ? (
-                  // OPTION A: SOLD MESSAGE
-                  <div className="bg-black/[0.03] p-8 border border-black/5 flex flex-col gap-4">
-                    <div>
-                      <h3 className="font-serif text-xl text-soft-black italic mb-1">Looking for something similar?</h3>
-                      <p className="font-sans text-[11px] leading-relaxed text-gray-500 tracking-wide">
-                        While this specific work has been acquired, our curation team specializes in sourcing rare pieces similar to this one.
-                      </p>
-                    </div>
-                    <div className="pt-2">
-                      <ArtworkInquiry artwork={art} isSold={true} />
-                    </div>
-                  </div>
-                ) : (
-                  // OPTION B: AVAILABLE
-                  <ArtworkInquiry artwork={art} isSold={false} />
-                )}
+              {/* Action Area */}
+              <div className="py-2" id="inquiry-section">
+                <ArtworkActions artwork={art} isSold={isSold} />
               </div>
+            </div>
+          </div>
 
-              {/* 4. THE NARRATIVE & PROVENANCE */}
-              <ArtStory description={art.description} provenance={art.provenance} />
+          {/* BLOCK 3: TABS (Mob: 3, Desk: Col 1) */}
+          <div className="lg:col-start-1 lg:row-start-2 lg:mt-12 animate-in fade-in duration-1000 delay-300">
+            <ArtworkTabs description={art.description} provenance={art.provenance} />
+          </div>
 
-
-              {/* 5. FROM THE GALLERY (INTERNAL LINK HUB) */}
-              <div className="pt-8 border-t border-black/5">
-                <h3 className="font-sans text-[11px] tracking-[0.2em] uppercase text-gray-400 mb-6">From The Gallery</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <Link href="/legacy" className="group p-4 bg-white border border-black/5 hover:border-black/20 transition-all">
-                    <h4 className="font-serif text-lg italic text-soft-black mb-1 group-hover:text-soft-black/70 transition-colors">Our 20-Year Legacy</h4>
-                    <p className="font-sans text-[10px] tracking-wider text-gray-400 uppercase">Learn about our heritage</p>
-                  </Link>
-                  <Link href="/guide/buying-art" className="group p-4 bg-white border border-black/5 hover:border-black/20 transition-all">
-                    <h4 className="font-serif text-lg italic text-soft-black mb-1 group-hover:text-soft-black/70 transition-colors">Art Advisory</h4>
-                    <p className="font-sans text-[10px] tracking-wider text-gray-400 uppercase">Collector's Guide</p>
-                  </Link>
+          {/* BLOCK 4: FROM THE GALLERY (Mob: 4, Desk: Spans Bottom) */}
+          <div className="col-span-1 lg:col-span-2 pt-20 border-t border-black/5 mt-12">
+            <h3 className="font-sans text-[11px] tracking-[0.2em] uppercase text-gray-800 mb-8 text-center md:text-left">From The Gallery</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <Link href="/legacy" className="group p-8 bg-white border border-black/5 hover:border-black/20 transition-all flex flex-col justify-between min-h-[160px]">
+                <div>
+                  <h4 className="font-serif text-xl italic text-soft-black mb-2 group-hover:text-soft-black/70 transition-colors">Our 20-Year Legacy</h4>
+                  <p className="font-sans text-[10px] tracking-wider text-gray-800 uppercase">Discover the roots of Shakya excellence.</p>
                 </div>
-              </div>
-
-              {/* 6. STATIC INFORMATION */}
-              <div className="space-y-6 pt-8 border-t border-black/5">
-                <div className="space-y-2">
-                  <h4 className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-400">Presentation & Shipping</h4>
-                  <p className="font-sans text-xs leading-relaxed text-gray-500">
-                    To ensure maximum protection during transit, this painting arrives unframed and carefully rolled in a heavy-duty protective tube. This is the industry standard for high-value fine art, minimizing risk and optimizing international transport.
-                  </p>
+                <span className="text-[10px] tracking-[0.2em] uppercase text-gray-400 group-hover:text-soft-black mt-4 inline-block">Learn More →</span>
+              </Link>
+              <Link href="/guide/buying-art" className="group p-8 bg-white border border-black/5 hover:border-black/20 transition-all flex flex-col justify-between min-h-[160px]">
+                <div>
+                  <h4 className="font-serif text-xl italic text-soft-black mb-2 group-hover:text-soft-black/70 transition-colors">Art Advisory</h4>
+                  <p className="font-sans text-[10px] tracking-wider text-gray-800 uppercase">Expert guidance for first-time collectors.</p>
                 </div>
-
-                <div className="space-y-2">
-                  <h4 className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-400">Authenticity</h4>
-                  <p className="font-sans text-xs leading-relaxed text-gray-500">
-                    Every acquisition is accompanied by a Certificate of Authenticity signed by the Shakya Gallery curation team, guaranteeing the provenance and originality of the work.
-                  </p>
-                </div>
-
-                <div className="space-y-2">
-                  <h4 className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-400">Shipping & Optional Framing</h4>
-                  <p className="font-sans text-xs leading-relaxed text-gray-500">
-                    We provide specialized art logistics for global delivery. While paintings ship tubed by default, custom museum-grade framing is available upon request. Mounting and framing will incur additional costs for the frame itself and increased weight-based shipping. Contact us for a bespoke framing quote.
-                  </p>
-                </div>
-              </div>
-
+                <span className="text-[10px] tracking-[0.2em] uppercase text-gray-400 group-hover:text-soft-black mt-4 inline-block">Collector's Guide →</span>
+              </Link>
+              {/* Additional Hub links could go here if we expand */}
             </div>
           </div>
 

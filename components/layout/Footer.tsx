@@ -53,7 +53,7 @@ export function Footer() {
             <h2 className="font-serif text-3xl md:text-4xl text-white tracking-wide">
               SHAKYA
             </h2>
-            <p className="font-sans text-xs tracking-[0.2em] text-gray-400 uppercase leading-relaxed max-w-sm">
+            <p className="font-sans text-xs tracking-[0.2em] text-gray-300 uppercase leading-relaxed max-w-sm">
               Curating Himalayan Masterworks<br />Since {siteConfig.since}.
             </p>
           </div>
@@ -69,7 +69,7 @@ export function Footer() {
                 <p className="font-sans text-sm tracking-widest text-green-400 uppercase">
                   Welcome to the inner circle.
                 </p>
-                <p className="font-sans text-xs text-gray-500">
+                <p className="font-sans text-xs text-gray-400">
                   You will be the first to know about new acquisitions.
                 </p>
               </div>
@@ -94,7 +94,7 @@ export function Footer() {
                   <button
                     type="submit"
                     disabled={status === "submitting"}
-                    className="absolute right-0 top-1/2 -translate-y-1/2 font-sans text-xs tracking-[0.2em] uppercase text-gray-400 hover:text-white transition-colors disabled:opacity-50"
+                    className="absolute right-0 top-1/2 -translate-y-1/2 font-sans text-xs tracking-[0.2em] uppercase text-gray-300 hover:text-white transition-colors disabled:opacity-50"
                   >
                     {status === "submitting" ? "Joining..." : "Subscribe"}
                   </button>
@@ -103,7 +103,7 @@ export function Footer() {
             )}
 
             {status !== "success" && (
-              <p className="font-sans text-xs text-gray-600 leading-relaxed">
+              <p className="font-sans text-xs text-gray-400 leading-relaxed">
                 Receive advance notice of new acquisitions and private viewing rooms.
               </p>
             )}
@@ -115,7 +115,7 @@ export function Footer() {
 
           {/* Column A: Explore */}
           <div className="space-y-8">
-            <h4 className="font-sans text-xs tracking-[0.2em] text-gray-500 uppercase">Explore</h4>
+            <h4 className="font-sans text-xs tracking-[0.2em] text-gray-400 uppercase">Explore</h4>
             <ul className="space-y-4">
               <li>
                 <Link href="/collection" className="font-serif text-lg text-white/80 hover:text-white hover:italic transition-all">
@@ -142,7 +142,7 @@ export function Footer() {
 
           {/* Column B: Services */}
           <div className="space-y-8">
-            <h4 className="font-sans text-xs tracking-[0.2em] text-gray-500 uppercase">Services</h4>
+            <h4 className="font-sans text-xs tracking-[0.2em] text-gray-400 uppercase">Services</h4>
             <ul className="space-y-4">
               {["Advisory", "Valuation", "Consignment", "Logistics"].map((item) => (
                 <li key={item}>
@@ -156,7 +156,7 @@ export function Footer() {
 
           {/* Column C: Contact & Social */}
           <div className="space-y-8">
-            <h4 className="font-sans text-xs tracking-[0.2em] text-gray-500 uppercase">Connect</h4>
+            <h4 className="font-sans text-xs tracking-[0.2em] text-gray-400 uppercase">Connect</h4>
             <ul className="space-y-4">
               <li>
                 <Link href="/contact" className="font-serif text-lg text-white/80 hover:text-white hover:italic transition-all">
@@ -181,12 +181,12 @@ export function Footer() {
 
       {/* 3. SUB-FOOTER (Copyright) */}
       <div className="max-w-[1400px] mx-auto mt-24 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
-        <p className="font-sans text-xs tracking-[0.2em] text-gray-600 uppercase">
+        <p className="font-sans text-xs tracking-[0.2em] text-gray-400 uppercase">
           © {new Date().getFullYear()} Shakya Gallery. All Rights Reserved.
         </p>
         <div className="flex gap-8">
-          <Link href="/privacy-policy" className="font-sans text-xs tracking-[0.2em] text-gray-600 uppercase hover:text-white transition-colors">Privacy</Link>
-          <Link href="/terms" className="font-sans text-xs tracking-[0.2em] text-gray-600 uppercase hover:text-white transition-colors">Terms</Link>
+          <Link href="/privacy-policy" className="font-sans text-xs tracking-[0.2em] text-gray-400 hover:text-white transition-colors uppercase">Privacy</Link>
+          <Link href="/terms" className="font-sans text-xs tracking-[0.2em] text-gray-400 hover:text-white transition-colors uppercase">Terms</Link>
         </div>
       </div>
 
