@@ -58,15 +58,15 @@ export default async function Home() {
         </SectionErrorBoundary>
       </section>
 
-      <section className="min-h-screen w-full flex items-center justify-center bg-bone">
-        <SectionErrorBoundary sectionName="Heritage Preview">
-          <HeritagePreview />
-        </SectionErrorBoundary>
-      </section>
-
       <section className="min-h-screen w-full bg-bone pt-20">
         <SectionErrorBoundary sectionName="Gallery Preview">
           <GalleryGrid limit={6} />
+        </SectionErrorBoundary>
+      </section>
+
+      <section className="min-h-screen w-full flex items-center justify-center bg-bone">
+        <SectionErrorBoundary sectionName="Heritage Preview">
+          <HeritagePreview />
         </SectionErrorBoundary>
       </section>
 

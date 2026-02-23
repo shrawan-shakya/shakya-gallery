@@ -34,9 +34,9 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
     const formatPrice = (priceUsd: number) => {
         if (currency === "NPR") {
             const priceNpr = Math.round(priceUsd * exchangeRate);
-            return `Rs\u00A0${priceNpr.toLocaleString("en-NP")}`;
+            return `Rs\u00A0${priceNpr.toLocaleString("en-NP", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
         }
-        return `$\u00A0${priceUsd.toLocaleString("en-US")}`;
+        return `$\u00A0${priceUsd.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
     };
 
     return (

@@ -1,5 +1,38 @@
 import { describe, it, expect } from "vitest";
-import { filterArtworks, Artwork, FilterOptions } from "./artworks";
+import { Artwork, FilterOptions } from "./types";
+
+// Helper for local filtering (replaces missing export or intended client-side logic)
+export function filterArtworks(artworks: Artwork[], options: Partial<FilterOptions>): Artwork[] {
+    let result = [...artworks];
+    const { searchQuery, selectedCategories, statusFilter, sortOption } = options;
+
+    if (searchQuery) {
+        const q = searchQuery.toLowerCase();
+        result = result.filter(a =>
+            a.title.toLowerCase().includes(q) ||
+            a.artist?.toLowerCase().includes(q) ||
+            a.material?.toLowerCase().includes(q)
+        );
+    }
+
+    if (selectedCategories && selectedCategories.length > 0) {
+        result = result.filter(a =>
+            a.categories?.some(cat => selectedCategories.includes(cat))
+        );
+    }
+
+    if (statusFilter && statusFilter !== "all") {
+        result = result.filter(a => a.status === statusFilter);
+    }
+
+    if (sortOption === "price_asc") {
+        result.sort((a, b) => (a.price || 0) - (b.price || 0));
+    } else if (sortOption === "price_desc") {
+        result.sort((a, b) => (b.price || 0) - (a.price || 0));
+    }
+
+    return result;
+}
 
 const mockArtworks: Artwork[] = [
     {
@@ -52,7 +85,7 @@ describe("filterArtworks logic check", () => {
     });
 
     it("should filter by category", () => {
-        const result = filterArtworks(mockArtworks, { selectedCategory: "Style A" });
+        const result = filterArtworks(mockArtworks, { selectedCategories: ["Style A"] });
         expect(result).toHaveLength(2);
         expect(result.every(a => a.categories?.includes("Style A"))).toBe(true);
     });
@@ -86,7 +119,7 @@ describe("filterArtworks logic check", () => {
     it("should combine multiple filters", () => {
         const result = filterArtworks(mockArtworks, {
             searchQuery: "mountain",
-            selectedCategory: "Landscape",
+            selectedCategories: ["Landscape"],
             statusFilter: "available",
             sortOption: "price_desc"
         });

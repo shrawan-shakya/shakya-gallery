@@ -83,8 +83,8 @@ export function Navbar() {
       >
 
         {/* LOGO */}
-        <Link href="/" className="z-50 group pointer-events-auto">
-          <div className={`font-serif tracking-[0.3em] relative font-thin transition-all duration-500 ${textColor}
+        <Link href="/" className="z-50 group pointer-events-auto flex items-center h-8">
+          <div className={`font-serif tracking-[0.3em] relative font-thin transition-all duration-500 flex items-center leading-none ${textColor}
             ${isScrolled ? "text-xl lg:text-2xl" : "text-2xl lg:text-3xl"}
           `}>
             SHAKYA
@@ -128,7 +128,7 @@ export function Navbar() {
           {/* HAMBURGER */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="w-8 h-8 flex flex-col justify-center items-end gap-1.5"
+            className="w-8 h-8 flex flex-col justify-center items-center gap-1.5"
           >
             <motion.span
               animate={isOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}
