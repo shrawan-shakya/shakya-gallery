@@ -8,14 +8,17 @@ import { MuseumFrame } from "@/components/ui/MuseumFrame";
 import { MuseumPlaque } from "@/components/ui/MuseumPlaque";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { SanityImage } from "@/components/ui/SanityImage";
+import { LazyGridItem } from "@/components/ui/LazyGridItem";
+
+
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { FeaturedCollection } from "./FeaturedCollection";
 import {
   Artwork,
-  Category,
-  filterArtworks
-} from "@/lib/artworks";
+  Category
+} from "@/lib/types";
+
 import { accordion, staggerContainer, staggerItem } from "@/lib/motion-variants";
 
 // --- ICONS ---
@@ -182,13 +185,19 @@ export function CollectionClient({
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  // --- PARSE URL PARAMS ---
   const searchQuery = searchParams.get("q") || "";
   const selectedCategories = useMemo(() => {
+
     const fromUrl = searchParams.get("category");
-    if (fromUrl) return fromUrl.split(",").filter(Boolean);
+    if (fromUrl) {
+      const parts = fromUrl.split(",");
+      const result = [];
+      for (const p of parts) if (p) result.push(p);
+      return result;
+    }
     return initialCategory ? [initialCategory] : [];
   }, [searchParams, initialCategory]);
+
   const statusFilter = (searchParams.get("status") as any) || "all";
   const sortOption = (searchParams.get("sort") as any) || "newest";
 
@@ -217,16 +226,27 @@ export function CollectionClient({
 
   const toggleCategory = (category: string) => {
     const params = new URLSearchParams(searchParams.toString());
-    let current = params.get("category")?.split(",").filter(Boolean) || [];
+    const paramVal = params.get("category");
+    let current = [];
+    if (paramVal) {
+      const parts = paramVal.split(",");
+      for (const p of parts) if (p) current.push(p);
+    }
     if (initialCategory && !params.has("category")) {
       current = [initialCategory];
     }
 
+
     if (current.includes(category)) {
-      current = current.filter(c => c !== category);
+      const next = [];
+      for (const c of current) {
+        if (c !== category) next.push(c);
+      }
+      current = next;
     } else {
       current = [...current, category];
     }
+
 
     if (current.length > 0) {
       params.set("category", current.join(","));
@@ -256,15 +276,14 @@ export function CollectionClient({
     return () => { document.body.style.overflow = "unset"; };
   }, [isMobileFilterOpen]);
 
-  // --- FILTER LOGIC ---
-  const filteredArtworks = useMemo(() => {
-    return filterArtworks(artworks, {
-      searchQuery,
-      selectedCategories,
-      statusFilter,
-      sortOption
+  // --- GRID DISTRIBUTION (No client-side .filter in JSX) ---
+  const columns = useMemo(() => {
+    const cols: Artwork[][] = Array.from({ length: gridCols }, () => []);
+    artworks.forEach((art, index) => {
+      cols[index % gridCols].push(art);
     });
-  }, [artworks, searchQuery, selectedCategories, statusFilter, sortOption]);
+    return cols;
+  }, [artworks, gridCols]);
 
   const categoriesByType = allCategories.reduce((acc, cat) => {
     if (!acc[cat.type]) acc[cat.type] = [];
@@ -301,7 +320,7 @@ export function CollectionClient({
   };
 
   return (
-    <div className="min-h-screen bg-bone pt-32 pb-20 px-6 md:px-12">
+    <div className="flex flex-col lg:flex-row gap-12 lg:gap-16">
 
       {/* MOBILE FILTER BUTTON */}
       <div className="lg:hidden mb-12 flex justify-between items-baseline border-b border-black/5 pb-4">
@@ -314,7 +333,7 @@ export function CollectionClient({
           </span>
         </button>
         <span className="font-sans text-[10px] tracking-widest text-gray-400 uppercase">
-          {filteredArtworks.length} Results
+          {artworks.length} Results
         </span>
       </div>
 
@@ -336,13 +355,13 @@ export function CollectionClient({
               <FilterPanel {...filterProps} />
             </div>
             <div className="p-6 border-t border-black/5 bg-bone">
-              <button onClick={() => setIsMobileFilterOpen(false)} className="w-full bg-soft-black text-white font-sans text-xs tracking-[0.3em] uppercase py-4 hover:bg-black/80 transition-colors">Show {filteredArtworks.length} Results</button>
+              <button onClick={() => setIsMobileFilterOpen(false)} className="w-full bg-soft-black text-white font-sans text-xs tracking-[0.3em] uppercase py-4 hover:bg-black/80 transition-colors">Show {artworks.length} Results</button>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      <div className="flex flex-col lg:flex-row gap-12 lg:gap-16">
+      <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 w-full">
 
         {/* DESKTOP SIDEBAR */}
         <aside
@@ -351,7 +370,7 @@ export function CollectionClient({
         >
           <div className="pb-8">
             <div className="mb-8 pb-4 border-b border-black/5">
-              <p className="font-sans text-[11px] tracking-widest text-gray-500 uppercase">{filteredArtworks.length} Results</p>
+              <p className="font-sans text-[11px] tracking-widest text-gray-500 uppercase">{artworks.length} Results</p>
             </div>
             <FilterPanel {...filterProps} />
           </div>
@@ -414,75 +433,86 @@ export function CollectionClient({
             key={`${searchQuery}-${selectedCategories.join("-")}-${statusFilter}-${sortOption}-${gridCols}`}
             className="flex gap-8 lg:gap-12 items-start transition-all duration-700"
           >
-            {filteredArtworks.length > 0 ? (
-              Array.from({ length: gridCols }).map((_, colIndex) => (
-                <motion.div
+            {artworks.length > 0 ? (
+              columns.map((columnArtworks, colIndex) => (
+                <div
                   key={colIndex}
-                  variants={staggerContainer}
-                  initial="initial"
-                  whileInView="animate"
-                  viewport={{ once: true }}
                   className="flex-1 flex flex-col gap-12 lg:gap-16"
                 >
                   <AnimatePresence mode="popLayout">
-                    {filteredArtworks
-                      .filter((_, index) => index % gridCols === colIndex)
-                      .map((art, index) => (
-                        <motion.div
-                          key={art._id}
-                          variants={staggerItem}
-                          layout
-                          className="relative z-10 w-full"
-                        >
-                          <Link href={`/artwork/${art.slug}`} className="block cursor-pointer group/card">
-                            <div className="relative group/image">
-                              <SanityImage
-                                src={art.imageUrl}
-                                alt={art.title}
-                                lqip={art.lqip}
-                                aspectRatio={art.aspectRatio}
-                                hasMat={showMat}
-                                priority={index < 2}
-                                imageClassName={cn(
-                                  (art.status === "sold" || art.status === "private")
-                                    ? "grayscale-[0.2] group-hover/image:grayscale group-hover/image:opacity-40"
-                                    : "grayscale-[0.2] group-hover/image:grayscale-0"
-                                )}
-                              />
-                              <div className="absolute inset-0 pointer-events-none p-6">
-                                {art.status === "sold" && (
-                                  <span className={`
-                                    absolute inset-0 flex flex-col items-center justify-center z-20
-                                    opacity-0 group-hover/image:opacity-100 transition-opacity duration-500
-                                  `}>
-                                    <span className="font-serif font-bold italic text-2xl md:text-3xl text-white bg-[#7D1818] shadow-xl -rotate-12 tracking-widest px-5 py-2">
-                                      SOLD
-                                    </span>
-                                    <span className="mt-16 font-sans text-white tracking-[0.2em] uppercase font-medium drop-shadow-md text-center px-4 text-[10px] md:text-xs leading-relaxed max-w-[200px]">
-                                      Commission a similar piece
-                                    </span>
-                                  </span>
-                                )}
-                              </div>
-                            </div>
+                    {columnArtworks.map((art: Artwork, index: number) => {
+                      // Total index across all columns for priority calculation
+                      const globalIndex = index * gridCols + colIndex;
+                      const isPriority = globalIndex < 4;
 
-                            <div className="mt-8">
-                              <MuseumPlaque
-                                title={art.title}
-                                artist={art.artist}
-                                year={art.year}
-                                medium={art.material}
-                                dimensions={art.dimensions}
-                                showButton={false}
-                                showMedium={false}
-                              />
-                            </div>
-                          </Link>
-                        </motion.div>
-                      ))}
+                      return (
+                        <LazyGridItem
+                          key={art._id}
+                          className="relative z-10 w-full"
+                          rootMargin="1000px 0px"
+                          aspectRatio={art.aspectRatio}
+                          disabled={globalIndex < 12}
+                        >
+                          <motion.div
+                            variants={staggerItem}
+                            initial="initial"
+                            whileInView="animate"
+                            viewport={{ once: true, margin: "600px" }}
+                            layout
+                            style={{ willChange: "transform, opacity" }}
+                          >
+                            <Link href={`/artwork/${art.slug}`} className="block cursor-pointer group/card">
+                              <div className="relative group/image">
+                                <SanityImage
+                                  src={art.imageUrl}
+                                  alt={art.title}
+                                  lqip={art.lqip}
+                                  aspectRatio={art.aspectRatio}
+                                  hasMat={showMat}
+                                  priority={isPriority}
+                                  imageClassName={cn(
+                                    (art.status === "sold" || art.status === "private")
+                                      ? "grayscale-[0.2] group-hover/image:grayscale group-hover/image:opacity-40"
+                                      : "grayscale-[0.2] group-hover/image:grayscale-0"
+                                  )}
+                                />
+                                <div className="absolute inset-0 pointer-events-none p-6">
+                                  {art.status === "sold" && (
+                                    <span className={`
+                                      absolute inset-0 flex flex-col items-center justify-center z-20
+                                      opacity-0 group-hover/image:opacity-100 transition-opacity duration-500
+                                    `}>
+                                      <span className="font-serif font-bold italic text-2xl md:text-3xl text-white bg-[#7D1818] shadow-xl -rotate-12 tracking-widest px-5 py-2">
+                                        SOLD
+                                      </span>
+                                      <span className="mt-16 font-sans text-white tracking-[0.2em] uppercase font-medium drop-shadow-md text-center px-4 text-[10px] md:text-xs leading-relaxed max-w-[200px]">
+                                        Commission a similar piece
+                                      </span>
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
+
+                              <div className="mt-8">
+                                <MuseumPlaque
+                                  title={art.title}
+                                  artist={art.artist}
+                                  year={art.year}
+                                  medium={art.material}
+                                  dimensions={art.dimensions}
+                                  showButton={false}
+                                  showMedium={false}
+                                />
+                              </div>
+                            </Link>
+                          </motion.div>
+                        </LazyGridItem>
+                      );
+                    })}
                   </AnimatePresence>
-                </motion.div>
+                </div>
               ))
+
             ) : (
               <div className="w-full">
                 <FeaturedCollection
@@ -506,3 +536,5 @@ export function CollectionClient({
     </div>
   );
 }
+
+

@@ -5,8 +5,9 @@ import { Variants } from "framer-motion";
  * Constraint: duration: 0.6, ease: [0.22, 1, 0.36, 1] (Quart Out)
  */
 
-export const LUXURY_EASE = [0.22, 1, 0.36, 1];
-export const LUXURY_DURATION = 0.6;
+export const LUXURY_EASE = [0.215, 0.61, 0.355, 1];
+export const LUXURY_DURATION = 0.8;
+
 
 export const fadeIn: Variants = {
     initial: { opacity: 0 },
@@ -54,7 +55,8 @@ export const staggerContainer: Variants = {
 };
 
 export const staggerItem: Variants = {
-    initial: { opacity: 0, y: 20 },
+    initial: { opacity: 0.3, y: 20 },
+
     animate: {
         opacity: 1,
         y: 0,

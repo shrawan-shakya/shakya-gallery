@@ -2,6 +2,8 @@ import { sanityFetch } from "@/sanity/lib/live";
 import { CollectionClient } from "@/components/sections/CollectionClient";
 import { Metadata } from "next";
 import { Suspense } from "react";
+import { getFilteredArtworks } from "@/lib/artworks";
+import { LoadingGrid } from "@/components/ui/LoadingGrid";
 
 export const metadata: Metadata = {
   title: "Buy Original Fine Art in Nepal | Abstracts, Landscapes & Portraits",
@@ -11,31 +13,7 @@ export const metadata: Metadata = {
   },
 };
 
-// 1. Fetch Artworks
-async function getArtworks() {
-  const query = `
-    *[_type == "artwork"] | order(_createdAt desc) {
-      _id,
-      title,
-      dimensions,
-      year,
-      artist,
-      material,
-      status,
-      price,
-      showPrice,
-      "categories": categories[]->title, // Get category names
-      "slug": slug.current,
-      "imageUrl": mainImage.asset->url,
-      "lqip": mainImage.asset->metadata.lqip,
-      "aspectRatio": mainImage.asset->metadata.dimensions.aspectRatio
-    }
-  `;
-  const { data } = await sanityFetch({ query });
-  return data;
-}
-
-// 2. Fetch Categories (For the Sidebar)
+// 1. Fetch Categories (For the Sidebar)
 async function getCategories() {
   const query = `
     *[_type == "category"] {
@@ -47,8 +25,25 @@ async function getCategories() {
   return data;
 }
 
-export default async function CollectionPage() {
-  const artworks = await getArtworks();
+interface Props {
+  searchParams: Promise<{
+    q?: string;
+    category?: string;
+    status?: string;
+    sort?: string;
+  }>;
+}
+
+export default async function CollectionPage({ searchParams }: Props) {
+  const params = await searchParams;
+
+  const artworks = await getFilteredArtworks({
+    searchQuery: params.q,
+    selectedCategories: params.category?.split(",").filter(Boolean) || [],
+    statusFilter: params.status as any,
+    sortOption: params.sort as any
+  });
+
   const categories = await getCategories();
 
   const jsonLd = {
@@ -72,9 +67,11 @@ export default async function CollectionPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <Suspense fallback={<div className="min-h-screen bg-bone pt-32 px-12 font-serif italic text-soft-black/40">Loading gallery...</div>}>
-        <CollectionClient artworks={artworks} allCategories={categories} />
-      </Suspense>
+      <div className="min-h-screen bg-bone pt-32 pb-20 px-6 md:px-12">
+        <Suspense fallback={<LoadingGrid />}>
+          <CollectionClient artworks={artworks} allCategories={categories} />
+        </Suspense>
+      </div>
     </>
   );
 }

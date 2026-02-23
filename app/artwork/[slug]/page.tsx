@@ -3,8 +3,51 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArtworkInquiry } from "@/components/ArtworkInquiry";
 import { ArtworkGallery } from "@/components/artwork/ArtworkGallery";
+import { PortableText } from "@portabletext/react";
 
-export const dynamicParams = true; // Ensure new items show up immediately
+
+export const dynamicParams = true;
+
+const components = {
+  block: {
+    h1: ({ children }: any) => <h1 className="font-serif text-3xl md:text-4xl text-soft-black mb-4">{children}</h1>,
+    h2: ({ children }: any) => <h2 className="font-serif text-2xl md:text-3xl text-soft-black mb-3">{children}</h2>,
+    h3: ({ children }: any) => <h3 className="font-serif text-xl md:text-2xl text-soft-black mb-2 italic">{children}</h3>,
+    normal: ({ children }: any) => <p className="font-sans font-light text-sm leading-[2.2] tracking-wide text-gray-600 text-justify mb-6">{children}</p>,
+  },
+  list: {
+    bullet: ({ children }: any) => <ul className="ml-6 list-disc space-y-2 mb-6 font-sans text-sm text-gray-600">{children}</ul>,
+    number: ({ children }: any) => <ol className="ml-6 list-decimal space-y-2 mb-6 font-sans text-sm text-gray-600">{children}</ol>,
+  },
+};
+
+const ArtStory = ({ description, provenance }: { description?: any[]; provenance?: any[] }) => {
+  if (!description && !provenance) return null;
+
+  return (
+    <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
+      {/* 1. THE NARRATIVE */}
+      {description && description.length > 0 && (
+        <div className="pt-4 border-t border-black/5">
+          <h3 className="font-serif text-xl italic text-soft-black mb-6">About The Artwork</h3>
+          <div className="prose prose-sm max-w-none">
+            <PortableText value={description} components={components} />
+          </div>
+        </div>
+      )}
+
+      {/* 2. PROVENANCE & HISTORY */}
+      {provenance && provenance.length > 0 && (
+        <div className="pt-8 border-t-[0.5px] border-frame-gold/30">
+          <h3 className="font-serif text-xl italic text-soft-black mb-6">Provenance & History</h3>
+          <div className="prose prose-sm max-w-none">
+            <PortableText value={provenance} components={components} />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
 
 // FETCH SLUGS FOR STATIC GENERATION
 export async function generateStaticParams() {
@@ -25,6 +68,7 @@ async function getArtwork(slug: string) {
       dimensions,
       material,
       description,
+      provenance,
       artist,
       status, 
       price,
@@ -44,6 +88,7 @@ async function getArtwork(slug: string) {
   return data;
 }
 
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const art = await getArtwork(slug);
@@ -58,8 +103,16 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const material = art.material || "Fine Art";
   const title = `${art.title} by ${artist} | Original Nepali Art`;
 
-  const description = art.description ?
-    art.description.length > 160 ? `${art.description.substring(0, 157)}...` : art.description
+  // Extract a plain text snippet for the meta description
+  const plainTextDescription = Array.isArray(art.description)
+    ? art.description
+      .map((block: any) => block._type === 'block' ? block.children?.map((child: any) => child.text).join('') : '')
+      .join(' ')
+      .trim()
+    : "";
+
+  const description = plainTextDescription
+    ? plainTextDescription.length > 160 ? `${plainTextDescription.substring(0, 157)}...` : plainTextDescription
     : `Buy ${art.title}, an original ${material} painting by ${artist}. Authentic Nepali art for sale at SHAKYA Gallery.`;
 
   return {
@@ -110,13 +163,22 @@ export default async function ArtworkPage({
     </nav>
   );
 
+  // Extract plain text for JSON-LD description
+  const plainTextDescription = Array.isArray(art.description)
+    ? art.description
+      .map((block: any) => block._type === 'block' ? block.children?.map((child: any) => child.text).join('') : '')
+      .join(' ')
+      .trim()
+    : "";
+
   // JSON-LD for VisualArtwork (Resolves Search Console E-commerce Errors)
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "VisualArtwork",
     "name": art.title,
     "image": art.mainImage.url,
-    "description": art.description,
+    "description": plainTextDescription,
+
     "creator": [
       {
         "@type": "Person",
@@ -231,13 +293,9 @@ export default async function ArtworkPage({
                 )}
               </div>
 
-              {/* 4. THE NARRATIVE */}
-              <div className="space-y-4 pt-4 border-t border-black/5">
-                <h3 className="font-serif text-xl italic text-soft-black">About The Artwork</h3>
-                <div className="font-sans font-light text-sm leading-[2.2] tracking-wide text-gray-600 text-justify">
-                  {art.description}
-                </div>
-              </div>
+              {/* 4. THE NARRATIVE & PROVENANCE */}
+              <ArtStory description={art.description} provenance={art.provenance} />
+
 
               {/* 5. FROM THE GALLERY (INTERNAL LINK HUB) */}
               <div className="pt-8 border-t border-black/5">

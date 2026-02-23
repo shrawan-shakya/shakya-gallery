@@ -6,7 +6,8 @@ import { Search as SearchIcon, ArrowRight, Loader2 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
-import { searchArtworks, SearchResult } from "@/app/actions/search";
+import { searchArtworks } from "@/app/actions/search";
+import { Artwork as SearchResult } from "@/lib/types";
 
 interface SearchOverlayProps {
     isOpen: boolean;
@@ -128,21 +129,22 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                                             transition={{ delay: i * 0.05 }}
                                         >
                                             <Link
-                                                href={`/artwork/${art.slug.current}`}
+                                                href={`/artwork/${art.slug}`}
                                                 onClick={onClose}
                                                 className="group flex gap-4 items-start"
                                             >
                                                 {/* Thumbnail */}
                                                 <div className="relative w-20 h-20 md:w-24 md:h-24 flex-shrink-0 overflow-hidden bg-gray-100">
-                                                    {art.mainImage && (
+                                                    {art.imageUrl && (
                                                         <Image
-                                                            src={urlFor(art.mainImage).width(200).height(200).url()}
+                                                            src={art.imageUrl}
                                                             alt={art.title}
                                                             fill
                                                             className="object-cover transition-transform duration-500 group-hover:scale-110"
                                                         />
                                                     )}
                                                 </div>
+
 
                                                 {/* Text Info */}
                                                 <div className="flex flex-col">

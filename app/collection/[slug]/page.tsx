@@ -3,42 +3,29 @@ import { CollectionClient } from "@/components/sections/CollectionClient";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import { getFilteredArtworks } from "@/lib/artworks";
+import { Artwork, Category } from "@/lib/types";
+import { LoadingGrid } from "@/components/ui/LoadingGrid";
+
 
 interface Props {
     params: Promise<{ slug: string }>;
+    searchParams: Promise<{
+        q?: string;
+        category?: string;
+        status?: string;
+        sort?: string;
+    }>;
 }
 
-// 1. Fetch Artworks for Category
-async function getArtworks(categorySlug: string) {
-    const query = `
-    *[_type == "artwork" && references(*[_type == "category" && slug.current == $slug]._id)] | order(_createdAt desc) {
-      _id,
-      title,
-      dimensions,
-      year,
-      artist,
-      material,
-      status,
-      price,
-      "categories": categories[]->title,
-      "slug": slug.current,
-      "imageUrl": mainImage.asset->url,
-      "lqip": mainImage.asset->metadata.lqip,
-      "aspectRatio": mainImage.asset->metadata.dimensions.aspectRatio
-    }
-  `;
-    const { data } = await sanityFetch({ query, params: { slug: categorySlug } });
-    return data;
-}
-
-// 2. Fetch Category Info
+// 1. Fetch Category Info
 async function getCategory(slug: string) {
     const query = `*[_type == "category" && slug.current == $slug][0] { title, description }`;
     const { data } = await sanityFetch({ query, params: { slug } });
     return data;
 }
 
-// 3. Fetch All Categories for Sidebar
+// 2. Fetch All Categories for Sidebar
 async function getAllCategories() {
     const query = `*[_type == "category"] { title, type }`;
     const { data } = await sanityFetch({ query });
@@ -60,22 +47,42 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
 }
 
-export default async function CategoryPage({ params }: Props) {
+export default async function CategoryPage({ params, searchParams }: Props) {
     const { slug } = await params;
+    const sParams = await searchParams;
     const category = await getCategory(slug);
 
     if (!category) return notFound();
 
-    const artworks = await getArtworks(slug);
+    // Merge URL categories with the slug-based category
+    const urlParam = sParams.category;
+    let urlCategories = [];
+    if (urlParam) {
+        const parts = urlParam.split(",");
+        for (const p of parts) if (p) urlCategories.push(p);
+    }
+
+    const selectedCategories = Array.from(new Set([category.title, ...urlCategories]));
+
+    const artworks = await getFilteredArtworks({
+        searchQuery: sParams.q,
+        selectedCategories: selectedCategories,
+        statusFilter: sParams.status as any,
+        sortOption: sParams.sort as any
+    });
+
     const allCategories = await getAllCategories();
 
     return (
-        <Suspense fallback={<div className="min-h-screen bg-bone pt-32 px-12 font-serif italic text-soft-black/40">Loading collection...</div>}>
-            <CollectionClient
-                artworks={artworks}
-                allCategories={allCategories}
-                initialCategory={category.title}
-            />
-        </Suspense>
+        <div className="min-h-screen bg-bone pt-32 pb-20 px-6 md:px-12">
+            <Suspense fallback={<LoadingGrid />}>
+                <CollectionClient
+                    artworks={artworks}
+                    allCategories={allCategories}
+                    initialCategory={category.title}
+                />
+            </Suspense>
+        </div>
     );
 }
+

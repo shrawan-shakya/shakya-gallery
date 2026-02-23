@@ -1,43 +1,13 @@
-export type Category = {
-    title: string;
-    type: "style" | "subject" | "medium" | "collection";
-};
+import { sanityFetch } from "@/sanity/lib/live";
 
-export type Artwork = {
-    _id: string;
-    title: string;
-    artist?: string;
-    year?: string;
-    slug: string;
-    imageUrl: string;
-    lqip?: string;
-    aspectRatio: number;
-    status?: "available" | "sold" | "private";
-    price?: number;
-    showPrice?: boolean;
-    packagedWeight?: number;
-    shippingDimensions?: {
-        length: number;
-        width: number;
-        height: number;
-    };
-    categories?: string[];
-    dimensions?: string;
-    material?: string;
-};
+import { Artwork, FilterOptions } from "./types";
 
-export type FilterOptions = {
-    searchQuery: string;
-    selectedCategories: string[];
-    statusFilter: "all" | "available" | "sold";
-    sortOption: "newest" | "price_asc" | "price_desc";
-};
 
 /**
- * Pure function to filter and sort artworks based on given options.
- * This can be used with State, URL SearchParams, or even on the Server.
+ * Server-side GROQ-based filtering for artworks.
+ * Unified logic for Gallery and Search.
  */
-export function filterArtworks(artworks: Artwork[], options: Partial<FilterOptions>): Artwork[] {
+export async function getFilteredArtworks(options: Partial<FilterOptions>) {
     const {
         searchQuery = "",
         selectedCategories = [],
@@ -45,32 +15,65 @@ export function filterArtworks(artworks: Artwork[], options: Partial<FilterOptio
         sortOption = "newest"
     } = options;
 
-    return artworks
-        .filter((art) => {
-            // 1. Search Query (Title or Artist)
-            const matchSearch =
-                art.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                (art.artist?.toLowerCase() || "").includes(searchQuery.toLowerCase());
+    // Base filters
+    const filters = [`_type == "artwork"`, `!(_id in path("drafts.**"))`];
 
-            // 2. Category Filter (OR logic: match if artwork has ANY of the selected categories)
-            const matchCategory =
-                selectedCategories.length === 0
-                    ? true
-                    : selectedCategories.some((cat) => art.categories?.includes(cat));
+    // 1. Search Logic (Consistent with Search Overlay)
+    if (searchQuery) {
+        filters.push(`(
+            title match $searchQuery + "*" || 
+            artist match $searchQuery + "*" || 
+            material match $searchQuery + "*"
+        )`);
+    }
 
-            // 3. Status Filter
-            const matchStatus =
-                statusFilter === "all" ? true :
-                    statusFilter === "available" ? art.status === "available" :
-                        (art.status === "sold" || art.status === "private");
+    // 2. Category Logic (OR logic)
+    if (selectedCategories.length > 0) {
+        filters.push(`count((categories[]->title)[@ in $selectedCategories]) > 0`);
+    }
 
-            return matchSearch && matchCategory && matchStatus;
-        })
-        .sort((a, b) => {
-            // 4. Sorting
-            if (sortOption === "price_asc") return (a.price || 0) - (b.price || 0);
-            if (sortOption === "price_desc") return (b.price || 0) - (a.price || 0);
-            // Newest (Default/Zero)
-            return 0;
-        });
+    // 3. Status Logic
+    if (statusFilter === "available") {
+        filters.push(`status == "available"`);
+    } else if (statusFilter === "sold") {
+        filters.push(`status in ["sold", "private"]`);
+    }
+
+    // 4. Sorting Logic
+    let orderClause = "_createdAt desc";
+    if (sortOption === "price_asc") orderClause = "price asc";
+    else if (sortOption === "price_desc") orderClause = "price desc";
+
+    const query = `
+    *[${filters.join(" && ")}] | order(${orderClause}) {
+      _id,
+      title,
+      dimensions,
+      year,
+      artist,
+      material,
+      status,
+      price,
+      showPrice,
+      "categories": categories[]->title,
+      "slug": slug.current,
+      "imageUrl": mainImage.asset->url,
+      "lqip": mainImage.asset->metadata.lqip,
+      "aspectRatio": mainImage.asset->metadata.dimensions.aspectRatio,
+      description,
+      provenance
+    }
+
+    `;
+
+    const { data } = await sanityFetch({
+        query,
+        params: {
+            searchQuery,
+            selectedCategories
+        }
+    });
+
+    return data as Artwork[];
 }
+

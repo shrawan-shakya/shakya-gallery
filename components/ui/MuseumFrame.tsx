@@ -50,7 +50,8 @@ export function MuseumFrame({
       <FrameWrapper>
         {/* 4. Artwork Container (The Master Proportions) */}
         <div
-          className="relative bg-[#FCFCFC] overflow-hidden shadow-[inset_0_2px_6px_rgba(0,0,0,0.2)] w-full h-full"
+          className="relative bg-[#F9F9F9] overflow-hidden shadow-[inset_0_2px_6px_rgba(0,0,0,0.2)] w-full h-full"
+
           style={{ aspectRatio }}
         >
           <div className="absolute inset-0 w-full h-full flex items-center justify-center">

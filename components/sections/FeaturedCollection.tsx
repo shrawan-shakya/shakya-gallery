@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Artwork } from "@/lib/artworks";
+import { Artwork } from "@/lib/types";
+
 import { SanityImage } from "@/components/ui/SanityImage";
 import Link from "next/link";
 import { staggerContainer, staggerItem } from "@/lib/motion-variants";

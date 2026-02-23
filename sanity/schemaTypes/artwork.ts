@@ -175,9 +175,19 @@ export default defineType({
     }),
     defineField({
       name: 'description',
-      title: 'The Story',
-      type: 'text',
-      rows: 4,
+      title: 'The Story (Description)',
+      type: 'array',
+      of: [{ type: 'block' }],
+      description: 'The Soul: Describe the Subject (Deity/Scene), Symbolism (Key details), and Technique (Materials/Craft).',
     }),
+    defineField({
+      name: 'provenance',
+      title: 'Provenance',
+      type: 'array',
+      of: [{ type: 'block' }],
+      description: 'The History: Trace the Origin (Where/When), Lineage (Artist Heritage), and Journey (Exhibitions/Collections).',
+    }),
+
+
   ],
 })
