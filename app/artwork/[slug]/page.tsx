@@ -110,34 +110,27 @@ export default async function ArtworkPage({
     </nav>
   );
 
-  // JSON-LD for Artwork/Product
+  // JSON-LD for VisualArtwork (Resolves Search Console E-commerce Errors)
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": ["VisualArtwork"],
+    "@type": "VisualArtwork",
     "name": art.title,
     "image": art.mainImage.url,
     "description": art.description,
-    "sku": art.sku || art._id,
-    "brand": {
-      "@type": "Brand",
-      "name": "Shakya Gallery"
-    },
-    "offers": {
-      "@type": "Offer",
-      "url": `https://shakyagallery.com/artwork/${slug}`,
-      "priceCurrency": "USD",
-      "price": art.price,
-      "availability": isSold ? "https://schema.org/SoldOut" : "https://schema.org/InStock",
-      "itemCondition": "https://schema.org/NewCondition"
-    },
-    "creator": {
-      "@type": "Person",
-      "name": art.artist
-    },
+    "creator": [
+      {
+        "@type": "Person",
+        "name": art.artist
+      }
+    ],
     "artMedium": art.material,
     "artDimensions": art.dimensions,
     "dateCreated": art.year,
-    "material": art.material
+    "material": art.material,
+    "publisher": {
+      "@type": "Organization",
+      "name": "Shakya Gallery"
+    }
   };
 
   return (
