@@ -5,6 +5,7 @@ import { ArtworkGallery } from "@/components/artwork/ArtworkGallery";
 import { PortableText } from "@portabletext/react";
 import { ArtworkActions } from "@/components/artwork/ArtworkActions";
 import { ArtworkTabs } from "@/components/artwork/ArtworkTabs";
+import { Price } from "@/components/ui/Price";
 
 
 
@@ -224,7 +225,7 @@ export default async function ArtworkPage({
                 {!isSold && art.showPrice && art.price && (
                   <div className="mb-2">
                     <p className="font-serif text-3xl md:text-4xl text-soft-black">
-                      ${art.price.toLocaleString()}
+                      <Price amount={art.price} />
                     </p>
                   </div>
                 )}

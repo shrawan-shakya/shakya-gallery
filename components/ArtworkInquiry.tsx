@@ -226,11 +226,11 @@ export function ArtworkInquiry({
 
                     {/* HEADER */}
                     <div className="pr-8"> {/* Padding right to avoid overlap with close button */}
-                      <p className="font-sans text-xs tracking-[0.3em] text-gray-800 uppercase mb-2">
+                      <p className="font-sans text-[10px] tracking-[0.3em] text-gray-400 uppercase mb-2">
                         Bespoke Acquisition
                       </p>
                       <h2 className="font-serif text-3xl text-soft-black leading-tight">{artwork.title}</h2>
-                      <p className="font-serif text-sm italic text-gray-800 mt-1">SKU: {artwork.sku || "Unlisted"}</p>
+                      <p className="font-serif text-sm italic text-gray-600 mt-1">Ref: {artwork.sku || "Unlisted"}</p>
                     </div>
 
                     {/* FIELDS */}
@@ -251,24 +251,24 @@ export function ArtworkInquiry({
                       {/* Name & Email */}
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="space-y-1">
-                          <label className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-800">Full Name</label>
-                          <input required type="text" value={name} onChange={(e) => setName(e.target.value)} className="w-full bg-transparent border-b border-black/10 py-2 font-serif text-lg outline-none focus:border-black transition-colors" />
+                          <label className="font-serif italic text-xs text-gray-500">Full Name</label>
+                          <input required type="text" value={name} onChange={(e) => setName(e.target.value)} className="w-full bg-transparent border-b border-black/10 py-2 font-sans font-light text-base outline-none focus:border-black transition-colors" />
                         </div>
                         <div className="space-y-1">
-                          <label className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-800">Email Address</label>
-                          <input required type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full bg-transparent border-b border-black/10 py-2 font-serif text-lg outline-none focus:border-black transition-colors" />
+                          <label className="font-serif italic text-xs text-gray-500">Email Address</label>
+                          <input required type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full bg-transparent border-b border-black/10 py-2 font-sans font-light text-base outline-none focus:border-black transition-colors" />
                         </div>
                       </div>
 
                       {/* Mobile with Country Code */}
                       <div className="space-y-1">
-                        <label className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-800">Mobile Number <span className="text-red-400">*</span></label>
+                        <label className="font-serif italic text-xs text-gray-500">Mobile Number <span className="text-red-400">*</span></label>
                         <div className="flex gap-4">
                           <div className="relative w-1/3">
                             <select
                               value={countryCode}
                               onChange={(e) => setCountryCode(e.target.value)}
-                              className="w-full bg-transparent border-b border-black/10 py-2 font-serif text-lg outline-none focus:border-black transition-colors appearance-none cursor-pointer"
+                              className="w-full bg-transparent border-b border-black/10 py-2 font-sans font-light text-base outline-none focus:border-black transition-colors appearance-none cursor-pointer"
                             >
                               {countryCodes.map((c) => (
                                 <option key={c.country} value={c.code}>
@@ -277,7 +277,7 @@ export function ArtworkInquiry({
                               ))}
                             </select>
                             {/* Custom Arrow */}
-                            <span className="absolute right-0 top-1/2 -translate-y-1/2 text-xs text-gray-800 pointer-events-none">▼</span>
+                            <span className="absolute right-0 top-1/2 -translate-y-1/2 text-[10px] text-gray-400 pointer-events-none">▼</span>
                           </div>
                           <input
                             required
@@ -285,28 +285,28 @@ export function ArtworkInquiry({
                             value={mobile}
                             onChange={(e) => setMobile(e.target.value)}
                             placeholder="Phone Number"
-                            className="w-2/3 bg-transparent border-b border-black/10 py-2 font-serif text-lg outline-none focus:border-black transition-colors placeholder:text-gray-300 placeholder:text-sm placeholder:font-sans"
+                            className="w-2/3 bg-transparent border-b border-black/10 py-2 font-sans font-light text-base outline-none focus:border-black transition-colors placeholder:text-gray-300 placeholder:text-sm"
                           />
                         </div>
                       </div>
 
                       {/* Detailed Shipping Address */}
                       <div className="space-y-4">
-                        <label className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-800">Shipping Destination</label>
+                        <label className="font-serif italic text-xs text-gray-500">Shipping Destination</label>
 
                         {/* Street */}
-                        <input required type="text" placeholder="Street Address" value={street} onChange={(e) => setStreet(e.target.value)} className="w-full bg-transparent border-b border-black/10 py-2 font-serif text-lg outline-none focus:border-black transition-colors placeholder:text-gray-300 placeholder:text-sm placeholder:font-sans" />
+                        <input required type="text" placeholder="Street Address" value={street} onChange={(e) => setStreet(e.target.value)} className="w-full bg-transparent border-b border-black/10 py-2 font-sans font-light text-base outline-none focus:border-black transition-colors placeholder:text-gray-300 placeholder:text-sm" />
 
                         {/* City & State */}
                         <div className="grid grid-cols-2 gap-6">
-                          <input required type="text" placeholder="City" value={city} onChange={(e) => setCity(e.target.value)} className="w-full bg-transparent border-b border-black/10 py-2 font-serif text-lg outline-none focus:border-black transition-colors placeholder:text-gray-300 placeholder:text-sm placeholder:font-sans" />
-                          <input required type="text" placeholder="State / Province" value={state} onChange={(e) => setState(e.target.value)} className="w-full bg-transparent border-b border-black/10 py-2 font-serif text-lg outline-none focus:border-black transition-colors placeholder:text-gray-300 placeholder:text-sm placeholder:font-sans" />
+                          <input required type="text" placeholder="City" value={city} onChange={(e) => setCity(e.target.value)} className="w-full bg-transparent border-b border-black/10 py-2 font-sans font-light text-base outline-none focus:border-black transition-colors placeholder:text-gray-300 placeholder:text-sm" />
+                          <input required type="text" placeholder="State / Province" value={state} onChange={(e) => setState(e.target.value)} className="w-full bg-transparent border-b border-black/10 py-2 font-sans font-light text-base outline-none focus:border-black transition-colors placeholder:text-gray-300 placeholder:text-sm" />
                         </div>
 
                         {/* Zip & Country */}
                         <div className="grid grid-cols-2 gap-6">
-                          <input required type="text" placeholder="Zip / Postal Code" value={zip} onChange={(e) => setZip(e.target.value)} className="w-full bg-transparent border-b border-black/10 py-2 font-serif text-lg outline-none focus:border-black transition-colors placeholder:text-gray-300 placeholder:text-sm placeholder:font-sans" />
-                          <input required type="text" placeholder="Country" value={country} onChange={(e) => setCountry(e.target.value)} className="w-full bg-transparent border-b border-black/10 py-2 font-serif text-lg outline-none focus:border-black transition-colors placeholder:text-gray-300 placeholder:text-sm placeholder:font-sans" />
+                          <input required type="text" placeholder="Zip / Postal Code" value={zip} onChange={(e) => setZip(e.target.value)} className="w-full bg-transparent border-b border-black/10 py-2 font-sans font-light text-base outline-none focus:border-black transition-colors placeholder:text-gray-300 placeholder:text-sm" />
+                          <input required type="text" placeholder="Country" value={country} onChange={(e) => setCountry(e.target.value)} className="w-full bg-transparent border-b border-black/10 py-2 font-sans font-light text-base outline-none focus:border-black transition-colors placeholder:text-gray-300 placeholder:text-sm" />
                         </div>
                       </div>
 

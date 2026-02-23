@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { siteConfig } from "@/lib/config";
+import { CurrencyToggle } from "@/components/ui/CurrencyToggle";
 
 export function Footer() {
   const [email, setEmail] = useState("");
@@ -179,11 +180,14 @@ export function Footer() {
         </div>
       </div>
 
-      {/* 3. SUB-FOOTER (Copyright) */}
-      <div className="max-w-[1400px] mx-auto mt-24 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
-        <p className="font-sans text-xs tracking-[0.2em] text-gray-400 uppercase">
-          © {new Date().getFullYear()} Shakya Gallery. All Rights Reserved.
-        </p>
+      {/* 3. SUB-FOOTER (Copyright & Currency) */}
+      <div className="max-w-[1400px] mx-auto mt-24 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
+        <div className="flex flex-col md:flex-row items-center gap-6 md:gap-12">
+          <p className="font-sans text-xs tracking-[0.2em] text-gray-400 uppercase">
+            © {new Date().getFullYear()} Shakya Gallery. All Rights Reserved.
+          </p>
+          <CurrencyToggle />
+        </div>
         <div className="flex gap-8">
           <Link href="/privacy-policy" className="font-sans text-xs tracking-[0.2em] text-gray-400 hover:text-white transition-colors uppercase">Privacy</Link>
           <Link href="/terms" className="font-sans text-xs tracking-[0.2em] text-gray-400 hover:text-white transition-colors uppercase">Terms</Link>

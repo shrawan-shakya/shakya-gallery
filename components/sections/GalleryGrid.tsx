@@ -14,6 +14,7 @@ async function getArtworks(limit?: number) {
       material,
       status, // <--- Added: Fetch if it is Sold/Available
       price,  // <--- Added: Fetch the price
+      showPrice,
       "slug": slug.current,
       "imageUrl": mainImage.asset->url,
       "aspectRatio": mainImage.asset->metadata.dimensions.aspectRatio

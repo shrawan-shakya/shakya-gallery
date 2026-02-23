@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useLenis } from "@studio-freight/react-lenis";
+import { useCurrency } from "@/hooks/use-currency";
 
 const zones = [
     { id: "ktm", name: "Kathmandu Valley (Local Pickup)", multiplier: 0 },
@@ -33,6 +34,7 @@ export function ShippingModal({ price, isOpen, onClose, onInquire }: ShippingMod
     const [size, setSize] = useState(sizes[0].id);
     const [estimate, setEstimate] = useState<[number, number] | null>(null);
     const lenis = useLenis();
+    const { formatPrice, currency, exchangeRate } = useCurrency();
 
     const isFree = price && price >= 1500;
 
@@ -112,7 +114,7 @@ export function ShippingModal({ price, isOpen, onClose, onInquire }: ShippingMod
                                         <select
                                             value={zone}
                                             onChange={(e) => setZone(e.target.value)}
-                                            className="w-full bg-transparent border-b border-black/10 py-3 font-serif text-lg outline-none focus:border-black transition-colors appearance-none cursor-pointer"
+                                            className="w-full bg-transparent border-b border-black/10 py-3 font-sans text-lg outline-none focus:border-black transition-colors appearance-none cursor-pointer"
                                         >
                                             {zones.map((z) => (
                                                 <option key={z.id} value={z.id}>
@@ -166,10 +168,10 @@ export function ShippingModal({ price, isOpen, onClose, onInquire }: ShippingMod
                                         >
                                             <div className="space-y-1">
                                                 <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-gray-800">Estimated Transit Cost</p>
-                                                <p className="font-serif text-4xl text-soft-black">
+                                                <p className="font-serif text-4xl text-soft-black font-sans font-light">
                                                     {estimate[0] === 0 ? (
                                                         <span className="flex flex-col items-center gap-2">
-                                                            <span className="text-xl">
+                                                            <span className="text-xl font-sans font-light">
                                                                 {zone === "ktm" ? "Hand-Delivery" : "Complimentary"}
                                                             </span>
                                                             <span className="font-sans text-[10px] text-frame-gold tracking-widest italic uppercase">
@@ -177,7 +179,9 @@ export function ShippingModal({ price, isOpen, onClose, onInquire }: ShippingMod
                                                             </span>
                                                         </span>
                                                     ) : (
-                                                        `$${estimate[0].toLocaleString()} – $${estimate[1].toLocaleString()}`
+                                                        currency === "NPR"
+                                                            ? `Rs\u00A0${Math.round(estimate[0] * exchangeRate).toLocaleString("en-NP")} – Rs\u00A0${Math.round(estimate[1] * exchangeRate).toLocaleString("en-NP")}`
+                                                            : `$\u00A0${estimate[0].toLocaleString()} – $\u00A0${estimate[1].toLocaleString()}`
                                                     )}
                                                 </p>
                                             </div>
@@ -230,7 +234,9 @@ export function ShippingModal({ price, isOpen, onClose, onInquire }: ShippingMod
                                     <p className="font-sans text-[9px] text-center text-gray-800 tracking-wider uppercase">
                                         This is an estimate only. Final quote within 24 business hours.
                                         {(!price || price < 1500) && (
-                                            <span className="block mt-2 text-frame-gold italic">Complimentary shipping on all acquisitions over $1,500</span>
+                                            <span className="block mt-2 text-frame-gold italic">
+                                                Complimentary shipping on all acquisitions over {formatPrice(1500)}
+                                            </span>
                                         )}
                                     </p>
                                 </div>

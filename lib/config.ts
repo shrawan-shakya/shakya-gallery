@@ -65,6 +65,10 @@ export const siteConfig = {
             description: "We facilitate secure international Bank Transfers (SWIFT) and local digital payments, ensuring transparency for every acquisition.",
         },
     ],
+    currency: {
+        usdToNpr: 135, // Approximate exchange rate
+        options: ["USD", "NPR"] as const
+    }
 };
 
 export type SiteConfig = typeof siteConfig;

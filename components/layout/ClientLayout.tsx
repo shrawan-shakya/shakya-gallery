@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { SmoothScroll } from "@/components/ui/SmoothScroll";
+import { CurrencyProvider } from "@/hooks/use-currency";
 
 export function ClientLayout({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
@@ -14,12 +15,14 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
     }
 
     return (
-        <SmoothScroll>
-            <Navbar />
-            <main className="flex-grow">
-                {children}
-            </main>
-            <Footer />
-        </SmoothScroll>
+        <CurrencyProvider>
+            <SmoothScroll>
+                <Navbar />
+                <main className="flex-grow">
+                    {children}
+                </main>
+                <Footer />
+            </SmoothScroll>
+        </CurrencyProvider>
     );
 }

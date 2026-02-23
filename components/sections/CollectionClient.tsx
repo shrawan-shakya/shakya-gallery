@@ -14,6 +14,7 @@ import { LazyGridItem } from "@/components/ui/LazyGridItem";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { FeaturedCollection } from "./FeaturedCollection";
+import { Price } from "@/components/ui/Price";
 import {
   Artwork,
   Category
@@ -488,6 +489,11 @@ export function CollectionClient({
                                       <span className="mt-16 font-sans text-white tracking-[0.2em] uppercase font-medium drop-shadow-md text-center px-4 text-[10px] md:text-xs leading-relaxed max-w-[200px]">
                                         Commission a similar piece
                                       </span>
+                                    </span>
+                                  )}
+                                  {art.status === "available" && art.showPrice && art.price && (
+                                    <span className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-white/95 text-soft-black text-sm md:text-base font-sans tracking-[0.2em] px-6 py-3 opacity-0 group-hover/image:opacity-100 transition-opacity duration-500 backdrop-blur-md shadow-md border border-soft-black/10">
+                                      <Price amount={art.price} />
                                     </span>
                                   )}
                                 </div>

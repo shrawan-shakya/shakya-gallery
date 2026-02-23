@@ -8,6 +8,7 @@ import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
 import { searchArtworks } from "@/app/actions/search";
 import { Artwork as SearchResult } from "@/lib/types";
+import { Price } from "@/components/ui/Price";
 
 interface SearchOverlayProps {
     isOpen: boolean;
@@ -154,9 +155,14 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                                                     <p className="text-sm text-soft-black/60 uppercase tracking-wider mt-1">
                                                         {art.artist}
                                                     </p>
-                                                    <p className="text-xs text-soft-black/40 mt-1 capitalize">
-                                                        {art.status}
-                                                    </p>
+                                                    <div className="flex items-center gap-3 mt-1">
+                                                        <p className="text-xs text-soft-black/40 capitalize">
+                                                            {art.status}
+                                                        </p>
+                                                        {art.status === "available" && art.showPrice && art.price && (
+                                                            <Price amount={art.price} className="text-xs text-soft-black/60 font-sans" />
+                                                        )}
+                                                    </div>
                                                 </div>
                                             </Link>
                                         </motion.div>
