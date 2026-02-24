@@ -90,7 +90,7 @@ export function Footer() {
                     onChange={(e) => setEmail(e.target.value)}
                     required
                     disabled={status === "submitting"}
-                    className="w-full bg-transparent py-4 font-sans text-sm text-white placeholder:text-gray-600 outline-none disabled:opacity-50"
+                    className="w-full bg-transparent py-4 font-sans text-sm text-white placeholder:text-gray-400 outline-none disabled:opacity-50"
                   />
                   <button
                     type="submit"

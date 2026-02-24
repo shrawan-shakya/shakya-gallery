@@ -157,7 +157,7 @@ export default function ContactPage() {
                     value={formData.name}
                     onChange={handleChange}
                     type="text"
-                    className="w-full border-b border-black/20 py-2 font-serif text-xl text-soft-black focus:border-black outline-none bg-transparent placeholder:text-black/20"
+                    className="w-full border-b border-black/20 py-2 font-serif text-xl text-soft-black focus:border-black outline-none bg-transparent placeholder:text-black/60"
                     placeholder="Your Name"
                   />
                 </div>
@@ -169,7 +169,7 @@ export default function ContactPage() {
                     value={formData.email}
                     onChange={handleChange}
                     type="email"
-                    className="w-full border-b border-black/20 py-2 font-serif text-xl text-soft-black focus:border-black outline-none bg-transparent placeholder:text-black/20"
+                    className="w-full border-b border-black/20 py-2 font-serif text-xl text-soft-black focus:border-black outline-none bg-transparent placeholder:text-black/60"
                     placeholder="email@address.com"
                   />
                 </div>
@@ -183,7 +183,7 @@ export default function ContactPage() {
                   value={formData.message}
                   onChange={handleChange}
                   rows={4}
-                  className="w-full border-b border-black/20 py-2 font-serif text-xl text-soft-black focus:border-black outline-none bg-transparent resize-none placeholder:text-black/20"
+                  className="w-full border-b border-black/20 py-2 font-serif text-xl text-soft-black focus:border-black outline-none bg-transparent resize-none placeholder:text-black/60"
                   placeholder="Tell us about your collection..."
                 />
               </div>

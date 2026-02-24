@@ -109,7 +109,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                                 value={query}
                                 onChange={(e) => setQuery(e.target.value)}
                                 placeholder="Search artists, titles, or styles..."
-                                className="w-full bg-transparent border-b-2 border-soft-black/20 text-3xl md:text-5xl lg:text-6xl font-serif text-soft-black placeholder:text-soft-black/30 py-4 focus:outline-none focus:border-soft-black transition-colors"
+                                className="w-full bg-transparent border-b-2 border-soft-black/20 text-3xl md:text-5xl lg:text-6xl font-serif text-soft-black placeholder:text-soft-black/60 py-4 focus:outline-none focus:border-soft-black transition-colors"
                             />
                             {isSearching && (
                                 <div className="absolute right-0 top-1/2 -translate-y-1/2">

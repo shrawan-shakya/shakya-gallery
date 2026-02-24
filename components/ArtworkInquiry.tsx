@@ -285,7 +285,7 @@ export function ArtworkInquiry({
                             value={mobile}
                             onChange={(e) => setMobile(e.target.value)}
                             placeholder="Phone Number"
-                            className="w-2/3 bg-transparent border-b border-black/10 py-2 font-sans font-light text-base outline-none focus:border-black transition-colors placeholder:text-gray-300 placeholder:text-sm"
+                            className="w-2/3 bg-transparent border-b border-black/10 py-2 font-sans font-light text-base outline-none focus:border-black transition-colors placeholder:text-gray-500 placeholder:text-sm"
                           />
                         </div>
                       </div>
@@ -295,18 +295,18 @@ export function ArtworkInquiry({
                         <label className="font-serif italic text-xs text-gray-500">Shipping Destination</label>
 
                         {/* Street */}
-                        <input required type="text" placeholder="Street Address" value={street} onChange={(e) => setStreet(e.target.value)} className="w-full bg-transparent border-b border-black/10 py-2 font-sans font-light text-base outline-none focus:border-black transition-colors placeholder:text-gray-300 placeholder:text-sm" />
+                        <input required type="text" placeholder="Street Address" value={street} onChange={(e) => setStreet(e.target.value)} className="w-full bg-transparent border-b border-black/10 py-2 font-sans font-light text-base outline-none focus:border-black transition-colors placeholder:text-gray-500 placeholder:text-sm" />
 
                         {/* City & State */}
                         <div className="grid grid-cols-2 gap-6">
-                          <input required type="text" placeholder="City" value={city} onChange={(e) => setCity(e.target.value)} className="w-full bg-transparent border-b border-black/10 py-2 font-sans font-light text-base outline-none focus:border-black transition-colors placeholder:text-gray-300 placeholder:text-sm" />
-                          <input required type="text" placeholder="State / Province" value={state} onChange={(e) => setState(e.target.value)} className="w-full bg-transparent border-b border-black/10 py-2 font-sans font-light text-base outline-none focus:border-black transition-colors placeholder:text-gray-300 placeholder:text-sm" />
+                          <input required type="text" placeholder="City" value={city} onChange={(e) => setCity(e.target.value)} className="w-full bg-transparent border-b border-black/10 py-2 font-sans font-light text-base outline-none focus:border-black transition-colors placeholder:text-gray-500 placeholder:text-sm" />
+                          <input required type="text" placeholder="State / Province" value={state} onChange={(e) => setState(e.target.value)} className="w-full bg-transparent border-b border-black/10 py-2 font-sans font-light text-base outline-none focus:border-black transition-colors placeholder:text-gray-500 placeholder:text-sm" />
                         </div>
 
                         {/* Zip & Country */}
                         <div className="grid grid-cols-2 gap-6">
-                          <input required type="text" placeholder="Zip / Postal Code" value={zip} onChange={(e) => setZip(e.target.value)} className="w-full bg-transparent border-b border-black/10 py-2 font-sans font-light text-base outline-none focus:border-black transition-colors placeholder:text-gray-300 placeholder:text-sm" />
-                          <input required type="text" placeholder="Country" value={country} onChange={(e) => setCountry(e.target.value)} className="w-full bg-transparent border-b border-black/10 py-2 font-sans font-light text-base outline-none focus:border-black transition-colors placeholder:text-gray-300 placeholder:text-sm" />
+                          <input required type="text" placeholder="Zip / Postal Code" value={zip} onChange={(e) => setZip(e.target.value)} className="w-full bg-transparent border-b border-black/10 py-2 font-sans font-light text-base outline-none focus:border-black transition-colors placeholder:text-gray-500 placeholder:text-sm" />
+                          <input required type="text" placeholder="Country" value={country} onChange={(e) => setCountry(e.target.value)} className="w-full bg-transparent border-b border-black/10 py-2 font-sans font-light text-base outline-none focus:border-black transition-colors placeholder:text-gray-500 placeholder:text-sm" />
                         </div>
                       </div>
 

@@ -36,11 +36,11 @@ export async function GalleryGrid({ limit }: { limit?: number }) {
           The Collection
         </p>
         <h2 className="font-serif text-4xl md:text-6xl tracking-[0.1em] text-soft-black leading-tight mb-8">
-          CURATED <span className="italic">MASTERS</span>
+          BEYOND THE <span className="italic">GALLERY.</span>
         </h2>
         <div className="max-w-2xl">
           <p className="font-serif text-lg md:text-xl italic text-soft-black/80 leading-relaxed">
-            "From time-honored traditions to bold contemporary visions, discover iconic known creations from Nepal’s most revered fine artists."
+            "A private collection of Nepal’s most respected artists. Curated for collectors who value heritage and soul."
           </p>
         </div>
       </div>
