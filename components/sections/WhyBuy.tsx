@@ -24,7 +24,7 @@ export function WhyBuy() {
 
                 {/* 1. SECTION TITLE */}
                 <div className="text-center mb-20">
-                    <p className="font-sans text-[10px] md:text-xs tracking-[0.3em] text-gray-800 uppercase mb-6">Why Collect With Us</p>
+                    <p className="font-sans text-[11px] md:text-xs tracking-[0.3em] text-gray-800 uppercase mb-6">Why Collect With Us</p>
                     <h2 className="font-serif text-4xl md:text-5xl text-soft-black leading-none">THE SHAKYA <span className="italic">PROMISE</span></h2>
                 </div>
 

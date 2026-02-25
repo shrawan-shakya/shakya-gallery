@@ -16,7 +16,7 @@ export function HeritagePreview() {
         {/* 1. Small Top Tag */}
         <motion.p
           variants={fadeInUp}
-          className="font-sans text-[10px] md:text-xs tracking-[0.3em] text-primary uppercase mb-8 font-medium"
+          className="font-sans text-[11px] md:text-xs tracking-[0.3em] text-primary uppercase mb-8 font-medium"
         >
           Our Heritage
         </motion.p>

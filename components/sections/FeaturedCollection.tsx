@@ -55,7 +55,7 @@ export function FeaturedCollection({ artworks, heading }: FeaturedCollectionProp
                             <h3 className="font-serif text-lg text-soft-black group-hover:text-gray-600 transition-colors">
                                 {art.title}
                             </h3>
-                            <p className="font-sans text-[10px] tracking-widest text-gray-400 uppercase mt-1 flex justify-between items-baseline">
+                            <p className="font-sans text-[11px] tracking-widest text-gray-400 uppercase mt-1 flex justify-between items-baseline">
                                 <span>{art.artist}</span>
                                 {!art.showPrice && (
                                     <PriceOnRequest startingPrice={art.startingPrice} variant="minimal" className="mt-1" />

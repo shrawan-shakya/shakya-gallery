@@ -108,7 +108,7 @@ export function ShippingWidget() {
                             className="bg-bone/50 p-8 text-center space-y-4 rounded-sm"
                         >
                             <div className="space-y-1">
-                                <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-gray-400">Estimated Transit Cost</p>
+                                <p className="font-sans text-[11px] tracking-[0.3em] uppercase text-gray-400">Estimated Transit Cost</p>
                                 <p className="font-serif text-4xl text-soft-black font-sans font-light">
                                     {estimate[0] === 0 ? (
                                         <span className="flex flex-col items-center gap-2">
@@ -128,7 +128,7 @@ export function ShippingWidget() {
                             </div>
 
                             {zone === "ktm" ? (
-                                <p className="font-sans text-[10px] text-gray-500 uppercase tracking-wider leading-relaxed">
+                                <p className="font-sans text-[11px] text-gray-500 uppercase tracking-wider leading-relaxed">
                                     Complimentary doorstep delivery within the Valley <br /> or visit our Kathmandu Gallery for pickup.
                                 </p>
                             ) : (

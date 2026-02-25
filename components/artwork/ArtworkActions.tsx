@@ -37,7 +37,7 @@ export function ArtworkActions({ artwork, isSold = false }: ArtworkActionsProps)
                 <div className="flex flex-col gap-3">
                     <button
                         onClick={() => setIsShippingOpen(true)}
-                        className="group inline-flex items-center gap-3 font-sans text-[10px] tracking-[0.2em] uppercase text-gray-600 hover:text-soft-black transition-colors"
+                        className="group inline-flex items-center gap-3 font-sans text-[11px] tracking-[0.2em] uppercase text-gray-600 hover:text-soft-black transition-colors"
                     >
                         <Globe className="w-4 h-4 text-gray-500 group-hover:text-soft-black transition-colors" />
                         <span>Estimate Worldwide Shipping</span>

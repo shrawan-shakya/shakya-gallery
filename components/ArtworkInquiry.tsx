@@ -208,7 +208,7 @@ export function ArtworkInquiry({
                     </p>
 
                     <div className="pt-8 border-t border-black/5 mt-8">
-                      <p className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-800 mb-4">
+                      <p className="font-sans text-[11px] tracking-[0.2em] uppercase text-gray-800 mb-4">
                         Prefer an immediate update?
                       </p>
                       <a
@@ -226,7 +226,7 @@ export function ArtworkInquiry({
 
                     {/* HEADER */}
                     <div className="pr-8"> {/* Padding right to avoid overlap with close button */}
-                      <p className="font-sans text-[10px] tracking-[0.3em] text-gray-400 uppercase mb-2">
+                      <p className="font-sans text-[11px] tracking-[0.3em] text-gray-400 uppercase mb-2">
                         Bespoke Acquisition
                       </p>
                       <h2 className="font-serif text-3xl text-soft-black leading-tight">{artwork.title}</h2>
@@ -312,7 +312,7 @@ export function ArtworkInquiry({
 
                       {/* File Upload */}
                       <div className="space-y-3">
-                        <label className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-600 block">Virtual Preview (Optional)</label>
+                        <label className="font-sans text-[11px] tracking-[0.2em] uppercase text-gray-600 block">Virtual Preview (Optional)</label>
                         <div className="relative border border-dashed border-black/20 hover:border-black/40 transition-colors rounded-sm p-6 text-center group cursor-pointer">
                           <input
                             type="file"
@@ -324,7 +324,7 @@ export function ArtworkInquiry({
                           <p className="font-serif text-sm text-soft-black">
                             {file ? `Selected: ${file.name}` : "Upload a photo of your wall."}
                           </p>
-                          <p className="font-sans text-[10px] text-gray-800 mt-2">
+                          <p className="font-sans text-[11px] text-gray-800 mt-2">
                             We will digitally place the artwork for you to ensure it brings peace to your space.
                           </p>
                         </div>

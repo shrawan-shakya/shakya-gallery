@@ -33,7 +33,7 @@ export async function GalleryGrid({ limit }: { limit?: number }) {
 
       {/* 2. THE HEADER */}
       <div className="max-w-4xl mx-auto text-center flex flex-col items-center mb-24 md:mb-32">
-        <p className="font-sans text-[10px] md:text-xs tracking-[0.3em] text-gray-400 uppercase mb-8 font-medium">
+        <p className="font-sans text-[11px] md:text-xs tracking-[0.3em] text-gray-400 uppercase mb-8 font-medium">
           The Collection
         </p>
         <h2 className="font-serif text-4xl md:text-6xl tracking-[0.1em] text-soft-black leading-tight mb-8">
@@ -51,7 +51,7 @@ export async function GalleryGrid({ limit }: { limit?: number }) {
 
       {/* 4. CTA (If limited) */}
       {limit && (
-        <div className="flex justify-center mt-24">
+        <div className="flex justify-center mt-4">
           <Link
             href="/collection"
             className="group relative inline-flex items-center gap-3 px-8 py-4 border border-soft-black/20 hover:border-soft-black transition-colors duration-500"

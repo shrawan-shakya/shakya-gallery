@@ -109,7 +109,7 @@ export function ShippingModal({ price, isOpen, onClose, onInquire }: ShippingMod
                             <div className="space-y-8">
                                 {/* Destination */}
                                 <div className="space-y-3">
-                                    <label className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-800">Destination</label>
+                                    <label className="font-sans text-[11px] tracking-[0.2em] uppercase text-gray-800">Destination</label>
                                     <div className="relative">
                                         <select
                                             value={zone}
@@ -128,7 +128,7 @@ export function ShippingModal({ price, isOpen, onClose, onInquire }: ShippingMod
 
                                 {/* Size Selection */}
                                 <div className="space-y-3">
-                                    <label className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-800">Artwork Size</label>
+                                    <label className="font-sans text-[11px] tracking-[0.2em] uppercase text-gray-800">Artwork Size</label>
                                     <div className="grid grid-cols-2 gap-3">
                                         {sizes.map((s) => (
                                             <button
@@ -167,7 +167,7 @@ export function ShippingModal({ price, isOpen, onClose, onInquire }: ShippingMod
                                             className="bg-white border border-black/5 p-8 text-center space-y-4"
                                         >
                                             <div className="space-y-1">
-                                                <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-gray-800">Estimated Transit Cost</p>
+                                                <p className="font-sans text-[11px] tracking-[0.3em] uppercase text-gray-800">Estimated Transit Cost</p>
                                                 <p className="font-serif text-4xl text-soft-black font-sans font-light">
                                                     {estimate[0] === 0 ? (
                                                         <span className="flex flex-col items-center gap-2">
@@ -187,7 +187,7 @@ export function ShippingModal({ price, isOpen, onClose, onInquire }: ShippingMod
                                             </div>
 
                                             {zone === "ktm" ? (
-                                                <p className="font-sans text-[10px] text-gray-800 uppercase tracking-wider">
+                                                <p className="font-sans text-[11px] text-gray-800 uppercase tracking-wider">
                                                     Complimentary doorstep delivery within the Valley <br /> or visit our Kathmandu Gallery for pickup.
                                                 </p>
                                             ) : (

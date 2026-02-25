@@ -110,7 +110,7 @@ export function ArtworkTabs({ description, provenance }: ArtworkTabsProps) {
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id)}
                         className={cn(
-                            "font-sans text-[10px] tracking-[0.2em] uppercase pb-4 transition-all relative",
+                            "font-sans text-[11px] tracking-[0.2em] uppercase pb-4 transition-all relative",
                             activeTab === tab.id ? "text-soft-black" : "text-gray-700 hover:text-soft-black"
                         )}
                     >

@@ -73,7 +73,7 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
             <button
               onClick={() => setShowMat(false)}
               className={cn(
-                "flex items-center gap-2 font-sans text-[10px] tracking-[0.2em] md:tracking-[0.25em] uppercase transition-all duration-300 py-1 relative",
+                "flex items-center gap-2 font-sans text-[11px] tracking-[0.2em] md:tracking-[0.25em] uppercase transition-all duration-300 py-1 relative",
                 !showMat
                   ? "text-soft-black font-semibold"
                   : "text-gray-400 hover:text-soft-black"
@@ -124,7 +124,7 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
       </div>
 
       {/* THE OUTER GRID */}
-      <div className="mx-auto px-6 pb-40 transition-all duration-700 ease-in-out">
+      <div className="mx-auto px-6 pb-8 transition-all duration-700 ease-in-out">
 
         {/* VIEW: SINGLE ROW */}
         {layout === "single" && (
@@ -173,7 +173,7 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                               <span className="font-serif font-bold italic text-3xl md:text-4xl text-white bg-[#7D1818] shadow-xl -rotate-12 tracking-widest px-6 py-2">
                                 SOLD
                               </span>
-                              <span className="mt-16 font-sans text-[8px] md:text-xs text-white tracking-[0.2em] uppercase font-medium drop-shadow-md">
+                              <span className="mt-16 font-sans text-[11px] md:text-xs text-white tracking-[0.2em] uppercase font-medium drop-shadow-md">
                                 Looking for something similar?
                               </span>
                             </span>
@@ -260,7 +260,7 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                                       <span className="font-serif font-bold italic text-3xl md:text-4xl text-white bg-[#7D1818] shadow-xl -rotate-12 tracking-widest px-6 py-2">
                                         SOLD
                                       </span>
-                                      <span className="mt-16 font-sans text-[8px] md:text-xs text-white tracking-[0.2em] uppercase font-medium drop-shadow-md">
+                                      <span className="mt-16 font-sans text-[11px] md:text-xs text-white tracking-[0.2em] uppercase font-medium drop-shadow-md">
                                         Looking for something similar?
                                       </span>
                                     </span>

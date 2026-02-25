@@ -37,7 +37,7 @@ export function EmptyState({
                 </p>
                 <Link
                     href={actionHref}
-                    className="inline-block px-10 py-4 bg-soft-black text-white font-sans text-[10px] tracking-[0.25em] uppercase hover:bg-black transition-colors"
+                    className="inline-block px-10 py-4 bg-soft-black text-white font-sans text-[11px] tracking-[0.25em] uppercase hover:bg-black transition-colors"
                 >
                     {actionLabel}
                 </Link>

@@ -16,18 +16,18 @@ export function PriceOnRequest({ startingPrice, className, variant = "minimal" }
             <span className={cn(
                 "font-sans uppercase tracking-[0.1em] text-gray-500",
                 variant === "minimal" && "text-[8px] md:text-[9px]",
-                variant === "plaque" && "text-[8px] md:text-[10px]",
+                variant === "plaque" && "text-[9px] md:text-[11px]",
                 variant === "detail" && "text-xs md:text-sm tracking-[0.15em]",
-                variant === "badge" && "text-[9px] md:text-[11px] tracking-widest"
+                variant === "badge" && "text-[11px] md:text-sm tracking-widest"
             )}>
                 Price on request <span className="lowercase">—</span> starts at
             </span>
             <span className={cn(
                 "font-sans font-bold text-soft-black",
                 variant === "minimal" && "text-[8px] md:text-[9px]",
-                variant === "plaque" && "text-[8px] md:text-[10px]",
+                variant === "plaque" && "text-[9px] md:text-[11px]",
                 variant === "detail" && "text-sm md:text-lg",
-                variant === "badge" && "text-[10px] md:text-xs"
+                variant === "badge" && "text-[11px] md:text-sm"
             )}>
                 ${startingPrice.toLocaleString()}
             </span>

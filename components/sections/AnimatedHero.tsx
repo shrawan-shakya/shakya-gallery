@@ -51,7 +51,7 @@ export function AnimatedHero() {
         animate="animate"
         className="flex flex-col items-center text-center z-10 px-4 mt-[15vh] md:mt-[22vh]"
       >
-        <p className="font-sans text-[10px] md:text-xs tracking-[2em] text-white/80 uppercase mb-6 ml-2">Est. 1998</p>
+        <p className="font-sans text-[11px] md:text-xs tracking-[2em] text-white/80 uppercase mb-6 ml-2">Est. 1998</p>
 
         <h1 className="sr-only">
           Buy Original Nepalese Fine Art
@@ -61,7 +61,7 @@ export function AnimatedHero() {
           SHAKYA
         </div>
         <div className="flex flex-col items-center mt-4">
-          <p className="font-sans text-[10px] md:text-sm tracking-[0.8em] text-white/90 uppercase ml-3">The Gallery</p>
+          <p className="font-sans text-[11px] md:text-sm tracking-[0.8em] text-white/90 uppercase ml-3">The Gallery</p>
           <div className="w-16 h-[1px] bg-white/50 mt-10 mb-8" />
         </div>
 

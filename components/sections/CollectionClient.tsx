@@ -55,7 +55,7 @@ const FilterSection = ({
         onClick={onToggle}
         className="w-full flex justify-between items-center py-5 group bg-transparent"
       >
-        <h3 className="font-sans text-[10px] tracking-[0.3em] uppercase text-gray-600 group-hover:text-soft-black transition-colors">
+        <h3 className="font-sans text-[11px] tracking-[0.3em] uppercase text-gray-600 group-hover:text-soft-black transition-colors">
           {title}
         </h3>
         <span className="font-sans text-lg text-soft-black/40 font-light group-hover:text-soft-black transition-colors">
@@ -135,7 +135,7 @@ const FilterPanel = ({
                 `}
               >
                 <span>{title}</span>
-                <span className="text-[10px] opacity-60 group-hover/btn:opacity-100 transition-opacity ml-2">({count})</span>
+                <span className="text-[11px] opacity-60 group-hover/btn:opacity-100 transition-opacity ml-2">({count})</span>
               </button>
             );
           })}
@@ -145,7 +145,7 @@ const FilterPanel = ({
       {hasActiveFilters && (
         <button
           onClick={clearFilters}
-          className="mt-4 text-left font-sans text-[10px] tracking-[0.2em] uppercase text-gray-400 hover:text-soft-black underline transition-colors"
+          className="mt-4 text-left font-sans text-[11px] tracking-[0.2em] uppercase text-gray-400 hover:text-soft-black underline transition-colors"
         >
           Clear All Filters
         </button>
@@ -334,7 +334,7 @@ export function CollectionClient({
             Filter + Sort
           </span>
         </button>
-        <span className="font-sans text-[10px] tracking-widest text-gray-400 uppercase">
+        <span className="font-sans text-[11px] tracking-widest text-gray-400 uppercase">
           {artworks.length} Results
         </span>
       </div>
@@ -487,7 +487,7 @@ export function CollectionClient({
                                       <span className="font-serif font-bold italic text-2xl md:text-3xl text-white bg-[#7D1818] shadow-xl -rotate-12 tracking-widest px-5 py-2">
                                         SOLD
                                       </span>
-                                      <span className="mt-16 font-sans text-white tracking-[0.2em] uppercase font-medium drop-shadow-md text-center px-4 text-[10px] md:text-xs leading-relaxed max-w-[200px]">
+                                      <span className="mt-16 font-sans text-white tracking-[0.2em] uppercase font-medium drop-shadow-md text-center px-4 text-[11px] md:text-xs leading-relaxed max-w-[200px]">
                                         Commission a similar piece
                                       </span>
                                     </span>
@@ -537,7 +537,7 @@ export function CollectionClient({
                 <div className="flex justify-center mt-12 mb-20 relative z-20">
                   <button
                     onClick={() => router.push(pathname)}
-                    className="font-sans text-[10px] underline uppercase tracking-[0.3em] text-soft-black hover:opacity-60 transition-opacity"
+                    className="font-sans text-[11px] underline uppercase tracking-[0.3em] text-soft-black hover:opacity-60 transition-opacity"
                   >
                     Reset Everything
                   </button>

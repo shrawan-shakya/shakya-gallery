@@ -22,7 +22,7 @@ export function CurrencyToggle({ className }: { className?: string }) {
                     key={opt}
                     onClick={() => setCurrency(opt)}
                     className={cn(
-                        "relative px-4 md:px-5 py-1.5 font-sans text-[9px] md:text-[10px] tracking-[0.2em] uppercase transition-colors duration-500",
+                        "relative px-4 md:px-5 py-1.5 font-sans text-[9px] md:text-[11px] tracking-[0.2em] uppercase transition-colors duration-500",
                         currency === opt ? "text-soft-black font-semibold" : "text-gray-400 hover:text-gray-200"
                     )}
                 >

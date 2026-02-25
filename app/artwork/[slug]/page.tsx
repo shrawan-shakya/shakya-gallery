@@ -229,12 +229,12 @@ export default async function ArtworkPage({
               {/* Technical Details */}
               <div className="grid grid-cols-2 gap-x-12 py-8 border-y border-black/[0.06]">
                 <div className="space-y-1">
-                  <p className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-400">Material</p>
-                  <p className="font-serif text-base text-soft-black leading-snug">{art.material || "Mixed Media"}</p>
+                  <p className="font-sans text-[11px] tracking-[0.2em] uppercase text-gray-400">Material</p>
+                  <p className="font-sans text-sm text-soft-black leading-snug">{art.material || "Mixed Media"}</p>
                 </div>
                 <div className="space-y-1">
-                  <p className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-400">Dimensions</p>
-                  <p className="font-serif text-base text-soft-black leading-snug">{art.dimensions || "Variable"}</p>
+                  <p className="font-sans text-[11px] tracking-[0.2em] uppercase text-gray-400">Dimensions</p>
+                  <p className="font-sans text-sm text-soft-black leading-snug">{art.dimensions || "Variable"}</p>
                 </div>
               </div>
 
