@@ -55,6 +55,7 @@ export async function getFilteredArtworks(options: Partial<FilterOptions>) {
       status,
       price,
       showPrice,
+      startingPrice,
       "categories": categories[]->title,
       "slug": slug.current,
       "imageUrl": mainImage.asset->url,

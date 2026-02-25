@@ -15,6 +15,7 @@ export type Artwork = {
     status?: "available" | "sold" | "private";
     price?: number;
     showPrice?: boolean;
+    startingPrice?: number;
     packagedWeight?: number;
     shippingDimensions?: {
         length: number;

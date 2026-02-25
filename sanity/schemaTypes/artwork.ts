@@ -73,6 +73,12 @@ export default defineType({
       description: 'Internal price or display price if shown.',
     }),
     defineField({
+      name: 'startingPrice',
+      title: 'Starting Price (USD)',
+      type: 'number',
+      description: 'The minimum price for "Price on Request" items (e.g. 500).',
+    }),
+    defineField({
       name: 'showPrice',
       title: 'Show Price on Website',
       type: 'boolean',

@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { PriceOnRequest } from "./PriceOnRequest";
 
 interface MuseumPlaqueProps {
   title: string;
@@ -8,6 +9,9 @@ interface MuseumPlaqueProps {
   medium?: string;
   dimensions?: string;
   year?: string;
+  price?: number;
+  showPrice?: boolean;
+  startingPrice?: number;
   showButton?: boolean;
   showMedium?: boolean;
   className?: string;
@@ -19,10 +23,14 @@ export function MuseumPlaque({
   medium = "Mixed Media",
   dimensions,
   year,
+  price,
+  showPrice,
+  startingPrice,
   showButton = true,
   showMedium = true,
   className
 }: MuseumPlaqueProps) {
+  const isSold = false; // We can pass this as a prop if needed, or infer from context
   return (
     <div
       className={cn(
@@ -74,6 +82,17 @@ export function MuseumPlaque({
         <p className="font-sans text-[8px] md:text-[10px] tracking-[0.1em] md:tracking-[0.2em] uppercase text-[#444444] font-medium">
           {dimensions ? `${dimensions} • ` : ""}{year}
         </p>
+
+        {/* Pricing */}
+        <div className="mt-1">
+          {showPrice && price ? (
+            <p className="font-sans text-[10px] md:text-sm text-[#1A1A1A] font-bold">
+              ${price.toLocaleString()}
+            </p>
+          ) : (
+            <PriceOnRequest startingPrice={startingPrice} variant="plaque" />
+          )}
+        </div>
 
         {/* Button */}
         {showButton && (

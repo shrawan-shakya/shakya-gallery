@@ -13,6 +13,8 @@ export const metadata: Metadata = {
   },
 };
 
+export const revalidate = 0;
+
 // 1. Fetch Categories (For the Sidebar)
 async function getCategories() {
   const query = `

@@ -6,10 +6,12 @@ import { PortableText } from "@portabletext/react";
 import { ArtworkActions } from "@/components/artwork/ArtworkActions";
 import { ArtworkTabs } from "@/components/artwork/ArtworkTabs";
 import { Price } from "@/components/ui/Price";
+import { PriceOnRequest } from "@/components/ui/PriceOnRequest";
 
 
 
 export const dynamicParams = true;
+export const revalidate = 0;
 
 const components = {
   block: {
@@ -49,6 +51,7 @@ async function getArtwork(slug: string) {
       status, 
       price,
       showPrice,
+      startingPrice,
       orientation,
       "mainImage": {
         "url": mainImage.asset->url,
@@ -177,18 +180,18 @@ export default async function ArtworkPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <div className="min-h-screen bg-bone pt-24 lg:pt-28 pb-40">
+      <div className="min-h-screen bg-bone pt-16 lg:pt-16 pb-40 overflow-x-hidden">
 
 
         {/* MOBILE BREADCRUMBS */}
-        <div className="max-w-[1400px] mx-auto px-6 lg:hidden mb-10">
+        <div className="max-w-[1400px] mx-auto px-6 lg:hidden mb-6">
           <Breadcrumbs />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 px-6 md:px-12 max-w-[1400px] mx-auto items-start">
 
           {/* BLOCK 1: GALLERY (Mob: 1, Desk: Col 1) */}
-          <div className="lg:col-start-1 lg:row-start-1">
+          <div className="lg:col-start-1 lg:row-start-1 lg:pt-12">
             <ArtworkGallery
               mainImage={art.mainImage}
               relatedImages={art.relatedImages}
@@ -198,55 +201,71 @@ export default async function ArtworkPage({
           </div>
 
           {/* BLOCK 2: TITLE SECTION (Mob: 2, Desk: Col 2) */}
-          <div className="lg:col-start-2 lg:row-start-1 lg:row-span-2">
-            <div className="flex flex-col gap-8 animate-in fade-in slide-in-from-bottom-8 duration-1000">
+          <div className="lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:sticky lg:top-16 self-start">
+            <div className="flex flex-col gap-6 animate-in fade-in slide-in-from-bottom-8 duration-1000">
               {/* Header */}
               <div className="flex flex-col gap-2">
-                <Breadcrumbs className="hidden lg:flex mb-8" />
+                <Breadcrumbs className="hidden lg:flex mb-6" />
 
                 {/* SOLD INDICATOR */}
                 {art.status === "sold" && (
-                  <div className="flex items-center gap-3 mb-6">
-                    <span className="font-serif font-bold italic text-2xl text-white bg-[#7D1818] px-6 py-2 -rotate-12 tracking-widest shadow-lg">
-                      SOLD
+                  <div className="inline-flex items-center gap-2 mb-4">
+                    <span className="font-sans text-[10px] tracking-[0.3em] uppercase text-white bg-[#7D1818] px-3 py-1 shadow-sm">
+                      Sold / Private Collection
                     </span>
                   </div>
                 )}
 
-                <h1 className="font-serif text-2xl md:text-4xl text-soft-black leading-tight mt-4 md:mt-6">
+                <h1 className="font-serif text-3xl md:text-5xl text-soft-black leading-[1.1] tracking-tight">
                   {art.title}
                 </h1>
-                <div className="flex justify-between items-baseline mt-2 mb-6">
-                  <p className="font-serif italic text-xl md:text-2xl text-soft-black">
-                    {art.artist}, {art.year}
+                <div className="flex justify-between items-baseline mt-3">
+                  <p className="font-serif italic text-lg md:text-xl text-gray-700">
+                    {art.artist}, <span className="text-gray-400 not-italic font-sans text-sm ml-1 tracking-wider">{art.year}</span>
                   </p>
                 </div>
-
-                {!isSold && art.showPrice && art.price && (
-                  <div className="mb-2">
-                    <p className="font-serif text-3xl md:text-4xl text-soft-black">
-                      <Price amount={art.price} />
-                    </p>
-                  </div>
-                )}
               </div>
 
               {/* Technical Details */}
-              <div className="grid grid-cols-2 gap-x-8 py-6 border-y border-black/5">
-                <div>
-                  <p className="font-sans text-[11px] tracking-widest uppercase text-gray-800 mb-1">Material</p>
-                  <p className="font-serif text-base md:text-lg text-soft-black leading-tight">{art.material || "Mixed Media"}</p>
+              <div className="grid grid-cols-2 gap-x-12 py-8 border-y border-black/[0.06]">
+                <div className="space-y-1">
+                  <p className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-400">Material</p>
+                  <p className="font-serif text-base text-soft-black leading-snug">{art.material || "Mixed Media"}</p>
                 </div>
-                <div>
-                  <p className="font-sans text-[11px] tracking-widest uppercase text-gray-800 mb-1">Dimensions</p>
-                  <p className="font-serif text-base md:text-lg text-soft-black leading-tight">{art.dimensions || "Variable"}</p>
+                <div className="space-y-1">
+                  <p className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-400">Dimensions</p>
+                  <p className="font-serif text-base text-soft-black leading-snug">{art.dimensions || "Variable"}</p>
                 </div>
               </div>
 
-              {/* Action Area */}
-              <div className="py-2" id="inquiry-section">
-                <ArtworkActions artwork={art} isSold={isSold} />
+              {/* Pricing & Actions Context */}
+              <div className="flex flex-col gap-8 pt-2">
+                {!isSold && (
+                  <div className="space-y-4">
+                    {(art.showPrice && art.price) ? (
+                      <div className="flex flex-col gap-1">
+                        <p className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-400">Current Value</p>
+                        <p className="font-serif text-3xl md:text-4xl text-soft-black">
+                          <Price amount={art.price} />
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="py-5 px-6 bg-white border border-black/[0.03] shadow-sm inline-block w-full">
+                        <PriceOnRequest startingPrice={art.startingPrice} variant="detail" />
+                        <p className="font-sans text-[10px] tracking-[0.2em] text-gray-400 uppercase mt-3 border-t border-black/[0.05] pt-3">
+                          Private Inquiry Required
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Action Area */}
+                <div id="inquiry-section">
+                  <ArtworkActions artwork={art} isSold={isSold} />
+                </div>
               </div>
+
             </div>
           </div>
 
@@ -256,7 +275,7 @@ export default async function ArtworkPage({
           </div>
 
           {/* BLOCK 4: FROM THE GALLERY (Mob: 4, Desk: Spans Bottom) */}
-          <div className="col-span-1 lg:col-span-2 pt-20 border-t border-black/5 mt-12">
+          <div className="lg:col-span-2 pt-20 border-t border-black/5 mt-12 w-full">
             <h3 className="font-sans text-[11px] tracking-[0.2em] uppercase text-gray-800 mb-8 text-center md:text-left">From The Gallery</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               <Link href="/legacy" className="group p-8 bg-white border border-black/5 hover:border-black/20 transition-all flex flex-col justify-between min-h-[160px]">
@@ -278,6 +297,7 @@ export default async function ArtworkPage({
           </div>
 
         </div>
+
       </div>
     </>
   );

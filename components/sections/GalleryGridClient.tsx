@@ -9,6 +9,7 @@ import { MuseumPlaque } from "@/components/ui/MuseumPlaque";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { SanityImage } from "@/components/ui/SanityImage";
 import { LazyGridItem } from "@/components/ui/LazyGridItem";
+import { PriceOnRequest } from "@/components/ui/PriceOnRequest";
 import { cn } from "@/lib/utils";
 import { Price } from "@/components/ui/Price";
 
@@ -26,6 +27,7 @@ interface Artwork {
   status?: "available" | "sold" | "private";
   price?: number;
   showPrice?: boolean;
+  startingPrice?: number;
 }
 
 import { staggerContainer, staggerItem } from "@/lib/motion-variants";
@@ -176,9 +178,13 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                               </span>
                             </span>
                           )}
-                          {art.status === "available" && art.showPrice && !!art.price && (
-                            <span className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-white/95 text-soft-black text-sm md:text-base font-sans tracking-[0.2em] px-6 py-3 opacity-0 group-hover/image:opacity-100 transition-opacity duration-500 backdrop-blur-md shadow-md border border-soft-black/10">
-                              <Price amount={art.price} />
+                          {art.status === "available" && (
+                            <span className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-white/95 text-soft-black text-sm md:text-base font-sans tracking-[0.2em] px-6 py-3 opacity-0 group-hover/image:opacity-100 transition-opacity duration-500 backdrop-blur-md shadow-md border border-soft-black/10 whitespace-nowrap">
+                              {art.showPrice && art.price ? (
+                                <Price amount={art.price} />
+                              ) : (
+                                <PriceOnRequest startingPrice={art.startingPrice} variant="badge" />
+                              )}
                             </span>
                           )}
                         </div>
@@ -190,6 +196,9 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                           medium={art.material}
                           dimensions={art.dimensions}
                           year={art.year}
+                          price={art.price}
+                          showPrice={art.showPrice}
+                          startingPrice={art.startingPrice}
                           showButton={true}
                           className=""
                         />
@@ -256,9 +265,13 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                                       </span>
                                     </span>
                                   )}
-                                  {art.status === "available" && art.showPrice && !!art.price && (
-                                    <span className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-white/95 text-soft-black text-sm md:text-base font-sans tracking-[0.2em] px-6 py-3 opacity-0 group-hover/image:opacity-100 transition-opacity duration-500 backdrop-blur-md shadow-md border border-soft-black/10">
-                                      <Price amount={art.price} />
+                                  {art.status === "available" && (
+                                    <span className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-white/95 text-soft-black text-sm md:text-base font-sans tracking-[0.2em] px-6 py-3 opacity-0 group-hover/image:opacity-100 transition-opacity duration-500 backdrop-blur-md shadow-md border border-soft-black/10 whitespace-nowrap">
+                                      {art.showPrice && art.price ? (
+                                        <Price amount={art.price} />
+                                      ) : (
+                                        <PriceOnRequest startingPrice={art.startingPrice} variant="badge" />
+                                      )}
                                     </span>
                                   )}
                                 </div>
@@ -270,6 +283,9 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                                   medium={art.material}
                                   dimensions={art.dimensions}
                                   year={art.year}
+                                  price={art.price}
+                                  showPrice={art.showPrice}
+                                  startingPrice={art.startingPrice}
                                   showButton={true}
                                   className=""
                                 />

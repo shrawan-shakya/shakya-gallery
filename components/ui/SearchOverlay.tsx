@@ -9,6 +9,7 @@ import { urlFor } from "@/sanity/lib/image";
 import { searchArtworks } from "@/app/actions/search";
 import { Artwork as SearchResult } from "@/lib/types";
 import { Price } from "@/components/ui/Price";
+import { PriceOnRequest } from "@/components/ui/PriceOnRequest";
 
 interface SearchOverlayProps {
     isOpen: boolean;
@@ -161,6 +162,9 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                                                         </p>
                                                         {art.status === "available" && art.showPrice && art.price && (
                                                             <Price amount={art.price} className="text-xs text-soft-black/60 font-sans" />
+                                                        )}
+                                                        {art.status === "available" && !art.showPrice && art.startingPrice && (
+                                                            <PriceOnRequest startingPrice={art.startingPrice} variant="minimal" />
                                                         )}
                                                     </div>
                                                 </div>
