@@ -180,7 +180,7 @@ export default async function ArtworkPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <div className="min-h-screen bg-bone pt-16 lg:pt-16 pb-40 overflow-x-hidden">
+      <div className="min-h-screen bg-bone pt-32 lg:pt-32 pb-40 overflow-x-hidden">
 
 
         {/* MOBILE BREADCRUMBS */}

@@ -478,28 +478,50 @@ export function CollectionClient({
                                       : "grayscale-[0.2] group-hover/image:grayscale-0"
                                   )}
                                 />
-                                <div className="absolute inset-0 pointer-events-none p-6">
+                                <div className="absolute inset-x-0 bottom-0 pointer-events-none p-2 md:p-6 bg-gradient-to-t from-black/40 via-black/10 to-transparent md:bg-none transition-opacity duration-500">
+                                  {/* SOLD BADGE: Center on Desktop, persistent bottom bar on Mobile */}
                                   {art.status === "sold" && (
-                                    <span className={`
-                                      absolute inset-0 flex flex-col items-center justify-center z-20
-                                      opacity-0 group-hover/image:opacity-100 transition-opacity duration-500
-                                    `}>
-                                      <span className="font-serif font-bold italic text-2xl md:text-3xl text-white bg-[#7D1818] shadow-xl -rotate-12 tracking-widest px-5 py-2">
-                                        SOLD
-                                      </span>
-                                      <span className="mt-16 font-sans text-white tracking-[0.2em] uppercase font-medium drop-shadow-md text-center px-4 text-[11px] md:text-xs leading-relaxed max-w-[200px]">
-                                        Commission a similar piece
-                                      </span>
-                                    </span>
+                                    <>
+                                      {/* Desktop Only Hover Center */}
+                                      <div className="hidden md:flex absolute inset-0 flex-col items-center justify-center opacity-0 group-hover/image:opacity-100 transition-opacity duration-500">
+                                        <span className="font-serif font-bold italic text-3xl text-white bg-[#7D1818] shadow-xl -rotate-12 tracking-widest px-5 py-2">
+                                          SOLD
+                                        </span>
+                                        <span className="mt-16 font-sans text-white tracking-[0.2em] uppercase font-medium drop-shadow-md text-center px-4 text-xs leading-relaxed max-w-[200px]">
+                                          Commission a similar piece
+                                        </span>
+                                      </div>
+                                      {/* Mobile Only Persistent Bottom */}
+                                      <div className="md:hidden flex items-center justify-between w-full px-2">
+                                        <span className="font-serif font-bold italic text-[11px] text-white bg-[#7D1818] px-2 py-0.5 tracking-wider">
+                                          SOLD
+                                        </span>
+                                      </div>
+                                    </>
                                   )}
+
+                                  {/* PRICE BADGE: Bottom Center on Desktop Hover, persistent bottom bar on Mobile */}
                                   {art.status === "available" && (
-                                    <span className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-white/95 text-soft-black text-sm md:text-base font-sans tracking-[0.2em] px-6 py-3 opacity-0 group-hover/image:opacity-100 transition-opacity duration-500 backdrop-blur-md shadow-md border border-soft-black/10 whitespace-nowrap">
-                                      {art.showPrice && art.price ? (
-                                        <Price amount={art.price} />
-                                      ) : (
-                                        <PriceOnRequest startingPrice={art.startingPrice} variant="badge" />
-                                      )}
-                                    </span>
+                                    <>
+                                      {/* Desktop Hover */}
+                                      <span className="hidden md:flex absolute bottom-8 left-1/2 -translate-x-1/2 bg-white/95 text-soft-black text-base font-sans tracking-[0.2em] px-6 py-3 opacity-0 group-hover/image:opacity-100 transition-opacity duration-500 backdrop-blur-md shadow-md border border-soft-black/10 whitespace-nowrap">
+                                        {art.showPrice && art.price ? (
+                                          <Price amount={art.price} />
+                                        ) : (
+                                          <PriceOnRequest startingPrice={art.startingPrice} variant="badge" />
+                                        )}
+                                      </span>
+                                      {/* Mobile Persistent */}
+                                      <div className="md:hidden flex justify-center w-full">
+                                        <span className="bg-white/90 text-soft-black text-[10px] font-sans tracking-[0.1em] px-3 py-1 backdrop-blur-sm shadow-sm border border-soft-black/5 whitespace-nowrap">
+                                          {art.showPrice && art.price ? (
+                                            <Price amount={art.price} />
+                                          ) : (
+                                            <PriceOnRequest startingPrice={art.startingPrice} variant="minimal" className="gap-1" />
+                                          )}
+                                        </span>
+                                      </div>
+                                    </>
                                   )}
                                 </div>
                               </div>

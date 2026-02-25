@@ -34,12 +34,11 @@ export function MuseumPlaque({
   return (
     <div
       className={cn(
-        "relative mx-auto text-center z-40 group",
+        "relative mx-auto text-center z-40 group transition-all duration-500",
         "bg-[linear-gradient(135deg,#F8F8F8_0%,#FFFFFF_50%,#EBEBEB_100%)]",
         "border-[0.5px] border-[#D8D8D8]",
         "shadow-[0_10px_25px_rgba(0,0,0,0.06)]",
-        // UPDATED: Constant 80% proportional width
-        "px-2 py-3 md:px-8 md:py-6 w-[80%]",
+        "px-2 py-3 md:px-8 md:py-6 w-[90%] md:w-[80%]",
         "overflow-hidden isolation-auto backface-hidden",
         className
       )}
@@ -59,18 +58,18 @@ export function MuseumPlaque({
       <div className="relative z-10 flex flex-col items-center gap-1.5">
 
         {/* Artist */}
-        <h3 className="font-sans text-[9px] md:text-[11px] tracking-[0.2em] md:tracking-[0.45em] uppercase text-[#666666] font-semibold whitespace-nowrap">
+        <h3 className="font-sans text-[10px] md:text-[11px] tracking-[0.2em] md:tracking-[0.45em] uppercase text-[#666666] font-semibold whitespace-nowrap">
           {artist}
         </h3>
 
         {/* Title */}
-        <h3 className="font-serif text-sm md:text-xl text-[#1A1A1A] font-bold italic leading-tight my-0.5 line-clamp-2">
+        <h3 className="font-serif text-base md:text-xl text-[#1A1A1A] font-bold italic leading-tight my-0.5 line-clamp-2">
           {title}
         </h3>
 
         {/* Medium */}
         {showMedium && (
-          <p className="font-sans text-[9px] md:text-[11px] tracking-[0.1em] md:tracking-[0.2em] uppercase text-[#444444] font-medium">
+          <p className="font-sans text-[10px] md:text-[11px] tracking-[0.1em] md:tracking-[0.2em] uppercase text-[#444444] font-medium">
             {medium}
           </p>
         )}
@@ -79,20 +78,11 @@ export function MuseumPlaque({
         <div className="w-[15px] md:w-[30px] h-[0.5px] bg-[#BBBBBB] my-1" />
 
         {/* Year */}
-        <p className="font-sans text-[9px] md:text-[11px] tracking-[0.1em] md:tracking-[0.2em] uppercase text-[#444444] font-medium">
+        <p className="font-sans text-[10px] md:text-[11px] tracking-[0.1em] md:tracking-[0.2em] uppercase text-[#444444] font-medium">
           {dimensions ? `${dimensions} • ` : ""}{year}
         </p>
 
-        {/* Pricing */}
-        <div className="mt-1">
-          {showPrice && price ? (
-            <p className="font-sans text-[10px] md:text-sm text-[#1A1A1A] font-bold">
-              ${price.toLocaleString()}
-            </p>
-          ) : (
-            <PriceOnRequest startingPrice={startingPrice} variant="plaque" />
-          )}
-        </div>
+        {/* Pricing removed from plaque to keep it clean */}
 
         {/* Button */}
         {showButton && (
