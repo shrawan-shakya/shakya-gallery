@@ -321,6 +321,107 @@ export function CollectionClient({
     hasActiveFilters
   };
 
+  const renderArtworkCard = (art: Artwork, globalIndex: number) => {
+    const isPriority = globalIndex < 4;
+    return (
+      <LazyGridItem
+        key={art._id}
+        className="relative z-10 w-full"
+        rootMargin="1000px 0px"
+        aspectRatio={art.aspectRatio}
+        disabled={globalIndex < 12}
+      >
+        <motion.div
+          variants={staggerItem}
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true, margin: "600px" }}
+          layout
+          style={{ willChange: "transform, opacity" }}
+        >
+          <Link href={`/artwork/${art.slug}`} className="block cursor-pointer group/card">
+            <div className="relative group/image">
+              <SanityImage
+                src={art.imageUrl}
+                alt={art.title}
+                lqip={art.lqip}
+                aspectRatio={art.aspectRatio}
+                hasMat={showMat}
+                priority={isPriority}
+                imageClassName={cn(
+                  (art.status === "sold" || art.status === "private")
+                    ? "grayscale-[0.2] group-hover/image:grayscale group-hover/image:opacity-40"
+                    : "grayscale-[0.2] group-hover/image:grayscale-0"
+                )}
+              />
+              <div className="absolute inset-x-0 bottom-0 pointer-events-none p-2 md:p-6 bg-gradient-to-t from-black/40 via-black/10 to-transparent md:bg-none transition-opacity duration-500">
+                {/* SOLD BADGE: Center on Desktop, persistent bottom bar on Mobile */}
+                {art.status === "sold" && (
+                  <>
+                    {/* Desktop Only Hover Center */}
+                    <div className="hidden md:flex absolute inset-0 flex-col items-center justify-center opacity-0 group-hover/image:opacity-100 transition-opacity duration-500">
+                      <span className="font-serif font-bold italic text-3xl text-white bg-[#7D1818] shadow-xl -rotate-12 tracking-widest px-5 py-2">
+                        SOLD
+                      </span>
+                      <span className="mt-16 font-sans text-white tracking-[0.2em] uppercase font-medium drop-shadow-md text-center px-4 text-xs leading-relaxed max-w-[200px]">
+                        Commission a similar piece
+                      </span>
+                    </div>
+                    {/* Mobile Only Persistent Bottom */}
+                    <div className="md:hidden flex items-center justify-between w-full px-2">
+                      <span className="font-serif font-bold italic text-[11px] text-white bg-[#7D1818] px-2 py-0.5 tracking-wider">
+                        SOLD
+                      </span>
+                    </div>
+                  </>
+                )}
+
+                {/* PRICE BADGE: Bottom Center on Desktop Hover, persistent bottom bar on Mobile */}
+                {art.status === "available" && (
+                  <>
+                    {/* Desktop Hover */}
+                    <span className="hidden md:flex absolute bottom-8 left-1/2 -translate-x-1/2 bg-white/95 text-soft-black text-base font-sans tracking-[0.2em] px-6 py-3 opacity-0 group-hover/image:opacity-100 transition-opacity duration-500 backdrop-blur-md shadow-md border border-soft-black/10 whitespace-nowrap">
+                      {art.showPrice && art.price ? (
+                        <Price amount={art.price} />
+                      ) : (
+                        <PriceOnRequest startingPrice={art.startingPrice} variant="badge" />
+                      )}
+                    </span>
+                    {/* Mobile Persistent */}
+                    <div className="md:hidden flex justify-center w-full">
+                      <span className="bg-white/90 text-soft-black text-[10px] font-sans tracking-[0.1em] px-3 py-1 backdrop-blur-sm shadow-sm border border-soft-black/5 whitespace-nowrap">
+                        {art.showPrice && art.price ? (
+                          <Price amount={art.price} />
+                        ) : (
+                          <PriceOnRequest startingPrice={art.startingPrice} variant="minimal" className="gap-1" />
+                        )}
+                      </span>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+
+            <div className="mt-8">
+              <MuseumPlaque
+                title={art.title}
+                artist={art.artist}
+                year={art.year}
+                medium={art.material}
+                dimensions={art.dimensions}
+                price={art.price}
+                showPrice={art.showPrice}
+                startingPrice={art.startingPrice}
+                showButton={false}
+                showMedium={false}
+              />
+            </div>
+          </Link>
+        </motion.div>
+      </LazyGridItem>
+    );
+  };
+
   return (
     <div className="flex flex-col lg:flex-row gap-12 lg:gap-16">
 
@@ -433,121 +534,32 @@ export function CollectionClient({
           {/* THE GRID - Key forces a reset on filter change to trigger animations */}
           <div
             key={`${searchQuery}-${selectedCategories.join("-")}-${statusFilter}-${sortOption}-${gridCols}`}
-            className="flex gap-8 lg:gap-12 items-start transition-all duration-700"
+            className="flex flex-col md:flex-row gap-8 lg:gap-12 items-start transition-all duration-700 w-full"
           >
             {artworks.length > 0 ? (
-              columns.map((columnArtworks, colIndex) => (
-                <div
-                  key={colIndex}
-                  className="flex-1 flex flex-col gap-12 lg:gap-16"
-                >
+              <>
+                {/* Mobile 1-Column Layout */}
+                <div className="flex w-full flex-col gap-12 md:hidden">
                   <AnimatePresence mode="popLayout">
-                    {columnArtworks.map((art: Artwork, index: number) => {
-                      // Total index across all columns for priority calculation
-                      const globalIndex = index * gridCols + colIndex;
-                      const isPriority = globalIndex < 4;
-
-                      return (
-                        <LazyGridItem
-                          key={art._id}
-                          className="relative z-10 w-full"
-                          rootMargin="1000px 0px"
-                          aspectRatio={art.aspectRatio}
-                          disabled={globalIndex < 12}
-                        >
-                          <motion.div
-                            variants={staggerItem}
-                            initial="initial"
-                            whileInView="animate"
-                            viewport={{ once: true, margin: "600px" }}
-                            layout
-                            style={{ willChange: "transform, opacity" }}
-                          >
-                            <Link href={`/artwork/${art.slug}`} className="block cursor-pointer group/card">
-                              <div className="relative group/image">
-                                <SanityImage
-                                  src={art.imageUrl}
-                                  alt={art.title}
-                                  lqip={art.lqip}
-                                  aspectRatio={art.aspectRatio}
-                                  hasMat={showMat}
-                                  priority={isPriority}
-                                  imageClassName={cn(
-                                    (art.status === "sold" || art.status === "private")
-                                      ? "grayscale-[0.2] group-hover/image:grayscale group-hover/image:opacity-40"
-                                      : "grayscale-[0.2] group-hover/image:grayscale-0"
-                                  )}
-                                />
-                                <div className="absolute inset-x-0 bottom-0 pointer-events-none p-2 md:p-6 bg-gradient-to-t from-black/40 via-black/10 to-transparent md:bg-none transition-opacity duration-500">
-                                  {/* SOLD BADGE: Center on Desktop, persistent bottom bar on Mobile */}
-                                  {art.status === "sold" && (
-                                    <>
-                                      {/* Desktop Only Hover Center */}
-                                      <div className="hidden md:flex absolute inset-0 flex-col items-center justify-center opacity-0 group-hover/image:opacity-100 transition-opacity duration-500">
-                                        <span className="font-serif font-bold italic text-3xl text-white bg-[#7D1818] shadow-xl -rotate-12 tracking-widest px-5 py-2">
-                                          SOLD
-                                        </span>
-                                        <span className="mt-16 font-sans text-white tracking-[0.2em] uppercase font-medium drop-shadow-md text-center px-4 text-xs leading-relaxed max-w-[200px]">
-                                          Commission a similar piece
-                                        </span>
-                                      </div>
-                                      {/* Mobile Only Persistent Bottom */}
-                                      <div className="md:hidden flex items-center justify-between w-full px-2">
-                                        <span className="font-serif font-bold italic text-[11px] text-white bg-[#7D1818] px-2 py-0.5 tracking-wider">
-                                          SOLD
-                                        </span>
-                                      </div>
-                                    </>
-                                  )}
-
-                                  {/* PRICE BADGE: Bottom Center on Desktop Hover, persistent bottom bar on Mobile */}
-                                  {art.status === "available" && (
-                                    <>
-                                      {/* Desktop Hover */}
-                                      <span className="hidden md:flex absolute bottom-8 left-1/2 -translate-x-1/2 bg-white/95 text-soft-black text-base font-sans tracking-[0.2em] px-6 py-3 opacity-0 group-hover/image:opacity-100 transition-opacity duration-500 backdrop-blur-md shadow-md border border-soft-black/10 whitespace-nowrap">
-                                        {art.showPrice && art.price ? (
-                                          <Price amount={art.price} />
-                                        ) : (
-                                          <PriceOnRequest startingPrice={art.startingPrice} variant="badge" />
-                                        )}
-                                      </span>
-                                      {/* Mobile Persistent */}
-                                      <div className="md:hidden flex justify-center w-full">
-                                        <span className="bg-white/90 text-soft-black text-[10px] font-sans tracking-[0.1em] px-3 py-1 backdrop-blur-sm shadow-sm border border-soft-black/5 whitespace-nowrap">
-                                          {art.showPrice && art.price ? (
-                                            <Price amount={art.price} />
-                                          ) : (
-                                            <PriceOnRequest startingPrice={art.startingPrice} variant="minimal" className="gap-1" />
-                                          )}
-                                        </span>
-                                      </div>
-                                    </>
-                                  )}
-                                </div>
-                              </div>
-
-                              <div className="mt-8">
-                                <MuseumPlaque
-                                  title={art.title}
-                                  artist={art.artist}
-                                  year={art.year}
-                                  medium={art.material}
-                                  dimensions={art.dimensions}
-                                  price={art.price}
-                                  showPrice={art.showPrice}
-                                  startingPrice={art.startingPrice}
-                                  showButton={false}
-                                  showMedium={false}
-                                />
-                              </div>
-                            </Link>
-                          </motion.div>
-                        </LazyGridItem>
-                      );
-                    })}
+                    {artworks.map((art, index) => renderArtworkCard(art, index))}
                   </AnimatePresence>
                 </div>
-              ))
+
+                {/* Desktop Masonry Layout */}
+                {columns.map((columnArtworks, colIndex) => (
+                  <div
+                    key={colIndex}
+                    className="hidden md:flex flex-1 flex-col gap-12 lg:gap-16 w-full"
+                  >
+                    <AnimatePresence mode="popLayout">
+                      {columnArtworks.map((art: Artwork, index: number) => {
+                        const globalIndex = index * gridCols + colIndex;
+                        return renderArtworkCard(art, globalIndex);
+                      })}
+                    </AnimatePresence>
+                  </div>
+                ))}
+              </>
 
             ) : (
               <div className="w-full">
