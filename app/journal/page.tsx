@@ -47,8 +47,8 @@ const ArticleCard = ({ article, index }: { article: any; index: number }) => {
                     )}
                     {/* Category Badge */}
                     {article.category && (
-                        <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1">
-                            <span className="font-sans text-[10px] tracking-[0.2em] uppercase text-soft-black">
+                        <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 flex items-center justify-center min-h-[24px]">
+                            <span className="font-sans text-[10px] tracking-[0.2em] uppercase text-soft-black leading-none mt-[1px]">
                                 {article.category}
                             </span>
                         </div>

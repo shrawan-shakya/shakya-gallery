@@ -75,6 +75,14 @@ export default async function CategoryPage({ params, searchParams }: Props) {
 
     return (
         <div className="min-h-screen bg-bone pt-32 pb-20 px-6 md:px-12">
+            <div className="mb-12 md:mb-16 flex flex-col items-center text-center">
+                <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-soft-black mb-4">{category.title}</h1>
+                {category.description && (
+                    <p className="font-sans text-sm md:text-base text-gray-600 max-w-2xl leading-relaxed">
+                        {category.description}
+                    </p>
+                )}
+            </div>
             <Suspense fallback={<LoadingGrid />}>
                 <CollectionClient
                     artworks={artworks}

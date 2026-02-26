@@ -102,39 +102,45 @@ export function ArtworkTabs({ description, provenance }: ArtworkTabsProps) {
     };
 
     return (
-        <div className="w-full space-y-8">
+        <div className="w-full space-y-6 md:space-y-8">
             {/* Tab Navigation */}
-            <div className="flex flex-wrap gap-x-8 gap-y-4 border-b border-black/5">
-                {tabs.map((tab) => (
-                    <button
-                        key={tab.id}
-                        onClick={() => setActiveTab(tab.id)}
-                        className={cn(
-                            "font-sans text-[11px] tracking-[0.2em] uppercase pb-4 transition-all relative",
-                            activeTab === tab.id ? "text-soft-black" : "text-gray-700 hover:text-soft-black"
-                        )}
-                    >
-                        {tab.label}
-                        {activeTab === tab.id && (
-                            <motion.div
-                                layoutId="activeTab"
-                                className="absolute bottom-0 left-0 right-0 h-[1px] bg-soft-black"
-                                transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                            />
-                        )}
-                    </button>
-                ))}
+            <div className="w-full relative overflow-hidden">
+                <div className="flex w-full overflow-x-auto hide-scrollbar border-b border-black/[0.05] snap-x snap-mandatory flex-nowrap">
+                    {tabs.map((tab, index) => (
+                        <button
+                            key={tab.id}
+                            onClick={() => setActiveTab(tab.id)}
+                            className={cn(
+                                "font-sans text-[11px] tracking-[0.25em] uppercase px-4 md:px-6 py-4 transition-colors relative whitespace-nowrap snap-start shrink-0 font-medium",
+                                activeTab === tab.id
+                                    ? "text-soft-black"
+                                    : "text-gray-400 hover:text-gray-600",
+                                index === 0 ? "pl-0" : "", // Remove left padding from first item so it aligns with content
+                                index === tabs.length - 1 ? "pr-8 md:pr-0" : "" // Add right padding to last item for mobile scroll clearance
+                            )}
+                        >
+                            {tab.label}
+                            {activeTab === tab.id && (
+                                <motion.div
+                                    layoutId="activeArtworkTab"
+                                    className="absolute bottom-0 left-0 right-0 h-[2px] bg-soft-black"
+                                    transition={{ type: "spring", stiffness: 400, damping: 35 }}
+                                />
+                            )}
+                        </button>
+                    ))}
+                </div>
             </div>
 
             {/* Tab Content */}
-            <div className="min-h-[300px] py-4">
+            <div className="min-h-[250px] md:min-h-[300px] py-2 md:py-4">
                 <AnimatePresence mode="wait">
                     <motion.div
                         key={activeTab}
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
-                        transition={{ duration: 0.3 }}
+                        transition={{ duration: 0.3, ease: "easeOut" }}
                     >
                         {renderContent()}
                     </motion.div>

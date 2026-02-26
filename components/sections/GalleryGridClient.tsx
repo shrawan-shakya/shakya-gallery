@@ -199,7 +199,7 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                               </span>
                               {/* Mobile Persistent */}
                               <div className="md:hidden flex justify-center w-full">
-                                <span className="bg-white/90 text-soft-black text-[10px] font-sans tracking-[0.1em] px-3 py-1 backdrop-blur-sm shadow-sm border border-soft-black/5 whitespace-nowrap">
+                                <span className="flex items-center justify-center bg-white/90 text-soft-black text-[10px] font-sans leading-none tracking-[0.1em] px-3 py-1 min-h-[24px] backdrop-blur-sm shadow-sm border border-soft-black/5 whitespace-nowrap">
                                   {art.showPrice && art.price ? (
                                     <Price amount={art.price} />
                                   ) : (
@@ -308,7 +308,7 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                                       </span>
                                       {/* Mobile Persistent */}
                                       <div className="md:hidden flex justify-center w-full">
-                                        <span className="bg-white/90 text-soft-black text-[10px] font-sans tracking-[0.1em] px-3 py-1 backdrop-blur-sm shadow-sm border border-soft-black/5 whitespace-nowrap">
+                                        <span className="flex items-center justify-center bg-white/90 text-soft-black text-[10px] font-sans leading-none tracking-[0.1em] px-3 py-1 min-h-[24px] backdrop-blur-sm shadow-sm border border-soft-black/5 whitespace-nowrap">
                                           {art.showPrice && art.price ? (
                                             <Price amount={art.price} />
                                           ) : (

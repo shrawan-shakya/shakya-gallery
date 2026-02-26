@@ -70,6 +70,12 @@ export default async function CollectionPage({ searchParams }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <div className="min-h-screen bg-bone pt-32 pb-20 px-6 md:px-12">
+        <div className="mb-12 md:mb-16 flex flex-col items-center text-center">
+          <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-soft-black mb-4">The Collection</h1>
+          <p className="font-sans text-sm md:text-base text-gray-600 max-w-2xl leading-relaxed">
+            Browse and buy original fine art paintings from Nepal's master artists. Our collection features exclusive abstracts, serene landscapes, and intimate portraits. Certified authenticity and secure global shipping.
+          </p>
+        </div>
         <Suspense fallback={<LoadingGrid />}>
           <CollectionClient artworks={artworks} allCategories={categories} />
         </Suspense>

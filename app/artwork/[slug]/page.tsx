@@ -211,7 +211,7 @@ export default async function ArtworkPage({
                 {/* SOLD INDICATOR */}
                 {art.status === "sold" && (
                   <div className="inline-flex items-center gap-2 mb-4">
-                    <span className="font-sans text-[10px] tracking-[0.3em] uppercase text-white bg-[#7D1818] px-3 py-1 shadow-sm">
+                    <span className="flex items-center justify-center font-sans text-[10px] tracking-[0.3em] uppercase text-white bg-[#7D1818] px-3 py-1 min-h-[24px] leading-none shadow-sm">
                       Sold / Private Collection
                     </span>
                   </div>
@@ -233,7 +233,7 @@ export default async function ArtworkPage({
                       <Link
                         key={category}
                         href={`/category/${category.toLowerCase().replace(/\s+/g, '-')}`}
-                        className="px-3 py-1 bg-white border border-black/10 hover:border-black/30 text-soft-black font-sans text-[10px] tracking-[0.15em] uppercase transition-colors"
+                        className="flex items-center justify-center px-2 py-1 md:px-3 md:py-1.5 bg-white border border-black/10 hover:border-black/30 text-soft-black font-sans text-[10px] leading-none tracking-[0.15em] uppercase transition-colors min-h-[24px]"
                       >
                         {category}
                       </Link>

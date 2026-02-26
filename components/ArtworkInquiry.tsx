@@ -53,6 +53,8 @@ export function ArtworkInquiry({
   const [zip, setZip] = useState("");
   const [country, setCountry] = useState("");
 
+  const [message, setMessage] = useState("");
+
   const [file, setFile] = useState<File | null>(null);
   const [honeypot, setHoneypot] = useState(""); // Anti-spam field
 
@@ -115,12 +117,15 @@ export function ArtworkInquiry({
       formData.append("Virtual Preview", file);
     }
 
-    formData.append("Artwork Details", `
+    const detailsText = `
       Title: ${artwork.title}
       SKU: ${artwork.sku || "N/A"}
       Status: ${isSold ? "Sold / Private" : "Available"}
       URL: ${window.location.href}
-    `);
+      User Message: ${message || "No additional message provided."}
+    `;
+
+    formData.append("Artwork Details", detailsText);
 
     try {
       const response = await fetch("/api/inquiry", {
@@ -308,6 +313,18 @@ export function ArtworkInquiry({
                           <input required type="text" placeholder="Zip / Postal Code" value={zip} onChange={(e) => setZip(e.target.value)} className="w-full bg-transparent border-b border-black/10 py-2 font-sans font-light text-base outline-none focus:border-black transition-colors placeholder:text-gray-500 placeholder:text-sm" />
                           <input required type="text" placeholder="Country" value={country} onChange={(e) => setCountry(e.target.value)} className="w-full bg-transparent border-b border-black/10 py-2 font-sans font-light text-base outline-none focus:border-black transition-colors placeholder:text-gray-500 placeholder:text-sm" />
                         </div>
+                      </div>
+
+                      {/* Custom Message */}
+                      <div className="space-y-1">
+                        <label className="font-serif italic text-xs text-gray-500">Additional Message / Questions <span className="font-sans ml-1 text-[10px] text-gray-400 opacity-70">(Optional)</span></label>
+                        <textarea
+                          value={message}
+                          onChange={(e) => setMessage(e.target.value)}
+                          placeholder="Tell us about your space, ask about framing, or make a bespoke request..."
+                          rows={3}
+                          className="w-full bg-transparent border-b border-black/10 py-2 font-sans font-light text-base outline-none focus:border-black transition-colors placeholder:text-gray-500 placeholder:text-sm resize-none"
+                        />
                       </div>
 
                       {/* File Upload */}
