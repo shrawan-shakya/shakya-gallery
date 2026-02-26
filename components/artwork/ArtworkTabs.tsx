@@ -104,7 +104,7 @@ export function ArtworkTabs({ description, provenance }: ArtworkTabsProps) {
     return (
         <div className="w-full space-y-6 md:space-y-8">
             {/* Tab Navigation */}
-            <div className="w-full relative overflow-hidden">
+            <div className="w-full relative overflow-hidden z-10">
                 <div className="flex w-full overflow-x-auto hide-scrollbar border-b border-black/[0.05] snap-x snap-mandatory flex-nowrap">
                     {tabs.map((tab, index) => (
                         <button

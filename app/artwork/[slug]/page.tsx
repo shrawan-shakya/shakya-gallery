@@ -202,7 +202,7 @@ export default async function ArtworkPage({
           </div>
 
           {/* BLOCK 2: TITLE SECTION (Mob: 2, Desk: Col 2) */}
-          <div className="lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:sticky lg:top-16 self-start">
+          <div className="lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:sticky lg:top-16 self-start z-50">
             <div className="flex flex-col gap-6 animate-in fade-in slide-in-from-bottom-8 duration-1000">
               {/* Header */}
               <div className="flex flex-col gap-2">

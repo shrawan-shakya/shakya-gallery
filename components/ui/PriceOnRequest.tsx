@@ -1,5 +1,6 @@
 "use client";
 
+import { useCurrency } from "@/hooks/use-currency";
 import { cn } from "@/lib/utils";
 
 interface PriceOnRequestProps {
@@ -9,6 +10,8 @@ interface PriceOnRequestProps {
 }
 
 export function PriceOnRequest({ startingPrice, className, variant = "minimal" }: PriceOnRequestProps) {
+    const { formatPrice } = useCurrency();
+
     if (!startingPrice) return null;
 
     return (
@@ -23,13 +26,13 @@ export function PriceOnRequest({ startingPrice, className, variant = "minimal" }
                 Price on request <span className="lowercase">—</span> starts at
             </span>
             <span className={cn(
-                "font-sans font-bold text-soft-black",
+                "font-sans font-bold text-soft-black whitespace-nowrap",
                 variant === "minimal" && "text-[10px] md:text-[11px]",
                 variant === "plaque" && "text-[11px] md:text-[12px]",
                 variant === "detail" && "text-sm md:text-lg",
                 variant === "badge" && "text-[12px] md:text-[14px]"
             )}>
-                ${startingPrice.toLocaleString()}
+                {formatPrice(startingPrice)}
             </span>
         </div>
     );
