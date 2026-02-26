@@ -106,6 +106,13 @@ export default defineType({
       initialValue: false,
       description: 'Toggle this to mark as a special offer or featured item',
     }),
+    defineField({
+      name: 'isFeatured',
+      title: 'Feature on Homepage',
+      type: 'boolean',
+      initialValue: false,
+      description: 'Toggle this ON to display this artwork in the curated collection section on the homepage.',
+    }),
 
     // --- 5. LOGISTICS ---
     defineField({

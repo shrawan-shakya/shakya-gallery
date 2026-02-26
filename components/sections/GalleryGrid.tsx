@@ -4,8 +4,12 @@ import Link from "next/link";
 
 // 1. The Query
 async function getArtworks(limit?: number) {
+  // If limit is provided, we assume it's the homepage collection preview,
+  // so we only fetch featured artworks. Otherwise (e.g., full collection page),
+  // we fetch all available artworks.
+  const filter = limit ? `*[_type == "artwork" && isFeatured == true]` : `*[_type == "artwork"]`;
   const query = `
-    *[_type == "artwork"] | order(_updatedAt desc)${limit ? `[0...${limit}]` : ""} {
+    ${filter} | order(_updatedAt desc)${limit ? `[0...${limit}]` : ""} {
       _id,
       title,
       dimensions,

@@ -129,7 +129,7 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
         {/* VIEW: SINGLE ROW */}
         {layout === "single" && (
           <div
-            className="max-w-[800px] mx-auto grid grid-cols-1 gap-y-32 md:gap-y-48"
+            className="max-w-[1000px] mx-auto grid grid-cols-1 gap-y-20 md:gap-y-32"
           >
             {artworks.map((art, index) => (
               <LazyGridItem key={art._id} rootMargin="1000px 0px" aspectRatio={art.aspectRatio} disabled={index < 12}>
@@ -142,9 +142,12 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                   style={{ willChange: "transform, opacity" }}
                 >
                   <Link href={`/artwork/${art.slug}`} className="block cursor-pointer no-underline group/card">
-                    <div className="w-full mx-auto">
-                      <div className="w-full md:max-w-[75%] mx-auto relative group/image">
-                        <MuseumFrame aspectRatio={art.aspectRatio} hasMat={showMat} className="w-full h-auto">
+                    <div className="w-full mx-auto flex flex-col items-center">
+                      <div
+                        className="w-full relative group/image"
+                        style={{ maxWidth: `min(100%, calc(90vh * ${Math.max(art.aspectRatio || 1, 0.4)}))` }}
+                      >
+                        <MuseumFrame aspectRatio={art.aspectRatio} hasMat={showMat} className="w-full h-auto mx-auto">
                           {art.imageUrl && (
                             <div className="absolute inset-0 w-full h-full">
                               <Image
@@ -208,7 +211,7 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                           )}
                         </div>
                       </div>
-                      <div className="w-full md:max-w-[75%] mx-auto relative z-0 mt-8 md:mt-12 flex flex-col items-center text-center">
+                      <div className="w-full md:max-w-[75%] mx-auto relative z-0 mt-6 md:mt-8 flex flex-col items-center text-center">
                         <MuseumPlaque
                           title={art.title}
                           artist={art.artist}
@@ -255,7 +258,10 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                         >
                           <Link href={`/artwork/${art.slug}`} className="block cursor-pointer no-underline group/card">
                             <div className="w-full mx-auto">
-                              <div className="w-full relative group/image">
+                              <div
+                                className="w-full relative group/image mx-auto"
+                                style={{ maxWidth: `min(100%, calc(90vh * ${Math.max(art.aspectRatio || 1, 0.4)}))` }}
+                              >
                                 {/* GRIDS: Use w-full h-auto. The grid-based frame will expand height naturally. */}
                                 <SanityImage
                                   src={art.imageUrl}
@@ -314,7 +320,7 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                                   )}
                                 </div>
                               </div>
-                              <div className="w-full relative z-0 mt-8 md:mt-12 flex flex-col items-center text-center">
+                              <div className="w-full relative z-0 mt-6 md:mt-8 flex flex-col items-center text-center">
                                 <MuseumPlaque
                                   title={art.title}
                                   artist={art.artist}
