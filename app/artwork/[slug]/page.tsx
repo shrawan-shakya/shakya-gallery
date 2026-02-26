@@ -57,6 +57,7 @@ async function getArtwork(slug: string) {
         "url": mainImage.asset->url,
         "aspectRatio": mainImage.asset->metadata.dimensions.aspectRatio
       },
+      "categories": categories[]->title,
       "relatedImages": relatedImages[]{
         "url": asset->url,
         "aspectRatio": asset->metadata.dimensions.aspectRatio
@@ -224,6 +225,21 @@ export default async function ArtworkPage({
                     {art.artist}, <span className="text-gray-400 not-italic font-sans text-sm ml-1 tracking-wider">{art.year}</span>
                   </p>
                 </div>
+
+                {/* CATEGORY TAGS */}
+                {art.categories && art.categories.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mt-4">
+                    {art.categories.map((category: string) => (
+                      <Link
+                        key={category}
+                        href={`/category/${category.toLowerCase().replace(/\s+/g, '-')}`}
+                        className="px-3 py-1 bg-white border border-black/10 hover:border-black/30 text-soft-black font-sans text-[10px] tracking-[0.15em] uppercase transition-colors"
+                      >
+                        {category}
+                      </Link>
+                    ))}
+                  </div>
+                )}
               </div>
 
               {/* Technical Details */}
