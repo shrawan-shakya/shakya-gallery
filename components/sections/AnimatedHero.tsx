@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { fadeInUp, LUXURY_DURATION, LUXURY_EASE } from "@/lib/motion-variants";
+import Link from "next/link";
 
 export function AnimatedHero() {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
@@ -38,7 +39,7 @@ export function AnimatedHero() {
       </motion.video>
 
       {/* OVERLAY */}
-      <div className="absolute inset-0 bg-black/20 z-0" />
+      <div className="absolute inset-0 bg-black/30 z-0" />
 
       {/* Background Watermark */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
@@ -49,7 +50,7 @@ export function AnimatedHero() {
         variants={fadeInUp}
         initial="initial"
         animate="animate"
-        className="flex flex-col items-center text-center z-10 px-4 mt-[15vh] md:mt-[22vh]"
+        className="flex flex-col items-center text-center z-10 px-4 mt-[10vh] md:mt-[15vh]"
       >
         <p className="font-sans text-[11px] md:text-xs tracking-[2em] text-white/80 uppercase mb-6 ml-2">Est. 1998</p>
 
@@ -66,19 +67,25 @@ export function AnimatedHero() {
         </div>
 
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.0, duration: LUXURY_DURATION, ease: LUXURY_EASE }}
-          className="flex flex-col items-center gap-4 mt-8"
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mt-8 md:mt-12 w-full px-4"
         >
-          <p className="font-sans text-[9px] tracking-[0.3em] uppercase text-white/70 ml-1">Scroll</p>
-          <div className="w-[1px] h-16 bg-white/20 overflow-hidden relative border-l border-white/10">
-            <motion.div
-              className="absolute top-0 left-0 w-full h-full bg-white"
-              animate={{ y: ["-100%", "100%"] }}
-              transition={{ repeat: Infinity, duration: 2.5, ease: "linear" }}
-            />
-          </div>
+          <Link
+            href="/collection"
+            className="group w-full sm:w-[240px] h-[52px] bg-white text-soft-black hover:bg-gray-100 transition-all duration-500 flex items-center justify-center gap-3 shadow-xl pointer-events-auto"
+          >
+            <span className="font-sans text-[10px] md:text-[11px] tracking-[0.25em] uppercase font-medium">Explore Collection</span>
+            <span className="text-lg transform group-hover:translate-x-1 transition-transform duration-300">→</span>
+          </Link>
+
+          <Link
+            href="/legacy"
+            className="group w-full sm:w-[240px] h-[52px] bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 hover:border-white/40 transition-all duration-500 flex items-center justify-center gap-3 pointer-events-auto"
+          >
+            <span className="font-sans text-[10px] md:text-[11px] tracking-[0.25em] uppercase font-medium">Our Legacy</span>
+          </Link>
         </motion.div>
       </motion.div>
     </div>

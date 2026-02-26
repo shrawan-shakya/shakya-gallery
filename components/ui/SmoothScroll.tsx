@@ -1,8 +1,17 @@
 "use client";
 
+import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { ReactLenis } from "@studio-freight/react-lenis";
 
 export function SmoothScroll({ children }: { children: React.ReactNode }) {
+    const pathname = usePathname();
+
+    // Reset scroll position on route change
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [pathname]);
+
     return (
         <ReactLenis
             root
