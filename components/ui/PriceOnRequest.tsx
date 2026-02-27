@@ -15,13 +15,13 @@ export function PriceOnRequest({ startingPrice, className, variant = "minimal" }
     if (!startingPrice) return null;
 
     return (
-        <div className={cn("flex items-center gap-1.5", className)}>
+        <div className={cn("flex flex-wrap items-baseline gap-x-2 gap-y-1", className)}>
             <span className={cn(
-                "font-sans uppercase tracking-[0.1em] text-gray-500",
-                variant === "minimal" && "text-[10px] md:text-[11px]",
-                variant === "plaque" && "text-[11px] md:text-[12px]",
-                variant === "detail" && "text-xs md:text-sm tracking-[0.15em]",
-                variant === "badge" && "text-[12px] md:text-[14px] tracking-widest"
+                "font-sans uppercase tracking-[0.1em] text-gray-500 whitespace-nowrap",
+                variant === "minimal" && "text-[9px] md:text-[11px]",
+                variant === "plaque" && "text-[10px] md:text-[12px]",
+                variant === "detail" && "text-[9.5px] sm:text-[11px] md:text-sm tracking-[0.05em] sm:tracking-[0.1em] md:tracking-[0.15em]",
+                variant === "badge" && "text-[11px] md:text-[14px] tracking-widest"
             )}>
                 Price on request <span className="lowercase">—</span> starts at
             </span>
@@ -29,7 +29,7 @@ export function PriceOnRequest({ startingPrice, className, variant = "minimal" }
                 "font-sans font-bold text-soft-black whitespace-nowrap",
                 variant === "minimal" && "text-[10px] md:text-[11px]",
                 variant === "plaque" && "text-[11px] md:text-[12px]",
-                variant === "detail" && "text-sm md:text-lg",
+                variant === "detail" && "text-[24px]",
                 variant === "badge" && "text-[12px] md:text-[14px]"
             )}>
                 {formatPrice(startingPrice)}

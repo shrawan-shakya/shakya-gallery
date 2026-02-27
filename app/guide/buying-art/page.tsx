@@ -7,11 +7,11 @@ export const metadata: Metadata = {
 };
 
 const Step = ({ number, title, text }: { number: string; title: string; text: React.ReactNode }) => (
-    <div className="flex gap-6 md:gap-10 items-start">
-        <span className="font-serif text-5xl md:text-6xl text-black/10 leading-none select-none">
+    <div className="flex gap-6 md:gap-10 items-start w-full">
+        <span className="font-serif text-5xl md:text-6xl text-black/10 leading-none select-none shrink-0">
             {number}
         </span>
-        <div className="pt-2">
+        <div className="pt-2 flex-1 min-w-0">
             <h3 className="font-serif text-2xl text-black mb-3">{title}</h3>
             <div className="font-sans text-sm md:text-base text-black leading-relaxed max-w-2xl">
                 {text}
