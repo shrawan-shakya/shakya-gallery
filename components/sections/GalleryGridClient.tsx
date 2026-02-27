@@ -190,13 +190,15 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                           {art.status === "available" && (
                             <>
                               {/* Desktop Hover */}
-                              <span className="hidden md:flex absolute bottom-8 left-1/2 -translate-x-1/2 bg-white/95 text-soft-black text-sm md:text-base font-sans tracking-[0.2em] px-6 py-3 opacity-0 group-hover/image:opacity-100 transition-opacity duration-500 backdrop-blur-md shadow-md border border-soft-black/10 whitespace-nowrap">
-                                {art.showPrice && art.price ? (
-                                  <Price amount={art.price} />
-                                ) : (
-                                  <PriceOnRequest startingPrice={art.startingPrice} variant="badge" />
-                                )}
-                              </span>
+                              <div className="hidden md:flex absolute inset-0 items-center justify-center opacity-0 group-hover/image:opacity-100 transition-opacity duration-500">
+                                <span className="bg-white/95 text-soft-black text-sm md:text-base font-sans tracking-[0.2em] px-6 py-3 backdrop-blur-md shadow-md border border-soft-black/10 whitespace-nowrap">
+                                  {art.showPrice && art.price ? (
+                                    <Price amount={art.price} />
+                                  ) : (
+                                    <PriceOnRequest startingPrice={art.startingPrice} variant="badge" />
+                                  )}
+                                </span>
+                              </div>
                               {/* Mobile Persistent */}
                               <div className="md:hidden flex justify-center w-full">
                                 <span className="flex items-center justify-center bg-white/90 text-soft-black text-[10px] font-sans leading-none tracking-[0.1em] px-3 py-1 min-h-[24px] backdrop-blur-sm shadow-sm border border-soft-black/5 whitespace-nowrap">
@@ -299,13 +301,15 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                                   {art.status === "available" && (
                                     <>
                                       {/* Desktop Hover */}
-                                      <span className="hidden md:flex absolute bottom-8 left-1/2 -translate-x-1/2 bg-white/95 text-soft-black text-sm md:text-base font-sans tracking-[0.2em] px-6 py-3 opacity-0 group-hover/image:opacity-100 transition-opacity duration-500 backdrop-blur-md shadow-md border border-soft-black/10 whitespace-nowrap">
-                                        {art.showPrice && art.price ? (
-                                          <Price amount={art.price} />
-                                        ) : (
-                                          <PriceOnRequest startingPrice={art.startingPrice} variant="badge" />
-                                        )}
-                                      </span>
+                                      <div className="hidden md:flex absolute inset-0 items-center justify-center opacity-0 group-hover/image:opacity-100 transition-opacity duration-500">
+                                        <span className="bg-white/95 text-soft-black text-sm md:text-base font-sans tracking-[0.2em] px-6 py-3 backdrop-blur-md shadow-md border border-soft-black/10 whitespace-nowrap">
+                                          {art.showPrice && art.price ? (
+                                            <Price amount={art.price} />
+                                          ) : (
+                                            <PriceOnRequest startingPrice={art.startingPrice} variant="badge" />
+                                          )}
+                                        </span>
+                                      </div>
                                       {/* Mobile Persistent */}
                                       <div className="md:hidden flex justify-center w-full">
                                         <span className="flex items-center justify-center bg-white/90 text-soft-black text-[10px] font-sans leading-none tracking-[0.1em] px-3 py-1 min-h-[24px] backdrop-blur-sm shadow-sm border border-soft-black/5 whitespace-nowrap">

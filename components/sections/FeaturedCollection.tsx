@@ -46,10 +46,16 @@ export function FeaturedCollection({ artworks, heading }: FeaturedCollectionProp
                                     hasMat={true}
                                     className="w-full"
                                 />
-                                {art.status === "available" && art.showPrice && art.price && (
-                                    <span className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-white/95 text-soft-black text-sm md:text-base font-sans tracking-[0.2em] px-6 py-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 backdrop-blur-md shadow-md border border-soft-black/10">
-                                        <Price amount={art.price} />
-                                    </span>
+                                {art.status === "available" && (
+                                    <div className="hidden md:flex absolute inset-0 items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                                        <span className="bg-white/95 text-soft-black text-sm md:text-base font-sans tracking-[0.2em] px-6 py-3 backdrop-blur-md shadow-md border border-soft-black/10 whitespace-nowrap">
+                                            {art.showPrice && art.price ? (
+                                                <Price amount={art.price} />
+                                            ) : (
+                                                <PriceOnRequest startingPrice={art.startingPrice} variant="badge" />
+                                            )}
+                                        </span>
+                                    </div>
                                 )}
                             </div>
                             <h3 className="font-serif text-lg text-soft-black group-hover:text-gray-600 transition-colors">

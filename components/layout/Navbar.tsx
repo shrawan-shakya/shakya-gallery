@@ -28,8 +28,8 @@ export function Navbar() {
   // Dynamic Text Color Logic
   // Home & Top: White
   // Scrolled OR Not Home: Soft Black
-  const textColor = (isHome && !isScrolled) ? "text-white" : "text-soft-black";
-  const hoverColor = (isHome && !isScrolled) ? "hover:text-white/70" : "hover:text-gray-500";
+  const textColor = (pathname === "/" && !isScrolled) ? "text-white" : "text-soft-black";
+  const hoverColor = (pathname === "/" && !isScrolled) ? "hover:text-white/70" : "hover:text-gray-500";
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious() || 0;
@@ -71,14 +71,11 @@ export function Navbar() {
         transition={{ duration: 0.35, ease: "easeInOut" }}
 
         // THE FIX:
-        // 1. At Top: bg-transparent (Let Hero color show through)
-        // 2. Scrolled: bg-[#FDFCF8] (Solid Bone color)
+        // 1. At Top on Home: bg-transparent (Let Hero color show through)
+        // 2. Scrolled or Not Home: bg-bone (Solid color)
         // 3. pointer-events-none: Allows clicking THROUGH the transparent navbar
-        className={`fixed top-0 left-0 right-0 z-50 px-6 lg:px-12 flex justify-between items-center w-full transition-all duration-500 ease-in-out pointer-events-none
-          ${isScrolled
-            ? "py-4 bg-bone border-b border-black/5 shadow-sm" // Scrolled: Solid & Compact
-            : "py-6 lg:py-10 bg-transparent border-none shadow-none" // Top: Invisible Background
-          }
+        className={`fixed top-0 left-0 right-0 z-[100] px-6 lg:px-12 flex justify-between items-center w-full transition-all duration-300 ease-in-out
+          ${pathname === "/" && !isScrolled ? "pointer-events-none bg-transparent py-6 lg:py-10 border-none shadow-none" : "pointer-events-auto bg-bone py-4 border-b border-black/5 shadow-sm"}
         `}
       >
 
