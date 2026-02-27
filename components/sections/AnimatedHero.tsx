@@ -1,12 +1,40 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { fadeInUp, LUXURY_DURATION, LUXURY_EASE } from "@/lib/motion-variants";
 import Link from "next/link";
 
 export function AnimatedHero() {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    // A slight delay ensures the DOM is fully interactive
+    // and the previous page's unmount doesn't interrupt the promise natively
+    const timer = setTimeout(() => {
+      if (videoRef.current) {
+        // If the video is already cached and loaded from a previous visit, show it instantly
+        if (videoRef.current.readyState >= 3) {
+          setIsVideoLoaded(true);
+        }
+
+        // Explicitly set these again just to be safe for iOS Safari
+        videoRef.current.defaultMuted = true;
+        videoRef.current.muted = true;
+
+        const playPromise = videoRef.current.play();
+        if (playPromise !== undefined) {
+          playPromise.catch((error) => {
+            // Autoplay was prevented.
+            console.warn("Video autoplay prevented:", error);
+          });
+        }
+      }
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div className="relative h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-bone">
@@ -22,21 +50,26 @@ export function AnimatedHero() {
       />
 
       {/* VIDEO BACKGROUND */}
-      <motion.video
-        autoPlay
-        loop
-        muted
-        playsInline
-        preload="auto"
-        poster="/hero-1.jpg"
-        onLoadedData={() => setIsVideoLoaded(true)}
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: isVideoLoaded ? 1 : 0 }}
         transition={{ duration: 1.5, ease: LUXURY_EASE }}
-        className="absolute inset-0 w-full h-full object-cover z-0"
+        className="absolute inset-0 w-full h-full z-0"
       >
-        <source src="/hero intro.mp4" type="video/mp4" />
-      </motion.video>
+        <video
+          ref={videoRef}
+          className="w-full h-full object-cover"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          poster="/hero-1.jpg"
+          onLoadedData={() => setIsVideoLoaded(true)}
+        >
+          <source src="/hero intro.mp4" type="video/mp4" />
+        </video>
+      </motion.div>
 
       {/* OVERLAY */}
       <div className="absolute inset-0 bg-black/30 z-0" />

@@ -24,7 +24,7 @@ export function HeritagePreview() {
         {/* 2. Main Title */}
         <motion.h2
           variants={fadeInUp}
-          className="font-serif text-5xl md:text-6xl tracking-[0.2em] text-soft-black leading-[1.1] mb-12"
+          className="font-serif text-4xl sm:text-5xl md:text-6xl tracking-[0.15em] sm:tracking-[0.2em] text-soft-black leading-[1.2] md:leading-[1.3] mb-12"
         >
           THE LEGACY OF <br />
           SHAKYA
