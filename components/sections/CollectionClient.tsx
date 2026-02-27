@@ -142,15 +142,6 @@ const FilterPanel = ({
         </FilterSection>
       ))}
 
-      {hasActiveFilters && (
-        <button
-          onClick={clearFilters}
-          className="mt-4 text-left font-sans text-[11px] tracking-[0.2em] uppercase text-gray-400 hover:text-soft-black underline transition-colors"
-        >
-          Clear All Filters
-        </button>
-      )}
-
       <FilterSection title="Availability" isOpen={openSections["availability"]} onToggle={() => toggleSection("availability")}>
         {["all", "available", "sold"].map((status) => (
           <button
@@ -170,6 +161,27 @@ const FilterPanel = ({
         <button onClick={() => setSortOption("price_asc")} className={`text-left font-sans text-xs tracking-[0.2em] uppercase py-1 ${sortOption === "price_asc" ? "text-soft-black font-semibold pl-2 border-l-2 border-soft-black" : "text-gray-500 hover:text-soft-black"}`}>Price: Low to High</button>
         <button onClick={() => setSortOption("price_desc")} className={`text-left font-sans text-xs tracking-[0.2em] uppercase py-1 ${sortOption === "price_desc" ? "text-soft-black font-semibold pl-2 border-l-2 border-soft-black" : "text-gray-500 hover:text-soft-black"}`}>Price: High to Low</button>
       </FilterSection>
+
+      <AnimatePresence>
+        {hasActiveFilters && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="overflow-hidden"
+          >
+            <div className="pt-6 mt-6 border-t border-black/5">
+              <button
+                onClick={clearFilters}
+                className="w-full text-left font-sans text-[11px] tracking-[0.2em] uppercase text-gray-400 hover:text-soft-black transition-colors flex justify-between items-center group"
+              >
+                <span>Clear All Filters</span>
+                <span className="opacity-0 group-hover:opacity-100 transition-opacity">✕</span>
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 };

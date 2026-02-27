@@ -41,8 +41,8 @@ export async function getFilteredArtworks(options: Partial<FilterOptions>) {
 
     // 4. Sorting Logic
     let orderClause = "_createdAt desc";
-    if (sortOption === "price_asc") orderClause = "price asc";
-    else if (sortOption === "price_desc") orderClause = "price desc";
+    if (sortOption === "price_asc") orderClause = "coalesce(price, startingPrice, 99999999) asc";
+    else if (sortOption === "price_desc") orderClause = "coalesce(price, startingPrice, 0) desc";
 
     const query = `
     *[${filters.join(" && ")}] | order(${orderClause}) {
