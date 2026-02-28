@@ -98,6 +98,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: `${title} | SHAKYA Gallery`,
     description,
+    alternates: {
+      canonical: `/artwork/${slug}`,
+    },
     openGraph: {
       title,
       description,

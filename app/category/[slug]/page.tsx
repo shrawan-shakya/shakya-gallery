@@ -56,6 +56,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     return {
         title: `${data.title} Artworks | SHAKYA Gallery`,
         description: data.description || `Browse our collection of original ${data.title} artworks. Authentic Nepali art for sale at SHAKYA Gallery.`,
+        alternates: {
+            canonical: `/category/${slug}`,
+        },
     };
 }
 

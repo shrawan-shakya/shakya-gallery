@@ -22,7 +22,7 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://shakyagallery.com"),
+  metadataBase: new URL("https://www.shakyagallery.com"),
   title: {
     default: "Shakya Gallery: Original Nepalese Fine Art & Buddha Paintings",
     template: "%s | SHAKYA Gallery Nepal",
