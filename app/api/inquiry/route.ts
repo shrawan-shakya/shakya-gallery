@@ -60,42 +60,35 @@ export async function POST(request: Request) {
 
         const resend = new Resend(resendApiKey);
 
-        // ... (Existing logic for extracting other fields like Artwork Details) ...
-        const detailsBlock = formData.get("Artwork Details") as string || "";
-        const titleMatch = detailsBlock.match(/Title: (.*)/);
-        const artworkTitle = titleMatch ? titleMatch[1] : "Artwork";
-        const urlMatch = detailsBlock.match(/URL: (.*)/);
-        const artworkUrl = urlMatch ? urlMatch[1] : "#";
         const shipping = formData.get("Shipping Address") as string;
+        const message = formData.get("message") as string;
 
-        // Handle File Attachment
-        const file = formData.get("Virtual Preview") as File | null;
-        let attachments: any[] = [];
-        if (file) {
-            const bytes = await file.arrayBuffer();
-            const buffer = Buffer.from(bytes);
-            attachments.push({
-                filename: file.name,
-                content: buffer,
-            });
+        let cartItems = [];
+        try {
+            const rawCart = formData.get("cartData") as string;
+            cartItems = JSON.parse(rawCart || "[]");
+        } catch (e) {
+            console.error("Failed to parse cart data", e);
         }
+
+        const cartTotal = Number(formData.get("cartTotal")) || 0;
+        const hasEstimate = formData.get("hasEstimate") === "true";
 
         // 3. Send Emails
         const { error: adminError } = await resend.emails.send({
             from: 'Shakya Gallery <concierge@shakyagallery.com>',
             to: ['mag.boudha@gmail.com'],
-            subject: `New Inquiry: ${artworkTitle} (${rawData.name})`,
+            subject: `New Multi-Item Inquiry from ${rawData.name}`,
             react: InquiryEmail({
-                artworkTitle,
-                artworkUrl,
                 inquirerName: rawData.name,
                 inquirerEmail: rawData.email,
                 inquirerMobile: rawData.mobile,
                 shippingAddress: shipping,
-                message: detailsBlock,
-                imageUrl: undefined
+                message: message,
+                cartItems: cartItems,
+                cartTotal: cartTotal,
+                hasEstimate: hasEstimate
             }),
-            attachments: attachments,
             replyTo: rawData.email,
         });
 
@@ -108,10 +101,12 @@ export async function POST(request: Request) {
         await resend.emails.send({
             from: 'Shakya Gallery <concierge@shakyagallery.com>',
             to: [rawData.email],
-            subject: `We received your inquiry: ${artworkTitle}`,
+            subject: `We received your inquiry at Shakya Gallery`,
             react: ConfirmationEmail({
                 inquirerName: rawData.name,
-                artworkTitle,
+                cartItems: cartItems,
+                cartTotal: cartTotal,
+                hasEstimate: hasEstimate
             }),
         });
 

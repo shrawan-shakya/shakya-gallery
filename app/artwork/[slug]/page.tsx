@@ -40,6 +40,7 @@ export async function generateStaticParams() {
 async function getArtwork(slug: string) {
   const query = `
     *[_type == "artwork" && slug.current == $slug][0] {
+      _id,
       title,
       sku, 
       year,

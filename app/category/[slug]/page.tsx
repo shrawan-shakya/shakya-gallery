@@ -25,6 +25,7 @@ async function getCategoryData(slug: string) {
       "artworks": *[_type == "artwork" && references(^._id)] | order(_updatedAt desc) {
         _id,
         title,
+        "slug": slug.current,
         dimensions,
         year,
         artist,

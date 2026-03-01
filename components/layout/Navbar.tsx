@@ -3,9 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
-import { useState, useEffect } from "react";
-import { Search } from "lucide-react";
+import { Search, ShoppingBag } from "lucide-react";
 import { SearchOverlay } from "@/components/ui/SearchOverlay";
+import { useEffect, useState } from "react";
+import { useCartStore } from "@/lib/store/useCartStore";
+import { CartDrawer } from "@/components/ui/CartDrawer";
 
 const links = [
   { name: "Collection", href: "/collection" },
@@ -21,6 +23,14 @@ export function Navbar() {
   const [isHidden, setIsHidden] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { scrollY } = useScroll();
+
+  // Zustand state
+  const { items, isOpen: isCartOpen, openCart, closeCart } = useCartStore();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const pathname = usePathname();
   const isHome = pathname === "/";
@@ -51,16 +61,17 @@ export function Navbar() {
   });
 
   useEffect(() => {
-    if (isOpen || isSearchOpen) {
+    if (isOpen || isSearchOpen || isCartOpen) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
     }
-  }, [isOpen, isSearchOpen]);
+  }, [isOpen, isSearchOpen, isCartOpen]);
 
   return (
     <>
       <SearchOverlay isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+      <CartDrawer isOpen={isCartOpen} onClose={closeCart} />
 
       <motion.nav
         variants={{
@@ -109,6 +120,20 @@ export function Navbar() {
           >
             <Search className="w-5 h-5" />
           </button>
+
+          {/* CART ICON (Desktop) */}
+          <button
+            onClick={openCart}
+            className={`relative ${hoverColor} transition-colors`}
+            aria-label="Inquiry Cart"
+          >
+            <ShoppingBag className="w-5 h-5" />
+            {mounted && items.length > 0 && (
+              <span className="absolute -top-1.5 -right-2 bg-red-700 text-white text-[9px] font-sans w-4 h-4 rounded-full flex items-center justify-center">
+                {items.length}
+              </span>
+            )}
+          </button>
         </div>
 
         {/* MOBILE CONTROLS */}
@@ -120,6 +145,20 @@ export function Navbar() {
             aria-label="Search"
           >
             <Search className="w-5 h-5" />
+          </button>
+
+          {/* CART ICON (Mobile) */}
+          <button
+            onClick={openCart}
+            className="w-8 h-8 flex items-center justify-center relative"
+            aria-label="Inquiry Cart"
+          >
+            <ShoppingBag className="w-5 h-5" />
+            {mounted && items.length > 0 && (
+              <span className="absolute top-0 right-0 bg-red-700 text-white text-[9px] font-sans w-4 h-4 rounded-full flex items-center justify-center">
+                {items.length}
+              </span>
+            )}
           </button>
 
           {/* HAMBURGER */}

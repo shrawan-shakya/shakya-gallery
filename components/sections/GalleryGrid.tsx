@@ -8,8 +8,9 @@ async function getArtworks(limit?: number) {
   // so we only fetch featured artworks. Otherwise (e.g., full collection page),
   // we fetch all available artworks.
   const filter = limit ? `*[_type == "artwork" && isFeatured == true]` : `*[_type == "artwork"]`;
+  const limitQuery = limit ? `[0...${limit}]` : ``;
   const query = `
-    ${filter} | order(_updatedAt desc)${limit ? `[0...${limit}]` : ""} {
+    ${filter} | order(_updatedAt desc) ${limitQuery} {
       _id,
       title,
       dimensions,

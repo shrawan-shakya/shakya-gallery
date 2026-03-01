@@ -20,7 +20,20 @@ interface Props {
 
 // 1. Fetch Category Info
 async function getCategory(slug: string) {
-    const query = `*[_type == "category" && slug.current == $slug][0] { title, description }`;
+    const query = `*[_type == "category" && slug.current == $slug][0] { 
+      title, 
+      description,
+      "artworks": *[_type == "artwork" && references(^._id)] | order(_updatedAt desc) {
+        _id,
+        title,
+        slug,
+        "imageUrl": mainImage.asset->url,
+        "artistName": artist->name,
+        price,
+        status,
+        category->title
+      }
+    }`;
     const { data } = await sanityFetch({ query, params: { slug } });
     return data;
 }
