@@ -40,7 +40,7 @@ export const siteConfig = {
         },
         {
             question: "Is every artwork an original piece?",
-            answer: "Yes, Shakya Gallery exclusively represents original fine art. Whether it is an expressive abstract or a detailed Paubha, every piece is a unique creation by a master artist, accompanied by a signed Certificate of Authenticity.",
+            answer: "Yes, Shakya Gallery exclusively represents original fine art. Whether it is an expressive abstract or a serene landscape, every piece is a unique creation by a master artist, accompanied by a signed Certificate of Authenticity.",
         },
         {
             question: "How do you support Nepalese artists?",

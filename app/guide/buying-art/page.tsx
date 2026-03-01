@@ -62,17 +62,17 @@ export default function BuyingGuidePage() {
                     />
                     <Step
                         number="02"
-                        title="Inquire for Details"
+                        title="Curate Your Selection"
                         text={
                             <div className="space-y-4">
                                 <p>
-                                    Click the <span className="text-black font-semibold">“Inquire to Acquire”</span> button on any artwork page.
+                                    As you find pieces that resonate, click <span className="text-black font-semibold">“Add to Inquiry Selection”</span>. You can curate multiple artworks into your personal gallery cart.
                                 </p>
                                 <p>
-                                    Takes 20 seconds. Tell us your name, email and country.
+                                    When you are ready, review your selection in the side drawer and submit a single, comprehensive inquiry in under 20 seconds.
                                 </p>
                                 <p>
-                                    Our team replies within 24 hours (often the same day) with high-resolution details, provenance, exact price and a personalised shipping quote.
+                                    Our curation team will review your complete selection and reply within 24 hours (often the same day) with high-resolution details, exact pricing, and a personalized, combined shipping quote.
                                 </p>
                             </div>
                         }

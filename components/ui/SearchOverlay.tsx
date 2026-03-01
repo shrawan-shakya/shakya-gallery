@@ -86,7 +86,13 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                     {/* Header (Close Button) */}
                     <div className="flex justify-end p-6 md:p-12">
                         <button
-                            onClick={onClose}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                e.preventDefault();
+                                setTimeout(() => {
+                                    onClose();
+                                }, 50);
+                            }}
                             className="w-8 h-8 flex items-center justify-center relative group"
                         >
                             <span className="absolute w-8 h-[1px] bg-soft-black rotate-45 transition-colors duration-300 group-hover:bg-soft-black/60" />
