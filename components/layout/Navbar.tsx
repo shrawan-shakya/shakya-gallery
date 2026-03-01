@@ -144,7 +144,7 @@ export function Navbar() {
             className="w-8 h-8 flex items-center justify-center p-0 m-0"
             aria-label="Search"
           >
-            <Search className="w-4 h-4" />
+            <Search className="w-5 h-5" />
           </button>
 
           {/* CART ICON (Mobile) */}
@@ -153,9 +153,9 @@ export function Navbar() {
             className="w-8 h-8 flex items-center justify-center relative p-0 m-0"
             aria-label="Inquiry Cart"
           >
-            <ShoppingBag className="w-4 h-4" />
+            <ShoppingBag className="w-5 h-5" />
             {mounted && items.length > 0 && !isOpen && (
-              <span className="absolute top-1 right-1 bg-red-700 text-white text-[8px] font-sans w-3.5 h-3.5 rounded-full flex items-center justify-center">
+              <span className="absolute top-0 flex items-center justify-center right-0 bg-red-700 text-white text-[9px] font-sans w-4 h-4 rounded-full">
                 {items.length}
               </span>
             )}
