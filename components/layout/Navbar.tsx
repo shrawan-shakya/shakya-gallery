@@ -137,7 +137,7 @@ export function Navbar() {
         </div>
 
         {/* MOBILE CONTROLS */}
-        <div className={`lg:hidden z-50 flex items-center gap-6 pointer-events-auto ${textColor}`}>
+        <div className={`lg:hidden z-50 flex items-center gap-3 pointer-events-auto ${textColor}`}>
           {/* SEARCH ICON (Mobile) */}
           <button
             onClick={() => setIsSearchOpen(true)}

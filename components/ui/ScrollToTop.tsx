@@ -39,7 +39,7 @@ export function ScrollToTop() {
     return (
         <AnimatePresence>
             {isVisible && (
-                <div className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-[90] flex flex-col items-center gap-4">
+                <div className="fixed bottom-24 right-6 md:bottom-8 md:right-8 z-[90] flex flex-col items-center gap-4">
                     {/* Chat Placeholder Space - 
                         The flex-col layout ensures that a future chat widget 
                         could sit right below or above this button nicely. 
