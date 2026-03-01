@@ -137,25 +137,25 @@ export function Navbar() {
         </div>
 
         {/* MOBILE CONTROLS */}
-        <div className={`lg:hidden z-50 flex items-center gap-3 pointer-events-auto ${textColor}`}>
+        <div className={`lg:hidden z-50 flex items-center gap-1.5 pointer-events-auto ${textColor}`}>
           {/* SEARCH ICON (Mobile) */}
           <button
             onClick={() => setIsSearchOpen(true)}
-            className="w-8 h-8 flex items-center justify-center"
+            className="w-8 h-8 flex items-center justify-center p-0 m-0"
             aria-label="Search"
           >
-            <Search className="w-5 h-5" />
+            <Search className="w-4 h-4" />
           </button>
 
           {/* CART ICON (Mobile) */}
           <button
             onClick={openCart}
-            className="w-8 h-8 flex items-center justify-center relative"
+            className="w-8 h-8 flex items-center justify-center relative p-0 m-0"
             aria-label="Inquiry Cart"
           >
-            <ShoppingBag className="w-5 h-5" />
-            {mounted && items.length > 0 && (
-              <span className="absolute top-0 right-0 bg-red-700 text-white text-[9px] font-sans w-4 h-4 rounded-full flex items-center justify-center">
+            <ShoppingBag className="w-4 h-4" />
+            {mounted && items.length > 0 && !isOpen && (
+              <span className="absolute top-1 right-1 bg-red-700 text-white text-[8px] font-sans w-3.5 h-3.5 rounded-full flex items-center justify-center">
                 {items.length}
               </span>
             )}
