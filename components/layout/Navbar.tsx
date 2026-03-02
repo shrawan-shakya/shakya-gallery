@@ -85,7 +85,7 @@ export function Navbar() {
         // 1. At Top on Home: bg-transparent (Let Hero color show through)
         // 2. Scrolled or Not Home: bg-bone (Solid color)
         // 3. pointer-events-none: Allows clicking THROUGH the transparent navbar
-        className={`fixed top-0 left-0 right-0 z-[100] px-6 lg:px-12 flex justify-between items-center w-full transition-all duration-300 ease-in-out
+        className={`fixed top-0 left-0 right-0 z-[120] px-6 lg:px-12 flex justify-between items-center w-full transition-all duration-300 ease-in-out
           ${pathname === "/" && !isScrolled ? "pointer-events-none bg-transparent py-6 lg:py-10 border-none shadow-none" : "pointer-events-auto bg-bone py-4 border-b border-black/5 shadow-sm"}
         `}
       >
@@ -118,7 +118,7 @@ export function Navbar() {
             className={`${hoverColor} transition-colors`}
             aria-label="Search"
           >
-            <Search className="w-5 h-5" />
+            <Search className="w-5 h-5" strokeWidth={1} />
           </button>
 
           {/* CART ICON (Desktop) */}
@@ -127,7 +127,7 @@ export function Navbar() {
             className={`relative ${hoverColor} transition-colors`}
             aria-label="Inquiry Cart"
           >
-            <ShoppingBag className="w-5 h-5" />
+            <ShoppingBag className="w-5 h-5" strokeWidth={1} />
             {mounted && items.length > 0 && (
               <span className="absolute -top-1.5 -right-2 bg-red-700 text-white text-[9px] font-sans w-4 h-4 rounded-full flex items-center justify-center">
                 {items.length}
@@ -144,7 +144,7 @@ export function Navbar() {
             className="w-8 h-8 flex items-center justify-center p-0 m-0"
             aria-label="Search"
           >
-            <Search className="w-5 h-5" />
+            <Search className="w-5 h-5" strokeWidth={1} />
           </button>
 
           {/* CART ICON (Mobile) */}
@@ -153,7 +153,7 @@ export function Navbar() {
             className="w-8 h-8 flex items-center justify-center relative p-0 m-0"
             aria-label="Inquiry Cart"
           >
-            <ShoppingBag className="w-5 h-5" />
+            <ShoppingBag className="w-5 h-5" strokeWidth={1} />
             {mounted && items.length > 0 && !isOpen && (
               <span className="absolute top-0 flex items-center justify-center right-0 bg-red-700 text-white text-[9px] font-sans w-4 h-4 rounded-full">
                 {items.length}
@@ -190,7 +190,7 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: "-100%" }}
             transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
-            className="fixed inset-0 bg-bone z-40 flex flex-col justify-center items-center"
+            className="fixed inset-0 bg-bone z-[110] flex flex-col justify-center items-center"
           >
             <div className="flex flex-col gap-8 text-center">
               {links.map((link, i) => (
