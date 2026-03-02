@@ -28,23 +28,14 @@ async function getCategories() {
 }
 
 interface Props {
-  searchParams: Promise<{
-    q?: string;
-    category?: string;
-    status?: string;
-    sort?: string;
-  }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 export default async function CollectionPage({ searchParams }: Props) {
-  const params = await searchParams;
-
-  const artworks = await getFilteredArtworks({
-    searchQuery: params.q,
-    selectedCategories: params.category?.split(",").filter(Boolean) || [],
-    statusFilter: params.status as any,
-    sortOption: params.sort as any
-  });
+  // We no longer read searchParams to filter data on the server.
+  // This allows the page to be statically generated or cached perfectly at the edge,
+  // returning all artworks immediately. Filtering happens on the client.
+  const artworks = await getFilteredArtworks({});
 
   const categories = await getCategories();
 
@@ -55,7 +46,7 @@ export default async function CollectionPage({ searchParams }: Props) {
     "description": "Explore our curated collection of fine art paintings, including abstracts, landscapes, and portraits.",
     "url": "https://shakyagallery.com/collection",
     "numberOfItems": artworks.length,
-    "itemListElement": artworks.map((art: any, index: number) => ({
+    "itemListElement": artworks.slice(0, 50).map((art: any, index: number) => ({
       "@type": "ListItem",
       "position": index + 1,
       "url": `https://shakyagallery.com/artwork/${art.slug}`,

@@ -225,6 +225,51 @@ export function CollectionClient({
     sort: false,
   });
 
+  // --- CLIENT-SIDE FILTERING ---
+  const filteredArtworks = useMemo(() => {
+    let result = artworks;
+
+    // 1. Search Query
+    if (searchQuery) {
+      const q = searchQuery.toLowerCase();
+      result = result.filter(art =>
+        art.title?.toLowerCase().includes(q) ||
+        art.artist?.toLowerCase().includes(q) ||
+        art.material?.toLowerCase().includes(q)
+      );
+    }
+
+    // 2. Categories
+    if (selectedCategories.length > 0) {
+      result = result.filter(art =>
+        art.categories?.some(cat => selectedCategories.includes(cat))
+      );
+    }
+
+    // 3. Status
+    if (statusFilter === "available") {
+      result = result.filter(art => art.status === "available");
+    } else if (statusFilter === "sold") {
+      result = result.filter(art => art.status === "sold" || art.status === "private");
+    }
+
+    // 4. Sort
+    result = [...result].sort((a, b) => {
+      if (sortOption === "price_asc") {
+        const priceA = a.price ?? a.startingPrice ?? 99999999;
+        const priceB = b.price ?? b.startingPrice ?? 99999999;
+        return priceA - priceB;
+      } else if (sortOption === "price_desc") {
+        const priceA = a.price ?? a.startingPrice ?? 0;
+        const priceB = b.price ?? b.startingPrice ?? 0;
+        return priceB - priceA;
+      }
+      return 0; // Default: newest (already returned from server)
+    });
+
+    return result;
+  }, [artworks, searchQuery, selectedCategories, statusFilter, sortOption]);
+
   // --- HELPERS ---
   const updateQueryParam = (name: string, value: string | null) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -293,11 +338,11 @@ export function CollectionClient({
   // --- GRID DISTRIBUTION (No client-side .filter in JSX) ---
   const columns = useMemo(() => {
     const cols: Artwork[][] = Array.from({ length: gridCols }, () => []);
-    artworks.forEach((art, index) => {
+    filteredArtworks.forEach((art, index) => {
       cols[index % gridCols].push(art);
     });
     return cols;
-  }, [artworks, gridCols]);
+  }, [filteredArtworks, gridCols]);
 
   const categoriesByType = allCategories.reduce((acc, cat) => {
     if (!acc[cat.type]) acc[cat.type] = [];
@@ -308,13 +353,13 @@ export function CollectionClient({
   // --- ITEM COUNTS ---
   const categoryCounts = useMemo(() => {
     const counts: Record<string, number> = {};
-    artworks.forEach((art) => {
+    filteredArtworks.forEach((art) => {
       art.categories?.forEach((cat) => {
         counts[cat] = (counts[cat] || 0) + 1;
       });
     });
     return counts;
-  }, [artworks]);
+  }, [filteredArtworks]);
 
   const filterProps = {
     searchQuery,
@@ -448,7 +493,7 @@ export function CollectionClient({
           </span>
         </button>
         <span className="font-sans text-[11px] tracking-widest text-gray-400 uppercase">
-          {artworks.length} Results
+          {filteredArtworks.length} Results
         </span>
       </div>
 
@@ -470,7 +515,7 @@ export function CollectionClient({
               <FilterPanel {...filterProps} />
             </div>
             <div className="p-6 border-t border-black/5 bg-bone">
-              <button onClick={() => setIsMobileFilterOpen(false)} className="w-full bg-soft-black text-white font-sans text-xs tracking-[0.3em] uppercase py-4 hover:bg-black/80 transition-colors">Show {artworks.length} Results</button>
+              <button onClick={() => setIsMobileFilterOpen(false)} className="w-full bg-soft-black text-white font-sans text-xs tracking-[0.3em] uppercase py-4 hover:bg-black/80 transition-colors">Show {filteredArtworks.length} Results</button>
             </div>
           </motion.div>
         )}
@@ -485,7 +530,7 @@ export function CollectionClient({
         >
           <div className="pb-8">
             <div className="mb-8 pb-4 border-b border-black/5">
-              <p className="font-sans text-[11px] tracking-widest text-gray-500 uppercase">{artworks.length} Results</p>
+              <p className="font-sans text-[11px] tracking-widest text-gray-500 uppercase">{filteredArtworks.length} Results</p>
             </div>
             <FilterPanel {...filterProps} />
           </div>
@@ -548,12 +593,12 @@ export function CollectionClient({
             key={`${searchQuery}-${selectedCategories.join("-")}-${statusFilter}-${sortOption}-${gridCols}`}
             className="flex flex-col md:flex-row gap-8 lg:gap-12 items-start transition-all duration-700 w-full"
           >
-            {artworks.length > 0 ? (
+            {filteredArtworks.length > 0 ? (
               <>
                 {/* Mobile 1-Column Layout */}
                 <div className="flex w-full flex-col gap-12 md:hidden">
                   <AnimatePresence mode="popLayout">
-                    {artworks.map((art, index) => renderArtworkCard(art, index))}
+                    {filteredArtworks.map((art, index) => renderArtworkCard(art, index))}
                   </AnimatePresence>
                 </div>
 
@@ -576,7 +621,7 @@ export function CollectionClient({
             ) : (
               <div className="w-full">
                 <FeaturedCollection
-                  artworks={artworks}
+                  artworks={artworks} // keep showing all feature artworks as recommendation
                   heading="While we curate more pieces for this category, explore our featured masterpieces."
                 />
 

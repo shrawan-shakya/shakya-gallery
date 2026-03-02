@@ -60,29 +60,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
 }
 
-export default async function CategoryPage({ params, searchParams }: Props) {
+export default async function CategoryPage({ params }: Props) {
     const { slug } = await params;
-    const sParams = await searchParams;
+
     const category = await getCategory(slug);
 
     if (!category) return notFound();
 
-    // Merge URL categories with the slug-based category
-    const urlParam = sParams.category;
-    let urlCategories = [];
-    if (urlParam) {
-        const parts = urlParam.split(",");
-        for (const p of parts) if (p) urlCategories.push(p);
-    }
-
-    const selectedCategories = Array.from(new Set([category.title, ...urlCategories]));
-
-    const artworks = await getFilteredArtworks({
-        searchQuery: sParams.q,
-        selectedCategories: selectedCategories,
-        statusFilter: sParams.status as any,
-        sortOption: sParams.sort as any
-    });
+    // We fetch ALL artworks here. Filtering by URL query params AND the current slug's category
+    // is entirely handled by CollectionClient on the client side now.
+    const artworks = await getFilteredArtworks({});
 
     const allCategories = await getAllCategories();
 
