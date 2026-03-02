@@ -8,9 +8,6 @@ import { LoadingGrid } from "@/components/ui/LoadingGrid";
 export const metadata: Metadata = {
   title: "Buy Original Fine Art in Nepal | Abstracts, Landscapes & Portraits",
   description: "Browse and buy original fine art paintings from Nepal's master artists. Our collection features exclusive abstracts, serene landscapes, and intimate portraits. Certified authenticity and secure global shipping.",
-  alternates: {
-    canonical: "https://shakyagallery.com/collection",
-  },
 };
 
 export const revalidate = 0;

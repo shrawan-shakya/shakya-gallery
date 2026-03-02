@@ -101,7 +101,7 @@ export function Navbar() {
         </Link>
 
         {/* DESKTOP LINKS */}
-        <div className={`hidden lg:flex gap-12 items-center font-thin pointer-events-auto ${textColor}`}>
+        <div className={`hidden min-[1200px]:flex gap-12 items-center font-thin pointer-events-auto ${textColor}`}>
           {links.map((link) => (
             <Link
               key={link.name}
@@ -137,7 +137,7 @@ export function Navbar() {
         </div>
 
         {/* MOBILE CONTROLS */}
-        <div className={`lg:hidden z-50 flex items-center gap-1.5 pointer-events-auto ${textColor}`}>
+        <div className={`min-[1200px]:hidden z-50 flex items-center gap-1.5 pointer-events-auto ${textColor}`}>
           {/* SEARCH ICON (Mobile) */}
           <button
             onClick={() => setIsSearchOpen(true)}

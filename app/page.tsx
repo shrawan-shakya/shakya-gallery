@@ -14,9 +14,6 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: `${siteConfig.name} | Original Nepalese Fine Art & Modern Abstract Collection`,
   description: siteConfig.description,
-  alternates: {
-    canonical: siteConfig.url,
-  },
 };
 
 export default async function Home() {

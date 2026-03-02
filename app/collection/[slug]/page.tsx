@@ -54,9 +54,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return {
         title: `Buy Original ${category.title} Paintings - 20-Year Legacy | SHAKYA Gallery`,
         description: `Explore our curated selection of original ${category.title.toLowerCase()} paintings from Nepal's master artists. Authentic fine art with over 20 years of gallery heritage.`,
-        alternates: {
-            canonical: `/collection/${slug}`,
-        },
     };
 }
 

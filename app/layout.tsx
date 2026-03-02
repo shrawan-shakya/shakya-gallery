@@ -4,6 +4,7 @@ import "./globals.css";
 import { ClientLayout } from "@/components/layout/ClientLayout";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { SanityLive } from "@/sanity/lib/live";
+import { CanonicalLink } from "@/components/ui/CanonicalLink";
 
 // 1. The Elegant Serif (Headings)
 const cormorant = Cormorant_Garamond({
@@ -22,7 +23,7 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.shakyagallery.com"),
+  metadataBase: new URL("https://shakyagallery.com"),
   title: {
     default: "Shakya Gallery: Original Nepalese Fine Art & Buddha Paintings",
     template: "%s | SHAKYA Gallery Nepal",
@@ -66,6 +67,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <CanonicalLink />
+      </head>
       {/* 3. Added flex column layout so footer pushes to bottom */}
       <body className={`${cormorant.variable} ${montserrat.variable} bg-bone text-soft-black antialiased flex flex-col min-h-screen`}>
         <ClientLayout>
