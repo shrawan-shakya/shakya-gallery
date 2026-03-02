@@ -420,9 +420,7 @@ export function CollectionClient({
                       <span className="font-serif font-bold italic text-3xl text-white bg-[#7D1818] shadow-xl -rotate-12 tracking-widest px-5 py-2">
                         SOLD
                       </span>
-                      <span className="mt-16 font-sans text-white tracking-[0.2em] uppercase font-medium drop-shadow-md text-center px-4 text-xs leading-relaxed max-w-[200px]">
-                        Commission a similar piece
-                      </span>
+
                     </div>
                     {/* Mobile Only Persistent Bottom */}
                     <div className="md:hidden flex items-center justify-between w-full px-2">

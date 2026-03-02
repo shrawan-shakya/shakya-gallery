@@ -175,9 +175,7 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                                 <span className="font-serif font-bold italic text-3xl md:text-4xl text-white bg-[#7D1818] shadow-xl -rotate-12 tracking-widest px-6 py-2">
                                   SOLD
                                 </span>
-                                <span className="mt-16 font-sans text-white tracking-[0.2em] uppercase font-medium drop-shadow-md text-xs leading-relaxed">
-                                  Looking for something similar?
-                                </span>
+
                               </div>
                               {/* Mobile Persistent */}
                               <div className="md:hidden flex items-center justify-between w-full px-2">
@@ -286,9 +284,7 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                                         <span className="font-serif font-bold italic text-3xl md:text-4xl text-white bg-[#7D1818] shadow-xl -rotate-12 tracking-widest px-6 py-2">
                                           SOLD
                                         </span>
-                                        <span className="mt-16 font-sans text-white tracking-[0.2em] uppercase font-medium drop-shadow-md text-xs leading-relaxed">
-                                          Looking for something similar?
-                                        </span>
+
                                       </div>
                                       {/* Mobile Only Persistent Bottom */}
                                       <div className="md:hidden flex items-center justify-between w-full px-2">
