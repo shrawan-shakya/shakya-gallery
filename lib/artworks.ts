@@ -23,7 +23,8 @@ export async function getFilteredArtworks(options: Partial<FilterOptions>) {
         filters.push(`(
             title match $searchQuery + "*" || 
             artist match $searchQuery + "*" || 
-            material match $searchQuery + "*"
+            material match $searchQuery + "*" ||
+            count((categories[]->title)[@ match $searchQuery + "*"]) > 0
         )`);
     }
 
