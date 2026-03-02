@@ -22,17 +22,7 @@ interface Props {
 async function getCategory(slug: string) {
     const query = `*[_type == "category" && slug.current == $slug][0] { 
       title, 
-      description,
-      "artworks": *[_type == "artwork" && references(^._id)] | order(_updatedAt desc) {
-        _id,
-        title,
-        slug,
-        "imageUrl": mainImage.asset->url,
-        "artistName": artist->name,
-        price,
-        status,
-        category->title
-      }
+      description
     }`;
     const { data } = await sanityFetch({ query, params: { slug } });
     return data;
