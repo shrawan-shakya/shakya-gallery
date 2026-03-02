@@ -7,6 +7,7 @@ import { ArtworkActions } from "@/components/artwork/ArtworkActions";
 import { ArtworkTabs } from "@/components/artwork/ArtworkTabs";
 import { Price } from "@/components/ui/Price";
 import { PriceOnRequest } from "@/components/ui/PriceOnRequest";
+import { ShieldCheck, Truck, Lock } from "lucide-react";
 
 
 
@@ -283,6 +284,24 @@ export default async function ArtworkPage({
                 {/* Action Area */}
                 <div id="inquiry-section">
                   <ArtworkActions artwork={art} isSold={isSold} />
+                </div>
+
+                {/* TRUST SIGNALS */}
+                <div className="mt-4 grid grid-cols-2 gap-4 border-t border-black/[0.04] pt-8">
+                  <div className="flex items-start gap-3">
+                    <ShieldCheck className="w-5 h-5 text-soft-black/40 mt-0.5" strokeWidth={1} />
+                    <div className="space-y-0.5">
+                      <p className="font-sans text-[10px] tracking-[0.15em] uppercase text-soft-black font-medium">Authenticity</p>
+                      <p className="font-sans text-[9px] text-gray-500 leading-tight">Signed Certificate of Authenticity Included</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <Truck className="w-5 h-5 text-soft-black/40 mt-0.5" strokeWidth={1} />
+                    <div className="space-y-0.5">
+                      <p className="font-sans text-[10px] tracking-[0.15em] uppercase text-soft-black font-medium">Global Delivery</p>
+                      <p className="font-sans text-[9px] text-gray-500 leading-tight">Insured Crating & Worldwide Shipping via DHL</p>
+                    </div>
+                  </div>
                 </div>
               </div>
 
