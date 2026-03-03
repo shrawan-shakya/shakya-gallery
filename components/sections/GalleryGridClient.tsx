@@ -145,7 +145,11 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                     <div className="w-full mx-auto flex flex-col items-center">
                       <div
                         className="w-full relative group/image"
-                        style={{ maxWidth: `min(100%, calc(90vh * ${Math.max(art.aspectRatio || 1, 0.4)}))` }}
+                        style={{
+                          maxWidth: art.aspectRatio > 1.1
+                            ? `min(1200px, 100%, calc(70vh * ${art.aspectRatio}))`
+                            : `min(1000px, 100%, calc(85vh * ${Math.max(art.aspectRatio || 1, 0.4)}))`
+                        }}
                       >
                         <MuseumFrame aspectRatio={art.aspectRatio} hasMat={showMat} className="w-full h-auto mx-auto">
                           {art.imageUrl && (
@@ -260,7 +264,11 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                             <div className="w-full mx-auto">
                               <div
                                 className="w-full relative group/image mx-auto"
-                                style={{ maxWidth: `min(100%, calc(90vh * ${Math.max(art.aspectRatio || 1, 0.4)}))` }}
+                                style={{
+                                  maxWidth: art.aspectRatio > 1.1
+                                    ? `min(1200px, 100%, calc(70vh * ${art.aspectRatio}))`
+                                    : `min(1000px, 100%, calc(85vh * ${Math.max(art.aspectRatio || 1, 0.4)}))`
+                                }}
                               >
                                 {/* GRIDS: Use w-full h-auto. The grid-based frame will expand height naturally. */}
                                 <SanityImage
