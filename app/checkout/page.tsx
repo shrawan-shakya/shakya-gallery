@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Price } from "@/components/ui/Price";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { countries } from "@/lib/countries";
 
 export default function CheckoutPage() {
     const { items, getCartTotals, clearCart } = useCartStore();
@@ -197,7 +198,20 @@ export default function CheckoutPage() {
 
                             <div className="grid grid-cols-2 gap-6">
                                 <input required type="text" placeholder="Zip / Postal Code" value={zip} onChange={(e) => setZip(e.target.value)} className="w-full bg-transparent border-b border-black/10 py-2 font-sans font-light text-base outline-none focus:border-black transition-colors placeholder:text-gray-500 placeholder:text-sm" />
-                                <input required type="text" placeholder="Country" value={country} onChange={(e) => setCountry(e.target.value)} className="w-full bg-transparent border-b border-black/10 py-2 font-sans font-light text-base outline-none focus:border-black transition-colors placeholder:text-gray-500 placeholder:text-sm" />
+                                <div className="relative">
+                                    <select
+                                        required
+                                        value={country}
+                                        onChange={(e) => setCountry(e.target.value)}
+                                        className="w-full bg-transparent border-b border-black/10 py-2 font-sans font-light text-base outline-none focus:border-black transition-colors appearance-none cursor-pointer"
+                                    >
+                                        <option value="" disabled className="text-gray-500">Country</option>
+                                        {countries.map((c) => (
+                                            <option key={c.code} value={c.name}>{c.name}</option>
+                                        ))}
+                                    </select>
+                                    <span className="absolute right-0 top-1/2 -translate-y-1/2 text-[10px] text-gray-400 pointer-events-none">▼</span>
+                                </div>
                             </div>
                         </div>
 

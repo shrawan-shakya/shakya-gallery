@@ -4,8 +4,9 @@ import { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { MuseumFrame } from "@/components/ui/MuseumFrame";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { MediaLightbox } from "@/components/ui/MediaLightbox";
 
 interface ImageType {
     url: string;
@@ -43,6 +44,7 @@ const getDescriptiveAlt = (title: string, index?: number) => {
 
 export function ArtworkGallery({ mainImage, relatedImages, title, orientation }: ArtworkGalleryProps) {
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [isLightboxOpen, setIsLightboxOpen] = useState(false);
 
     // Combine main image and related images into one array for the gallery
     const allImages = [mainImage, ...(relatedImages || [])];
@@ -66,7 +68,7 @@ export function ArtworkGallery({ mainImage, relatedImages, title, orientation }:
                 <div className="relative w-full lg:h-[80vh] flex flex-col items-center justify-center transition-all duration-500 ease-in-out px-4">
                     <div
                         className={cn(
-                            "relative max-w-full max-h-full flex items-center justify-center transition-all duration-500",
+                            "relative max-w-full max-h-full flex items-center justify-center transition-all duration-500 cursor-zoom-in group/image",
                             // FINAL MOBILE-FIRST STRATEGY:
                             // Mobile: All images are width-first (w-full h-auto) to fill the phone screen.
                             // Desktop: Landscapes stay width-first. Portraits switch to height-first (lg:h-full lg:w-auto).
@@ -74,7 +76,15 @@ export function ArtworkGallery({ mainImage, relatedImages, title, orientation }:
                                 ? "w-full h-auto flex"
                                 : "w-full h-auto flex lg:h-full lg:w-auto lg:inline-grid"
                         )}
+                        onClick={() => setIsLightboxOpen(true)}
                     >
+                        {/* Zoom Indicator (Desktop) */}
+                        <div className="absolute top-4 right-4 z-20 opacity-0 group-hover/image:opacity-100 transition-opacity duration-300 pointer-events-none">
+                            <div className="bg-white/90 backdrop-blur-md p-2 rounded-full shadow-lg border border-black/5 text-soft-black">
+                                <ZoomIn size={18} strokeWidth={1.5} />
+                            </div>
+                        </div>
+
                         {currentIndex === 0 ? (
                             <MuseumFrame
                                 aspectRatio={currentImage.aspectRatio}
@@ -184,6 +194,14 @@ export function ArtworkGallery({ mainImage, relatedImages, title, orientation }:
                     ))}
                 </div>
             )}
+            {/* LIGHTBOX */}
+            <MediaLightbox
+                isOpen={isLightboxOpen}
+                onClose={() => setIsLightboxOpen(false)}
+                images={allImages}
+                initialIndex={currentIndex}
+                title={title}
+            />
         </div>
     );
 }
