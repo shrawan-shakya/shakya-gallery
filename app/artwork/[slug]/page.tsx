@@ -5,6 +5,7 @@ import { ArtworkGallery } from "@/components/artwork/ArtworkGallery";
 import { PortableText } from "@portabletext/react";
 import { ArtworkActions } from "@/components/artwork/ArtworkActions";
 import { ArtworkTabs } from "@/components/artwork/ArtworkTabs";
+import { RelatedArtworks } from "@/components/artwork/RelatedArtworks";
 import { Price } from "@/components/ui/Price";
 import { PriceOnRequest } from "@/components/ui/PriceOnRequest";
 import { ShieldCheck, Truck, Lock } from "lucide-react";
@@ -57,16 +58,45 @@ async function getArtwork(slug: string) {
       orientation,
       "mainImage": {
         "url": mainImage.asset->url,
-        "aspectRatio": mainImage.asset->metadata.dimensions.aspectRatio
+        "aspectRatio": mainImage.asset->metadata.dimensions.aspectRatio,
+        "lqip": mainImage.asset->metadata.lqip
       },
+      "categoryRefs": categories[]->_ref,
       "categories": categories[]->title,
       "relatedImages": relatedImages[]{
         "url": asset->url,
-        "aspectRatio": asset->metadata.dimensions.aspectRatio
+        "aspectRatio": asset->metadata.dimensions.aspectRatio,
+        "lqip": asset->metadata.lqip
       }
     }
   `;
   const { data } = await sanityFetch({ query, params: { slug } });
+  return data;
+}
+
+async function getRelatedArtworks(categoryRefs: string[], currentId: string, artist: string) {
+  const query = `
+    *[_type == "artwork" && _id != $currentId] | order(
+      count(categories[@._ref in $categoryRefs]) desc,
+      select(status == "available" => 1, 0) desc,
+      select(artist == $artist => 1, 0) desc,
+      _createdAt desc
+    ) [0...3] {
+      _id,
+      title,
+      "slug": slug.current,
+      "imageUrl": mainImage.asset->url,
+      "lqip": mainImage.asset->metadata.lqip,
+      "aspectRatio": mainImage.asset->metadata.dimensions.aspectRatio,
+      price,
+      showPrice,
+      startingPrice,
+      status,
+      artist,
+      year
+    }
+  `;
+  const { data } = await sanityFetch({ query, params: { categoryRefs, currentId, artist: artist || "" } });
   return data;
 }
 
@@ -135,6 +165,8 @@ export default async function ArtworkPage({
 
   if (!art) return notFound();
 
+  const relatedArtworks = await getRelatedArtworks(art.categoryRefs || [], art._id, art.artist || "");
+
   const isSold = art.status === "sold" || art.status === "private";
 
   // Reusable Breadcrumbs
@@ -146,6 +178,29 @@ export default async function ArtworkPage({
       <span className="text-gray-500">/</span>
       <span className="text-soft-black border-b border-black/20 pb-0.5">Current Work</span>
     </nav>
+  );
+
+  // Reusable Gallery Hub (Legacy/Advisory Links)
+  const GalleryHub = ({ className, isSidebar = false }: { className?: string, isSidebar?: boolean }) => (
+    <div className={`${isSidebar ? "pt-8" : "pt-12"} border-t border-black/5 w-full ${className}`}>
+      <h3 className={`font-sans text-[11px] tracking-[0.2em] uppercase text-gray-800 ${isSidebar ? "mb-4" : "mb-8"} text-center md:text-left`}>From The Gallery</h3>
+      <div className={`grid ${isSidebar ? "gap-4" : "gap-6"} ${isSidebar ? "grid-cols-1" : "grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4"}`}>
+        <Link href="/legacy" className={`group ${isSidebar ? "p-5" : "p-8"} bg-white border border-black/5 hover:border-black/20 transition-all flex flex-col justify-between ${isSidebar ? "min-h-[130px]" : "min-h-[160px]"}`}>
+          <div>
+            <h4 className={`font-serif ${isSidebar ? "text-lg" : "text-xl"} italic text-soft-black mb-1 group-hover:text-soft-black/70 transition-colors`}>Our 20-Year Legacy</h4>
+            <p className={`font-sans ${isSidebar ? "text-[9px]" : "text-[10px]"} tracking-wider text-gray-800 uppercase`}>Discover the roots of Shakya excellence.</p>
+          </div>
+          <span className={`text-[9px] tracking-[0.2em] uppercase text-gray-400 group-hover:text-soft-black ${isSidebar ? "mt-2" : "mt-4"} inline-block`}>Learn More →</span>
+        </Link>
+        <Link href="/guide/buying-art" className={`group ${isSidebar ? "p-5" : "p-8"} bg-white border border-black/5 hover:border-black/20 transition-all flex flex-col justify-between ${isSidebar ? "min-h-[130px]" : "min-h-[160px]"}`}>
+          <div>
+            <h4 className={`font-serif ${isSidebar ? "text-lg" : "text-xl"} italic text-soft-black mb-1 group-hover:text-soft-black/70 transition-colors`}>Art Advisory</h4>
+            <p className={`font-sans ${isSidebar ? "text-[9px]" : "text-[10px]"} tracking-wider text-gray-800 uppercase`}>Expert guidance for first-time collectors.</p>
+          </div>
+          <span className={`text-[9px] tracking-[0.2em] uppercase text-gray-400 group-hover:text-soft-black ${isSidebar ? "mt-2" : "mt-4"} inline-block`}>Collector's Guide →</span>
+        </Link>
+      </div>
+    </div>
   );
 
   // Extract plain text for JSON-LD description
@@ -303,6 +358,9 @@ export default async function ArtworkPage({
                     </div>
                   </div>
                 </div>
+
+                {/* DESKTOP HUB (Shows in right column on LG+) */}
+                <GalleryHub className="hidden lg:block border-none pt-8" isSidebar />
               </div>
 
             </div>
@@ -313,26 +371,14 @@ export default async function ArtworkPage({
             <ArtworkTabs description={art.description} provenance={art.provenance} />
           </div>
 
+          {/* SIMILAR ARTWORKS */}
+          <div className="lg:col-span-2">
+            <RelatedArtworks artworks={relatedArtworks} />
+          </div>
+
           {/* BLOCK 4: FROM THE GALLERY (Mob: 4, Desk: Spans Bottom) */}
-          <div className="lg:col-span-2 pt-20 border-t border-black/5 mt-12 w-full">
-            <h3 className="font-sans text-[11px] tracking-[0.2em] uppercase text-gray-800 mb-8 text-center md:text-left">From The Gallery</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <Link href="/legacy" className="group p-8 bg-white border border-black/5 hover:border-black/20 transition-all flex flex-col justify-between min-h-[160px]">
-                <div>
-                  <h4 className="font-serif text-xl italic text-soft-black mb-2 group-hover:text-soft-black/70 transition-colors">Our 20-Year Legacy</h4>
-                  <p className="font-sans text-[10px] tracking-wider text-gray-800 uppercase">Discover the roots of Shakya excellence.</p>
-                </div>
-                <span className="text-[10px] tracking-[0.2em] uppercase text-gray-400 group-hover:text-soft-black mt-4 inline-block">Learn More →</span>
-              </Link>
-              <Link href="/guide/buying-art" className="group p-8 bg-white border border-black/5 hover:border-black/20 transition-all flex flex-col justify-between min-h-[160px]">
-                <div>
-                  <h4 className="font-serif text-xl italic text-soft-black mb-2 group-hover:text-soft-black/70 transition-colors">Art Advisory</h4>
-                  <p className="font-sans text-[10px] tracking-wider text-gray-800 uppercase">Expert guidance for first-time collectors.</p>
-                </div>
-                <span className="text-[10px] tracking-[0.2em] uppercase text-gray-400 group-hover:text-soft-black mt-4 inline-block">Collector's Guide →</span>
-              </Link>
-              {/* Additional Hub links could go here if we expand */}
-            </div>
+          <div className="lg:hidden lg:col-span-2 mt-12 w-full">
+            <GalleryHub />
           </div>
 
         </div>
