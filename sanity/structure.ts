@@ -40,6 +40,16 @@ export const structure: StructureResolver = (S) =>
 
       S.divider(),
 
+      // --- COLLECTORS ---
+      S.documentTypeListItem('subscriber').title('Collectors'),
+
+      S.divider(),
+
+      // --- ORDERS ---
+      S.documentTypeListItem('order').title('Orders'),
+
+      S.divider(),
+
       // --- SETTINGS & META ---
       S.listItem()
         .title('Configuration')
