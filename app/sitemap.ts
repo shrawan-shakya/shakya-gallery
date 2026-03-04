@@ -11,8 +11,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         { url: "/collection", priority: 0.9, changeFrequency: "weekly" as const },
         { url: "/journal", priority: 0.8, changeFrequency: "weekly" as const },
         { url: "/guide/buying-art", priority: 0.8, changeFrequency: "monthly" as const },
+        { url: "/shipping", priority: 0.7, changeFrequency: "monthly" as const },
         { url: "/legacy", priority: 0.7, changeFrequency: "yearly" as const },
         { url: "/contact", priority: 0.6, changeFrequency: "yearly" as const },
+        { url: "/privacy-policy", priority: 0.5, changeFrequency: "yearly" as const },
+        { url: "/terms", priority: 0.5, changeFrequency: "yearly" as const },
     ].map((route) => ({
         url: `${baseUrl}${route.url}`,
         lastModified: new Date(),
@@ -43,7 +46,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }));
 
     const categoryRoutes = data.categories.map((cat: any) => ({
-        url: `${baseUrl}/collection/${cat.slug}`,
+        url: `${baseUrl}/category/${cat.slug}`,
         lastModified: new Date(cat._updatedAt || new Date()),
         changeFrequency: "weekly" as const,
         priority: 0.8,
