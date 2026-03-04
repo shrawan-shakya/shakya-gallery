@@ -16,20 +16,12 @@ export function Footer() {
     setStatus("submitting");
 
     // 1. Send to Web3Forms
-    const response = await fetch("https://api.web3forms.com/submit", {
+    const response = await fetch("/api/newsletter", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/json",
       },
-      body: JSON.stringify({
-        access_key: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY, // <--- Use Env Variable
-        subject: "New Newsletter Subscriber",
-        from_name: "Shakya Gallery Footer",
-        email: email, // The user's email
-        message: "Please add this user to the Collector's Circle mailing list.",
-        botcheck: (e.target as any).botcheck.checked ? "true" : "" // Honeypot logic
-      }),
+      body: JSON.stringify({ email }),
     });
 
     const result = await response.json();
@@ -38,8 +30,8 @@ export function Footer() {
       setStatus("success");
       setEmail("");
     } else {
-      setStatus("idle"); // If it fails, let them try again
-      alert("Something went wrong. Please try again.");
+      setStatus("idle");
+      alert(result.message || "Something went wrong. Please try again.");
     }
   };
 
