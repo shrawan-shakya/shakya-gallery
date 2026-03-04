@@ -1,8 +1,10 @@
 import { sanityFetch } from "@/sanity/lib/live";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { GalleryGridClient } from "@/components/sections/GalleryGridClient";
-import { SectionErrorBoundary } from "@/components/ui/SectionErrorBoundary";
+import { CollectionClient } from "@/components/sections/CollectionClient";
+import { Suspense } from "react";
+import { getFilteredArtworks } from "@/lib/artworks";
+import { LoadingGrid } from "@/components/ui/LoadingGrid";
 
 export const dynamicParams = true;
 export const revalidate = 0;
@@ -16,47 +18,36 @@ export async function generateStaticParams() {
     }));
 }
 
-// FETCH CATEGORY AND ITS ARTWORKS
-async function getCategoryData(slug: string) {
-    const query = `
-    *[_type == "category" && slug.current == $slug][0] {
-      title,
-      description,
-      "artworks": *[_type == "artwork" && references(^._id)] | order(_updatedAt desc) {
-        _id,
-        title,
-        "slug": slug.current,
-        dimensions,
-        year,
-        artist,
-        material,
-        status,
-        price,
-        showPrice,
-        startingPrice,
-        "slug": slug.current,
-        "imageUrl": mainImage.asset->url,
-        "aspectRatio": mainImage.asset->metadata.dimensions.aspectRatio
-      }
-    }
-  `;
+// FETCH CATEGORY INFO
+async function getCategory(slug: string) {
+    const query = `*[_type == "category" && slug.current == $slug][0] { 
+      title, 
+      description
+    }`;
     const { data } = await sanityFetch({ query, params: { slug } });
+    return data;
+}
+
+// FETCH ALL CATEGORIES FOR SIDEBAR
+async function getAllCategories() {
+    const query = `*[_type == "category"] { title, type }`;
+    const { data } = await sanityFetch({ query });
     return data;
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
-    const data = await getCategoryData(slug);
+    const category = await getCategory(slug);
 
-    if (!data) {
+    if (!category) {
         return {
             title: "Category Not Found | SHAKYA Gallery",
         };
     }
 
     return {
-        title: `${data.title} Artworks | SHAKYA Gallery`,
-        description: data.description || `Browse our collection of original ${data.title} artworks. Authentic Nepali art for sale at SHAKYA Gallery.`,
+        title: `${category.title} Artworks | SHAKYA Gallery`,
+        description: category.description || `Browse our collection of original ${category.title} artworks. Authentic Nepali art for sale at SHAKYA Gallery.`,
         alternates: {
             canonical: `/category/${slug}`,
         },
@@ -69,12 +60,16 @@ export default async function CategoryPage({
     params: Promise<{ slug: string }>
 }) {
     const { slug } = await params;
-    const data = await getCategoryData(slug);
+    const category = await getCategory(slug);
 
-    if (!data) return notFound();
+    if (!category) return notFound();
+
+    // Fetch all artworks and categories for the CollectionClient (Filters Logic)
+    const artworks = await getFilteredArtworks({});
+    const allCategories = await getAllCategories();
 
     return (
-        <div className="bg-bone min-h-screen pt-32 lg:pt-40">
+        <div className="bg-bone min-h-screen pt-32 lg:pt-40 pb-20 px-6 md:px-12">
 
             {/* HEADER SECTION */}
             <div className="max-w-4xl mx-auto text-center flex flex-col items-center mb-16 md:mb-24 px-6 animate-in fade-in duration-1000">
@@ -83,23 +78,27 @@ export default async function CategoryPage({
                     <span className="text-gray-500">/</span>
                     <Link href="/collection" className="hover:text-soft-black transition-colors">Collection</Link>
                     <span className="text-gray-500">/</span>
-                    <span className="text-soft-black border-b border-black/20 pb-0.5">{data.title}</span>
+                    <span className="text-soft-black border-b border-black/20 pb-0.5">{category.title}</span>
                 </nav>
 
                 <h1 className="font-serif text-4xl md:text-6xl tracking-[0.1em] text-soft-black leading-tight mb-8 uppercase">
-                    {data.title}
+                    {category.title}
                 </h1>
                 <div className="max-w-2xl">
                     <p className="font-serif text-lg md:text-xl italic text-soft-black/80 leading-relaxed">
-                        {data.description || `"A curated selection of ${data.title} from our gallery."`}
+                        {category.description || `"A curated selection of ${category.title} from our gallery."`}
                     </p>
                 </div>
             </div>
 
-            {/* GRID SECTION */}
-            <SectionErrorBoundary sectionName="Category Grid">
-                <GalleryGridClient artworks={data.artworks || []} />
-            </SectionErrorBoundary>
+            {/* COLLECTION/FILTER SECTION */}
+            <Suspense fallback={<LoadingGrid />}>
+                <CollectionClient
+                    artworks={artworks}
+                    allCategories={allCategories}
+                    initialCategory={category.title}
+                />
+            </Suspense>
 
         </div>
     );
