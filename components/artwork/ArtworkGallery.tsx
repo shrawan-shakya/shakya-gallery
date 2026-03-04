@@ -7,6 +7,7 @@ import { MuseumFrame } from "@/components/ui/MuseumFrame";
 import { ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { MediaLightbox } from "@/components/ui/MediaLightbox";
+import { ImageHoverZoom } from "@/components/ui/ImageHoverZoom";
 
 interface ImageType {
     url: string;
@@ -78,8 +79,8 @@ export function ArtworkGallery({ mainImage, relatedImages, title, orientation }:
                         )}
                         onClick={() => setIsLightboxOpen(true)}
                     >
-                        {/* Zoom Indicator (Desktop) */}
-                        <div className="absolute top-4 right-4 z-20 opacity-0 group-hover/image:opacity-100 transition-opacity duration-300 pointer-events-none">
+                        {/* Zoom Indicator (Desktop) - Hide when zoomed for luxury feel */}
+                        <div className="absolute top-4 right-4 z-20 opacity-0 group-hover/image:opacity-100 group-hover/image:hidden lg:group-hover/image:flex transition-opacity duration-300 pointer-events-none">
                             <div className="bg-white/90 backdrop-blur-md p-2 rounded-full shadow-lg border border-black/5 text-soft-black">
                                 <ZoomIn size={18} strokeWidth={1.5} />
                             </div>
@@ -104,11 +105,10 @@ export function ArtworkGallery({ mainImage, relatedImages, title, orientation }:
                                         transition={{ duration: 0.5 }}
                                         className="absolute inset-0 w-full h-full"
                                     >
-                                        <Image
+                                        <ImageHoverZoom
                                             src={currentImage.url}
                                             alt={getDescriptiveAlt(title, 0)}
-                                            fill
-                                            className="object-cover"
+                                            aspectRatio={currentImage.aspectRatio}
                                             priority
                                             sizes="(max-width: 1024px) 100vw, 50vw"
                                         />
@@ -134,13 +134,13 @@ export function ArtworkGallery({ mainImage, relatedImages, title, orientation }:
                                         transition={{ duration: 0.5 }}
                                         className="absolute inset-0 w-full h-full"
                                     >
-                                        <Image
+                                        <ImageHoverZoom
                                             src={currentImage.url}
                                             alt={getDescriptiveAlt(title, currentIndex)}
-                                            fill
-                                            className="object-contain"
+                                            aspectRatio={currentImage.aspectRatio}
                                             priority
                                             sizes="(max-width: 1024px) 100vw, 50vw"
+                                            imageClassName="object-contain"
                                         />
                                     </motion.div>
                                 </AnimatePresence>

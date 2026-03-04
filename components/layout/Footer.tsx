@@ -236,6 +236,8 @@ export function Footer() {
             <Link href="/privacy-policy" className="font-sans text-[10px] tracking-widest text-gray-500 hover:text-white transition-colors uppercase">Privacy</Link>
             <span className="text-white/20 text-[10px]">•</span>
             <Link href="/terms" className="font-sans text-[10px] tracking-widest text-gray-500 hover:text-white transition-colors uppercase">Terms</Link>
+            <span className="text-white/20 text-[10px]">•</span>
+            <Link href="/refund-policy" className="font-sans text-[10px] tracking-widest text-gray-500 hover:text-white transition-colors uppercase">Refunds</Link>
           </div>
         </div>
 
