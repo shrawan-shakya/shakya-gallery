@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -537,8 +537,8 @@ export function CollectionClient({
         {/* MAIN CONTENT AREA */}
         <div className="flex-1">
 
-          {/* VIEW CONTROLS - Hidden on mobile, visible on desktop */}
-          <div className="hidden lg:flex justify-end mb-8 items-center gap-4">
+          {/* VIEW CONTROLS - Static Glass Pill */}
+          <div className="hidden lg:flex justify-end mb-8 items-center gap-4 bg-bone/40 underline-offset-4 backdrop-blur-md border border-black/[0.03] px-6 py-3 rounded-full transition-all duration-500">
             <div className="flex items-center gap-2 lg:gap-4 lg:border-r lg:border-black/10 lg:pr-6 lg:mr-2">
               <button
                 onClick={() => setShowMat(true)}
@@ -550,7 +550,7 @@ export function CollectionClient({
               >
                 <FrameIcon />
                 <span className="hidden sm:block font-sans text-[11px] tracking-widest uppercase whitespace-nowrap">View with Frame</span>
-                {showMat && <motion.div layoutId="collection-active-mat" className="absolute bottom-0 left-0 right-0 h-[2px] bg-soft-black" />}
+                {showMat && <motion.div layoutId="collection-active-mat" className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-soft-black" />}
               </button>
               <button
                 onClick={() => setShowMat(false)}
@@ -562,7 +562,7 @@ export function CollectionClient({
               >
                 <CanvasIcon />
                 <span className="hidden sm:block font-sans text-[11px] tracking-widest uppercase whitespace-nowrap">Canvas Only</span>
-                {!showMat && <motion.div layoutId="collection-active-mat" className="absolute bottom-0 left-0 right-0 h-[2px] bg-soft-black" />}
+                {!showMat && <motion.div layoutId="collection-active-mat" className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-soft-black" />}
               </button>
             </div>
 

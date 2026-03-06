@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
@@ -49,12 +49,37 @@ const CanvasIcon = ({ className }: { className?: string }) => (
 export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
   const [layout, setLayout] = useState<"grid" | "single">("single");
   const [showMat, setShowMat] = useState(true);
+  const [isStuck, setIsStuck] = useState(false);
+  const sentinelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const sentinel = sentinelRef.current;
+    if (!sentinel) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // If the sentinel is NOT intersecting, it means the sticky element has reached the top
+        setIsStuck(!entry.isIntersecting);
+      },
+      { threshold: [1], rootMargin: "-1px 0px 0px 0px" }
+    );
+
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <>
+      {/* SENTINEL FOR STICKY DETECTION */}
+      <div ref={sentinelRef} className="h-0 w-full" />
       {/* ... toggle bar - Hidden on mobile, visible on desktop ... */}
-      <div className="sticky top-0 z-40 w-full bg-bone/95 backdrop-blur-sm border-b border-[#1A1A1A]/5 transition-all duration-300 mb-12 hidden md:block">
-        <div className="flex justify-between max-w-[1800px] mx-auto px-8 py-4">
+      <div className={cn(
+        "sticky top-0 z-40 w-full transition-all duration-500 mb-12 hidden md:block",
+        isStuck
+          ? "bg-bone/40 backdrop-blur-md border-b border-black/[0.03] py-3"
+          : "bg-transparent border-b border-transparent py-4"
+      )}>
+        <div className="flex justify-between max-w-[1800px] mx-auto px-8">
 
           <div className="flex gap-4 md:gap-8">
             <button
