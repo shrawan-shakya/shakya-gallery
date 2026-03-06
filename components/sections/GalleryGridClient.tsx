@@ -151,25 +151,19 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                             : `min(1000px, 100%, calc(85vh * ${Math.max(art.aspectRatio || 1, 0.4)}))`
                         }}
                       >
-                        <MuseumFrame aspectRatio={art.aspectRatio} hasMat={showMat} className="w-full h-auto mx-auto">
-                          {art.imageUrl && (
-                            <div className="absolute inset-0 w-full h-full">
-                              <Image
-                                src={art.imageUrl}
-                                alt={`Buy ${art.title} - Original Nepali fine art at Shakya Gallery`}
-                                fill
-                                priority={index < 4}
-                                sizes="(max-width: 768px) 100vw, 50vw"
-                                className={`object-cover transition-all duration-700 ease-out scale-100 group-hover/image:scale-105
-                              ${(art.status === "sold" || art.status === "private")
-                                    ? "grayscale-[0.2] group-hover/image:grayscale group-hover/image:opacity-40"
-                                    : "grayscale-[0.2] group-hover/image:grayscale-0"
-                                  }
-                            `}
-                              />
-                            </div>
+                        <SanityImage
+                          src={art.imageUrl}
+                          alt={`Buy ${art.title} - Original Nepali fine art at Shakya Gallery`}
+                          lqip={art.lqip}
+                          aspectRatio={art.aspectRatio}
+                          hasMat={showMat}
+                          priority={index < 4}
+                          imageClassName={cn(
+                            (art.status === "sold" || art.status === "private")
+                              ? "grayscale-[0.2] group-hover/image:grayscale group-hover/image:opacity-40"
+                              : "grayscale-[0.2] group-hover/image:grayscale-0"
                           )}
-                        </MuseumFrame>
+                        />
                         {/* STATUS BADGES */}
                         <div className="absolute inset-x-0 bottom-0 pointer-events-none p-4 md:p-6 bg-gradient-to-t from-black/40 via-black/10 to-transparent md:bg-none">
                           {art.status === "sold" && (

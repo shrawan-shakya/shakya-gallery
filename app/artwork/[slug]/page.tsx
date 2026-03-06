@@ -17,7 +17,7 @@ export const revalidate = 0;
 
 const components = {
   block: {
-    h1: ({ children }: any) => <h1 className="font-serif text-3xl md:text-4xl text-soft-black mb-4">{children}</h1>,
+    h1: ({ children }: any) => <h2 className="font-serif text-3xl md:text-4xl text-soft-black mb-4">{children}</h2>,
     h2: ({ children }: any) => <h2 className="font-serif text-2xl md:text-3xl text-soft-black mb-3">{children}</h2>,
     h3: ({ children }: any) => <h3 className="font-serif text-xl md:text-2xl text-soft-black mb-2 italic">{children}</h3>,
     normal: ({ children }: any) => <p className="font-sans font-light text-sm leading-[2.2] tracking-wide text-gray-600 text-justify mb-6">{children}</p>,
