@@ -16,8 +16,8 @@ async function getArticles() {
       "slug": slug.current,
       publishedAt,
       excerpt,
-      category,
-      "imageUrl": mainImage.asset->url
+      "imageUrl": mainImage.asset->url,
+      "lqip": mainImage.asset->metadata.lqip
     }
   `;
     const { data } = await sanityFetch({ query });
@@ -40,6 +40,8 @@ const ArticleCard = ({ article, index }: { article: any; index: number }) => {
                             alt={article.title}
                             fill
                             className="object-cover transition-transform duration-700 group-hover:scale-105"
+                            placeholder={article.lqip ? "blur" : "empty"}
+                            blurDataURL={article.lqip}
                         />
                     ) : (
                         <div className="absolute inset-0 flex items-center justify-center bg-gray-200 text-gray-400 font-sans tracking-widest uppercase text-xs">
@@ -127,6 +129,8 @@ export default async function JournalPage() {
                                     fill
                                     className="object-cover transition-transform duration-1000 group-hover:scale-105"
                                     priority
+                                    placeholder={featured.lqip ? "blur" : "empty"}
+                                    blurDataURL={featured.lqip}
                                 />
                             ) : (
                                 <div className="w-full h-full bg-gray-200" />

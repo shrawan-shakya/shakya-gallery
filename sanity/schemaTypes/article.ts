@@ -63,6 +63,30 @@ export default defineType({
                         { title: 'H3', value: 'h3' },
                         { title: 'Quote', value: 'blockquote' },
                     ],
+                    marks: {
+                        decorators: [
+                            { title: 'Strong', value: 'strong' },
+                            { title: 'Emphasis', value: 'em' },
+                            { title: 'Underline', value: 'underline' },
+                        ],
+                        annotations: [
+                            {
+                                name: 'link',
+                                type: 'object',
+                                title: 'URL',
+                                fields: [
+                                    {
+                                        title: 'URL',
+                                        name: 'href',
+                                        type: 'url',
+                                        validation: (Rule) => Rule.uri({
+                                            scheme: ['http', 'https', 'mailto', 'tel']
+                                        })
+                                    }
+                                ]
+                            }
+                        ]
+                    }
                 },
                 { type: 'image' }
             ],

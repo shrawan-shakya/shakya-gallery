@@ -14,8 +14,22 @@ async function getArticle(slug: string) {
       publishedAt,
       excerpt,
       category,
-      body,
-      mainImage
+      body[]{
+        ...,
+        _type == "image" => {
+          ...,
+          asset->{
+            _id,
+            url,
+            metadata {
+              lqip,
+              dimensions
+            }
+          }
+        }
+      },
+      mainImage,
+      "lqip": mainImage.asset->metadata.lqip
     }
   `;
     const { data } = await sanityFetch({ query, params: { slug } });
@@ -82,6 +96,8 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                             fill
                             className="object-cover"
                             priority
+                            placeholder={article.lqip ? "blur" : "empty"}
+                            blurDataURL={article.lqip}
                         />
                     </div>
                 </div>

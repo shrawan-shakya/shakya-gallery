@@ -6,14 +6,20 @@ import Link from 'next/link';
 const components: PortableTextComponents = {
     types: {
         image: ({ value }: any) => {
+            const hasAsset = value?.asset?._ref || value?.asset?._id || value?.asset?.url;
+            const lqip = value?.asset?.metadata?.lqip;
+            const src = value?.asset?.url || (hasAsset ? urlForImage(value).url() : "");
+
             return (
                 <div className="relative w-full aspect-[16/9] my-8 rounded-sm overflow-hidden bg-gray-100">
-                    {value?.asset?._ref && (
+                    {hasAsset && (
                         <Image
-                            src={urlForImage(value).url()}
+                            src={src}
                             alt={value.alt || 'Article Image'}
                             fill
                             className="object-cover"
+                            placeholder={lqip ? "blur" : "empty"}
+                            blurDataURL={lqip}
                         />
                     )}
                 </div>
