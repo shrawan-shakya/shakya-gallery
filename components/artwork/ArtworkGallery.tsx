@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { MuseumFrame } from "@/components/ui/MuseumFrame";
-import { ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { MediaLightbox } from "@/components/ui/MediaLightbox";
 import { ImageHoverZoom } from "@/components/ui/ImageHoverZoom";
@@ -79,12 +79,7 @@ export function ArtworkGallery({ mainImage, relatedImages, title, orientation }:
                         )}
                         onClick={() => setIsLightboxOpen(true)}
                     >
-                        {/* Zoom Indicator (Desktop) - Hide when zoomed for luxury feel */}
-                        <div className="absolute top-4 right-4 z-20 opacity-0 group-hover/image:opacity-100 group-hover/image:hidden lg:group-hover/image:flex transition-opacity duration-300 pointer-events-none">
-                            <div className="bg-white/90 backdrop-blur-md p-2 rounded-full shadow-lg border border-black/5 text-soft-black">
-                                <ZoomIn size={18} strokeWidth={1.5} />
-                            </div>
-                        </div>
+                        {/* Zoom indicator removed for a cleaner minimal look, relying on cursor-zoom-in */}
 
                         {currentIndex === 0 ? (
                             <MuseumFrame

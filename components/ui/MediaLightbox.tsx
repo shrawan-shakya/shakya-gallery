@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { X, ChevronLeft, ChevronRight, ZoomIn, ZoomOut } from "lucide-react";
+import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { LUXURY_EASE } from "@/lib/motion-variants";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
@@ -97,32 +97,17 @@ export function MediaLightbox({
                                         </span>
                                     </div>
 
-                                    <div className="flex items-center gap-6">
+                                    <div className="flex items-center gap-6 z-[250]">
                                         <span className="hidden md:block font-sans text-[11px] tracking-widest text-white/40 uppercase">
                                             {currentIndex + 1} / {images.length}
                                         </span>
-                                        <div className="hidden md:flex gap-2">
-                                            <button
-                                                onClick={() => zoomOut()}
-                                                className="text-white/60 hover:text-white transition-colors p-2"
-                                                aria-label="Zoom Out"
-                                            >
-                                                <ZoomOut size={20} strokeWidth={1.5} />
-                                            </button>
-                                            <button
-                                                onClick={() => zoomIn()}
-                                                className="text-white/60 hover:text-white transition-colors p-2"
-                                                aria-label="Zoom In"
-                                            >
-                                                <ZoomIn size={20} strokeWidth={1.5} />
-                                            </button>
-                                        </div>
+                                        {/* Zoom buttons removed for a more minimal layout */}
                                         <button
                                             onClick={onClose}
                                             className="text-white/60 hover:text-white transition-colors p-2"
                                             aria-label="Close Lightbox"
                                         >
-                                            <X size={24} strokeWidth={1.5} />
+                                            <X size={24} strokeWidth={1} />
                                         </button>
                                     </div>
                                 </div>

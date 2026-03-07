@@ -42,12 +42,18 @@ const components: PortableTextComponents = {
     },
     marks: {
         link: ({ children, value }: any) => {
-            const rel = !value.href.startsWith('/') ? 'noopener noreferrer' : undefined;
-            const target = !value.href.startsWith('/') ? '_blank' : undefined;
+            const href = value?.href;
 
-            if (value.href.startsWith('/')) {
+            if (!href) {
+                return <span className="underline decoration-black/20">{children}</span>;
+            }
+
+            const rel = !href.startsWith('/') ? 'noopener noreferrer' : undefined;
+            const target = !href.startsWith('/') ? '_blank' : undefined;
+
+            if (href.startsWith('/')) {
                 return (
-                    <Link href={value.href} className="text-soft-black underline decoration-black/20 hover:decoration-black transition-all">
+                    <Link href={href} className="text-soft-black underline decoration-black/20 hover:decoration-black transition-all">
                         {children}
                     </Link>
                 );
@@ -55,7 +61,7 @@ const components: PortableTextComponents = {
 
             return (
                 <a
-                    href={value.href}
+                    href={href}
                     rel={rel}
                     target={target}
                     className="text-soft-black underline decoration-black/20 hover:decoration-black transition-all"
