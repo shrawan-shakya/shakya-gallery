@@ -36,7 +36,7 @@ export function FeaturedCollection({ artworks, heading }: FeaturedCollectionProp
             >
                 {featured.map((art) => (
                     <motion.div key={art._id} variants={staggerItem}>
-                        <Link href={`/artwork/${art.slug}`} className="group block">
+                        <Link href={`/artwork/${art.slug}`} target="_blank" rel="noopener noreferrer" className="group block">
                             <div className="relative mb-4">
                                 <SanityImage
                                     src={art.imageUrl}

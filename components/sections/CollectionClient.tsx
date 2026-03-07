@@ -396,7 +396,7 @@ export function CollectionClient({
           layout
           style={{ willChange: "transform, opacity" }}
         >
-          <Link href={`/artwork/${art.slug}`} className="block cursor-pointer group/card">
+          <Link href={`/artwork/${art.slug}`} target="_blank" rel="noopener noreferrer" className="block cursor-pointer group/card">
             <div className="relative group/image">
               <SanityImage
                 src={art.imageUrl}

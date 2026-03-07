@@ -138,6 +138,8 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                                         >
                                             <Link
                                                 href={`/artwork/${art.slug}`}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
                                                 onClick={onClose}
                                                 className="group flex gap-4 items-start"
                                             >

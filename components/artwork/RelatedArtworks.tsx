@@ -33,7 +33,7 @@ export function RelatedArtworks({ artworks }: RelatedArtworksProps) {
                 >
                     {artworks.map((art) => (
                         <motion.div key={art._id} variants={staggerItem}>
-                            <Link href={`/artwork/${art.slug}`} className="group block h-full">
+                            <Link href={`/artwork/${art.slug}`} target="_blank" rel="noopener noreferrer" className="group block h-full">
                                 <div className="relative mb-8">
                                     <SanityImage
                                         src={art.imageUrl}
