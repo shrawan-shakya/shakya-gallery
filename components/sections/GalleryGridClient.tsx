@@ -244,7 +244,7 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                           price={art.price}
                           showPrice={art.showPrice}
                           startingPrice={art.startingPrice}
-                          showButton={true}
+                          showButton={false}
                           className=""
                         />
                       </div>
@@ -357,7 +357,7 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                                   price={art.price}
                                   showPrice={art.showPrice}
                                   startingPrice={art.startingPrice}
-                                  showButton={true}
+                                  showButton={false}
                                   className=""
                                 />
                               </div>
