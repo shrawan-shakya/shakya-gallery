@@ -252,7 +252,7 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                           showPrice={art.showPrice}
                           startingPrice={art.startingPrice}
                           showButton={false}
-                          className=""
+                          className={art.aspectRatio > 1.1 ? "md:w-[60%]" : ""}
                         />
                       </div>
                     </div>
@@ -372,7 +372,7 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                                   showPrice={art.showPrice}
                                   startingPrice={art.startingPrice}
                                   showButton={false}
-                                  className=""
+                                  className={art.aspectRatio > 1.1 ? "md:w-[60%]" : ""}
                                 />
                               </div>
                             </div>
