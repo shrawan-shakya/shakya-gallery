@@ -166,7 +166,7 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                   className="w-full relative z-10"
                   style={{ willChange: "transform, opacity" }}
                 >
-                  <Link href={`/artwork/${art.slug}`} className="block cursor-pointer no-underline group/card">
+                  <Link href={`/artwork/${art.slug}`} target="_blank" rel="noopener noreferrer" className="block cursor-pointer no-underline group/card">
                     <div className="w-full mx-auto flex flex-col items-center">
                       <div
                         className="w-full relative group/image"
@@ -279,7 +279,7 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                           className="w-full relative z-10"
                           style={{ willChange: "transform, opacity" }}
                         >
-                          <Link href={`/artwork/${art.slug}`} className="block cursor-pointer no-underline group/card">
+                          <Link href={`/artwork/${art.slug}`} target="_blank" rel="noopener noreferrer" className="block cursor-pointer no-underline group/card">
                             <div className="w-full mx-auto">
                               <div
                                 className="w-full relative group/image mx-auto"
