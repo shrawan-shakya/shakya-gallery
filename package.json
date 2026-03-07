@@ -26,6 +26,7 @@
     "next-sanity": "^11.6.12",
     "react": "^18",
     "react-dom": "^18",
+    "react-zoom-pan-pinch": "^3.7.0",
     "resend": "^6.9.2",
     "sanity": "^4.22.0",
     "sanity-plugin-media": "^4.1.1",
