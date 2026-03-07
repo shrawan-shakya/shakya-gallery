@@ -234,7 +234,14 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                           )}
                         </div>
                       </div>
-                      <div className="w-full md:max-w-[75%] mx-auto relative z-0 mt-6 md:mt-8 flex flex-col items-center text-center">
+                      <div
+                        className="w-full mx-auto relative z-0 mt-6 md:mt-8 flex flex-col items-center text-center"
+                        style={{
+                          maxWidth: art.aspectRatio > 1.1
+                            ? `min(1200px, 100%, calc(70vh * ${art.aspectRatio}))`
+                            : `min(1000px, 100%, calc(85vh * ${Math.max(art.aspectRatio || 1, 0.4)}))`
+                        }}
+                      >
                         <MuseumPlaque
                           title={art.title}
                           artist={art.artist}
@@ -347,7 +354,14 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                                   )}
                                 </div>
                               </div>
-                              <div className="w-full relative z-0 mt-6 md:mt-8 flex flex-col items-center text-center">
+                              <div
+                                className="w-full relative mx-auto z-0 mt-6 md:mt-8 flex flex-col items-center text-center"
+                                style={{
+                                  maxWidth: art.aspectRatio > 1.1
+                                    ? `min(1200px, 100%, calc(70vh * ${art.aspectRatio}))`
+                                    : `min(1000px, 100%, calc(85vh * ${Math.max(art.aspectRatio || 1, 0.4)}))`
+                                }}
+                              >
                                 <MuseumPlaque
                                   title={art.title}
                                   artist={art.artist}
