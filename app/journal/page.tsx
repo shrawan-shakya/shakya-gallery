@@ -1,4 +1,4 @@
-import { client } from "@/sanity/lib/client";
+import { sanityFetch } from "@/sanity/lib/live";
 import Link from "next/link";
 import Image from "next/image";
 import { Metadata } from "next";
@@ -20,7 +20,8 @@ async function getArticles() {
       "imageUrl": mainImage.asset->url
     }
   `;
-    return await client.fetch(query);
+    const { data } = await sanityFetch({ query });
+    return data;
 }
 
 // 2. Helper Components

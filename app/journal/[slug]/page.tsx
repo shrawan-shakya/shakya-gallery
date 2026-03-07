@@ -1,4 +1,4 @@
-import { client } from "@/sanity/lib/client";
+import { sanityFetch } from "@/sanity/lib/live";
 import { urlForImage } from "@/sanity/lib/image";
 import { ContentBody } from "@/components/ui/ContentBody";
 import Image from "next/image";
@@ -18,7 +18,8 @@ async function getArticle(slug: string) {
       mainImage
     }
   `;
-    return await client.fetch(query, { slug });
+    const { data } = await sanityFetch({ query, params: { slug } });
+    return data;
 }
 
 // 2. Metadata
