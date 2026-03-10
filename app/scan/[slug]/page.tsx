@@ -28,7 +28,7 @@ export default async function ScanPage({ params }: { params: Promise<{ slug: str
     if (!art) return notFound();
 
     return (
-        <div className="min-h-screen bg-bone flex flex-col items-center justify-center p-6 lg:p-12 relative overflow-hidden">
+        <div className="min-h-screen bg-bone flex flex-col items-center pt-28 pb-12 px-6 lg:p-12 lg:justify-center relative overflow-hidden">
             {/* Background Blur */}
             {art.mainImage?.url && (
                 <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">

@@ -6,13 +6,15 @@ export async function POST(req: Request) {
         const body = await req.json();
         const { name, email, scannedArtworkId, scanLocation, actionTaken } = body;
 
-        if (!name || !scannedArtworkId || !actionTaken) {
+        if (!scannedArtworkId || !actionTaken) {
             return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
         }
 
+        const leadName = name?.trim() ? name : "Anonymous Scan";
+
         const newLead = await backendClient.create({
             _type: "lead",
-            name,
+            name: leadName,
             email: email || undefined,
             hotelLocation: scanLocation || undefined,
             scannedArtwork: {
