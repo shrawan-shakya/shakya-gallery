@@ -169,9 +169,8 @@ export default async function ArtworkPage({
 
   const isSold = art.status === "sold" || art.status === "private";
 
-  // Reusable Breadcrumbs
   const Breadcrumbs = ({ className }: { className?: string }) => (
-    <nav className={`flex flex-wrap items-baseline gap-3 font-sans text-[11px] tracking-[0.2em] uppercase text-gray-800 ${className}`}>
+    <nav className={`flex flex-wrap items-baseline gap-3 font-sans text-[10px] tracking-[0.2em] uppercase text-gray-800 ${className}`}>
       <Link href="/" className="hover:text-soft-black transition-colors">Home</Link>
       <span className="text-gray-500">/</span>
       <Link href="/collection" className="hover:text-soft-black transition-colors">Collection</Link>
@@ -241,18 +240,17 @@ export default async function ArtworkPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <div className="min-h-screen bg-bone pt-16 lg:pt-16 pb-40 overflow-x-hidden">
+      <div className="min-h-screen bg-bone pt-20 lg:pt-24 pb-40 overflow-x-hidden">
 
-
-        {/* MOBILE BREADCRUMBS */}
-        <div className="max-w-[1400px] mx-auto px-6 lg:hidden mb-6">
+        {/* FULL WIDTH BREADCRUMBS */}
+        <div className="max-w-[1400px] mx-auto px-6 md:px-12 mb-6 border-b border-black/[0.04] pb-4">
           <Breadcrumbs />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 px-6 md:px-12 max-w-[1400px] mx-auto items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-20 px-6 md:px-12 max-w-[1400px] mx-auto items-start">
 
           {/* BLOCK 1: GALLERY (Mob: 1, Desk: Col 1) */}
-          <div className="lg:col-start-1 lg:row-start-1 lg:pt-12">
+          <div className="lg:col-start-1 lg:row-start-1 lg:pt-2">
             <ArtworkGallery
               mainImage={art.mainImage}
               relatedImages={art.relatedImages}
@@ -266,7 +264,6 @@ export default async function ArtworkPage({
             <div className="flex flex-col gap-6 animate-in fade-in slide-in-from-bottom-8 duration-1000">
               {/* Header */}
               <div className="flex flex-col gap-2">
-                <Breadcrumbs className="hidden lg:flex mb-6" />
 
                 {/* SOLD INDICATOR */}
                 {art.status === "sold" && (
@@ -277,33 +274,34 @@ export default async function ArtworkPage({
                   </div>
                 )}
 
-                <h1 className="font-serif text-3xl md:text-5xl text-soft-black leading-[1.1] tracking-tight">
+                <h1 className="font-serif text-2xl md:text-4xl lg:text-[2.5rem] text-soft-black leading-[1.1] tracking-tight">
                   {art.title}
                 </h1>
-                <div className="flex justify-between items-baseline mt-3">
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mt-3">
                   <p className="font-serif italic text-lg md:text-xl text-gray-700">
                     {art.artist}, <span className="text-gray-400 not-italic font-sans text-sm ml-1 tracking-wider">{art.year}</span>
                   </p>
+
+                  {/* CATEGORY TAGS */}
+                  {art.categories && art.categories.length > 0 && (
+                    <div className="flex flex-wrap gap-1.5 md:gap-2 mt-[1px]">
+                      {art.categories.map((category: string) => (
+                        <Link
+                          key={category}
+                          href={`/category/${category.toLowerCase().replace(/\s+/g, '-')}`}
+                          className="flex items-center justify-center px-1.5 py-0.5 md:px-2 md:py-1 bg-white border border-black/10 hover:border-black/30 text-soft-black font-sans text-[8px] md:text-[9px] leading-none tracking-[0.1em] md:tracking-[0.15em] uppercase transition-colors"
+                        >
+                          {category}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
-                {/* CATEGORY TAGS */}
-                {art.categories && art.categories.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mt-4">
-                    {art.categories.map((category: string) => (
-                      <Link
-                        key={category}
-                        href={`/category/${category.toLowerCase().replace(/\s+/g, '-')}`}
-                        className="flex items-center justify-center px-2 py-1 md:px-3 md:py-1.5 bg-white border border-black/10 hover:border-black/30 text-soft-black font-sans text-[10px] leading-none tracking-[0.15em] uppercase transition-colors min-h-[24px]"
-                      >
-                        {category}
-                      </Link>
-                    ))}
-                  </div>
-                )}
               </div>
 
               {/* Technical Details */}
-              <div className="grid grid-cols-2 gap-x-12 py-8 border-y border-black/[0.06]">
+              <div className="grid grid-cols-2 gap-x-12 py-5 border-y border-black/[0.06]">
                 <div className="space-y-1">
                   <p className="font-sans text-[11px] tracking-[0.2em] uppercase text-gray-400">Material</p>
                   <p className="font-sans text-sm text-soft-black leading-snug">{art.material || "Mixed Media"}</p>
@@ -358,6 +356,8 @@ export default async function ArtworkPage({
                     </div>
                   </div>
                 </div>
+
+
 
                 {/* DESKTOP HUB (Shows in right column on LG+) */}
                 <GalleryHub className="hidden lg:block border-none pt-8" isSidebar />

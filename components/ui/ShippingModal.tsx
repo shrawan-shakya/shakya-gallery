@@ -71,7 +71,7 @@ export function ShippingModal({ price, isOpen, onClose, onInquire }: ShippingMod
     return (
         <AnimatePresence>
             {isOpen && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center px-6">
+                <div className="fixed inset-0 z-[9999] flex items-center justify-center px-6 pt-12 md:pt-0">
                     {/* Backdrop */}
                     <motion.div
                         initial={{ opacity: 0 }}
@@ -81,12 +81,11 @@ export function ShippingModal({ price, isOpen, onClose, onInquire }: ShippingMod
                         className="absolute inset-0 bg-soft-black/40 backdrop-blur-sm"
                     />
 
-                    {/* Modal Content */}
                     <motion.div
                         initial={{ opacity: 0, scale: 0.95, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                        className="relative w-full max-w-xl bg-bone shadow-2xl border border-white/20 max-h-[90vh] flex flex-col rounded-sm overflow-hidden"
+                        className="relative w-full max-w-xl bg-bone shadow-2xl border border-white/20 max-h-[85vh] mt-16 md:mt-20 flex flex-col rounded-sm overflow-hidden"
                     >
                         {/* Close Button */}
                         <button

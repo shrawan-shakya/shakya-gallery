@@ -71,19 +71,21 @@ export function ArtworkActions({ artwork, isSold = false }: ArtworkActionsProps)
                 </button>
             </div>
 
-            {/* 2. SHIPPING ESTIMATE TRIGGER (OBVIOUS) */}
+            {/* 2. SHIPPING ESTIMATE TRIGGER (OBVIOUS AFFORDANCE) */}
             {!isSold && (
                 <div className="flex flex-col gap-3">
                     <button
                         onClick={() => setIsShippingOpen(true)}
-                        className="group inline-flex items-center gap-3 font-sans text-[11px] tracking-[0.2em] uppercase text-gray-600 hover:text-soft-black transition-colors"
+                        className="group w-full inline-flex items-center justify-between px-6 py-4 border border-black/10 bg-white hover:border-black/30 hover:shadow-sm transition-all duration-300 cursor-pointer"
                     >
-                        <Globe className="w-4 h-4 text-gray-500 group-hover:text-soft-black transition-colors" />
-                        <span>Estimate Worldwide Shipping</span>
-                        <span className="opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition-all">→</span>
+                        <div className="flex items-center gap-3">
+                            <Globe className="w-4 h-4 text-gray-500 group-hover:text-soft-black transition-colors" />
+                            <span className="font-sans text-[10px] tracking-[0.2em] uppercase text-soft-black">Estimate Worldwide Shipping</span>
+                        </div>
+                        <span className="text-gray-400 group-hover:text-soft-black transform group-hover:translate-x-1 transition-all">→</span>
                     </button>
 
-                    <p className="font-sans text-[9px] text-gray-500 tracking-wider uppercase ml-8 italic">
+                    <p className="font-sans text-[9px] text-gray-500 tracking-wider uppercase text-center italic">
                         Complimentary on orders over $1,500
                     </p>
                 </div>
