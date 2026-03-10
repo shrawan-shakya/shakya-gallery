@@ -14,6 +14,8 @@ import { apiVersion, dataset, projectId } from './sanity/env'
 import { schemaTypes } from './sanity/schemaTypes' // Updated with startingPrice field
 import { structure } from './sanity/structure'
 
+import { QRPrintAction } from './sanity/actions/QRPrintAction'
+
 export default defineConfig({
   basePath: '/studio',
   projectId,
@@ -21,6 +23,11 @@ export default defineConfig({
   // Add and edit the content schema in the './sanity/schema' folder
   schema: {
     types: schemaTypes, // <--- FIXED: Using schemaTypes
+  },
+  document: {
+    actions: (prev, context) => {
+      return [...prev, QRPrintAction]
+    },
   },
   plugins: [
     structureTool({ structure }),
