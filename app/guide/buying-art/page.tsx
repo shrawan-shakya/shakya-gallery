@@ -199,7 +199,7 @@ export default function BuyingGuidePage() {
                             </p>
                             <div className="space-y-6">
                                 <Link
-                                    href="https://wa.me/9779843320342"
+                                    href="https://wa.me/61450704907"
                                     target="_blank"
                                     className="inline-flex items-center gap-3 px-8 py-4 bg-[#25D366] text-white font-sans text-xs tracking-[0.2em] uppercase hover:bg-green-600 transition-colors"
                                 >

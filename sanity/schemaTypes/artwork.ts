@@ -116,6 +116,13 @@ export default defineType({
 
     // --- 5. LOGISTICS ---
     defineField({
+      name: 'currentLocation',
+      title: 'Current Physical Location',
+      type: 'string',
+      description: 'e.g. "Gallery Vault", "The Ritz-Carlton Exhibition", "Private Collector"',
+      initialValue: 'Shakya Gallery Kathmandu',
+    }),
+    defineField({
       name: 'packagedWeight',
       title: 'Packaged Weight (KG)',
       type: 'number',
