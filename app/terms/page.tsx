@@ -34,7 +34,7 @@ export default function TermsPage() {
                 <h2 className="font-serif text-2xl text-[#1A1A1A] mt-12 mb-6 font-semibold">2. Payment & Transfer of Title</h2>
                 <ul className="list-disc pl-6 mb-8 space-y-2">
                     <li>Prices are listed in <strong>USD</strong> unless otherwise stated.</li>
-                    <li>We accept payment via Bank Wire Transfer (SWIFT), Credit Card (subject to surcharge), or local digital wallets (Nepalese clients).</li>
+                    <li>We accept payment via Bank Wire Transfer (SWIFT), or local digital wallets and Cash on Delivery (Nepalese clients).</li>
                     <li><strong>Title of Ownership</strong> passes to the buyer only upon our receipt of full payment in cleared funds.</li>
                     <li>We reserve the right to cancel any order if payment is not received within 7 days of invoicing.</li>
                 </ul>
@@ -45,9 +45,9 @@ export default function TermsPage() {
                     <strong>International Shipments:</strong> We provide professional crating and insured shipping via registered couriers (DHL/FedEx/Cargo).
                 </p>
                 <div className="bg-bone p-6 border border-black/5 mb-8">
-                    <p className="font-semibold text-soft-black mb-2">✨ Customs & Duties Included:</p>
+                    <p className="font-semibold text-soft-black mb-2">⚠️ Important Note on Customs:</p>
                     <p className="text-sm">
-                        Shakya Gallery covers all <strong>local customs, import duties, VAT, and clearance fees</strong> for your international shipment. The price you see is the final price delivered to your door. We are not responsible for delays caused by customs processing.
+                        The Buyer is responsible for all <strong>local customs and import taxes</strong>, as well as any VAT or clearance fees levied by the destination country. Shakya Gallery is not responsible for delays caused by customs processing.
                     </p>
                 </div>
 
@@ -59,7 +59,7 @@ export default function TermsPage() {
                 <ul className="list-disc pl-6 mb-8 space-y-2">
                     <li><strong>Online Sales:</strong> You may request a return within <strong>7 days</strong> of delivery if the artwork differs significantly from its description.</li>
                     <li>The artwork must be returned in its original condition and packaging.</li>
-                    <li>Return shipping costs and insurance are the responsibility of the buyer. Original shipping costs and any custom duties paid by the gallery are non-refundable and will be deducted from the refund amount.</li>
+                    <li>Shipping costs (both ways) and any custom duties paid are non-refundable.</li>
                     <li><strong>Damaged Goods:</strong> If an artwork arrives damaged, you must notify us within 48 hours with photographic evidence to initiate an insurance claim.</li>
                 </ul>
 

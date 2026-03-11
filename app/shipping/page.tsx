@@ -90,11 +90,11 @@ export default function ShippingPage() {
 
                         <section className="p-10 bg-soft-black text-white space-y-6">
                             <div className="flex items-start gap-4">
-                                <span className="text-3xl">🛡️</span>
+                                <span className="text-3xl">✈️</span>
                                 <div className="space-y-4">
-                                    <h2 className="font-serif text-3xl italic">No Surprise Fees, Guaranteed.</h2>
+                                    <h2 className="font-serif text-3xl italic">Global Reach, Local Care.</h2>
                                     <p className="font-sans text-sm font-light leading-relaxed opacity-80">
-                                        The price you see is the price you pay. Our global logistics team manages all export taxes, documentation, and handles customs clearance on your behalf. If any unexpected administrative fees or duties arise during transit, they are covered entirely by the gallery.
+                                        Our global logistics team manages all export taxes and documentation on your behalf, ensuring your artwork leaves Nepal securely. Please note that the Buyer is responsible for all local customs and import taxes applied by the destination country.
                                     </p>
                                 </div>
                             </div>
@@ -114,9 +114,9 @@ export default function ShippingPage() {
 
 
                         <section className="p-10 bg-frame-gold/[0.03] border-l-2 border-frame-gold/30 space-y-4">
-                            <h3 className="font-serif text-xl italic text-soft-black">Customs & Duties Included</h3>
+                            <h3 className="font-serif text-xl italic text-soft-black">Customs & Duties</h3>
                             <p className="font-sans text-xs leading-relaxed text-gray-500">
-                                We handle all export documentation from Nepal and cover any local import duties, customs clearance fees, or VAT/Sales Tax that may apply in your destination country. You will not face any hidden charges upon delivery.
+                                While we handle all export documentation from Nepal, international shipments may be subject to import duties or taxes depending on your destination country. The Buyer is responsible for all local customs and import taxes.
                             </p>
                         </section>
 

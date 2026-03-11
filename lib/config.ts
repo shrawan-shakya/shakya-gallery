@@ -28,7 +28,7 @@ export const siteConfig = {
     faqs: [
         {
             question: "How do I pay for an artwork?",
-            answer: "We facilitate secure transactions for all clients. International collectors can pay via Bank Wire Transfer (SWIFT) or International Credit Card (upon request). For local clients in Nepal, we accept Bank Transfer, Digital Wallets (Fonepay/eSewa), or Cash on Delivery.",
+            answer: "We facilitate secure transactions for all clients. International collectors can pay via Bank Wire Transfer (SWIFT). For local clients in Nepal, we accept Bank Transfer, Digital Wallets (Fonepay/eSewa), or Cash on Delivery.",
         },
         {
             question: "Do you offer international shipping?",

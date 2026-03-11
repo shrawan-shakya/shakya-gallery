@@ -113,6 +113,10 @@ export default function BuyingGuidePage() {
                                             </li>
                                             <li className="flex items-start gap-2">
                                                 <span className="text-red-900">•</span>
+                                                <span>Cash on Delivery (COD)</span>
+                                            </li>
+                                            <li className="flex items-start gap-2">
+                                                <span className="text-red-900">•</span>
                                                 <span>Direct bank transfer</span>
                                             </li>
                                         </ul>

@@ -95,7 +95,7 @@ export const ConfirmationEmail = ({
                                 </Text>
                             </Column>
                         </Row>
-                        <Text style={totalsNote}>* Exact shipping costs will be calculated and added to your final invoice. All customs duties and taxes are covered by the gallery.</Text>
+                        <Text style={totalsNote}>* Exact shipping charges will be added to your invoice. Buyer is responsible for all local customs and import taxes.</Text>
                     </Section>
 
                     <Hr style={hrLight} />

@@ -243,7 +243,7 @@ export default async function ArtworkPage({
       <div className="min-h-screen bg-bone pt-20 lg:pt-24 pb-40 overflow-x-hidden">
 
         {/* FULL WIDTH BREADCRUMBS */}
-        <div className="max-w-[1400px] mx-auto px-6 md:px-12 mb-6 border-b border-black/[0.04] pb-4">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-12 mt-6 md:mt-0 mb-4 md:mb-6 border-b border-black/[0.04] pb-4">
           <Breadcrumbs />
         </div>
 
@@ -289,7 +289,7 @@ export default async function ArtworkPage({
                         <Link
                           key={category}
                           href={`/category/${category.toLowerCase().replace(/\s+/g, '-')}`}
-                          className="flex items-center justify-center px-1.5 py-0.5 md:px-2 md:py-1 bg-white border border-black/10 hover:border-black/30 text-soft-black font-sans text-[8px] md:text-[9px] leading-none tracking-[0.1em] md:tracking-[0.15em] uppercase transition-colors"
+                          className="flex items-center justify-center px-1.5 py-0 md:px-2 md:py-1 bg-white border border-black/10 hover:border-black/30 text-soft-black font-sans text-[8px] md:text-[9px] leading-tight tracking-[0.1em] md:tracking-[0.15em] uppercase transition-colors"
                         >
                           {category}
                         </Link>

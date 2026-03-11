@@ -44,7 +44,7 @@ export function ShippingWidget() {
     }, [zone, size]);
 
     return (
-        <div className="bg-white border border-black/5 p-8 md:p-10 shadow-sm rounded-sm space-y-10">
+        <div className="bg-white border border-black/5 p-6 md:p-10 shadow-sm rounded-sm space-y-8 md:space-y-10">
             <h3 className="font-serif text-2xl text-soft-black leading-tight">Quick Estimate</h3>
 
             <div className="space-y-8">
@@ -70,7 +70,7 @@ export function ShippingWidget() {
                 {/* Size Selection */}
                 <div className="space-y-3">
                     <label className="font-serif italic text-xs text-gray-500">Artwork Size</label>
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         {sizes.map((s) => (
                             <button
                                 key={s.id}
@@ -105,11 +105,11 @@ export function ShippingWidget() {
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -10 }}
                             transition={{ duration: 0.5 }}
-                            className="bg-bone/50 p-8 text-center space-y-4 rounded-sm"
+                            className="bg-bone/50 p-6 md:p-8 text-center space-y-4 rounded-sm"
                         >
                             <div className="space-y-1">
                                 <p className="font-sans text-[11px] tracking-[0.3em] uppercase text-gray-400">Estimated Transit Cost</p>
-                                <p className="font-serif text-4xl text-soft-black font-sans font-light">
+                                <p className="font-serif text-3xl md:text-4xl text-soft-black font-sans font-light">
                                     {estimate[0] === 0 ? (
                                         <span className="flex flex-col items-center gap-2">
                                             <span className="text-xl font-sans font-light">
@@ -132,16 +132,22 @@ export function ShippingWidget() {
                                     Complimentary doorstep delivery within the Valley <br /> or visit our Kathmandu Gallery for pickup.
                                 </p>
                             ) : (
-                                <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[foot-note] font-sans tracking-[0.1em] text-gray-400 uppercase text-[9px]">
-                                    <span className="flex items-center gap-1.5">
-                                        <span className="w-1 h-1 bg-frame-gold rounded-full" />
-                                        7–21 days
-                                    </span>
-                                    <span className="flex items-center gap-1.5">
-                                        <span className="w-1 h-1 bg-frame-gold rounded-full" />
-                                        Fully insured
-                                    </span>
-                                </div>
+                                <>
+                                    <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[foot-note] font-sans tracking-[0.1em] text-gray-400 uppercase text-[9px]">
+                                        <span className="flex items-center gap-1.5">
+                                            <span className="w-1 h-1 bg-frame-gold rounded-full" />
+                                            7–21 days
+                                        </span>
+                                        <span className="flex items-center gap-1.5">
+                                            <span className="w-1 h-1 bg-frame-gold rounded-full" />
+                                            Fully insured
+                                        </span>
+                                    </div>
+                                    <div className="pt-4 border-t border-black/5 flex items-center justify-center gap-2">
+                                        <span className="text-xs grayscale opacity-70">⚠️</span>
+                                        <span className="font-sans text-[9px] text-gray-500 uppercase tracking-widest">Buyer is responsible for all local customs and import taxes</span>
+                                    </div>
+                                </>
                             )}
                         </motion.div>
                     )}

@@ -97,13 +97,13 @@ export function ShippingModal({ price, isOpen, onClose, onInquire }: ShippingMod
 
                         <div
                             data-lenis-prevent
-                            className="overflow-y-auto p-8 md:p-12 overscroll-contain
+                            className="overflow-y-auto p-6 md:p-12 overscroll-contain
                 [&::-webkit-scrollbar]:w-1.5
                 [&::-webkit-scrollbar-track]:bg-transparent
                 [&::-webkit-scrollbar-thumb]:bg-black/10
                 hover:[&::-webkit-scrollbar-thumb]:bg-black/20"
                         >
-                            <h3 className="font-serif text-3xl text-soft-black mb-8 leading-tight">Estimate Your Shipping</h3>
+                            <h3 className="font-serif text-2xl md:text-3xl text-soft-black mb-8 leading-tight">Estimate Your Shipping</h3>
 
                             <div className="space-y-8">
                                 {/* Destination */}
@@ -128,7 +128,7 @@ export function ShippingModal({ price, isOpen, onClose, onInquire }: ShippingMod
                                 {/* Size Selection */}
                                 <div className="space-y-3">
                                     <label className="font-sans text-[11px] tracking-[0.2em] uppercase text-gray-800">Artwork Size</label>
-                                    <div className="grid grid-cols-2 gap-3">
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                         {sizes.map((s) => (
                                             <button
                                                 key={s.id}
@@ -163,11 +163,11 @@ export function ShippingModal({ price, isOpen, onClose, onInquire }: ShippingMod
                                             animate={{ opacity: 1, y: 0 }}
                                             exit={{ opacity: 0, y: -10 }}
                                             transition={{ duration: 0.5, ease: [0.215, 0.61, 0.355, 1] }}
-                                            className="bg-white border border-black/5 p-8 text-center space-y-4"
+                                            className="bg-white border border-black/5 p-6 md:p-8 text-center space-y-4"
                                         >
                                             <div className="space-y-1">
                                                 <p className="font-sans text-[11px] tracking-[0.3em] uppercase text-gray-800">Estimated Transit Cost</p>
-                                                <p className="font-serif text-4xl text-soft-black font-sans font-light">
+                                                <p className="font-serif text-3xl md:text-4xl text-soft-black font-sans font-light">
                                                     {estimate[0] === 0 ? (
                                                         <span className="flex flex-col items-center gap-2">
                                                             <span className="text-xl font-sans font-light">
@@ -208,8 +208,8 @@ export function ShippingModal({ price, isOpen, onClose, onInquire }: ShippingMod
 
                                             {zone !== "ktm" && (
                                                 <div className="pt-4 border-t border-black/5 mt-4 flex items-center justify-center gap-2">
-                                                    <span className="text-xs">🛡️</span>
-                                                    <span className="font-sans text-[9px] text-gray-800 uppercase tracking-widest">No Surprise Fees • Duties & Taxes Included</span>
+                                                    <span className="text-xs">⚠️</span>
+                                                    <span className="font-sans text-[9px] text-gray-800 uppercase tracking-widest">Buyer is responsible for all local customs and import taxes</span>
                                                 </div>
                                             )}
                                         </motion.div>
