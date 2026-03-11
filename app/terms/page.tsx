@@ -45,9 +45,9 @@ export default function TermsPage() {
                     <strong>International Shipments:</strong> We provide professional crating and insured shipping via registered couriers (DHL/FedEx/Cargo).
                 </p>
                 <div className="bg-bone p-6 border border-black/5 mb-8">
-                    <p className="font-semibold text-soft-black mb-2">⚠️ Important Note on Customs:</p>
+                    <p className="font-semibold text-soft-black mb-2">✨ Customs & Duties Included:</p>
                     <p className="text-sm">
-                        The Buyer is responsible for all <strong>import duties, VAT, taxes, and customs clearance fees</strong> levied by the destination country. Shakya Gallery is not responsible for delays caused by customs processing.
+                        Shakya Gallery covers all <strong>local customs, import duties, VAT, and clearance fees</strong> for your international shipment. The price you see is the final price delivered to your door. We are not responsible for delays caused by customs processing.
                     </p>
                 </div>
 
@@ -59,7 +59,7 @@ export default function TermsPage() {
                 <ul className="list-disc pl-6 mb-8 space-y-2">
                     <li><strong>Online Sales:</strong> You may request a return within <strong>7 days</strong> of delivery if the artwork differs significantly from its description.</li>
                     <li>The artwork must be returned in its original condition and packaging.</li>
-                    <li>Shipping costs (both ways) and any custom duties paid are non-refundable.</li>
+                    <li>Return shipping costs and insurance are the responsibility of the buyer. Original shipping costs and any custom duties paid by the gallery are non-refundable and will be deducted from the refund amount.</li>
                     <li><strong>Damaged Goods:</strong> If an artwork arrives damaged, you must notify us within 48 hours with photographic evidence to initiate an insurance claim.</li>
                 </ul>
 

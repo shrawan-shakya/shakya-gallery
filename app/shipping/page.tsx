@@ -114,9 +114,9 @@ export default function ShippingPage() {
 
 
                         <section className="p-10 bg-frame-gold/[0.03] border-l-2 border-frame-gold/30 space-y-4">
-                            <h3 className="font-serif text-xl italic text-soft-black">Customs & Duties</h3>
+                            <h3 className="font-serif text-xl italic text-soft-black">Customs & Duties Included</h3>
                             <p className="font-sans text-xs leading-relaxed text-gray-500">
-                                While we handle all export documentation from Nepal, international shipments may be subject to import duties or taxes depending on your destination country. Most original fine art is exempt from duties in major regions (like the US and UK), but local VAT/Sales Tax may apply.
+                                We handle all export documentation from Nepal and cover any local import duties, customs clearance fees, or VAT/Sales Tax that may apply in your destination country. You will not face any hidden charges upon delivery.
                             </p>
                         </section>
 
