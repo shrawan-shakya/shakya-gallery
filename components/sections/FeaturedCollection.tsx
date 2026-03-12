@@ -39,7 +39,7 @@ export function FeaturedCollection({ artworks, heading }: FeaturedCollectionProp
                         <Link href={`/artwork/${art.slug}`} target="_blank" rel="noopener noreferrer" className="group block">
                             <div className="relative mb-4">
                                 <SanityImage
-                                    src={art.imageUrl}
+                                    source={art.image}
                                     alt={art.title}
                                     lqip={art.lqip}
                                     aspectRatio={art.aspectRatio}

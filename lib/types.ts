@@ -10,6 +10,7 @@ export type Artwork = {
     year?: string;
     slug: string;
     imageUrl: string;
+    image: any;
     lqip?: string;
     aspectRatio: number;
     status?: "available" | "sold" | "private";

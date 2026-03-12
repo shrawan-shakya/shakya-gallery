@@ -60,6 +60,7 @@ export async function getFilteredArtworks(options: Partial<FilterOptions>) {
       "categories": categories[]->title,
       "slug": slug.current,
       "imageUrl": mainImage.asset->url,
+      "image": mainImage,
       "lqip": mainImage.asset->metadata.lqip,
       "aspectRatio": mainImage.asset->metadata.dimensions.aspectRatio,
       description,

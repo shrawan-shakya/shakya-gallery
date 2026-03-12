@@ -21,6 +21,7 @@ import {
   Category
 } from "@/lib/types";
 
+import { useArtFilter } from "@/hooks/useArtFilter";
 import { accordion, staggerContainer, staggerItem } from "@/lib/motion-variants";
 
 // --- ICONS ---
@@ -195,27 +196,25 @@ export function CollectionClient({
   allCategories: Category[],
   initialCategory?: string | null
 }) {
+  const {
+    filteredArtworks,
+    searchQuery,
+    setSearchQuery,
+    selectedCategories,
+    toggleCategory,
+    statusFilter,
+    setStatusFilter,
+    sortOption,
+    setSortOption,
+    clearFilters,
+    hasActiveFilters,
+    categoryCounts,
+  } = useArtFilter(artworks, initialCategory);
+
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
 
-  const searchQuery = searchParams.get("q") || "";
-  const selectedCategories = useMemo(() => {
-
-    const fromUrl = searchParams.get("category");
-    if (fromUrl) {
-      const parts = fromUrl.split(",");
-      const result = [];
-      for (const p of parts) if (p) result.push(p);
-      return result;
-    }
-    return initialCategory ? [initialCategory] : [];
-  }, [searchParams, initialCategory]);
-
-  const statusFilter = (searchParams.get("status") as any) || "all";
-  const sortOption = (searchParams.get("sort") as any) || "newest";
-
-  // --- UI STATE (Still local) ---
+  // --- UI STATE ---
   const [showMat, setShowMat] = useState(true);
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const [gridCols, setGridCols] = useState<2 | 3>(2);
@@ -224,102 +223,6 @@ export function CollectionClient({
     availability: false,
     sort: false,
   });
-
-  // --- CLIENT-SIDE FILTERING ---
-  const filteredArtworks = useMemo(() => {
-    let result = artworks;
-
-    // 1. Search Query
-    if (searchQuery) {
-      const q = searchQuery.toLowerCase();
-      result = result.filter(art =>
-        art.title?.toLowerCase().includes(q) ||
-        art.artist?.toLowerCase().includes(q) ||
-        art.material?.toLowerCase().includes(q)
-      );
-    }
-
-    // 2. Categories
-    if (selectedCategories.length > 0) {
-      result = result.filter(art =>
-        art.categories?.some(cat => selectedCategories.includes(cat))
-      );
-    }
-
-    // 3. Status
-    if (statusFilter === "available") {
-      result = result.filter(art => art.status === "available");
-    } else if (statusFilter === "sold") {
-      result = result.filter(art => art.status === "sold" || art.status === "private");
-    }
-
-    // 4. Sort
-    result = [...result].sort((a, b) => {
-      if (sortOption === "price_asc") {
-        const priceA = a.price ?? a.startingPrice ?? 99999999;
-        const priceB = b.price ?? b.startingPrice ?? 99999999;
-        return priceA - priceB;
-      } else if (sortOption === "price_desc") {
-        const priceA = a.price ?? a.startingPrice ?? 0;
-        const priceB = b.price ?? b.startingPrice ?? 0;
-        return priceB - priceA;
-      }
-      return 0; // Default: newest (already returned from server)
-    });
-
-    return result;
-  }, [artworks, searchQuery, selectedCategories, statusFilter, sortOption]);
-
-  // --- HELPERS ---
-  const updateQueryParam = (name: string, value: string | null) => {
-    const params = new URLSearchParams(searchParams.toString());
-    if (value) {
-      params.set(name, value);
-    } else {
-      params.delete(name);
-    }
-
-    const method = name === "q" ? "replace" : "push";
-    router[method](`${pathname}?${params.toString()}`, { scroll: false });
-  };
-
-  const toggleCategory = (category: string) => {
-    const params = new URLSearchParams(searchParams.toString());
-    const paramVal = params.get("category");
-    let current = [];
-    if (paramVal) {
-      const parts = paramVal.split(",");
-      for (const p of parts) if (p) current.push(p);
-    }
-    if (initialCategory && !params.has("category")) {
-      current = [initialCategory];
-    }
-
-
-    if (current.includes(category)) {
-      const next = [];
-      for (const c of current) {
-        if (c !== category) next.push(c);
-      }
-      current = next;
-    } else {
-      current = [...current, category];
-    }
-
-
-    if (current.length > 0) {
-      params.set("category", current.join(","));
-    } else {
-      params.delete("category");
-    }
-    router.push(`${pathname}?${params.toString()}`, { scroll: false });
-  };
-
-  const clearFilters = () => {
-    router.push(pathname, { scroll: false });
-  };
-
-  const hasActiveFilters = searchQuery !== "" || selectedCategories.length > 0 || statusFilter !== "all" || sortOption !== "newest";
 
   const toggleSection = (key: string) => {
     setOpenSections(prev => ({ ...prev, [key]: !prev[key] }));
@@ -335,7 +238,7 @@ export function CollectionClient({
     return () => { document.body.style.overflow = "unset"; };
   }, [isMobileFilterOpen]);
 
-  // --- GRID DISTRIBUTION (No client-side .filter in JSX) ---
+  // --- GRID DISTRIBUTION ---
   const columns = useMemo(() => {
     const cols: Artwork[][] = Array.from({ length: gridCols }, () => []);
     filteredArtworks.forEach((art, index) => {
@@ -350,27 +253,16 @@ export function CollectionClient({
     return acc;
   }, {} as Record<string, string[]>);
 
-  // --- ITEM COUNTS ---
-  const categoryCounts = useMemo(() => {
-    const counts: Record<string, number> = {};
-    filteredArtworks.forEach((art) => {
-      art.categories?.forEach((cat) => {
-        counts[cat] = (counts[cat] || 0) + 1;
-      });
-    });
-    return counts;
-  }, [filteredArtworks]);
-
   const filterProps = {
     searchQuery,
-    setSearchQuery: (val: string) => updateQueryParam("q", val),
+    setSearchQuery,
     categoriesByType,
     selectedCategories,
     toggleCategory,
     statusFilter,
-    setStatusFilter: (val: any) => updateQueryParam("status", val),
+    setStatusFilter,
     sortOption,
-    setSortOption: (val: any) => updateQueryParam("sort", val),
+    setSortOption,
     openSections,
     toggleSection,
     categoryCounts,
@@ -386,7 +278,7 @@ export function CollectionClient({
         className="relative z-10 w-full"
         rootMargin="1000px 0px"
         aspectRatio={art.aspectRatio}
-        disabled={globalIndex < 12}
+        disabled={globalIndex < 4}
       >
         <motion.div
           variants={staggerItem}
@@ -399,7 +291,7 @@ export function CollectionClient({
           <Link href={`/artwork/${art.slug}`} target="_blank" rel="noopener noreferrer" className="block cursor-pointer group/card">
             <div className="relative group/image">
               <SanityImage
-                src={art.imageUrl}
+                source={art.image}
                 alt={art.title}
                 lqip={art.lqip}
                 aspectRatio={art.aspectRatio}

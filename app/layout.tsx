@@ -68,6 +68,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link rel="preconnect" href="https://cdn.sanity.io" />
+        <link rel="dns-prefetch" href="https://cdn.sanity.io" />
         <CanonicalLink />
       </head>
       {/* 3. Added flex column layout so footer pushes to bottom */}

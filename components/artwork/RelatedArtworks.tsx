@@ -36,7 +36,7 @@ export function RelatedArtworks({ artworks }: RelatedArtworksProps) {
                             <Link href={`/artwork/${art.slug}`} target="_blank" rel="noopener noreferrer" className="group block h-full">
                                 <div className="relative mb-8">
                                     <SanityImage
-                                        src={art.imageUrl}
+                                        source={art.image}
                                         alt={art.title}
                                         lqip={art.lqip}
                                         aspectRatio={art.aspectRatio}

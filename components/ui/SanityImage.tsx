@@ -4,8 +4,10 @@ import Image from "next/image";
 import { MuseumFrame } from "./MuseumFrame";
 import { cn } from "@/lib/utils";
 
+import { urlForImage } from "@/sanity/lib/image";
+
 interface SanityImageProps {
-    src: string;
+    source: any;
     alt: string;
     lqip?: string;
     aspectRatio: number;
@@ -18,10 +20,10 @@ interface SanityImageProps {
 
 /**
  * SanityImage component with luxury blur-up effect.
- * Integrates MuseumFrame with Sanity's LQIP for a premium loading experience.
+ * Integrates MuseumFrame with Sanity's image pipeline for a premium experience.
  */
 export function SanityImage({
-    src,
+    source,
     alt,
     lqip,
     aspectRatio,
@@ -31,6 +33,11 @@ export function SanityImage({
     className,
     imageClassName,
 }: SanityImageProps) {
+    // Generate optimized URL with a reasonable max width for high-density screens
+    const imageUrl = source 
+        ? urlForImage(source).auto('format').width(2000).url() 
+        : "";
+
     return (
         <MuseumFrame
             className={cn("h-auto", className)}
@@ -39,7 +46,7 @@ export function SanityImage({
         >
             <div className="relative w-full h-full overflow-hidden">
                 <Image
-                    src={src}
+                    src={imageUrl}
                     alt={alt}
                     fill
                     priority={priority}

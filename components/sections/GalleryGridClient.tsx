@@ -21,6 +21,7 @@ interface Artwork {
   material?: string;
   year: string;
   imageUrl: string;
+  image: any;
   lqip?: string;
   slug: string;
   aspectRatio: number;
@@ -157,7 +158,7 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
             className="max-w-[1000px] mx-auto grid grid-cols-1 gap-y-20 md:gap-y-32"
           >
             {artworks.map((art, index) => (
-              <LazyGridItem key={art._id} rootMargin="1000px 0px" aspectRatio={art.aspectRatio} disabled={index < 12}>
+              <LazyGridItem key={art._id} rootMargin="1000px 0px" aspectRatio={art.aspectRatio} disabled={index < 4}>
                 <motion.div
                   variants={staggerItem}
                   initial="initial"
@@ -177,7 +178,7 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                         }}
                       >
                         <SanityImage
-                          src={art.imageUrl}
+                          source={art.image}
                           alt={`Buy ${art.title} - Original Nepali fine art at Shakya Gallery`}
                           lqip={art.lqip}
                           aspectRatio={art.aspectRatio}
@@ -277,7 +278,7 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                   .map((art, index) => {
                     const globalIndex = index * 2 + colIndex;
                     return (
-                      <LazyGridItem key={art._id} rootMargin="1000px 0px" aspectRatio={art.aspectRatio} disabled={globalIndex < 12}>
+                      <LazyGridItem key={art._id} rootMargin="1000px 0px" aspectRatio={art.aspectRatio} disabled={globalIndex < 4}>
                         <motion.div
                           variants={staggerItem}
                           initial="initial"
@@ -298,7 +299,7 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                               >
                                 {/* GRIDS: Use w-full h-auto. The grid-based frame will expand height naturally. */}
                                 <SanityImage
-                                  src={art.imageUrl}
+                                  source={art.image}
                                   alt={art.title}
                                   lqip={art.lqip}
                                   aspectRatio={art.aspectRatio}

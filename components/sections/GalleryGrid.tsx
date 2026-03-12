@@ -23,6 +23,8 @@ async function getArtworks(limit?: number) {
       startingPrice,
       "slug": slug.current,
       "imageUrl": mainImage.asset->url,
+      "image": mainImage,
+      "lqip": mainImage.asset->metadata.lqip,
       "aspectRatio": mainImage.asset->metadata.dimensions.aspectRatio
     }
   `;
