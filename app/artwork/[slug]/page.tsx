@@ -85,6 +85,7 @@ async function getRelatedArtworks(categoryRefs: string[], currentId: string, art
       _id,
       title,
       "slug": slug.current,
+      "image": mainImage.asset,
       "imageUrl": mainImage.asset->url,
       "lqip": mainImage.asset->metadata.lqip,
       "aspectRatio": mainImage.asset->metadata.dimensions.aspectRatio,

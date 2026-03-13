@@ -36,7 +36,7 @@ export function SanityImage({
     // Generate optimized URL with a reasonable max width for high-density screens
     const imageUrl = source 
         ? urlForImage(source).auto('format').width(2000).url() 
-        : "";
+        : null;
 
     return (
         <MuseumFrame
@@ -45,19 +45,21 @@ export function SanityImage({
             aspectRatio={aspectRatio}
         >
             <div className="relative w-full h-full overflow-hidden">
-                <Image
-                    src={imageUrl}
-                    alt={alt}
-                    fill
-                    priority={priority}
-                    sizes={sizes}
-                    placeholder={lqip ? "blur" : "empty"}
-                    blurDataURL={lqip}
-                    className={cn(
-                        "object-cover transition-all duration-700 ease-out",
-                        imageClassName
-                    )}
-                />
+                {imageUrl && (
+                    <Image
+                        src={imageUrl}
+                        alt={alt}
+                        fill
+                        priority={priority}
+                        sizes={sizes}
+                        placeholder={lqip ? "blur" : "empty"}
+                        blurDataURL={lqip}
+                        className={cn(
+                            "object-cover transition-all duration-700 ease-out",
+                            imageClassName
+                        )}
+                    />
+                )}
             </div>
         </MuseumFrame>
     );

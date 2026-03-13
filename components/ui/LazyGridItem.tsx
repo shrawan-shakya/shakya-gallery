@@ -31,7 +31,7 @@ export function LazyGridItem({
 
     const ref = useRef(null);
     const isInView = useInView(ref, {
-        once: false,
+        once: true,
         amount: threshold,
         margin: rootMargin
     });
@@ -39,9 +39,8 @@ export function LazyGridItem({
     return (
         <div ref={ref} className={className}>
             {disabled || isInView ? children : fallback || (
-
                 <div
-                    className="w-full bg-[#F9F9F9] shadow-sm"
+                    className="w-full bg-[#F9F9F9] shadow-sm transition-all duration-700"
                     style={{ aspectRatio: `${aspectRatio}` }}
                 />
             )}

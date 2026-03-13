@@ -33,7 +33,7 @@ export function WhyBuy() {
                     variants={staggerContainer}
                     initial="initial"
                     whileInView="animate"
-                    viewport={{ once: true }}
+                    viewport={{ once: true, margin: "-100px", amount: 0.3 }}
                     className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-24"
                 >
                     {whyBuyItems.map((item, index) => (

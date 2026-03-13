@@ -44,7 +44,7 @@ export default async function Home() {
   };
 
   return (
-    <div className="bg-bone min-h-screen">
+    <div className="bg-bone min-h-screen overflow-x-hidden">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -55,17 +55,13 @@ export default async function Home() {
         </SectionErrorBoundary>
       </section>
 
-      <section className="min-h-screen w-full bg-bone pt-20">
-        <SectionErrorBoundary sectionName="Gallery Preview">
-          <GalleryGrid limit={6} />
-        </SectionErrorBoundary>
-      </section>
-
-      <section className="min-h-screen w-full flex items-center justify-center bg-bone">
-        <SectionErrorBoundary sectionName="Heritage Preview">
-          <HeritagePreview />
-        </SectionErrorBoundary>
-      </section>
+      <SectionErrorBoundary sectionName="Gallery Preview">
+        <GalleryGrid limit={6} />
+      </SectionErrorBoundary>
+ 
+      <SectionErrorBoundary sectionName="Heritage Preview">
+        <HeritagePreview />
+      </SectionErrorBoundary>
 
       <SectionErrorBoundary sectionName="Why Buy Section">
         <WhyBuy />

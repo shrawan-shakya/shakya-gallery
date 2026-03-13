@@ -5,12 +5,12 @@ import { fadeInUp, fadeIn, staggerContainer } from "@/lib/motion-variants";
 
 export function HeritagePreview() {
   return (
-    <section className="bg-bone px-6 border-b border-primary/5 w-full">
+    <section className="bg-bone px-6 py-24 md:py-32 border-b border-primary/5 w-full">
       <motion.div
         variants={staggerContainer}
         initial="initial"
         whileInView="animate"
-        viewport={{ once: true }}
+        viewport={{ once: true, margin: "-100px", amount: 0.3 }}
         className="max-w-4xl mx-auto text-center flex flex-col items-center"
       >
         {/* 1. Small Top Tag */}

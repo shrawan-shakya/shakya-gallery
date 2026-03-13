@@ -75,10 +75,10 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
       <div ref={sentinelRef} className="h-0 w-full" />
       {/* ... toggle bar - Hidden on mobile, visible on desktop ... */}
       <div className={cn(
-        "sticky top-0 z-40 w-full transition-all duration-500 mb-12 hidden md:block",
+        "sticky top-0 z-40 w-full transition-[background-color,backdrop-filter,border-color] duration-500 mb-12 hidden md:block py-4",
         isStuck
-          ? "bg-bone/40 backdrop-blur-md border-b border-black/[0.03] py-3"
-          : "bg-transparent border-b border-transparent py-4"
+          ? "bg-bone/40 backdrop-blur-md border-b border-black/[0.03]"
+          : "bg-transparent border-b border-transparent"
       )}>
         <div className="flex justify-between max-w-[1800px] mx-auto px-8">
 
