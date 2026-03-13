@@ -62,19 +62,19 @@ export function MuseumPlaque({
         </h3>
 
         {/* Title */}
-        <h3 className="font-serif text-base md:text-xl text-[#1A1A1A] font-bold italic leading-tight my-0.5 line-clamp-2">
+        <h3 className="font-serif text-base md:text-xl text-soft-black font-bold italic leading-tight my-0.5 line-clamp-2">
           {title}
         </h3>
 
         {/* Medium */}
         {showMedium && (
-          <p className="font-sans text-[10px] md:text-[11px] tracking-[0.1em] md:tracking-[0.2em] uppercase text-[#444444] font-medium">
+          <p className="font-sans text-micro md:text-tiny tracking-luxury-tight md:tracking-luxury-wide uppercase text-muted-foreground font-medium">
             {medium}
           </p>
         )}
 
         {/* Separator */}
-        <div className="w-[15px] md:w-[30px] h-[0.5px] bg-[#BBBBBB] my-1" />
+        <div className="w-[15px] md:w-[30px] h-[0.5px] bg-border my-1" />
 
         {/* Year */}
         <p className="font-sans text-[10px] md:text-[11px] tracking-[0.1em] md:tracking-[0.2em] uppercase text-[#444444] font-medium">

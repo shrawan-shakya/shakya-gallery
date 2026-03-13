@@ -34,13 +34,13 @@ export default function BuyingGuidePage() {
     <main className="min-h-screen bg-bone">
       {/* 1. HERO */}
       <section className="pt-40 pb-20 px-6 text-center max-w-4xl mx-auto">
-        <p className="font-sans text-xs tracking-[0.3em] text-red-800 uppercase mb-6">
+        <p className="font-sans text-xs tracking-luxury-wide text-danger uppercase mb-6">
           The Collector's Guide
         </p>
-        <h1 className="font-serif text-5xl md:text-7xl text-black leading-none mb-10">
+        <h1 className="font-serif text-5xl md:text-7xl text-soft-black leading-none mb-8">
           HOW TO <span className="italic">ACQUIRE</span> ART
         </h1>
-        <p className="font-serif text-xl italic text-zinc-900 max-w-2xl mx-auto leading-relaxed">
+        <p className="font-serif text-xl italic text-muted-foreground max-w-2xl mx-auto leading-relaxed">
           "Collecting fine art is a journey of emotion, taste, and legacy. Here
           is how to navigate the acquisition process with confidence."
         </p>

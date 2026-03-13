@@ -61,7 +61,7 @@ export default async function CollectionPage({ searchParams }: Props) {
       />
       <div className="min-h-screen bg-bone pt-32 pb-20 px-6 md:px-12">
         <div className="mb-12 md:mb-16 flex flex-col items-center text-center">
-          <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-soft-black mb-4">
+          <h1 className="font-serif text-5xl md:text-7xl text-soft-black mb-6 leading-none">
             The Collection
           </h1>
           <p className="font-sans text-sm md:text-base text-gray-600 max-w-2xl leading-relaxed">

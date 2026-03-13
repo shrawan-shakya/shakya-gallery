@@ -25,7 +25,7 @@ export function MuseumFrameSkeleton({
           className="grid p-[2px] shadow-sm
           bg-gradient-to-tr from-[#8a6e34] via-[#e6dfa8] to-[#996b19] animate-pulse"
         >
-          <div className="relative grid bg-[#f4f4f4] animate-pulse p-[4px] md:p-[16px] shadow-[inset_0_0_15px_rgba(0,0,0,0.4)] transition-all duration-300">
+          <div className="relative grid bg-bone animate-pulse p-[4px] md:p-[16px] shadow-[inset_0_0_15px_rgba(0,0,0,0.4)] transition-all duration-300">
             {children}
           </div>
         </div>
@@ -37,7 +37,7 @@ export function MuseumFrameSkeleton({
     <div className={cn("relative select-none grid", className)} {...props}>
       <FrameWrapper>
         <div
-          className="relative bg-[#e0e0e0] animate-pulse overflow-hidden shadow-[inset_0_2px_6px_rgba(0,0,0,0.2)] w-full h-full"
+          className="relative bg-bone-dark animate-pulse overflow-hidden shadow-[inset_0_2px_6px_rgba(0,0,0,0.2)] w-full h-full"
           style={{ aspectRatio }}
         />
       </FrameWrapper>

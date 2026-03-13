@@ -14,8 +14,12 @@ module.exports = {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
         },
-        bone: "#FAFAFA",
-        "soft-black": "#1A1A1A",
+        bone: {
+          DEFAULT: "hsl(var(--bone))",
+          dark: "hsl(var(--bone-dark))",
+        },
+        "soft-black": "hsl(var(--soft-black))",
+        danger: "hsl(var(--danger))",
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
@@ -23,9 +27,6 @@ module.exports = {
         "frame-base": "#111111",
         "frame-gold": "#D4AF37",
         "frame-ebony": "#111111",
-        "gallery-top": "#F2F0E9",
-        "gallery-center": "#E8E8E3",
-        "gallery-bottom": "#DFDDD5",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {
@@ -58,6 +59,18 @@ module.exports = {
           4: "hsl(var(--chart-4))",
           5: "hsl(var(--chart-5))",
         },
+      },
+      fontSize: {
+        "tiny": "0.625rem", // 10px
+        "micro": "0.6875rem", // 11px
+        "sm-ui": "0.8125rem", // 13px
+        "base-ui": "0.9375rem", // 15px
+      },
+      letterSpacing: {
+        "luxury-tight": "0.1em",
+        "luxury-wide": "0.2em",
+        "luxury-widest": "0.3em",
+        "luxury-extreme": "0.45em",
       },
       fontFamily: {
         serif: ["var(--font-cormorant)", "serif"],

@@ -23,7 +23,7 @@ export default function ShippingPage() {
             </span>
           </nav>
 
-          <h1 className="font-serif text-5xl md:text-7xl text-soft-black leading-tight mb-8">
+          <h1 className="font-serif text-4xl md:text-5xl text-soft-black leading-tight mb-8">
             Global Logistics, <br />
             <span className="italic text-gray-400">Museum Protection.</span>
           </h1>

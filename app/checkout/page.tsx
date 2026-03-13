@@ -7,6 +7,8 @@ import { Price } from "@/components/ui/Price";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { countries } from "@/lib/countries";
+import { Input } from "@/components/ui/Input";
+import { Button } from "@/components/ui/Button";
 
 export default function CheckoutPage() {
   const { items, getCartTotals, clearCart } = useCartStore();
@@ -182,24 +184,24 @@ export default function CheckoutPage() {
                 <label className="font-serif italic text-xs text-gray-500">
                   Full Name
                 </label>
-                <input
+                <Input
                   required
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full bg-transparent border-b border-black/10 py-2 font-sans font-light text-base outline-none focus:border-black transition-colors"
+                  className="w-full text-base"
                 />
               </div>
               <div className="space-y-1">
                 <label className="font-serif italic text-xs text-gray-500">
                   Email Address
                 </label>
-                <input
+                <Input
                   required
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-transparent border-b border-black/10 py-2 font-sans font-light text-base outline-none focus:border-black transition-colors"
+                  className="w-full text-base"
                 />
               </div>
             </div>
@@ -226,7 +228,7 @@ export default function CheckoutPage() {
                     ▼
                   </span>
                 </div>
-                <input
+                <Input
                   required
                   type="tel"
                   minLength={7}
@@ -234,7 +236,7 @@ export default function CheckoutPage() {
                   value={mobile}
                   onChange={(e) => setMobile(e.target.value)}
                   placeholder="Phone Number"
-                  className="w-2/3 bg-transparent border-b border-black/10 py-2 font-sans font-light text-base outline-none focus:border-black transition-colors placeholder:text-gray-500 placeholder:text-sm"
+                  className="w-2/3 text-base placeholder:text-gray-500 placeholder:text-sm"
                 />
               </div>
             </div>
@@ -245,36 +247,36 @@ export default function CheckoutPage() {
                 Shipping Destination
               </h3>
 
-              <input
+              <Input
                 required
                 type="text"
                 placeholder="Street Address"
                 value={street}
                 onChange={(e) => setStreet(e.target.value)}
-                className="w-full bg-transparent border-b border-black/10 py-2 font-sans font-light text-base outline-none focus:border-black transition-colors placeholder:text-gray-500 placeholder:text-sm"
+                className="w-full text-base placeholder:text-gray-500 placeholder:text-sm"
               />
 
               <div className="grid grid-cols-2 gap-6">
-                <input
+                <Input
                   required
                   type="text"
                   placeholder="City"
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
-                  className="w-full bg-transparent border-b border-black/10 py-2 font-sans font-light text-base outline-none focus:border-black transition-colors placeholder:text-gray-500 placeholder:text-sm"
+                  className="w-full text-base placeholder:text-gray-500 placeholder:text-sm"
                 />
-                <input
+                <Input
                   required
                   type="text"
                   placeholder="State / Province"
                   value={state}
                   onChange={(e) => setState(e.target.value)}
-                  className="w-full bg-transparent border-b border-black/10 py-2 font-sans font-light text-base outline-none focus:border-black transition-colors placeholder:text-gray-500 placeholder:text-sm"
+                  className="w-full text-base placeholder:text-gray-500 placeholder:text-sm"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-6">
-                <input
+                <Input
                   required
                   type="text"
                   placeholder="Zip / Postal Code"
@@ -282,7 +284,7 @@ export default function CheckoutPage() {
                   maxLength={10}
                   value={zip}
                   onChange={(e) => setZip(e.target.value)}
-                  className="w-full bg-transparent border-b border-black/10 py-2 font-sans font-light text-base outline-none focus:border-black transition-colors placeholder:text-gray-500 placeholder:text-sm"
+                  className="w-full text-base placeholder:text-gray-500 placeholder:text-sm"
                 />
                 <div className="relative">
                   <select
@@ -323,13 +325,15 @@ export default function CheckoutPage() {
               />
             </div>
 
-            <button
+            <Button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-soft-black text-white py-4 mt-8 font-sans text-xs tracking-[0.2em] uppercase hover:bg-black transition-colors disabled:opacity-50"
+              variant="default"
+              animation="slide"
+              className="w-full mt-8"
             >
               {isSubmitting ? "Processing..." : "Submit Inquiry"}
-            </button>
+            </Button>
           </form>
         </div>
 

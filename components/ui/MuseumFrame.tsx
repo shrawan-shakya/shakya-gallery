@@ -33,7 +33,7 @@ export function MuseumFrame({
           bg-gradient-to-tr from-[#997b3a] via-[#fcf6ba] to-[#aa771c]"
         >
           {/* 3. The Matting (With Deep Inner Shadow) */}
-          <div className="relative grid bg-[#FCFCFC] p-[4px] md:p-[16px] shadow-[inset_0_0_15px_rgba(0,0,0,0.4)] transition-all duration-300">
+          <div className="relative grid bg-bone p-[4px] md:p-[16px] shadow-[inset_0_0_15px_rgba(0,0,0,0.4)] transition-all duration-300">
             {children}
           </div>
         </div>
@@ -49,7 +49,7 @@ export function MuseumFrame({
       <FrameWrapper>
         {/* 4. Artwork Container (The Master Proportions) */}
         <div
-          className="relative bg-[#F9F9F9] overflow-hidden shadow-[inset_0_2px_6px_rgba(0,0,0,0.2)] w-full h-full"
+          className="relative bg-bone-dark overflow-hidden shadow-[inset_0_2px_6px_rgba(0,0,0,0.2)] w-full h-full"
           style={{ aspectRatio }}
         >
           <div className="absolute inset-0 w-full h-full flex items-center justify-center">

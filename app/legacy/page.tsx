@@ -106,12 +106,14 @@ export default function LegacyPage() {
           <p className="font-sans text-xs tracking-[0.3em] text-gray-400 uppercase mb-8">
             Our Heritage
           </p>
-          <h1 className="font-serif text-5xl md:text-8xl text-soft-black leading-none mb-12">
-            THE <span className="italic">JOURNEY</span>
-          </h1>
-          <p className="font-serif text-xl italic text-gray-500 max-w-2xl mx-auto">
-            "From the ancient streets of Kathmandu to a global digital stage."
-          </p>
+          <div className="max-w-4xl mx-auto text-center px-6 mb-24 lg:mb-32">
+            <h1 className="font-serif text-5xl md:text-7xl text-soft-black leading-none mb-8">
+              THE <span className="italic">JOURNEY</span>
+            </h1>
+            <p className="font-serif text-xl italic text-gray-500 max-w-2xl mx-auto">
+              "From the ancient streets of Kathmandu to a global digital stage."
+            </p>
+          </div>
         </motion.div>
 
         {/* SCROLL LINE */}

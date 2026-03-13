@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import { Price } from "@/components/ui/Price";
 import { Artwork } from "@/lib/types";
 import { staggerItem } from "@/lib/motion-variants";
+import { Badge } from "@/components/ui/Badge";
 
 interface ArtworkCardProps {
   art: Artwork;
@@ -75,21 +76,17 @@ export function ArtworkCard({
                   {art.status === "sold" && (
                     <>
                       <div className="hidden md:flex absolute inset-0 flex-col items-center justify-center opacity-0 group-hover/image:opacity-100 transition-opacity duration-500">
-                        <span className="font-serif font-bold italic text-3xl md:text-4xl text-white bg-[#7D1818] shadow-xl -rotate-12 tracking-widest px-6 py-2">
-                          SOLD
-                        </span>
+                        <Badge variant="danger" size="default">SOLD</Badge>
                       </div>
                       <div className="md:hidden flex items-center justify-between w-full px-2">
-                        <span className="font-serif font-bold italic text-[11px] text-white bg-[#7D1818] px-2 py-0.5 tracking-wider">
-                          SOLD
-                        </span>
+                        <Badge variant="danger" size="sm">SOLD</Badge>
                       </div>
                     </>
                   )}
                   {art.status === "available" && (
                     <>
                       <div className="hidden md:flex absolute inset-0 items-center justify-center opacity-0 group-hover/image:opacity-100 transition-opacity duration-500">
-                        <span className="bg-white/95 text-soft-black text-sm md:text-base font-sans tracking-[0.2em] px-6 py-3 backdrop-blur-md shadow-md border border-soft-black/10 whitespace-nowrap">
+                        <span className="bg-white/95 text-soft-black text-sm md:text-base font-sans tracking-luxury-wide px-6 py-3 backdrop-blur-md shadow-md border border-soft-black/10 whitespace-nowrap">
                           {art.showPrice && art.price ? (
                             <Price amount={art.price} />
                           ) : (
@@ -101,7 +98,7 @@ export function ArtworkCard({
                         </span>
                       </div>
                       <div className="md:hidden flex justify-center w-full">
-                        <span className="flex items-center justify-center bg-white/90 text-soft-black text-[10px] font-sans leading-none tracking-[0.1em] px-3 py-1 min-h-[24px] backdrop-blur-sm shadow-sm border border-soft-black/5 whitespace-nowrap">
+                        <span className="flex items-center justify-center bg-white/90 text-soft-black text-tiny font-sans leading-none tracking-luxury-tight px-3 py-1 min-h-[24px] backdrop-blur-sm shadow-sm border border-soft-black/5 whitespace-nowrap">
                           {art.showPrice && art.price ? (
                             <Price amount={art.price} />
                           ) : (
@@ -196,14 +193,10 @@ export function ArtworkCard({
               {art.status === "sold" && (
                 <>
                   <div className="hidden md:flex absolute inset-0 flex-col items-center justify-center opacity-0 group-hover/image:opacity-100 transition-opacity duration-500">
-                    <span className="font-serif font-bold italic text-3xl text-white bg-[#7D1818] shadow-xl -rotate-12 tracking-widest px-5 py-2">
-                      SOLD
-                    </span>
+                    <Badge variant="danger" size="default">SOLD</Badge>
                   </div>
                   <div className="md:hidden flex items-center justify-between w-full px-2">
-                    <span className="font-serif font-bold italic text-[11px] text-white bg-[#7D1818] px-2 py-0.5 tracking-wider">
-                      SOLD
-                    </span>
+                    <Badge variant="danger" size="sm">SOLD</Badge>
                   </div>
                 </>
               )}
@@ -212,7 +205,7 @@ export function ArtworkCard({
               {art.status === "available" && (
                 <>
                   <div className="hidden md:flex absolute inset-0 items-center justify-center opacity-0 group-hover/image:opacity-100 transition-opacity duration-500">
-                    <span className="bg-white/95 text-soft-black text-base font-sans tracking-[0.2em] px-6 py-3 backdrop-blur-md shadow-md border border-soft-black/10 whitespace-nowrap">
+                    <span className="bg-white/95 text-soft-black text-base font-sans tracking-luxury-wide px-6 py-3 backdrop-blur-md shadow-md border border-soft-black/10 whitespace-nowrap">
                       {art.showPrice && art.price ? (
                         <Price amount={art.price} />
                       ) : (
@@ -224,7 +217,7 @@ export function ArtworkCard({
                     </span>
                   </div>
                   <div className="md:hidden flex justify-center w-full">
-                    <span className="flex items-center justify-center bg-white/90 text-soft-black text-[10px] font-sans leading-none tracking-[0.1em] px-3 py-1 min-h-[24px] backdrop-blur-sm shadow-sm border border-soft-black/5 whitespace-nowrap">
+                    <span className="flex items-center justify-center bg-white/90 text-soft-black text-tiny font-sans leading-none tracking-luxury-tight px-3 py-1 min-h-[24px] backdrop-blur-sm shadow-sm border border-soft-black/5 whitespace-nowrap">
                       {art.showPrice && art.price ? (
                         <Price amount={art.price} />
                       ) : (

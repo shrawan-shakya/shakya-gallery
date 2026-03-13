@@ -48,7 +48,7 @@ export function Navbar() {
   const hoverColor =
     pathname === "/" && !isScrolled
       ? "hover:text-white/70"
-      : "hover:text-gray-500";
+      : "hover:text-soft-black/60";
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious() || 0;
@@ -146,7 +146,7 @@ export function Navbar() {
           >
             <ShoppingBag className="w-5 h-5" strokeWidth={1} />
             {mounted && items.length > 0 && (
-              <span className="absolute -top-1.5 -right-2 bg-red-700 text-white text-[9px] font-sans w-4 h-4 rounded-full flex items-center justify-center">
+              <span className="absolute -top-1.5 -right-2 bg-danger text-white text-[9px] font-sans w-4 h-4 rounded-full flex items-center justify-center">
                 {items.length}
               </span>
             )}
@@ -174,7 +174,7 @@ export function Navbar() {
           >
             <ShoppingBag className="w-5 h-5" strokeWidth={1} />
             {mounted && items.length > 0 && !isOpen && (
-              <span className="absolute top-0 flex items-center justify-center right-0 bg-red-700 text-white text-[9px] font-sans w-4 h-4 rounded-full">
+              <span className="absolute top-0 flex items-center justify-center right-0 bg-danger text-white text-[9px] font-sans w-4 h-4 rounded-full">
                 {items.length}
               </span>
             )}
@@ -226,7 +226,7 @@ export function Navbar() {
                   <Link
                     href={link.href}
                     onClick={() => setIsOpen(false)}
-                    className="font-serif text-4xl text-[#1A1A1A] italic hover:text-[#999999] transition-colors"
+                    className="font-serif text-4xl text-soft-black italic hover:text-soft-black/60 transition-colors"
                   >
                     {link.name}
                   </Link>

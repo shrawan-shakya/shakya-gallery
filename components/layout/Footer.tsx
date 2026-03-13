@@ -6,6 +6,8 @@ import { siteConfig } from "@/lib/config";
 import { CurrencyToggle } from "@/components/ui/CurrencyToggle";
 import { ShieldCheck, Truck, Lock, Award } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Input } from "@/components/ui/Input";
+import { Button } from "@/components/ui/Button";
 
 export function Footer() {
   const [email, setEmail] = useState("");
@@ -82,11 +84,11 @@ export function Footer() {
                   style={{ display: "none" }}
                 />
 
-                <div className="relative border-b border-white/20 focus-within:border-white transition-colors duration-300">
+                <div className="relative flex w-full max-w-sm items-center space-x-2 border-b border-white/20 focus-within:border-white transition-colors duration-300">
                   <label htmlFor="footer-email" className="sr-only">
                     Email Address
                   </label>
-                  <input
+                  <Input
                     id="footer-email"
                     type="email"
                     placeholder="Email Address"
@@ -94,15 +96,18 @@ export function Footer() {
                     onChange={(e) => setEmail(e.target.value)}
                     required
                     disabled={status === "submitting"}
-                    className="w-full bg-transparent py-4 font-sans text-sm text-white placeholder:text-gray-400 outline-none disabled:opacity-50"
+                    className="border-0 bg-transparent py-4 font-sans text-sm text-white placeholder:text-gray-400 outline-none disabled:opacity-50 ring-0 focus-visible:ring-0 px-0"
+                    variant="underline"
                   />
-                  <button
+                  <Button
                     type="submit"
                     disabled={status === "submitting"}
-                    className="absolute right-0 top-1/2 -translate-y-1/2 font-sans text-xs tracking-[0.2em] uppercase text-gray-300 hover:text-white transition-colors disabled:opacity-50"
+                    variant="ghost"
+                    size="sm"
+                    className="absolute right-0 font-sans text-tiny tracking-luxury-widest uppercase text-gray-300 hover:text-white hover:bg-transparent transition-colors disabled:opacity-50 px-0"
                   >
                     {status === "submitting" ? "Joining..." : "Subscribe"}
-                  </button>
+                  </Button>
                 </div>
               </form>
             )}
@@ -224,7 +229,7 @@ export function Footer() {
                 <h5 className="font-serif text-sm italic text-white/90 leading-none">
                   Authenticity
                 </h5>
-                <p className="font-sans text-[10px] tracking-[0.2em] text-gray-500 uppercase leading-relaxed">
+                <p className="font-sans text-tiny tracking-luxury-wide text-gray-500 uppercase leading-relaxed">
                   Signed Certificates
                 </p>
               </div>
@@ -238,7 +243,7 @@ export function Footer() {
                 <h5 className="font-serif text-sm italic text-white/90 leading-none">
                   Logistics
                 </h5>
-                <p className="font-sans text-[10px] tracking-[0.2em] text-gray-500 uppercase leading-relaxed">
+                <p className="font-sans text-tiny tracking-luxury-wide text-gray-500 uppercase leading-relaxed">
                   Insured Delivery
                 </p>
               </div>
@@ -252,7 +257,7 @@ export function Footer() {
                 <h5 className="font-serif text-sm italic text-white/90 leading-none">
                   Payments
                 </h5>
-                <p className="font-sans text-[10px] tracking-[0.2em] text-gray-500 uppercase leading-relaxed">
+                <p className="font-sans text-tiny tracking-luxury-wide text-gray-500 uppercase leading-relaxed">
                   Secure Transfers
                 </p>
               </div>
@@ -266,7 +271,7 @@ export function Footer() {
                 <h5 className="font-serif text-sm italic text-white/90 leading-none">
                   Legacy
                 </h5>
-                <p className="font-sans text-[10px] tracking-[0.2em] text-gray-500 uppercase leading-relaxed">
+                <p className="font-sans text-tiny tracking-luxury-wide text-gray-500 uppercase leading-relaxed">
                   Since 1998
                 </p>
               </div>
@@ -276,7 +281,7 @@ export function Footer() {
           {/* Payment Methods */}
           <div className="lg:col-span-4 lg:border-l lg:border-white/5 lg:pl-16 flex flex-col justify-center gap-10 mt-12 lg:mt-0 pt-10 lg:pt-0 border-t border-white/5 lg:border-t-0">
             <div className="space-y-4">
-              <span className="font-sans text-[9px] tracking-[0.3em] uppercase text-gray-500 block leading-none">
+              <span className="font-sans text-tiny tracking-luxury-widest uppercase text-gray-500 block leading-none">
                 International
               </span>
               <p className="font-serif text-white/80 italic text-base lg:text-lg leading-tight lg:mt-1">
@@ -284,7 +289,7 @@ export function Footer() {
               </p>
             </div>
             <div className="space-y-4">
-              <span className="font-sans text-[9px] tracking-[0.3em] uppercase text-gray-500 block leading-none">
+              <span className="font-sans text-tiny tracking-luxury-widest uppercase text-gray-500 block leading-none">
                 Local (Nepal)
               </span>
               <p className="font-serif text-white/80 italic text-base lg:text-lg leading-tight lg:mt-1">
@@ -299,28 +304,28 @@ export function Footer() {
       <div className="max-w-[1400px] mx-auto mt-16 md:mt-24 lg:mt-32 pb-12 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8 md:gap-0">
         {/* Left: Copyright & Links */}
         <div className="flex flex-col md:flex-row items-center gap-3 md:gap-6 order-2 md:order-1 w-full md:w-auto text-center md:text-left">
-          <p className="font-sans text-[10px] tracking-widest text-gray-500 uppercase flex-shrink-0">
+          <p className="font-sans text-tiny tracking-widest text-gray-500 uppercase flex-shrink-0">
             © {new Date().getFullYear()} Shakya Gallery
           </p>
           <div className="hidden md:block w-px h-3 bg-white/10" />
           <div className="flex items-center justify-center gap-3 md:gap-4">
             <Link
               href="/privacy-policy"
-              className="font-sans text-[10px] tracking-widest text-gray-500 hover:text-white transition-colors uppercase"
+              className="font-sans text-tiny tracking-widest text-gray-500 hover:text-white transition-colors uppercase"
             >
               Privacy
             </Link>
-            <span className="text-white/20 text-[10px]">•</span>
+            <span className="text-white/20 text-tiny">•</span>
             <Link
               href="/terms"
-              className="font-sans text-[10px] tracking-widest text-gray-500 hover:text-white transition-colors uppercase"
+              className="font-sans text-tiny tracking-widest text-gray-500 hover:text-white transition-colors uppercase"
             >
               Terms
             </Link>
-            <span className="text-white/20 text-[10px]">•</span>
+            <span className="text-white/20 text-tiny">•</span>
             <Link
               href="/refund-policy"
-              className="font-sans text-[10px] tracking-widest text-gray-500 hover:text-white transition-colors uppercase"
+              className="font-sans text-tiny tracking-widest text-gray-500 hover:text-white transition-colors uppercase"
             >
               Refunds
             </Link>

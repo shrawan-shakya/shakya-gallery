@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { SanityImage } from "@/components/ui/SanityImage";
 import { MuseumPlaque } from "@/components/ui/MuseumPlaque";
+import { Badge } from "@/components/ui/Badge";
 import { Artwork } from "@/lib/types";
 import { staggerContainer, staggerItem } from "@/lib/motion-variants";
 
@@ -52,10 +53,8 @@ export function RelatedArtworks({ artworks }: RelatedArtworksProps) {
                   />
 
                   {art.status === "sold" && (
-                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                      <span className="font-serif font-bold italic text-xl text-white bg-[#7D1818] shadow-lg -rotate-12 tracking-widest px-4 py-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                        SOLD
-                      </span>
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                      <Badge variant="danger" size="default">SOLD</Badge>
                     </div>
                   )}
                 </div>

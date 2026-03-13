@@ -53,6 +53,12 @@
     --chart-5: 27 87% 67%;
 
     --radius: 0.5rem;
+
+    /* Custom Shakya Tokens */
+    --bone: 0 0% 98%;      /* #FAFAFA */
+    --bone-dark: 0 0% 94%; /* Slightly darker for contrast */
+    --soft-black: 0 0% 10%;/* #1A1A1A */
+    --danger: 0 68% 29%;   /* #7D1818 mapped to HSL */
   }
 
   .dark {
@@ -103,6 +109,12 @@
     --chart-4: 280 65% 60%;
 
     --chart-5: 340 75% 55%;
+
+    /* Custom Shakya Tokens (Dark Mode Equivalents) */
+    --bone: 0 0% 12%;      
+    --bone-dark: 0 0% 8%; 
+    --soft-black: 0 0% 96%;
+    --danger: 0 68% 45%;   
   }
 }
 

@@ -9,9 +9,9 @@ export const metadata: Metadata = {
 
 export default function RefundPolicyPage() {
   return (
-    <div className="max-w-3xl mx-auto px-6 py-24 md:py-32">
-      <h1 className="font-serif text-4xl md:text-5xl italic font-bold text-[#1A1A1A] mb-12 text-center uppercase tracking-wider">
-        Refund & Return Policy
+    <main className="min-h-screen bg-bone pt-32 pb-20 px-6 md:px-12">
+      <h1 className="font-serif text-4xl md:text-5xl text-soft-black leading-tight italic font-bold mb-12 text-center tracking-luxury-wide uppercase">
+        Refund Policy
       </h1>
 
       <div className="prose prose-stone max-w-none font-sans text-gray-600 leading-relaxed">
@@ -118,6 +118,6 @@ export default function RefundPolicyPage() {
           Since {siteConfig.since}.
         </p>
       </div>
-    </div>
+    </main>
   );
 }

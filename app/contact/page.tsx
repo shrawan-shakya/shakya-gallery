@@ -3,6 +3,8 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { siteConfig } from "@/lib/config";
+import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/Input";
 
 export default function ContactPage() {
   const [activeTab, setActiveTab] = useState<"inquiry" | "visit">("inquiry");
@@ -132,7 +134,7 @@ export default function ContactPage() {
                 href="https://maps.google.com/?q=Shakya+Gallery+Kathmandu"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block font-sans text-xs tracking-[0.2em] uppercase border-b border-black/30 hover:border-black transition-colors pb-1"
+                className="inline-block font-sans text-xs tracking-luxury-wide uppercase border-b border-black/30 hover:border-black transition-colors pb-1"
               >
                 View on Map
               </a>
@@ -185,12 +187,12 @@ export default function ContactPage() {
                           setActiveTab(option as any);
                           setFormData({ ...formData, interest: option });
                         }}
-                        className={`font-sans text-[10px] tracking-[0.2em] uppercase px-6 py-3 border transition-all duration-300
+                        className={`font-sans text-tiny tracking-luxury-wide uppercase px-6 py-3 border transition-all duration-300
                         ${formData.interest === option ? "border-soft-black bg-soft-black text-white" : "border-black/10 text-gray-500 hover:border-black/30"}
                       `}
                       >
                         {option}
-                      </button> // ... continued
+                      </button> 
                     ),
                   )}
                 </div>
@@ -209,10 +211,10 @@ export default function ContactPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="font-sans text-[10px] tracking-[0.2em] text-gray-400 uppercase">
+                  <label className="font-sans text-tiny tracking-luxury-wide text-gray-400 uppercase">
                     Name
                   </label>
-                  <input
+                  <Input
                     name="name"
                     required
                     minLength={2}
@@ -220,29 +222,29 @@ export default function ContactPage() {
                     value={formData.name}
                     onChange={handleChange}
                     type="text"
-                    className="w-full border-b border-black/20 py-2 font-serif text-xl text-soft-black focus:border-black outline-none bg-transparent placeholder:text-black/60"
+                    className="w-full text-xl py-2"
                     placeholder="Your Name"
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="font-sans text-[10px] tracking-[0.2em] text-gray-400 uppercase">
+                  <label className="font-sans text-tiny tracking-luxury-wide text-gray-400 uppercase">
                     Email
                   </label>
-                  <input
+                  <Input
                     name="email"
                     required
                     maxLength={150}
                     value={formData.email}
                     onChange={handleChange}
                     type="email"
-                    className="w-full border-b border-black/20 py-2 font-serif text-xl text-soft-black focus:border-black outline-none bg-transparent placeholder:text-black/60"
+                    className="w-full text-xl py-2"
                     placeholder="email@address.com"
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <label className="font-sans text-[10px] tracking-[0.2em] text-gray-400 uppercase">
+                <label className="font-sans text-tiny tracking-luxury-wide text-gray-400 uppercase">
                   Message
                 </label>
                 <textarea
@@ -253,24 +255,21 @@ export default function ContactPage() {
                   value={formData.message}
                   onChange={handleChange}
                   rows={4}
-                  className="w-full border-b border-black/20 py-2 font-serif text-xl text-soft-black focus:border-black outline-none bg-transparent resize-none placeholder:text-black/60"
+                  className="w-full border-b border-black/10 py-2 font-serif text-xl text-soft-black focus:border-soft-black outline-none bg-transparent resize-none placeholder:text-muted-foreground transition-colors"
                   placeholder="Tell us about your collection..."
                 />
               </div>
 
               <div className="pt-4">
-                <button
+                <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="group flex items-center gap-4 text-soft-black disabled:opacity-50"
+                  variant="default"
+                  animation="slide"
+                  className="w-full md:w-auto"
                 >
-                  <span className="font-sans text-xs tracking-[0.3em] uppercase border-b border-black pb-1 group-hover:border-gray-400 transition-colors">
-                    {isSubmitting ? "Sending..." : "Send Message"}
-                  </span>
-                  <span className="text-xl transform group-hover:translate-x-2 transition-transform duration-300">
-                    →
-                  </span>
-                </button>
+                  {isSubmitting ? "Sending..." : "Send Message"}
+                </Button>
               </div>
             </form>
           )}

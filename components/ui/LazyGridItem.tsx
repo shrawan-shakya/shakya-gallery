@@ -39,7 +39,7 @@ export function LazyGridItem({
         ? children
         : fallback || (
             <div
-              className="w-full bg-[#F9F9F9] shadow-sm transition-all duration-700"
+              className="w-full bg-bone-dark shadow-sm transition-all duration-700"
               style={{ aspectRatio: `${aspectRatio}` }}
             />
           )}
