@@ -118,7 +118,7 @@ export function CollectionClient({
   };
 
   return (
-    <div className="flex flex-col lg:flex-row gap-12 lg:gap-16">
+    <div className="flex flex-col lg:flex-row gap-8">
       {/* MOBILE FILTER BUTTON */}
       <div className="lg:hidden mb-12 flex justify-between items-baseline border-b border-black/5 pb-4">
         <button
@@ -171,10 +171,10 @@ export function CollectionClient({
         )}
       </AnimatePresence>
 
-      <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 w-full">
+      <div className="flex flex-col lg:flex-row gap-8 w-full">
         {/* DESKTOP SIDEBAR */}
         <aside
-          className="hidden lg:block w-64 flex-shrink-0 sticky top-32 h-[calc(100vh-8rem)] overflow-y-auto custom-scrollbar"
+          className="hidden lg:block w-52 flex-shrink-0 sticky top-32 h-[calc(100vh-8rem)] overflow-y-auto custom-scrollbar"
           data-lenis-prevent
         >
           <div className="pb-8">

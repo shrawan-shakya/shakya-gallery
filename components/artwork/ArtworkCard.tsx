@@ -133,7 +133,6 @@ export function ArtworkCard({
                   showPrice={art.showPrice}
                   startingPrice={art.startingPrice}
                   showButton={false}
-                  className={art.aspectRatio > 1.1 ? "md:w-[60%]" : ""}
                 />
               </div>
             </div>
@@ -246,7 +245,6 @@ export function ArtworkCard({
               startingPrice={art.startingPrice}
               showButton={false}
               showMedium={false}
-              className={art.aspectRatio > 1.1 ? "md:w-[60%]" : ""}
             />
           </div>
         </Link>
