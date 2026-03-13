@@ -3,6 +3,7 @@ import { Resend } from "resend";
 import { createClient } from "next-sanity";
 import { NewsletterWelcomeEmail } from "@/components/emails/NewsletterWelcomeEmail";
 import { z } from "zod";
+import { projectId, dataset } from "@/sanity/env";
 
 // 1. ZOD VALIDATION
 const NewsletterSchema = z.object({
@@ -11,12 +12,14 @@ const NewsletterSchema = z.object({
 
 // 2. SANITY ADMIN CLIENT (Requires Token)
 const adminClient = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
+  projectId,
+  dataset,
   apiVersion: "2024-03-01",
   useCdn: false,
   token: process.env.SANITY_API_TOKEN, // Critical: Need this for mutations
 });
+
+export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
   try {
@@ -36,6 +39,10 @@ export async function POST(request: Request) {
 
     const { email } = result.data;
 
+    if (!process.env.SANITY_API_TOKEN) {
+      console.error("Newsletter Error: Missing SANITY_API_TOKEN");
+    }
+
     // 3. CHECK FOR DUPLICATE
     const existing = await adminClient.fetch(
       `*[_type == "subscriber" && email == $email][0]`,
@@ -43,7 +50,6 @@ export async function POST(request: Request) {
     );
 
     if (existing) {
-      // Silently succeed to avoid user confusion, or return custom message
       return NextResponse.json({
         success: true,
         message: "You are already a member of the Circle.",
@@ -51,13 +57,23 @@ export async function POST(request: Request) {
     }
 
     // 4. CREATE SUBSCRIBER IN SANITY
-    await adminClient.create({
-      _type: "subscriber",
-      email,
-      subscribedAt: new Date().toISOString(),
-      optInStatus: true,
-      source: "Website Footer",
-    });
+    try {
+      await adminClient.create({
+        _type: "subscriber",
+        email,
+        subscribedAt: new Date().toISOString(),
+        optInStatus: true,
+        source: "Website Footer",
+      });
+    } catch (sanityError) {
+      console.error("Newsletter Sanity Error:", sanityError);
+      // We continue even if Sanity fails, so we can at least try to send the email
+      // OR we can fail here. Let's fail for data integrity.
+      return NextResponse.json(
+        { success: false, message: "Database error. Please try again later." },
+        { status: 500 },
+      );
+    }
 
     // 5. SEND WELCOME EMAIL VIA RESEND
     const resendApiKey = process.env.RESEND_API_KEY;
@@ -65,20 +81,30 @@ export async function POST(request: Request) {
       const resend = new Resend(resendApiKey);
 
       // To User: Welcome
-      await resend.emails.send({
+      const { error: userEmailError } = await resend.emails.send({
         from: "Shakya Gallery <concierge@shakyagallery.com>",
         to: [email],
         subject: "Welcome to the Collector's Circle",
         react: NewsletterWelcomeEmail(),
       });
 
+      if (userEmailError) {
+        console.error("Newsletter Resend (User) Error:", userEmailError);
+      }
+
       // To Admin: Notification
-      await resend.emails.send({
+      const { error: adminEmailError } = await resend.emails.send({
         from: "Shakya Gallery System <system@shakyagallery.com>",
         to: ["mag.boudha@gmail.com"],
         subject: `New Collector Joined: ${email}`,
         text: `A new collector has joined the circle: ${email}\nSource: Website Footer\nTimestamp: ${new Date().toLocaleString()}`,
       });
+
+      if (adminEmailError) {
+        console.error("Newsletter Resend (Admin) Error:", adminEmailError);
+      }
+    } else {
+      console.error("Newsletter Error: Missing RESEND_API_KEY");
     }
 
     return NextResponse.json({
@@ -86,9 +112,9 @@ export async function POST(request: Request) {
       message: "Welcome to the Collector's Circle.",
     });
   } catch (error) {
-    console.error("Newsletter API Error:", error);
+    console.error("Newsletter API General Error:", error);
     return NextResponse.json(
-      { success: false, message: "Internal Server Error" },
+      { success: false, message: "Something went wrong. Please try again soon." },
       { status: 500 },
     );
   }
