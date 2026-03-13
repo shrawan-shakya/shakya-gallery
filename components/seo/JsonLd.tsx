@@ -1,14 +1,14 @@
-import React from 'react';
+import React from "react";
 
 type JsonLdProps = {
-    data: Record<string, any>;
+  data: Record<string, any>;
 };
 
 export const JsonLd = ({ data }: JsonLdProps) => {
-    return (
-        <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
-        />
-    );
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+    />
+  );
 };

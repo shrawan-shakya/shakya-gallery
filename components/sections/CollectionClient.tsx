@@ -10,31 +10,68 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { SanityImage } from "@/components/ui/SanityImage";
 import { LazyGridItem } from "@/components/ui/LazyGridItem";
 import { PriceOnRequest } from "@/components/ui/PriceOnRequest";
-
+import { ArtworkCard } from "@/components/artwork/ArtworkCard";
 
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { FeaturedCollection } from "./FeaturedCollection";
 import { Price } from "@/components/ui/Price";
-import {
-  Artwork,
-  Category
-} from "@/lib/types";
+import { Artwork, Category } from "@/lib/types";
 
 import { useArtFilter } from "@/hooks/useArtFilter";
-import { accordion, staggerContainer, staggerItem } from "@/lib/motion-variants";
+import {
+  accordion,
+  staggerContainer,
+  staggerItem,
+} from "@/lib/motion-variants";
 
 // --- ICONS ---
 const FrameIcon = ({ className }: { className?: string }) => (
-  <svg width="16" height="16" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-    <rect x="1" y="1" width="16" height="16" stroke="currentColor" strokeWidth="1.5" />
-    <rect x="4" y="4" width="10" height="10" stroke="currentColor" strokeWidth="1" opacity="0.6" />
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 18 18"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+  >
+    <rect
+      x="1"
+      y="1"
+      width="16"
+      height="16"
+      stroke="currentColor"
+      strokeWidth="1.5"
+    />
+    <rect
+      x="4"
+      y="4"
+      width="10"
+      height="10"
+      stroke="currentColor"
+      strokeWidth="1"
+      opacity="0.6"
+    />
   </svg>
 );
 
 const CanvasIcon = ({ className }: { className?: string }) => (
-  <svg width="16" height="16" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-    <rect x="1" y="1" width="16" height="16" stroke="currentColor" strokeWidth="1.5" />
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 18 18"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+  >
+    <rect
+      x="1"
+      y="1"
+      width="16"
+      height="16"
+      stroke="currentColor"
+      strokeWidth="1.5"
+    />
   </svg>
 );
 
@@ -43,7 +80,7 @@ const FilterSection = ({
   title,
   isOpen,
   onToggle,
-  children
+  children,
 }: {
   title: string;
   isOpen: boolean;
@@ -72,9 +109,7 @@ const FilterSection = ({
             exit="exit"
             className="overflow-hidden"
           >
-            <div className="pb-6 pt-1 flex flex-col gap-3">
-              {children}
-            </div>
+            <div className="pb-6 pt-1 flex flex-col gap-3">{children}</div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -116,7 +151,6 @@ const FilterPanel = ({
 }) => {
   return (
     <>
-
       {Object.entries(categoriesByType).map(([type, titles]) => (
         <FilterSection
           key={type}
@@ -136,14 +170,20 @@ const FilterPanel = ({
                 `}
               >
                 <span>{title}</span>
-                <span className="text-[11px] opacity-60 group-hover/btn:opacity-100 transition-opacity ml-2">({count})</span>
+                <span className="text-[11px] opacity-60 group-hover/btn:opacity-100 transition-opacity ml-2">
+                  ({count})
+                </span>
               </button>
             );
           })}
         </FilterSection>
       ))}
 
-      <FilterSection title="Availability" isOpen={openSections["availability"]} onToggle={() => toggleSection("availability")}>
+      <FilterSection
+        title="Availability"
+        isOpen={openSections["availability"]}
+        onToggle={() => toggleSection("availability")}
+      >
         {["all", "available", "sold"].map((status) => (
           <button
             key={status}
@@ -157,10 +197,29 @@ const FilterPanel = ({
         ))}
       </FilterSection>
 
-      <FilterSection title="Sort" isOpen={openSections["sort"]} onToggle={() => toggleSection("sort")}>
-        <button onClick={() => setSortOption("newest")} className={`text-left font-sans text-xs tracking-[0.2em] uppercase py-1 ${sortOption === "newest" ? "text-soft-black font-semibold pl-2 border-l-2 border-soft-black" : "text-gray-500 hover:text-soft-black"}`}>Newest</button>
-        <button onClick={() => setSortOption("price_asc")} className={`text-left font-sans text-xs tracking-[0.2em] uppercase py-1 ${sortOption === "price_asc" ? "text-soft-black font-semibold pl-2 border-l-2 border-soft-black" : "text-gray-500 hover:text-soft-black"}`}>Price: Low to High</button>
-        <button onClick={() => setSortOption("price_desc")} className={`text-left font-sans text-xs tracking-[0.2em] uppercase py-1 ${sortOption === "price_desc" ? "text-soft-black font-semibold pl-2 border-l-2 border-soft-black" : "text-gray-500 hover:text-soft-black"}`}>Price: High to Low</button>
+      <FilterSection
+        title="Sort"
+        isOpen={openSections["sort"]}
+        onToggle={() => toggleSection("sort")}
+      >
+        <button
+          onClick={() => setSortOption("newest")}
+          className={`text-left font-sans text-xs tracking-[0.2em] uppercase py-1 ${sortOption === "newest" ? "text-soft-black font-semibold pl-2 border-l-2 border-soft-black" : "text-gray-500 hover:text-soft-black"}`}
+        >
+          Newest
+        </button>
+        <button
+          onClick={() => setSortOption("price_asc")}
+          className={`text-left font-sans text-xs tracking-[0.2em] uppercase py-1 ${sortOption === "price_asc" ? "text-soft-black font-semibold pl-2 border-l-2 border-soft-black" : "text-gray-500 hover:text-soft-black"}`}
+        >
+          Price: Low to High
+        </button>
+        <button
+          onClick={() => setSortOption("price_desc")}
+          className={`text-left font-sans text-xs tracking-[0.2em] uppercase py-1 ${sortOption === "price_desc" ? "text-soft-black font-semibold pl-2 border-l-2 border-soft-black" : "text-gray-500 hover:text-soft-black"}`}
+        >
+          Price: High to Low
+        </button>
       </FilterSection>
 
       <AnimatePresence>
@@ -177,7 +236,9 @@ const FilterPanel = ({
                 className="w-full text-left font-sans text-[11px] tracking-[0.2em] uppercase text-gray-400 hover:text-soft-black transition-colors flex justify-between items-center group"
               >
                 <span>Clear All Filters</span>
-                <span className="opacity-0 group-hover:opacity-100 transition-opacity">✕</span>
+                <span className="opacity-0 group-hover:opacity-100 transition-opacity">
+                  ✕
+                </span>
               </button>
             </div>
           </motion.div>
@@ -190,11 +251,11 @@ const FilterPanel = ({
 export function CollectionClient({
   artworks,
   allCategories,
-  initialCategory = null
+  initialCategory = null,
 }: {
-  artworks: Artwork[],
-  allCategories: Category[],
-  initialCategory?: string | null
+  artworks: Artwork[];
+  allCategories: Category[];
+  initialCategory?: string | null;
 }) {
   const {
     filteredArtworks,
@@ -225,7 +286,7 @@ export function CollectionClient({
   });
 
   const toggleSection = (key: string) => {
-    setOpenSections(prev => ({ ...prev, [key]: !prev[key] }));
+    setOpenSections((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
   // Lock body scroll when mobile drawer is open
@@ -235,7 +296,9 @@ export function CollectionClient({
     } else {
       document.body.style.overflow = "unset";
     }
-    return () => { document.body.style.overflow = "unset"; };
+    return () => {
+      document.body.style.overflow = "unset";
+    };
   }, [isMobileFilterOpen]);
 
   // --- GRID DISTRIBUTION ---
@@ -247,11 +310,14 @@ export function CollectionClient({
     return cols;
   }, [filteredArtworks, gridCols]);
 
-  const categoriesByType = allCategories.reduce((acc, cat) => {
-    if (!acc[cat.type]) acc[cat.type] = [];
-    acc[cat.type].push(cat.title);
-    return acc;
-  }, {} as Record<string, string[]>);
+  const categoriesByType = allCategories.reduce(
+    (acc, cat) => {
+      if (!acc[cat.type]) acc[cat.type] = [];
+      acc[cat.type].push(cat.title);
+      return acc;
+    },
+    {} as Record<string, string[]>,
+  );
 
   const filterProps = {
     searchQuery,
@@ -267,111 +333,11 @@ export function CollectionClient({
     toggleSection,
     categoryCounts,
     clearFilters,
-    hasActiveFilters
-  };
-
-  const renderArtworkCard = (art: Artwork, globalIndex: number) => {
-    const isPriority = globalIndex < 4;
-    return (
-      <LazyGridItem
-        key={art._id}
-        className="relative z-10 w-full"
-        rootMargin="1000px 0px"
-        aspectRatio={art.aspectRatio}
-        disabled={globalIndex < 4}
-      >
-        <motion.div
-          variants={staggerItem}
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true, margin: "600px" }}
-          layout
-          style={{ willChange: "transform, opacity" }}
-        >
-          <Link href={`/artwork/${art.slug}`} target="_blank" rel="noopener noreferrer" className="block cursor-pointer group/card">
-            <div className="relative group/image">
-              <SanityImage
-                source={art.image}
-                alt={art.title}
-                lqip={art.lqip}
-                aspectRatio={art.aspectRatio}
-                hasMat={showMat}
-                priority={isPriority}
-                imageClassName={cn(
-                  (art.status === "sold" || art.status === "private")
-                    ? "grayscale-[0.2] group-hover/image:grayscale group-hover/image:opacity-40"
-                    : "grayscale-[0.2] group-hover/image:grayscale-0"
-                )}
-              />
-              <div className="absolute inset-x-0 bottom-0 pointer-events-none p-2 md:p-6 bg-gradient-to-t from-black/40 via-black/10 to-transparent md:bg-none transition-opacity duration-500">
-                {/* SOLD BADGE: Center on Desktop, persistent bottom bar on Mobile */}
-                {art.status === "sold" && (
-                  <>
-                    {/* Desktop Only Hover Center */}
-                    <div className="hidden md:flex absolute inset-0 flex-col items-center justify-center opacity-0 group-hover/image:opacity-100 transition-opacity duration-500">
-                      <span className="font-serif font-bold italic text-3xl text-white bg-[#7D1818] shadow-xl -rotate-12 tracking-widest px-5 py-2">
-                        SOLD
-                      </span>
-
-                    </div>
-                    {/* Mobile Only Persistent Bottom */}
-                    <div className="md:hidden flex items-center justify-between w-full px-2">
-                      <span className="font-serif font-bold italic text-[11px] text-white bg-[#7D1818] px-2 py-0.5 tracking-wider">
-                        SOLD
-                      </span>
-                    </div>
-                  </>
-                )}
-
-                {/* PRICE BADGE: Bottom Center on Desktop Hover, persistent bottom bar on Mobile */}
-                {art.status === "available" && (
-                  <>
-                    {/* Desktop Hover */}
-                    <span className="hidden md:flex absolute bottom-8 left-1/2 -translate-x-1/2 bg-white/95 text-soft-black text-base font-sans tracking-[0.2em] px-6 py-3 opacity-0 group-hover/image:opacity-100 transition-opacity duration-500 backdrop-blur-md shadow-md border border-soft-black/10 whitespace-nowrap">
-                      {art.showPrice && art.price ? (
-                        <Price amount={art.price} />
-                      ) : (
-                        <PriceOnRequest startingPrice={art.startingPrice} variant="badge" />
-                      )}
-                    </span>
-                    {/* Mobile Persistent */}
-                    <div className="md:hidden flex justify-center w-full">
-                      <span className="flex items-center justify-center bg-white/90 text-soft-black text-[10px] font-sans leading-none tracking-[0.1em] px-3 py-1 min-h-[24px] backdrop-blur-sm shadow-sm border border-soft-black/5 whitespace-nowrap">
-                        {art.showPrice && art.price ? (
-                          <Price amount={art.price} />
-                        ) : (
-                          <PriceOnRequest startingPrice={art.startingPrice} variant="minimal" className="gap-1" />
-                        )}
-                      </span>
-                    </div>
-                  </>
-                )}
-              </div>
-            </div>
-
-            <div className="mt-8">
-              <MuseumPlaque
-                title={art.title}
-                artist={art.artist}
-                year={art.year}
-                medium={art.material}
-                dimensions={art.dimensions}
-                price={art.price}
-                showPrice={art.showPrice}
-                startingPrice={art.startingPrice}
-                showButton={false}
-                showMedium={false}
-              />
-            </div>
-          </Link>
-        </motion.div>
-      </LazyGridItem>
-    );
+    hasActiveFilters,
   };
 
   return (
     <div className="flex flex-col lg:flex-row gap-12 lg:gap-16">
-
       {/* MOBILE FILTER BUTTON */}
       <div className="lg:hidden mb-12 flex justify-between items-baseline border-b border-black/5 pb-4">
         <button
@@ -399,20 +365,32 @@ export function CollectionClient({
           >
             <div className="flex justify-between items-center p-6 border-b border-black/5">
               <h2 className="font-serif text-3xl text-soft-black">Filters</h2>
-              <button onClick={() => setIsMobileFilterOpen(false)} className="p-2 hover:opacity-50 transition-opacity"><span className="font-sans text-xl">✕</span></button>
+              <button
+                onClick={() => setIsMobileFilterOpen(false)}
+                className="p-2 hover:opacity-50 transition-opacity"
+              >
+                <span className="font-sans text-xl">✕</span>
+              </button>
             </div>
-            <div className="flex-1 overflow-y-auto p-6 pb-32" data-lenis-prevent>
+            <div
+              className="flex-1 overflow-y-auto p-6 pb-32"
+              data-lenis-prevent
+            >
               <FilterPanel {...filterProps} />
             </div>
             <div className="p-6 border-t border-black/5 bg-bone">
-              <button onClick={() => setIsMobileFilterOpen(false)} className="w-full bg-soft-black text-white font-sans text-xs tracking-[0.3em] uppercase py-4 hover:bg-black/80 transition-colors">Show {filteredArtworks.length} Results</button>
+              <button
+                onClick={() => setIsMobileFilterOpen(false)}
+                className="w-full bg-soft-black text-white font-sans text-xs tracking-[0.3em] uppercase py-4 hover:bg-black/80 transition-colors"
+              >
+                Show {filteredArtworks.length} Results
+              </button>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
       <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 w-full">
-
         {/* DESKTOP SIDEBAR */}
         <aside
           className="hidden lg:block w-64 flex-shrink-0 sticky top-32 h-[calc(100vh-8rem)] overflow-y-auto custom-scrollbar"
@@ -420,7 +398,9 @@ export function CollectionClient({
         >
           <div className="pb-8">
             <div className="mb-8 pb-4 border-b border-black/5">
-              <p className="font-sans text-[11px] tracking-widest text-gray-500 uppercase">{filteredArtworks.length} Results</p>
+              <p className="font-sans text-[11px] tracking-widest text-gray-500 uppercase">
+                {filteredArtworks.length} Results
+              </p>
             </div>
             <FilterPanel {...filterProps} />
           </div>
@@ -428,7 +408,6 @@ export function CollectionClient({
 
         {/* MAIN CONTENT AREA */}
         <div className="flex-1">
-
           {/* VIEW CONTROLS - Static Glass Pill */}
           <div className="hidden lg:flex justify-end mb-8 items-center gap-4 bg-bone/40 underline-offset-4 backdrop-blur-md border border-black/[0.03] px-6 py-3 rounded-full transition-all duration-500">
             <div className="flex items-center gap-2 lg:gap-4 lg:border-r lg:border-black/10 lg:pr-6 lg:mr-2">
@@ -436,43 +415,111 @@ export function CollectionClient({
                 onClick={() => setShowMat(true)}
                 className={cn(
                   "flex items-center gap-2 h-8 px-2 transition-all relative",
-                  showMat ? "text-soft-black font-semibold" : "text-gray-400 hover:text-gray-600"
+                  showMat
+                    ? "text-soft-black font-semibold"
+                    : "text-gray-400 hover:text-gray-600",
                 )}
                 title="View with Frame"
               >
                 <FrameIcon />
-                <span className="hidden sm:block font-sans text-[11px] tracking-widest uppercase whitespace-nowrap">View with Frame</span>
-                {showMat && <motion.div layoutId="collection-active-mat" className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-soft-black" />}
+                <span className="hidden sm:block font-sans text-[11px] tracking-widest uppercase whitespace-nowrap">
+                  View with Frame
+                </span>
+                {showMat && (
+                  <motion.div
+                    layoutId="collection-active-mat"
+                    className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-soft-black"
+                  />
+                )}
               </button>
               <button
                 onClick={() => setShowMat(false)}
                 className={cn(
                   "flex items-center gap-2 h-8 px-2 transition-all relative",
-                  !showMat ? "text-soft-black font-semibold" : "text-gray-400 hover:text-gray-600"
+                  !showMat
+                    ? "text-soft-black font-semibold"
+                    : "text-gray-400 hover:text-gray-600",
                 )}
                 title="Canvas Only"
               >
                 <CanvasIcon />
-                <span className="hidden sm:block font-sans text-[11px] tracking-widest uppercase whitespace-nowrap">Canvas Only</span>
-                {!showMat && <motion.div layoutId="collection-active-mat" className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-soft-black" />}
+                <span className="hidden sm:block font-sans text-[11px] tracking-widest uppercase whitespace-nowrap">
+                  Canvas Only
+                </span>
+                {!showMat && (
+                  <motion.div
+                    layoutId="collection-active-mat"
+                    className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-soft-black"
+                  />
+                )}
               </button>
             </div>
 
             <div className="hidden sm:flex items-center gap-2">
-              <span className="hidden lg:block font-sans text-[11px] tracking-widest text-gray-400 uppercase mr-2">View</span>
-              <button onClick={() => setGridCols(2)} className={`p-2 transition-colors duration-300 ${gridCols === 2 ? "text-soft-black" : "text-gray-300 hover:text-gray-500"}`}>
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <span className="hidden lg:block font-sans text-[11px] tracking-widest text-gray-400 uppercase mr-2">
+                View
+              </span>
+              <button
+                onClick={() => setGridCols(2)}
+                className={`p-2 transition-colors duration-300 ${gridCols === 2 ? "text-soft-black" : "text-gray-300 hover:text-gray-500"}`}
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 18 18"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
                   <title>2 Columns</title>
-                  <rect x="0.5" y="0.5" width="7" height="17" stroke="currentColor" />
-                  <rect x="10.5" y="0.5" width="7" height="17" stroke="currentColor" />
+                  <rect
+                    x="0.5"
+                    y="0.5"
+                    width="7"
+                    height="17"
+                    stroke="currentColor"
+                  />
+                  <rect
+                    x="10.5"
+                    y="0.5"
+                    width="7"
+                    height="17"
+                    stroke="currentColor"
+                  />
                 </svg>
               </button>
-              <button onClick={() => setGridCols(3)} className={`p-2 transition-colors duration-300 ${gridCols === 3 ? "text-soft-black" : "text-gray-300 hover:text-gray-500"}`}>
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <button
+                onClick={() => setGridCols(3)}
+                className={`p-2 transition-colors duration-300 ${gridCols === 3 ? "text-soft-black" : "text-gray-300 hover:text-gray-500"}`}
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 18 18"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
                   <title>3 Columns</title>
-                  <rect x="1" y="0.5" width="4" height="17" stroke="currentColor" />
-                  <rect x="7" y="0.5" width="4" height="17" stroke="currentColor" />
-                  <rect x="13" y="0.5" width="4" height="17" stroke="currentColor" />
+                  <rect
+                    x="1"
+                    y="0.5"
+                    width="4"
+                    height="17"
+                    stroke="currentColor"
+                  />
+                  <rect
+                    x="7"
+                    y="0.5"
+                    width="4"
+                    height="17"
+                    stroke="currentColor"
+                  />
+                  <rect
+                    x="13"
+                    y="0.5"
+                    width="4"
+                    height="17"
+                    stroke="currentColor"
+                  />
                 </svg>
               </button>
             </div>
@@ -488,7 +535,15 @@ export function CollectionClient({
                 {/* Mobile 1-Column Layout */}
                 <div className="flex w-full flex-col gap-12 md:hidden">
                   <AnimatePresence mode="popLayout">
-                    {filteredArtworks.map((art, index) => renderArtworkCard(art, index))}
+                    {filteredArtworks.map((art, index) => (
+                      <ArtworkCard
+                        key={art._id}
+                        art={art}
+                        globalIndex={index}
+                        showMat={showMat}
+                        layout="grid"
+                      />
+                    ))}
                   </AnimatePresence>
                 </div>
 
@@ -501,13 +556,20 @@ export function CollectionClient({
                     <AnimatePresence mode="popLayout">
                       {columnArtworks.map((art: Artwork, index: number) => {
                         const globalIndex = index * gridCols + colIndex;
-                        return renderArtworkCard(art, globalIndex);
+                        return (
+                          <ArtworkCard
+                            key={art._id}
+                            art={art}
+                            globalIndex={globalIndex}
+                            showMat={showMat}
+                            layout="grid"
+                          />
+                        );
                       })}
                     </AnimatePresence>
                   </div>
                 ))}
               </>
-
             ) : (
               <div className="w-full">
                 <FeaturedCollection
@@ -531,5 +593,3 @@ export function CollectionClient({
     </div>
   );
 }
-
-

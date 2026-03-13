@@ -28,11 +28,23 @@ export const metadata: Metadata = {
     default: "Shakya Gallery: Original Nepalese Fine Art & Buddha Paintings",
     template: "%s | SHAKYA Gallery Nepal",
   },
-  description: "Discover and buy original fine art in Nepal. SHAKYA Gallery features a curated collection of abstract, landscape, and portrait paintings by master Nepali artists. Secure global shipping available.",
-  keywords: ["Buy Art Nepal", "Art Gallery Kathmandu", "Fine Art Nepal", "Nepali Artists", "Original Paintings Nepal", "Abstract Art Nepal", "Landscape Paintings Nepal", "Art Online Nepal", "Shakya Gallery"],
+  description:
+    "Discover and buy original fine art in Nepal. SHAKYA Gallery features a curated collection of abstract, landscape, and portrait paintings by master Nepali artists. Secure global shipping available.",
+  keywords: [
+    "Buy Art Nepal",
+    "Art Gallery Kathmandu",
+    "Fine Art Nepal",
+    "Nepali Artists",
+    "Original Paintings Nepal",
+    "Abstract Art Nepal",
+    "Landscape Paintings Nepal",
+    "Art Online Nepal",
+    "Shakya Gallery",
+  ],
   openGraph: {
     title: "SHAKYA | Exclusive Fine Arts Gallery in Nepal",
-    description: "Browse a curated collection of fine art paintings that capture emotion and beauty. Discover expressive abstracts, serene landscapes, and intimate portraits.",
+    description:
+      "Browse a curated collection of fine art paintings that capture emotion and beauty. Discover expressive abstracts, serene landscapes, and intimate portraits.",
     url: "https://shakyagallery.com",
     siteName: "Shakya Gallery",
     locale: "en_US",
@@ -52,7 +64,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "SHAKYA | Exclusive Fine Arts Gallery in Nepal",
-    description: "Browse a curated collection of fine art paintings that capture emotion and beauty. Capturing emotion through expressive abstracts, landscapes, and portraits.",
+    description:
+      "Browse a curated collection of fine art paintings that capture emotion and beauty. Capturing emotion through expressive abstracts, landscapes, and portraits.",
     images: ["/hero-1.jpg"], // Fallback to hero image
   },
   verification: {
@@ -73,10 +86,10 @@ export default function RootLayout({
         <CanonicalLink />
       </head>
       {/* 3. Added flex column layout so footer pushes to bottom */}
-      <body className={`${cormorant.variable} ${montserrat.variable} bg-bone text-soft-black antialiased flex flex-col min-h-screen`}>
-        <ClientLayout>
-          {children}
-        </ClientLayout>
+      <body
+        className={`${cormorant.variable} ${montserrat.variable} bg-bone text-soft-black antialiased flex flex-col min-h-screen`}
+      >
+        <ClientLayout>{children}</ClientLayout>
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID || ""} />
         <SanityLive />
       </body>

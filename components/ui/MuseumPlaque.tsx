@@ -28,7 +28,7 @@ export function MuseumPlaque({
   startingPrice,
   showButton = true,
   showMedium = true,
-  className
+  className,
 }: MuseumPlaqueProps) {
   const isSold = false; // We can pass this as a prop if needed, or infer from context
   return (
@@ -40,7 +40,7 @@ export function MuseumPlaque({
         "shadow-[0_10px_25px_rgba(0,0,0,0.06)]",
         "px-2 py-3 md:px-8 md:py-6 w-[90%] md:w-[80%]",
         "overflow-hidden isolation-auto backface-hidden",
-        className
+        className,
       )}
     >
       {/* Light Sweep */}
@@ -56,7 +56,6 @@ export function MuseumPlaque({
 
       {/* Content Layer */}
       <div className="relative z-10 flex flex-col items-center gap-1.5">
-
         {/* Artist */}
         <h3 className="font-sans text-[10px] md:text-[11px] tracking-[0.2em] md:tracking-[0.45em] uppercase text-[#666666] font-semibold whitespace-nowrap">
           {artist}
@@ -79,7 +78,8 @@ export function MuseumPlaque({
 
         {/* Year */}
         <p className="font-sans text-[10px] md:text-[11px] tracking-[0.1em] md:tracking-[0.2em] uppercase text-[#444444] font-medium">
-          {dimensions ? `${dimensions} • ` : ""}{year}
+          {dimensions ? `${dimensions} • ` : ""}
+          {year}
         </p>
 
         {/* Pricing removed from plaque to keep it clean */}
@@ -92,7 +92,6 @@ export function MuseumPlaque({
             </span>
           </button>
         )}
-
       </div>
     </div>
   );

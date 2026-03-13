@@ -6,98 +6,112 @@ import { Globe } from "lucide-react";
 import { useCartStore } from "@/lib/store/useCartStore";
 
 interface ArtworkActionsProps {
-    artwork: any;
-    isSold?: boolean;
+  artwork: any;
+  isSold?: boolean;
 }
 
-export function ArtworkActions({ artwork, isSold = false }: ArtworkActionsProps) {
-    const [isShippingOpen, setIsShippingOpen] = useState(false);
-    const [mounted, setMounted] = useState(false);
+export function ArtworkActions({
+  artwork,
+  isSold = false,
+}: ArtworkActionsProps) {
+  const [isShippingOpen, setIsShippingOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
-    const { items, addItem, openCart } = useCartStore();
+  const { items, addItem, openCart } = useCartStore();
 
-    useEffect(() => {
-        setMounted(true);
-    }, []);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
-    const isInCart = mounted && artwork?._id ? items.some((item) => item._id === artwork._id) : false;
+  const isInCart =
+    mounted && artwork?._id
+      ? items.some((item) => item._id === artwork._id)
+      : false;
 
-    const handleActionClick = () => {
-        if (!artwork?._id) return;
+  const handleActionClick = () => {
+    if (!artwork?._id) return;
 
-        if (isInCart) {
-            openCart();
-            return;
-        }
+    if (isInCart) {
+      openCart();
+      return;
+    }
 
-        addItem({
-            _id: artwork._id,
-            title: artwork.title,
-            artist: artwork.artist,
-            year: artwork.year,
-            price: artwork.price,
-            showPrice: artwork.showPrice,
-            startingPrice: artwork.startingPrice,
-            imageUrl: artwork.mainImage?.url || "",
-        });
+    addItem({
+      _id: artwork._id,
+      title: artwork.title,
+      artist: artwork.artist,
+      year: artwork.year,
+      price: artwork.price,
+      showPrice: artwork.showPrice,
+      startingPrice: artwork.startingPrice,
+      imageUrl: artwork.mainImage?.url || "",
+    });
 
-        openCart();
-    };
+    openCart();
+  };
 
-    const handleInquireFromShipping = () => {
-        setIsShippingOpen(false);
-        setTimeout(() => {
-            handleActionClick();
-        }, 300);
-    };
+  const handleInquireFromShipping = () => {
+    setIsShippingOpen(false);
+    setTimeout(() => {
+      handleActionClick();
+    }, 300);
+  };
 
-    return (
-        <div className="flex flex-col gap-6 w-full">
-            {/* 1. PRIMARY INQUIRY TRIGGER */}
-            <div className="fixed bottom-0 left-0 right-0 z-50 p-4 bg-white/95 backdrop-blur-md border-t border-black/5 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] lg:relative lg:bottom-auto lg:left-auto lg:right-auto lg:z-auto lg:p-0 lg:bg-transparent lg:backdrop-blur-none lg:border-none lg:shadow-none transition-all duration-300">
-                <button
-                    onClick={handleActionClick}
-                    disabled={!mounted || isSold || !artwork?._id}
-                    className="group w-full inline-flex items-center justify-center gap-4 px-8 py-4 bg-soft-black text-white hover:bg-black transition-all duration-300 cursor-pointer shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                    <span className="font-sans text-[10px] md:text-xs tracking-[0.3em] uppercase">
-                        {isSold ? "Contact Concierge" : (isInCart ? "View Your Selection" : "Add to Inquiry Selection")}
-                    </span>
-                    {!isSold && (
-                        <span className="text-lg transform group-hover:translate-x-2 transition-transform duration-500">
-                            →
-                        </span>
-                    )}
-                </button>
+  return (
+    <div className="flex flex-col gap-6 w-full">
+      {/* 1. PRIMARY INQUIRY TRIGGER */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 p-4 bg-white/95 backdrop-blur-md border-t border-black/5 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] lg:relative lg:bottom-auto lg:left-auto lg:right-auto lg:z-auto lg:p-0 lg:bg-transparent lg:backdrop-blur-none lg:border-none lg:shadow-none transition-all duration-300">
+        <button
+          onClick={handleActionClick}
+          disabled={!mounted || isSold || !artwork?._id}
+          className="group w-full inline-flex items-center justify-center gap-4 px-8 py-4 bg-soft-black text-white hover:bg-black transition-all duration-300 cursor-pointer shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          <span className="font-sans text-[10px] md:text-xs tracking-[0.3em] uppercase">
+            {isSold
+              ? "Contact Concierge"
+              : isInCart
+                ? "View Your Selection"
+                : "Add to Inquiry Selection"}
+          </span>
+          {!isSold && (
+            <span className="text-lg transform group-hover:translate-x-2 transition-transform duration-500">
+              →
+            </span>
+          )}
+        </button>
+      </div>
+
+      {/* 2. SHIPPING ESTIMATE TRIGGER (OBVIOUS AFFORDANCE) */}
+      {!isSold && (
+        <div className="flex flex-col gap-3">
+          <button
+            onClick={() => setIsShippingOpen(true)}
+            className="group w-full inline-flex items-center justify-between px-6 py-4 border border-black/10 bg-white hover:border-black/30 hover:shadow-sm transition-all duration-300 cursor-pointer"
+          >
+            <div className="flex items-center gap-3">
+              <Globe className="w-4 h-4 text-gray-500 group-hover:text-soft-black transition-colors" />
+              <span className="font-sans text-[10px] tracking-[0.2em] uppercase text-soft-black">
+                Estimate Worldwide Shipping
+              </span>
             </div>
+            <span className="text-gray-400 group-hover:text-soft-black transform group-hover:translate-x-1 transition-all">
+              →
+            </span>
+          </button>
 
-            {/* 2. SHIPPING ESTIMATE TRIGGER (OBVIOUS AFFORDANCE) */}
-            {!isSold && (
-                <div className="flex flex-col gap-3">
-                    <button
-                        onClick={() => setIsShippingOpen(true)}
-                        className="group w-full inline-flex items-center justify-between px-6 py-4 border border-black/10 bg-white hover:border-black/30 hover:shadow-sm transition-all duration-300 cursor-pointer"
-                    >
-                        <div className="flex items-center gap-3">
-                            <Globe className="w-4 h-4 text-gray-500 group-hover:text-soft-black transition-colors" />
-                            <span className="font-sans text-[10px] tracking-[0.2em] uppercase text-soft-black">Estimate Worldwide Shipping</span>
-                        </div>
-                        <span className="text-gray-400 group-hover:text-soft-black transform group-hover:translate-x-1 transition-all">→</span>
-                    </button>
-
-                    <p className="font-sans text-[9px] text-gray-500 tracking-wider uppercase text-center italic">
-                        Complimentary on orders over $1,500
-                    </p>
-                </div>
-            )}
-
-            {/* 3. THE SHIPPING MODAL */}
-            <ShippingModal
-                price={artwork.price}
-                isOpen={isShippingOpen}
-                onClose={() => setIsShippingOpen(false)}
-                onInquire={handleInquireFromShipping}
-            />
+          <p className="font-sans text-[9px] text-gray-500 tracking-wider uppercase text-center italic">
+            Complimentary on orders over $1,500
+          </p>
         </div>
-    );
+      )}
+
+      {/* 3. THE SHIPPING MODAL */}
+      <ShippingModal
+        price={artwork.price}
+        isOpen={isShippingOpen}
+        onClose={() => setIsShippingOpen(false)}
+        onInquire={handleInquireFromShipping}
+      />
+    </div>
+  );
 }

@@ -7,7 +7,8 @@ import { LoadingGrid } from "@/components/ui/LoadingGrid";
 
 export const metadata: Metadata = {
   title: "Buy Original Fine Art in Nepal | Abstracts, Landscapes & Portraits",
-  description: "Browse and buy original fine art paintings from Nepal's master artists. Our collection features exclusive abstracts, serene landscapes, and intimate portraits. Certified authenticity and secure global shipping.",
+  description:
+    "Browse and buy original fine art paintings from Nepal's master artists. Our collection features exclusive abstracts, serene landscapes, and intimate portraits. Certified authenticity and secure global shipping.",
 };
 
 export const revalidate = 0;
@@ -39,16 +40,17 @@ export default async function CollectionPage({ searchParams }: Props) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    "name": "Shakya Gallery Collection",
-    "description": "Explore our curated collection of fine art paintings, including abstracts, landscapes, and portraits.",
-    "url": "https://shakyagallery.com/collection",
-    "numberOfItems": artworks.length,
-    "itemListElement": artworks.slice(0, 50).map((art: any, index: number) => ({
+    name: "Shakya Gallery Collection",
+    description:
+      "Explore our curated collection of fine art paintings, including abstracts, landscapes, and portraits.",
+    url: "https://shakyagallery.com/collection",
+    numberOfItems: artworks.length,
+    itemListElement: artworks.slice(0, 50).map((art: any, index: number) => ({
       "@type": "ListItem",
-      "position": index + 1,
-      "url": `https://shakyagallery.com/artwork/${art.slug}`,
-      "name": art.title
-    }))
+      position: index + 1,
+      url: `https://shakyagallery.com/artwork/${art.slug}`,
+      name: art.title,
+    })),
   };
 
   return (
@@ -59,9 +61,14 @@ export default async function CollectionPage({ searchParams }: Props) {
       />
       <div className="min-h-screen bg-bone pt-32 pb-20 px-6 md:px-12">
         <div className="mb-12 md:mb-16 flex flex-col items-center text-center">
-          <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-soft-black mb-4">The Collection</h1>
+          <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-soft-black mb-4">
+            The Collection
+          </h1>
           <p className="font-sans text-sm md:text-base text-gray-600 max-w-2xl leading-relaxed">
-            Browse and buy original fine art paintings from Nepal's master artists. Our collection features exclusive abstracts, serene landscapes, and intimate portraits. Certified authenticity and secure global shipping.
+            Browse and buy original fine art paintings from Nepal's master
+            artists. Our collection features exclusive abstracts, serene
+            landscapes, and intimate portraits. Certified authenticity and
+            secure global shipping.
           </p>
         </div>
         <Suspense fallback={<LoadingGrid />}>

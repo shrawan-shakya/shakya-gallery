@@ -7,36 +7,37 @@
  * https://github.com/sanity-io/next-sanity
  */
 
-import { NextStudio } from 'next-sanity/studio'
-import config from '../../../sanity.config'
-import { cookies } from 'next/headers'
-import { notFound } from 'next/navigation'
-import { Metadata } from 'next'
+import { NextStudio } from "next-sanity/studio";
+import config from "../../../sanity.config";
+import { cookies } from "next/headers";
+import { notFound } from "next/navigation";
+import { Metadata } from "next";
 
 // The secret word to unlock the studio
 const UNLOCK_KEY = process.env.STUDIO_UNLOCK_KEY || "shakyagallerystudio";
 
-export const dynamic = 'force-dynamic'
+export const dynamic = "force-dynamic";
 
 // Ensure search engines never index the studio
 export const metadata: Metadata = {
-  title: 'Admin Studio | SHAKYA',
+  title: "Admin Studio | SHAKYA",
   robots: {
     index: false,
     follow: false,
     nocache: true,
-  }
-}
+  },
+};
 
 export default async function StudioPage({
   searchParams,
 }: {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const sParams = await searchParams;
   const cookieStore = await cookies();
 
-  const hasAccessCookie = cookieStore.get('SHAKYA_STUDIO_ACCESS')?.value === 'true';
+  const hasAccessCookie =
+    cookieStore.get("SHAKYA_STUDIO_ACCESS")?.value === "true";
   const isUnlocking = sParams.unlock === UNLOCK_KEY;
 
   // If no cookie and no secret key, return 404
@@ -50,7 +51,7 @@ export default async function StudioPage({
       {isUnlocking && (
         <script
           dangerouslySetInnerHTML={{
-            __html: `document.cookie = "SHAKYA_STUDIO_ACCESS=true; path=/; max-age=31536000; SameSite=Lax";`
+            __html: `document.cookie = "SHAKYA_STUDIO_ACCESS=true; path=/; max-age=31536000; SameSite=Lax";`,
           }}
         />
       )}

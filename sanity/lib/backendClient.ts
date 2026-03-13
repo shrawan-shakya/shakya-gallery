@@ -1,11 +1,11 @@
-import { createClient } from 'next-sanity'
+import { createClient } from "next-sanity";
 
-import { apiVersion, dataset, projectId } from '../env'
+import { apiVersion, dataset, projectId } from "../env";
 
 export const backendClient = createClient({
-    projectId,
-    dataset,
-    apiVersion,
-    useCdn: false, // Always false for mutations
-    token: process.env.SANITY_API_WRITE_TOKEN, // Required for mutations
-})
+  projectId,
+  dataset,
+  apiVersion,
+  useCdn: false, // Always false for mutations
+  token: process.env.SANITY_API_WRITE_TOKEN, // Required for mutations
+});

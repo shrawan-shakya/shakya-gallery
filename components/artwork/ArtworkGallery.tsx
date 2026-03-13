@@ -10,193 +10,204 @@ import { MediaLightbox } from "@/components/ui/MediaLightbox";
 import { ImageHoverZoom } from "@/components/ui/ImageHoverZoom";
 
 interface ImageType {
-    url: string;
-    aspectRatio: number;
+  url: string;
+  aspectRatio: number;
 }
 
 interface ArtworkGalleryProps {
-    mainImage: ImageType;
-    relatedImages: ImageType[] | null;
-    title: string;
-    orientation?: 'landscape' | 'portrait' | 'square';
+  mainImage: ImageType;
+  relatedImages: ImageType[] | null;
+  title: string;
+  orientation?: "landscape" | "portrait" | "square";
 }
 
 const getDescriptiveAlt = (title: string, index?: number) => {
-    const lowerTitle = title.toLowerCase();
-    const isBuddha = lowerTitle.includes('buddha') || lowerTitle.includes('zen');
+  const lowerTitle = title.toLowerCase();
+  const isBuddha = lowerTitle.includes("buddha") || lowerTitle.includes("zen");
 
-    if (isBuddha) {
-        // Targeted descriptive keywords for Buddha paintings
-        const keywords = [
-            "serene meditative Buddha painting with intricate textures",
-            "modern Zen statement piece featuring Buddha iconography",
-            "hand-painted Buddha artwork with rich gold and copper leaf accents",
-            "spiritual Nepalese fine art portraying enlightenment and peace",
-            "contemporary Buddha canvas for mindful interior design",
-            "authentic Himalayan Buddha portrait with traditional symbolic details"
-        ];
-        // Use index to vary the keywords for the gallery images
-        const keyword = keywords[(index || 0) % keywords.length];
-        return `Buy ${title} - ${keyword} at Shakya Gallery Nepal`;
-    }
+  if (isBuddha) {
+    // Targeted descriptive keywords for Buddha paintings
+    const keywords = [
+      "serene meditative Buddha painting with intricate textures",
+      "modern Zen statement piece featuring Buddha iconography",
+      "hand-painted Buddha artwork with rich gold and copper leaf accents",
+      "spiritual Nepalese fine art portraying enlightenment and peace",
+      "contemporary Buddha canvas for mindful interior design",
+      "authentic Himalayan Buddha portrait with traditional symbolic details",
+    ];
+    // Use index to vary the keywords for the gallery images
+    const keyword = keywords[(index || 0) % keywords.length];
+    return `Buy ${title} - ${keyword} at Shakya Gallery Nepal`;
+  }
 
-    return `Buy ${title} - Original fine art painting at Shakya Gallery Nepal`;
+  return `Buy ${title} - Original fine art painting at Shakya Gallery Nepal`;
 };
 
-export function ArtworkGallery({ mainImage, relatedImages, title, orientation }: ArtworkGalleryProps) {
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+export function ArtworkGallery({
+  mainImage,
+  relatedImages,
+  title,
+  orientation,
+}: ArtworkGalleryProps) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
 
-    // Combine main image and related images into one array for the gallery
-    const allImages = [mainImage, ...(relatedImages || [])];
-    const currentImage = allImages[currentIndex];
+  // Combine main image and related images into one array for the gallery
+  const allImages = [mainImage, ...(relatedImages || [])];
+  const currentImage = allImages[currentIndex];
 
-    // Determine effective orientation
-    const effectiveOrientation = orientation || (currentImage.aspectRatio > 1.1 ? 'landscape' : currentImage.aspectRatio < 0.9 ? 'portrait' : 'square');
+  // Determine effective orientation
+  const effectiveOrientation =
+    orientation ||
+    (currentImage.aspectRatio > 1.1
+      ? "landscape"
+      : currentImage.aspectRatio < 0.9
+        ? "portrait"
+        : "square");
 
-    const handleNext = () => {
-        setCurrentIndex((prev) => (prev + 1) % allImages.length);
-    };
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % allImages.length);
+  };
 
-    const handlePrev = () => {
-        setCurrentIndex((prev) => (prev - 1 + allImages.length) % allImages.length);
-    };
+  const handlePrev = () => {
+    setCurrentIndex((prev) => (prev - 1 + allImages.length) % allImages.length);
+  };
 
-    return (
-        <div className="flex flex-col gap-6 w-full">
-            {/* MAIN STAGE */}
-            <div className="relative w-full group">
-                <div className="relative w-full lg:h-[80vh] flex flex-col items-center justify-center transition-all duration-500 ease-in-out px-4">
-                    <div
-                        className={cn(
-                            "relative max-w-full max-h-full flex items-center justify-center transition-all duration-500 cursor-zoom-in group/image",
-                            // FINAL MOBILE-FIRST STRATEGY:
-                            // Mobile: All images are width-first (w-full h-auto) to fill the phone screen.
-                            // Desktop: Landscapes stay width-first. Portraits switch to height-first (lg:h-full lg:w-auto).
-                            effectiveOrientation === 'landscape'
-                                ? "w-full h-auto flex"
-                                : "w-full h-auto flex lg:h-full lg:w-auto lg:inline-grid"
-                        )}
-                        onClick={() => setIsLightboxOpen(true)}
-                    >
-                        {/* Zoom indicator removed for a cleaner minimal look, relying on cursor-zoom-in */}
-
-                        {currentIndex === 0 ? (
-                            <MuseumFrame
-                                aspectRatio={currentImage.aspectRatio}
-                                className={cn(
-                                    "transition-all duration-500",
-                                    effectiveOrientation === 'landscape'
-                                        ? "w-full h-auto"
-                                        : "w-full h-auto lg:h-full lg:w-auto"
-                                )}
-                            >
-                                <AnimatePresence mode="wait">
-                                    <motion.div
-                                        key={currentIndex}
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                        exit={{ opacity: 0 }}
-                                        transition={{ duration: 0.5 }}
-                                        className="absolute inset-0 w-full h-full"
-                                    >
-                                        <ImageHoverZoom
-                                            src={currentImage.url}
-                                            alt={getDescriptiveAlt(title, 0)}
-                                            aspectRatio={currentImage.aspectRatio}
-                                            priority
-                                            sizes="(max-width: 1024px) 100vw, 50vw"
-                                        />
-                                    </motion.div>
-                                </AnimatePresence>
-                            </MuseumFrame>
-                        ) : (
-                            <div
-                                className={cn(
-                                    "relative bg-bone shadow-md overflow-hidden",
-                                    effectiveOrientation === 'landscape'
-                                        ? "w-full h-auto"
-                                        : "w-full h-auto lg:h-full lg:w-auto"
-                                )}
-                                style={{ aspectRatio: currentImage.aspectRatio }}
-                            >
-                                <AnimatePresence mode="wait">
-                                    <motion.div
-                                        key={currentIndex}
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                        exit={{ opacity: 0 }}
-                                        transition={{ duration: 0.5 }}
-                                        className="absolute inset-0 w-full h-full"
-                                    >
-                                        <ImageHoverZoom
-                                            src={currentImage.url}
-                                            alt={getDescriptiveAlt(title, currentIndex)}
-                                            aspectRatio={currentImage.aspectRatio}
-                                            priority
-                                            sizes="(max-width: 1024px) 100vw, 50vw"
-                                            imageClassName="object-contain"
-                                        />
-                                    </motion.div>
-                                </AnimatePresence>
-                            </div>
-                        )}
-                    </div>
-                </div>
-
-                {/* Navigation Arrows */}
-                {allImages.length > 1 && (
-                    <>
-                        <button
-                            onClick={handlePrev}
-                            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 flex items-center justify-center rounded-full bg-white/80 hover:bg-white text-soft-black backdrop-blur-sm transition-all shadow-sm opacity-0 group-hover:opacity-100"
-                            aria-label="Previous image"
-                        >
-                            <ChevronLeft size={24} />
-                        </button>
-                        <button
-                            onClick={handleNext}
-                            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 flex items-center justify-center rounded-full bg-white/80 hover:bg-white text-soft-black backdrop-blur-sm transition-all shadow-sm opacity-0 group-hover:opacity-100"
-                            aria-label="Next image"
-                        >
-                            <ChevronRight size={24} />
-                        </button>
-                    </>
-                )}
-            </div>
-
-            {/* THUMBNAIL STRIP */}
-            {allImages.length > 1 && (
-                <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
-                    {allImages.map((img, idx) => (
-                        <button
-                            key={idx}
-                            onClick={() => setCurrentIndex(idx)}
-                            className={cn(
-                                "relative flex-none w-20 h-20 rounded-sm transition-all duration-300 border-2",
-                                currentIndex === idx
-                                    ? "border-soft-black opacity-100 ring-1 ring-soft-black/20"
-                                    : "border-transparent opacity-60 hover:opacity-100"
-                            )}
-                        >
-                            <Image
-                                src={img.url}
-                                alt={`Thumbnail view ${idx + 1} of ${title}`}
-                                fill
-                                className="object-cover"
-                            />
-                        </button>
-                    ))}
-                </div>
+  return (
+    <div className="flex flex-col gap-6 w-full">
+      {/* MAIN STAGE */}
+      <div className="relative w-full group">
+        <div className="relative w-full lg:h-[80vh] flex flex-col items-center justify-center transition-all duration-500 ease-in-out px-4">
+          <div
+            className={cn(
+              "relative max-w-full max-h-full flex items-center justify-center transition-all duration-500 cursor-zoom-in group/image",
+              // FINAL MOBILE-FIRST STRATEGY:
+              // Mobile: All images are width-first (w-full h-auto) to fill the phone screen.
+              // Desktop: Landscapes stay width-first. Portraits switch to height-first (lg:h-full lg:w-auto).
+              effectiveOrientation === "landscape"
+                ? "w-full h-auto flex"
+                : "w-full h-auto flex lg:h-full lg:w-auto lg:inline-grid",
             )}
-            {/* LIGHTBOX */}
-            <MediaLightbox
-                isOpen={isLightboxOpen}
-                onClose={() => setIsLightboxOpen(false)}
-                images={allImages}
-                initialIndex={currentIndex}
-                title={title}
-            />
+            onClick={() => setIsLightboxOpen(true)}
+          >
+            {/* Zoom indicator removed for a cleaner minimal look, relying on cursor-zoom-in */}
+
+            {currentIndex === 0 ? (
+              <MuseumFrame
+                aspectRatio={currentImage.aspectRatio}
+                className={cn(
+                  "transition-all duration-500",
+                  effectiveOrientation === "landscape"
+                    ? "w-full h-auto"
+                    : "w-full h-auto lg:h-full lg:w-auto",
+                )}
+              >
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentIndex}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="absolute inset-0 w-full h-full"
+                  >
+                    <ImageHoverZoom
+                      src={currentImage.url}
+                      alt={getDescriptiveAlt(title, 0)}
+                      aspectRatio={currentImage.aspectRatio}
+                      priority
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                    />
+                  </motion.div>
+                </AnimatePresence>
+              </MuseumFrame>
+            ) : (
+              <div
+                className={cn(
+                  "relative bg-bone shadow-md overflow-hidden",
+                  effectiveOrientation === "landscape"
+                    ? "w-full h-auto"
+                    : "w-full h-auto lg:h-full lg:w-auto",
+                )}
+                style={{ aspectRatio: currentImage.aspectRatio }}
+              >
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentIndex}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="absolute inset-0 w-full h-full"
+                  >
+                    <ImageHoverZoom
+                      src={currentImage.url}
+                      alt={getDescriptiveAlt(title, currentIndex)}
+                      aspectRatio={currentImage.aspectRatio}
+                      priority
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      imageClassName="object-contain"
+                    />
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+            )}
+          </div>
         </div>
-    );
+
+        {/* Navigation Arrows */}
+        {allImages.length > 1 && (
+          <>
+            <button
+              onClick={handlePrev}
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 flex items-center justify-center rounded-full bg-white/80 hover:bg-white text-soft-black backdrop-blur-sm transition-all shadow-sm opacity-0 group-hover:opacity-100"
+              aria-label="Previous image"
+            >
+              <ChevronLeft size={24} />
+            </button>
+            <button
+              onClick={handleNext}
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 flex items-center justify-center rounded-full bg-white/80 hover:bg-white text-soft-black backdrop-blur-sm transition-all shadow-sm opacity-0 group-hover:opacity-100"
+              aria-label="Next image"
+            >
+              <ChevronRight size={24} />
+            </button>
+          </>
+        )}
+      </div>
+
+      {/* THUMBNAIL STRIP */}
+      {allImages.length > 1 && (
+        <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
+          {allImages.map((img, idx) => (
+            <button
+              key={idx}
+              onClick={() => setCurrentIndex(idx)}
+              className={cn(
+                "relative flex-none w-20 h-20 rounded-sm transition-all duration-300 border-2",
+                currentIndex === idx
+                  ? "border-soft-black opacity-100 ring-1 ring-soft-black/20"
+                  : "border-transparent opacity-60 hover:opacity-100",
+              )}
+            >
+              <Image
+                src={img.url}
+                alt={`Thumbnail view ${idx + 1} of ${title}`}
+                fill
+                className="object-cover"
+              />
+            </button>
+          ))}
+        </div>
+      )}
+      {/* LIGHTBOX */}
+      <MediaLightbox
+        isOpen={isLightboxOpen}
+        onClose={() => setIsLightboxOpen(false)}
+        images={allImages}
+        initialIndex={currentIndex}
+        title={title}
+      />
+    </div>
+  );
 }

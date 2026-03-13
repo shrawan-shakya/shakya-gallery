@@ -1,13 +1,17 @@
 import { sanityFetch } from "@/sanity/lib/live";
 import { GalleryGridClient } from "./GalleryGridClient";
 import Link from "next/link";
+import { Suspense } from "react";
+import { MuseumFrameSkeleton } from "@/components/ui/MuseumFrameSkeleton";
 
 // 1. The Query
 async function getArtworks(limit?: number) {
   // If limit is provided, we assume it's the homepage collection preview,
   // so we only fetch featured artworks. Otherwise (e.g., full collection page),
   // we fetch all available artworks.
-  const filter = limit ? `*[_type == "artwork" && isFeatured == true]` : `*[_type == "artwork"]`;
+  const filter = limit
+    ? `*[_type == "artwork" && isFeatured == true]`
+    : `*[_type == "artwork"]`;
   const limitQuery = limit ? `[0...${limit}]` : ``;
   const query = `
     ${filter} | order(_updatedAt desc) ${limitQuery} {
@@ -37,7 +41,6 @@ export async function GalleryGrid({ limit }: { limit?: number }) {
 
   return (
     <section className="py-24 md:py-32 px-6 bg-bone">
-
       {/* 2. THE HEADER */}
       <div className="max-w-4xl mx-auto text-center flex flex-col items-center mb-24 md:mb-32">
         <p className="font-sans text-[11px] md:text-xs tracking-[0.3em] text-gray-400 uppercase mb-8 font-medium">
@@ -48,13 +51,36 @@ export async function GalleryGrid({ limit }: { limit?: number }) {
         </h2>
         <div className="max-w-2xl">
           <p className="font-serif text-lg md:text-xl italic text-soft-black/80 leading-relaxed">
-            "A private collection of Nepal’s most respected artists. Curated for collectors who value heritage and soul."
+            "A private collection of Nepal’s most respected artists. Curated for
+            collectors who value heritage and soul."
           </p>
         </div>
       </div>
 
       {/* 3. The Grid (Passes data to Client) */}
-      <GalleryGridClient artworks={artworks} />
+      <Suspense
+        fallback={
+          <div className="flex flex-col md:flex-row gap-8 lg:gap-12 items-start transition-all duration-700 w-full">
+            {[1, 2, 3].map((_, colIndex) => (
+              <div
+                key={colIndex}
+                className="hidden md:flex flex-1 flex-col gap-12 lg:gap-16 w-full"
+              >
+                {[1, 2, 3].map((_, i) => (
+                  <MuseumFrameSkeleton key={i} aspectRatio={1.2} />
+                ))}
+              </div>
+            ))}
+            <div className="flex w-full flex-col gap-12 md:hidden">
+              {[1, 2, 3].map((_, i) => (
+                <MuseumFrameSkeleton key={i} aspectRatio={1.2} />
+              ))}
+            </div>
+          </div>
+        }
+      >
+        <GalleryGridClient artworks={artworks} />
+      </Suspense>
 
       {/* 4. CTA (If limited) */}
       {limit && (

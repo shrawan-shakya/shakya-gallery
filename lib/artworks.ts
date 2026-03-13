@@ -2,50 +2,51 @@ import { sanityFetch } from "@/sanity/lib/live";
 
 import { Artwork, FilterOptions } from "./types";
 
-
 /**
  * Server-side GROQ-based filtering for artworks.
  * Unified logic for Gallery and Search.
  */
 export async function getFilteredArtworks(options: Partial<FilterOptions>) {
-    const {
-        searchQuery = "",
-        selectedCategories = [],
-        statusFilter = "all",
-        sortOption = "newest"
-    } = options;
+  const {
+    searchQuery = "",
+    selectedCategories = [],
+    statusFilter = "all",
+    sortOption = "newest",
+  } = options;
 
-    // Base filters
-    const filters = [`_type == "artwork"`, `!(_id in path("drafts.**"))`];
+  // Base filters
+  const filters = [`_type == "artwork"`, `!(_id in path("drafts.**"))`];
 
-    // 1. Search Logic (Consistent with Search Overlay)
-    if (searchQuery) {
-        filters.push(`(
+  // 1. Search Logic (Consistent with Search Overlay)
+  if (searchQuery) {
+    filters.push(`(
             title match $searchQuery + "*" || 
             artist match $searchQuery + "*" || 
             material match $searchQuery + "*" ||
             count((categories[]->title)[@ match $searchQuery + "*"]) > 0
         )`);
-    }
+  }
 
-    // 2. Category Logic (OR logic)
-    if (selectedCategories.length > 0) {
-        filters.push(`count((categories[]->title)[@ in $selectedCategories]) > 0`);
-    }
+  // 2. Category Logic (OR logic)
+  if (selectedCategories.length > 0) {
+    filters.push(`count((categories[]->title)[@ in $selectedCategories]) > 0`);
+  }
 
-    // 3. Status Logic
-    if (statusFilter === "available") {
-        filters.push(`status == "available"`);
-    } else if (statusFilter === "sold") {
-        filters.push(`status in ["sold", "private"]`);
-    }
+  // 3. Status Logic
+  if (statusFilter === "available") {
+    filters.push(`status == "available"`);
+  } else if (statusFilter === "sold") {
+    filters.push(`status in ["sold", "private"]`);
+  }
 
-    // 4. Sorting Logic
-    let orderClause = "_createdAt desc";
-    if (sortOption === "price_asc") orderClause = "coalesce(price, startingPrice, 99999999) asc";
-    else if (sortOption === "price_desc") orderClause = "coalesce(price, startingPrice, 0) desc";
+  // 4. Sorting Logic
+  let orderClause = "_createdAt desc";
+  if (sortOption === "price_asc")
+    orderClause = "coalesce(price, startingPrice, 99999999) asc";
+  else if (sortOption === "price_desc")
+    orderClause = "coalesce(price, startingPrice, 0) desc";
 
-    const query = `
+  const query = `
     *[${filters.join(" && ")}] | order(${orderClause}) {
       _id,
       title,
@@ -69,14 +70,13 @@ export async function getFilteredArtworks(options: Partial<FilterOptions>) {
 
     `;
 
-    const { data } = await sanityFetch({
-        query,
-        params: {
-            searchQuery,
-            selectedCategories
-        }
-    });
+  const { data } = await sanityFetch({
+    query,
+    params: {
+      searchQuery,
+      selectedCategories,
+    },
+  });
 
-    return data as Artwork[];
+  return data as Artwork[];
 }
-

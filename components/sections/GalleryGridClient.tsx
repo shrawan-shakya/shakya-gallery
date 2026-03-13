@@ -12,38 +12,58 @@ import { LazyGridItem } from "@/components/ui/LazyGridItem";
 import { PriceOnRequest } from "@/components/ui/PriceOnRequest";
 import { cn } from "@/lib/utils";
 import { Price } from "@/components/ui/Price";
-
-interface Artwork {
-  _id: string;
-  title: string;
-  artist?: string;
-  dimensions?: string;
-  material?: string;
-  year: string;
-  imageUrl: string;
-  image: any;
-  lqip?: string;
-  slug: string;
-  aspectRatio: number;
-  status?: "available" | "sold" | "private";
-  price?: number;
-  showPrice?: boolean;
-  startingPrice?: number;
-}
+import { Artwork } from "@/lib/types";
+import { ArtworkCard } from "@/components/artwork/ArtworkCard";
 
 import { staggerContainer, staggerItem } from "@/lib/motion-variants";
 
 // --- ICONS ---
 const FrameIcon = ({ className }: { className?: string }) => (
-  <svg width="14" height="14" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-    <rect x="1" y="1" width="16" height="16" stroke="currentColor" strokeWidth="1.5" />
-    <rect x="4" y="4" width="10" height="10" stroke="currentColor" strokeWidth="1" opacity="0.6" />
+  <svg
+    width="14"
+    height="14"
+    viewBox="0 0 18 18"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+  >
+    <rect
+      x="1"
+      y="1"
+      width="16"
+      height="16"
+      stroke="currentColor"
+      strokeWidth="1.5"
+    />
+    <rect
+      x="4"
+      y="4"
+      width="10"
+      height="10"
+      stroke="currentColor"
+      strokeWidth="1"
+      opacity="0.6"
+    />
   </svg>
 );
 
 const CanvasIcon = ({ className }: { className?: string }) => (
-  <svg width="14" height="14" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-    <rect x="1" y="1" width="16" height="16" stroke="currentColor" strokeWidth="1.5" />
+  <svg
+    width="14"
+    height="14"
+    viewBox="0 0 18 18"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+  >
+    <rect
+      x="1"
+      y="1"
+      width="16"
+      height="16"
+      stroke="currentColor"
+      strokeWidth="1.5"
+    />
   </svg>
 );
 
@@ -62,7 +82,7 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
         // If the sentinel is NOT intersecting, it means the sticky element has reached the top
         setIsStuck(!entry.isIntersecting);
       },
-      { threshold: [1], rootMargin: "-1px 0px 0px 0px" }
+      { threshold: [1], rootMargin: "-1px 0px 0px 0px" },
     );
 
     observer.observe(sentinel);
@@ -74,14 +94,15 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
       {/* SENTINEL FOR STICKY DETECTION */}
       <div ref={sentinelRef} className="h-0 w-full" />
       {/* ... toggle bar - Hidden on mobile, visible on desktop ... */}
-      <div className={cn(
-        "sticky top-0 z-40 w-full transition-[background-color,backdrop-filter,border-color] duration-500 mb-12 hidden md:block py-4",
-        isStuck
-          ? "bg-bone/40 backdrop-blur-md border-b border-black/[0.03]"
-          : "bg-transparent border-b border-transparent"
-      )}>
+      <div
+        className={cn(
+          "sticky top-0 z-40 w-full transition-[background-color,backdrop-filter,border-color] duration-500 mb-12 hidden md:block py-4",
+          isStuck
+            ? "bg-bone/40 backdrop-blur-md border-b border-black/[0.03]"
+            : "bg-transparent border-b border-transparent",
+        )}
+      >
         <div className="flex justify-between max-w-[1800px] mx-auto px-8">
-
           <div className="flex gap-4 md:gap-8">
             <button
               onClick={() => setShowMat(true)}
@@ -89,12 +110,17 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                 "flex items-center gap-2 font-sans text-[10px] tracking-[0.2em] md:tracking-[0.25em] uppercase transition-all duration-300 py-1 relative",
                 showMat
                   ? "text-soft-black font-semibold"
-                  : "text-gray-400 hover:text-soft-black"
+                  : "text-gray-400 hover:text-soft-black",
               )}
             >
               <FrameIcon />
               <span className="hidden sm:inline">View with Frame</span>
-              {showMat && <motion.div layoutId="grid-active-mat" className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-soft-black" />}
+              {showMat && (
+                <motion.div
+                  layoutId="grid-active-mat"
+                  className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-soft-black"
+                />
+              )}
             </button>
             <button
               onClick={() => setShowMat(false)}
@@ -102,12 +128,17 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                 "flex items-center gap-2 font-sans text-[11px] tracking-[0.2em] md:tracking-[0.25em] uppercase transition-all duration-300 py-1 relative",
                 !showMat
                   ? "text-soft-black font-semibold"
-                  : "text-gray-400 hover:text-soft-black"
+                  : "text-gray-400 hover:text-soft-black",
               )}
             >
               <CanvasIcon />
               <span className="hidden sm:inline">Canvas Only</span>
-              {!showMat && <motion.div layoutId="grid-active-mat" className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-soft-black" />}
+              {!showMat && (
+                <motion.div
+                  layoutId="grid-active-mat"
+                  className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-soft-black"
+                />
+              )}
             </button>
           </div>
 
@@ -119,15 +150,57 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                 "flex items-center gap-2 font-sans text-[10px] tracking-[0.25em] uppercase transition-all duration-300 py-1 relative",
                 layout === "grid"
                   ? "text-soft-black font-semibold"
-                  : "text-gray-400 hover:text-soft-black"
+                  : "text-gray-400 hover:text-soft-black",
               )}
             >
-              <svg width="14" height="14" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 18 18"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <title>Grid View</title>
-                <rect x="1" y="1" width="7" height="7" stroke="currentColor" strokeWidth="1.5" /><rect x="10" y="1" width="7" height="7" stroke="currentColor" strokeWidth="1.5" /><rect x="1" y="10" width="7" height="7" stroke="currentColor" strokeWidth="1.5" /><rect x="10" y="10" width="7" height="7" stroke="currentColor" strokeWidth="1.5" />
+                <rect
+                  x="1"
+                  y="1"
+                  width="7"
+                  height="7"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                />
+                <rect
+                  x="10"
+                  y="1"
+                  width="7"
+                  height="7"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                />
+                <rect
+                  x="1"
+                  y="10"
+                  width="7"
+                  height="7"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                />
+                <rect
+                  x="10"
+                  y="10"
+                  width="7"
+                  height="7"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                />
               </svg>
               <span className="hidden sm:inline">Grid</span>
-              {layout === "grid" && <motion.div layoutId="grid-active-layout" className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-soft-black" />}
+              {layout === "grid" && (
+                <motion.div
+                  layoutId="grid-active-layout"
+                  className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-soft-black"
+                />
+              )}
             </button>
             <button
               onClick={() => setLayout("single")}
@@ -135,15 +208,49 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                 "flex items-center gap-2 font-sans text-[10px] tracking-[0.25em] uppercase transition-all duration-300 py-1 relative",
                 layout === "single"
                   ? "text-soft-black font-semibold"
-                  : "text-gray-400 hover:text-soft-black"
+                  : "text-gray-400 hover:text-soft-black",
               )}
             >
-              <svg width="14" height="14" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 18 18"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <title>Row View</title>
-                <rect x="1" y="2" width="16" height="3" stroke="currentColor" strokeWidth="1.5" /><rect x="1" y="7.5" width="16" height="3" stroke="currentColor" strokeWidth="1.5" /><rect x="1" y="13" width="16" height="3" stroke="currentColor" strokeWidth="1.5" />
+                <rect
+                  x="1"
+                  y="2"
+                  width="16"
+                  height="3"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                />
+                <rect
+                  x="1"
+                  y="7.5"
+                  width="16"
+                  height="3"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                />
+                <rect
+                  x="1"
+                  y="13"
+                  width="16"
+                  height="3"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                />
               </svg>
               <span className="hidden sm:inline">Rows</span>
-              {layout === "single" && <motion.div layoutId="grid-active-layout" className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-soft-black" />}
+              {layout === "single" && (
+                <motion.div
+                  layoutId="grid-active-layout"
+                  className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-soft-black"
+                />
+              )}
             </button>
           </div>
         </div>
@@ -151,115 +258,17 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
 
       {/* THE OUTER GRID */}
       <div className="mx-auto px-6 pb-8 transition-all duration-700 ease-in-out">
-
         {/* VIEW: SINGLE ROW */}
         {layout === "single" && (
-          <div
-            className="max-w-[1000px] mx-auto grid grid-cols-1 gap-y-20 md:gap-y-32"
-          >
+          <div className="max-w-[1000px] mx-auto grid grid-cols-1 gap-y-20 md:gap-y-32">
             {artworks.map((art, index) => (
-              <LazyGridItem key={art._id} rootMargin="1000px 0px" aspectRatio={art.aspectRatio} disabled={index < 4}>
-                <motion.div
-                  variants={staggerItem}
-                  initial="initial"
-                  whileInView="animate"
-                  viewport={{ once: true, margin: "600px" }}
-                  className="w-full relative z-10"
-                  style={{ willChange: "transform, opacity" }}
-                >
-                  <Link href={`/artwork/${art.slug}`} target="_blank" rel="noopener noreferrer" className="block cursor-pointer no-underline group/card">
-                    <div className="w-full mx-auto flex flex-col items-center">
-                      <div
-                        className="w-full relative group/image"
-                        style={{
-                          maxWidth: art.aspectRatio > 1.1
-                            ? `min(1200px, 100%, calc(70vh * ${art.aspectRatio}))`
-                            : `min(1000px, 100%, calc(85vh * ${Math.max(art.aspectRatio || 1, 0.4)}))`
-                        }}
-                      >
-                        <SanityImage
-                          source={art.image}
-                          alt={`Buy ${art.title} - Original Nepali fine art at Shakya Gallery`}
-                          lqip={art.lqip}
-                          aspectRatio={art.aspectRatio}
-                          hasMat={showMat}
-                          priority={index < 4}
-                          imageClassName={cn(
-                            (art.status === "sold" || art.status === "private")
-                              ? "grayscale-[0.2] group-hover/image:grayscale group-hover/image:opacity-40"
-                              : "grayscale-[0.2] group-hover/image:grayscale-0"
-                          )}
-                        />
-                        {/* STATUS BADGES */}
-                        <div className="absolute inset-x-0 bottom-0 pointer-events-none p-4 md:p-6 bg-gradient-to-t from-black/40 via-black/10 to-transparent md:bg-none">
-                          {art.status === "sold" && (
-                            <>
-                              {/* Desktop Hover */}
-                              <div className="hidden md:flex absolute inset-0 flex-col items-center justify-center opacity-0 group-hover/image:opacity-100 transition-opacity duration-500">
-                                <span className="font-serif font-bold italic text-3xl md:text-4xl text-white bg-[#7D1818] shadow-xl -rotate-12 tracking-widest px-6 py-2">
-                                  SOLD
-                                </span>
-
-                              </div>
-                              {/* Mobile Persistent */}
-                              <div className="md:hidden flex items-center justify-between w-full px-2">
-                                <span className="font-serif font-bold italic text-[11px] text-white bg-[#7D1818] px-2 py-0.5 tracking-wider">
-                                  SOLD
-                                </span>
-                              </div>
-                            </>
-                          )}
-                          {art.status === "available" && (
-                            <>
-                              {/* Desktop Hover */}
-                              <div className="hidden md:flex absolute inset-0 items-center justify-center opacity-0 group-hover/image:opacity-100 transition-opacity duration-500">
-                                <span className="bg-white/95 text-soft-black text-sm md:text-base font-sans tracking-[0.2em] px-6 py-3 backdrop-blur-md shadow-md border border-soft-black/10 whitespace-nowrap">
-                                  {art.showPrice && art.price ? (
-                                    <Price amount={art.price} />
-                                  ) : (
-                                    <PriceOnRequest startingPrice={art.startingPrice} variant="badge" />
-                                  )}
-                                </span>
-                              </div>
-                              {/* Mobile Persistent */}
-                              <div className="md:hidden flex justify-center w-full">
-                                <span className="flex items-center justify-center bg-white/90 text-soft-black text-[10px] font-sans leading-none tracking-[0.1em] px-3 py-1 min-h-[24px] backdrop-blur-sm shadow-sm border border-soft-black/5 whitespace-nowrap">
-                                  {art.showPrice && art.price ? (
-                                    <Price amount={art.price} />
-                                  ) : (
-                                    <PriceOnRequest startingPrice={art.startingPrice} variant="minimal" className="gap-1" />
-                                  )}
-                                </span>
-                              </div>
-                            </>
-                          )}
-                        </div>
-                      </div>
-                      <div
-                        className="w-full mx-auto relative z-0 mt-6 md:mt-8 flex flex-col items-center text-center"
-                        style={{
-                          maxWidth: art.aspectRatio > 1.1
-                            ? `min(1200px, 100%, calc(70vh * ${art.aspectRatio}))`
-                            : `min(1000px, 100%, calc(85vh * ${Math.max(art.aspectRatio || 1, 0.4)}))`
-                        }}
-                      >
-                        <MuseumPlaque
-                          title={art.title}
-                          artist={art.artist}
-                          medium={art.material}
-                          dimensions={art.dimensions}
-                          year={art.year}
-                          price={art.price}
-                          showPrice={art.showPrice}
-                          startingPrice={art.startingPrice}
-                          showButton={false}
-                          className={art.aspectRatio > 1.1 ? "md:w-[60%]" : ""}
-                        />
-                      </div>
-                    </div>
-                  </Link>
-                </motion.div>
-              </LazyGridItem>
+              <ArtworkCard
+                key={art._id}
+                art={art}
+                globalIndex={index}
+                showMat={showMat}
+                layout="single"
+              />
             ))}
           </div>
         )}
@@ -278,108 +287,13 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                   .map((art, index) => {
                     const globalIndex = index * 2 + colIndex;
                     return (
-                      <LazyGridItem key={art._id} rootMargin="1000px 0px" aspectRatio={art.aspectRatio} disabled={globalIndex < 4}>
-                        <motion.div
-                          variants={staggerItem}
-                          initial="initial"
-                          whileInView="animate"
-                          viewport={{ once: true, margin: "600px" }}
-                          className="w-full relative z-10"
-                          style={{ willChange: "transform, opacity" }}
-                        >
-                          <Link href={`/artwork/${art.slug}`} target="_blank" rel="noopener noreferrer" className="block cursor-pointer no-underline group/card">
-                            <div className="w-full mx-auto">
-                              <div
-                                className="w-full relative group/image mx-auto"
-                                style={{
-                                  maxWidth: art.aspectRatio > 1.1
-                                    ? `min(1200px, 100%, calc(70vh * ${art.aspectRatio}))`
-                                    : `min(1000px, 100%, calc(85vh * ${Math.max(art.aspectRatio || 1, 0.4)}))`
-                                }}
-                              >
-                                {/* GRIDS: Use w-full h-auto. The grid-based frame will expand height naturally. */}
-                                <SanityImage
-                                  source={art.image}
-                                  alt={art.title}
-                                  lqip={art.lqip}
-                                  aspectRatio={art.aspectRatio}
-                                  hasMat={showMat}
-                                  priority={globalIndex < 4}
-                                  imageClassName={cn(
-                                    (art.status === "sold" || art.status === "private")
-                                      ? "grayscale-[0.2] group-hover/image:grayscale group-hover/image:opacity-40"
-                                      : "grayscale-[0.2] group-hover/image:grayscale-0"
-                                  )}
-                                />
-                                <div className="absolute inset-x-0 bottom-0 pointer-events-none p-4 md:p-6 bg-gradient-to-t from-black/40 via-black/10 to-transparent md:bg-none">
-                                  {art.status === "sold" && (
-                                    <>
-                                      {/* Desktop Only Center Hover */}
-                                      <div className="hidden md:flex absolute inset-0 flex-col items-center justify-center opacity-0 group-hover/image:opacity-100 transition-opacity duration-500">
-                                        <span className="font-serif font-bold italic text-3xl md:text-4xl text-white bg-[#7D1818] shadow-xl -rotate-12 tracking-widest px-6 py-2">
-                                          SOLD
-                                        </span>
-
-                                      </div>
-                                      {/* Mobile Only Persistent Bottom */}
-                                      <div className="md:hidden flex items-center justify-between w-full px-2">
-                                        <span className="font-serif font-bold italic text-[11px] text-white bg-[#7D1818] px-2 py-0.5 tracking-wider">
-                                          SOLD
-                                        </span>
-                                      </div>
-                                    </>
-                                  )}
-                                  {art.status === "available" && (
-                                    <>
-                                      {/* Desktop Hover */}
-                                      <div className="hidden md:flex absolute inset-0 items-center justify-center opacity-0 group-hover/image:opacity-100 transition-opacity duration-500">
-                                        <span className="bg-white/95 text-soft-black text-sm md:text-base font-sans tracking-[0.2em] px-6 py-3 backdrop-blur-md shadow-md border border-soft-black/10 whitespace-nowrap">
-                                          {art.showPrice && art.price ? (
-                                            <Price amount={art.price} />
-                                          ) : (
-                                            <PriceOnRequest startingPrice={art.startingPrice} variant="badge" />
-                                          )}
-                                        </span>
-                                      </div>
-                                      {/* Mobile Persistent */}
-                                      <div className="md:hidden flex justify-center w-full">
-                                        <span className="flex items-center justify-center bg-white/90 text-soft-black text-[10px] font-sans leading-none tracking-[0.1em] px-3 py-1 min-h-[24px] backdrop-blur-sm shadow-sm border border-soft-black/5 whitespace-nowrap">
-                                          {art.showPrice && art.price ? (
-                                            <Price amount={art.price} />
-                                          ) : (
-                                            <PriceOnRequest startingPrice={art.startingPrice} variant="minimal" className="gap-1" />
-                                          )}
-                                        </span>
-                                      </div>
-                                    </>
-                                  )}
-                                </div>
-                              </div>
-                              <div
-                                className="w-full relative mx-auto z-0 mt-6 md:mt-8 flex flex-col items-center text-center"
-                                style={{
-                                  maxWidth: art.aspectRatio > 1.1
-                                    ? `min(1200px, 100%, calc(70vh * ${art.aspectRatio}))`
-                                    : `min(1000px, 100%, calc(85vh * ${Math.max(art.aspectRatio || 1, 0.4)}))`
-                                }}
-                              >
-                                <MuseumPlaque
-                                  title={art.title}
-                                  artist={art.artist}
-                                  medium={art.material}
-                                  dimensions={art.dimensions}
-                                  year={art.year}
-                                  price={art.price}
-                                  showPrice={art.showPrice}
-                                  startingPrice={art.startingPrice}
-                                  showButton={false}
-                                  className={art.aspectRatio > 1.1 ? "md:w-[60%]" : ""}
-                                />
-                              </div>
-                            </div>
-                          </Link>
-                        </motion.div>
-                      </LazyGridItem>
+                      <ArtworkCard
+                        key={art._id}
+                        art={art}
+                        globalIndex={globalIndex}
+                        showMat={showMat}
+                        layout="grid"
+                      />
                     );
                   })}
               </div>
@@ -388,11 +302,8 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
         )}
 
         {/* EMPTY STATE FALLBACK */}
-        {artworks.length === 0 && (
-          <EmptyState />
-        )}
-
-      </div >
+        {artworks.length === 0 && <EmptyState />}
+      </div>
     </>
   );
 }

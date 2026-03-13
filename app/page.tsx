@@ -7,8 +7,6 @@ import { FAQ } from "@/components/sections/FAQ";
 import { siteConfig } from "@/lib/config";
 import { SectionErrorBoundary } from "@/components/ui/SectionErrorBoundary";
 
-
-
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -17,30 +15,29 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "ArtGallery",
-    "name": siteConfig.name,
-    "image": `${siteConfig.url}/hero-1.jpg`,
-    "logo": `${siteConfig.url}/icon.png`,
-    "description": siteConfig.description,
-    "url": siteConfig.url,
-    "telephone": siteConfig.contact.phone,
-    "priceRange": "$$$",
-    "address": {
+    name: siteConfig.name,
+    image: `${siteConfig.url}/hero-1.jpg`,
+    logo: `${siteConfig.url}/icon.png`,
+    description: siteConfig.description,
+    url: siteConfig.url,
+    telephone: siteConfig.contact.phone,
+    priceRange: "$$$",
+    address: {
       "@type": "PostalAddress",
-      "streetAddress": siteConfig.contact.address.street,
-      "addressLocality": siteConfig.contact.address.city,
-      "addressRegion": siteConfig.contact.address.region,
-      "postalCode": siteConfig.contact.address.postalCode,
-      "addressCountry": siteConfig.contact.address.country
+      streetAddress: siteConfig.contact.address.street,
+      addressLocality: siteConfig.contact.address.city,
+      addressRegion: siteConfig.contact.address.region,
+      postalCode: siteConfig.contact.address.postalCode,
+      addressCountry: siteConfig.contact.address.country,
     },
-    "geo": {
+    geo: {
       "@type": "GeoCoordinates",
-      "latitude": siteConfig.contact.geo.latitude,
-      "longitude": siteConfig.contact.geo.longitude
-    }
+      latitude: siteConfig.contact.geo.latitude,
+      longitude: siteConfig.contact.geo.longitude,
+    },
   };
 
   return (
@@ -58,7 +55,7 @@ export default async function Home() {
       <SectionErrorBoundary sectionName="Gallery Preview">
         <GalleryGrid limit={6} />
       </SectionErrorBoundary>
- 
+
       <SectionErrorBoundary sectionName="Heritage Preview">
         <HeritagePreview />
       </SectionErrorBoundary>

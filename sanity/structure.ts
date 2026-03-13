@@ -1,63 +1,63 @@
-import type { StructureResolver } from 'sanity/structure'
+import type { StructureResolver } from "sanity/structure";
 
 // https://www.sanity.io/docs/structure-builder-cheat-sheet
 export const structure: StructureResolver = (S) =>
   S.list()
-    .title('Gallery Content')
+    .title("Gallery Content")
     .items([
       // --- ARTWORKS ---
       S.listItem()
-        .title('Artworks')
+        .title("Artworks")
         .child(
           S.list()
-            .title('Artworks')
+            .title("Artworks")
             .items([
               S.listItem()
-                .title('All Artworks')
-                .child(S.documentTypeList('artwork').title('All Artworks')),
+                .title("All Artworks")
+                .child(S.documentTypeList("artwork").title("All Artworks")),
               S.divider(),
               S.listItem()
-                .title('Available')
+                .title("Available")
                 .child(
                   S.documentList()
-                    .title('Available Artworks')
-                    .filter('_type == "artwork" && status == "available"')
+                    .title("Available Artworks")
+                    .filter('_type == "artwork" && status == "available"'),
                 ),
               S.listItem()
-                .title('Sold / Private')
+                .title("Sold / Private")
                 .child(
                   S.documentList()
-                    .title('Sold / Private Artworks')
-                    .filter('_type == "artwork" && (status == "sold" || status == "private")')
+                    .title("Sold / Private Artworks")
+                    .filter(
+                      '_type == "artwork" && (status == "sold" || status == "private")',
+                    ),
                 ),
-            ])
+            ]),
         ),
 
       S.divider(),
 
       // --- JOURNAL ---
-      S.documentTypeListItem('article').title('Journal'),
+      S.documentTypeListItem("article").title("Journal"),
 
       S.divider(),
 
       // --- COLLECTORS ---
-      S.documentTypeListItem('subscriber').title('Collectors'),
+      S.documentTypeListItem("subscriber").title("Collectors"),
 
       S.divider(),
 
       // --- ORDERS ---
-      S.documentTypeListItem('order').title('Orders'),
+      S.documentTypeListItem("order").title("Orders"),
 
       S.divider(),
 
       // --- SETTINGS & META ---
       S.listItem()
-        .title('Configuration')
+        .title("Configuration")
         .child(
           S.list()
-            .title('Configuration')
-            .items([
-              S.documentTypeListItem('category').title('Categories'),
-            ])
+            .title("Configuration")
+            .items([S.documentTypeListItem("category").title("Categories")]),
         ),
-    ])
+    ]);

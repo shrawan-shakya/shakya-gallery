@@ -4,16 +4,16 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'cdn.sanity.io',
+        protocol: "https",
+        hostname: "cdn.sanity.io",
       },
     ],
   },
   async redirects() {
     return [
       {
-        source: '/collection/:slug',
-        destination: '/category/:slug',
+        source: "/collection/:slug",
+        destination: "/category/:slug",
         permanent: true,
       },
     ];

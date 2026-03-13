@@ -15,7 +15,7 @@ export default function ContactPage() {
     email: "",
     message: "",
     interest: "Acquiring Art", // Default interest
-    _honey: "" // Anti-spam honeypot
+    _honey: "", // Anti-spam honeypot
   });
 
   // --- HANDLE INPUT CHANGES ---
@@ -42,7 +42,13 @@ export default function ContactPage() {
 
       if (result.success) {
         setIsSuccess(true);
-        setFormData({ name: "", email: "", message: "", interest: "Acquiring Art", _honey: "" }); // Clear form
+        setFormData({
+          name: "",
+          email: "",
+          message: "",
+          interest: "Acquiring Art",
+          _honey: "",
+        }); // Clear form
       } else {
         alert("Something went wrong. Please try again.");
       }
@@ -56,28 +62,68 @@ export default function ContactPage() {
 
   return (
     <main className="min-h-screen bg-bone pt-32 pb-20 px-6 md:px-12">
-
       {/* HEADER ... (Same as before) */}
       <div className="max-w-4xl mx-auto text-center mb-24">
-        <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="font-sans text-xs tracking-[0.3em] text-gray-400 uppercase mb-6">Concierge Service</motion.p>
-        <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="font-serif text-5xl md:text-7xl text-soft-black leading-none mb-8">GET IN <span className="italic">TOUCH</span></motion.h1>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="font-sans text-xs tracking-[0.3em] text-gray-400 uppercase mb-6"
+        >
+          Concierge Service
+        </motion.p>
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="font-serif text-5xl md:text-7xl text-soft-black leading-none mb-8"
+        >
+          GET IN <span className="italic">TOUCH</span>
+        </motion.h1>
       </div>
 
       <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24">
-
         {/* LEFT COLUMN ... (Same as before) */}
-        <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }} className="space-y-16">
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.3 }}
+          className="space-y-16"
+        >
           <div className="space-y-8">
-            <h3 className="font-sans text-xs tracking-[0.2em] text-soft-black border-b border-black/10 pb-4 uppercase">Direct Lines</h3>
+            <h3 className="font-sans text-xs tracking-[0.2em] text-soft-black border-b border-black/10 pb-4 uppercase">
+              Direct Lines
+            </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div><p className="font-serif text-lg italic text-gray-500 mb-2">Acquisitions</p><a href={`mailto:${siteConfig.contact.email}`} className="font-sans text-sm tracking-wide text-soft-black hover:opacity-70 transition-opacity">{siteConfig.contact.email}</a></div>
-              <div><p className="font-serif text-lg italic text-gray-500 mb-2">General</p><a href={`mailto:${siteConfig.contact.secondaryEmail}`} className="font-sans text-sm tracking-wide text-soft-black hover:opacity-70 transition-opacity">{siteConfig.contact.secondaryEmail}</a></div>
+              <div>
+                <p className="font-serif text-lg italic text-gray-500 mb-2">
+                  Acquisitions
+                </p>
+                <a
+                  href={`mailto:${siteConfig.contact.email}`}
+                  className="font-sans text-sm tracking-wide text-soft-black hover:opacity-70 transition-opacity"
+                >
+                  {siteConfig.contact.email}
+                </a>
+              </div>
+              <div>
+                <p className="font-serif text-lg italic text-gray-500 mb-2">
+                  General
+                </p>
+                <a
+                  href={`mailto:${siteConfig.contact.secondaryEmail}`}
+                  className="font-sans text-sm tracking-wide text-soft-black hover:opacity-70 transition-opacity"
+                >
+                  {siteConfig.contact.secondaryEmail}
+                </a>
+              </div>
             </div>
           </div>
 
           {/* LOCATION */}
           <div className="space-y-8">
-            <h3 className="font-sans text-xs tracking-[0.2em] text-soft-black border-b border-black/10 pb-4 uppercase">Visit The Gallery</h3>
+            <h3 className="font-sans text-xs tracking-[0.2em] text-soft-black border-b border-black/10 pb-4 uppercase">
+              Visit The Gallery
+            </h3>
             <div className="space-y-4">
               <p className="font-serif text-2xl text-soft-black leading-relaxed">
                 {siteConfig.contact.address.full}
@@ -92,7 +138,6 @@ export default function ContactPage() {
               </a>
             </div>
           </div>
-
         </motion.div>
 
         {/* RIGHT COLUMN: THE FORM (WIRED UP) */}
@@ -106,34 +151,48 @@ export default function ContactPage() {
             // SUCCESS STATE
             <div className="h-full flex flex-col items-center justify-center text-center space-y-6 py-12">
               <span className="text-4xl">✉️</span>
-              <h3 className="font-serif text-2xl text-soft-black">Message Sent</h3>
+              <h3 className="font-serif text-2xl text-soft-black">
+                Message Sent
+              </h3>
               <p className="font-sans text-sm text-gray-500 leading-relaxed max-w-xs">
-                Thank you. Our curation team will review your inquiry and respond shortly.
+                Thank you. Our curation team will review your inquiry and
+                respond shortly.
               </p>
-              <button onClick={() => setIsSuccess(false)} className="mt-8 font-sans text-[10px] tracking-[0.2em] uppercase border-b border-black hover:opacity-60 transition-opacity">Send Another</button>
+              <button
+                onClick={() => setIsSuccess(false)}
+                className="mt-8 font-sans text-[10px] tracking-[0.2em] uppercase border-b border-black hover:opacity-60 transition-opacity"
+              >
+                Send Another
+              </button>
             </div>
           ) : (
             // FORM STATE
             <form onSubmit={handleSubmit} className="space-y-12">
-
               {/* --- SPAM PROTECTION (HONEYPOT) --- */}
               {/* Note: In a real custom API we might handle honeypot on server, but for now we focus on the main fields */}
 
               <div className="space-y-6">
-                <label className="block font-sans text-xs tracking-[0.2em] text-gray-400 uppercase">I am interested in...</label>
+                <label className="block font-sans text-xs tracking-[0.2em] text-gray-400 uppercase">
+                  I am interested in...
+                </label>
                 <div className="flex flex-wrap gap-4">
-                  {["Acquiring Art", "Commissioning", "Valuation", "Other"].map((option) => (
-                    <button
-                      key={option}
-                      type="button"
-                      onClick={() => { setActiveTab(option as any); setFormData({ ...formData, interest: option }) }}
-                      className={`font-sans text-[10px] tracking-[0.2em] uppercase px-6 py-3 border transition-all duration-300
+                  {["Acquiring Art", "Commissioning", "Valuation", "Other"].map(
+                    (option) => (
+                      <button
+                        key={option}
+                        type="button"
+                        onClick={() => {
+                          setActiveTab(option as any);
+                          setFormData({ ...formData, interest: option });
+                        }}
+                        className={`font-sans text-[10px] tracking-[0.2em] uppercase px-6 py-3 border transition-all duration-300
                         ${formData.interest === option ? "border-soft-black bg-soft-black text-white" : "border-black/10 text-gray-500 hover:border-black/30"}
                       `}
-                    >
-                      {option}
-                    </button> // ... continued
-                  ))}
+                      >
+                        {option}
+                      </button> // ... continued
+                    ),
+                  )}
                 </div>
               </div>
 
@@ -150,10 +209,14 @@ export default function ContactPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="font-sans text-[10px] tracking-[0.2em] text-gray-400 uppercase">Name</label>
+                  <label className="font-sans text-[10px] tracking-[0.2em] text-gray-400 uppercase">
+                    Name
+                  </label>
                   <input
                     name="name"
                     required
+                    minLength={2}
+                    maxLength={100}
                     value={formData.name}
                     onChange={handleChange}
                     type="text"
@@ -162,10 +225,13 @@ export default function ContactPage() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="font-sans text-[10px] tracking-[0.2em] text-gray-400 uppercase">Email</label>
+                  <label className="font-sans text-[10px] tracking-[0.2em] text-gray-400 uppercase">
+                    Email
+                  </label>
                   <input
                     name="email"
                     required
+                    maxLength={150}
                     value={formData.email}
                     onChange={handleChange}
                     type="email"
@@ -176,10 +242,14 @@ export default function ContactPage() {
               </div>
 
               <div className="space-y-2">
-                <label className="font-sans text-[10px] tracking-[0.2em] text-gray-400 uppercase">Message</label>
+                <label className="font-sans text-[10px] tracking-[0.2em] text-gray-400 uppercase">
+                  Message
+                </label>
                 <textarea
                   name="message"
                   required
+                  minLength={10}
+                  maxLength={1000}
                   value={formData.message}
                   onChange={handleChange}
                   rows={4}
@@ -189,18 +259,22 @@ export default function ContactPage() {
               </div>
 
               <div className="pt-4">
-                <button type="submit" disabled={isSubmitting} className="group flex items-center gap-4 text-soft-black disabled:opacity-50">
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="group flex items-center gap-4 text-soft-black disabled:opacity-50"
+                >
                   <span className="font-sans text-xs tracking-[0.3em] uppercase border-b border-black pb-1 group-hover:border-gray-400 transition-colors">
                     {isSubmitting ? "Sending..." : "Send Message"}
                   </span>
-                  <span className="text-xl transform group-hover:translate-x-2 transition-transform duration-300">→</span>
+                  <span className="text-xl transform group-hover:translate-x-2 transition-transform duration-300">
+                    →
+                  </span>
                 </button>
               </div>
-
             </form>
           )}
         </motion.div>
-
       </div>
     </main>
   );

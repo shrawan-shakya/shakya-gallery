@@ -11,7 +11,7 @@ const Section = ({
   title,
   text,
   image,
-  alignment = "left"
+  alignment = "left",
 }: {
   year: string;
   title: string;
@@ -21,7 +21,6 @@ const Section = ({
 }) => {
   return (
     <div className="min-h-[70vh] flex items-center justify-center py-20 relative overflow-hidden">
-
       {/* BACKGROUND YEAR (Parallax) */}
       <motion.div
         initial={{ opacity: 0, y: 100 }}
@@ -34,8 +33,9 @@ const Section = ({
         {year}
       </motion.div>
 
-      <div className={`container mx-auto px-6 md:px-12 relative z-10 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 items-center ${alignment === "right" ? "md:grid-flow-col-dense" : ""}`}>
-
+      <div
+        className={`container mx-auto px-6 md:px-12 relative z-10 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 items-center ${alignment === "right" ? "md:grid-flow-col-dense" : ""}`}
+      >
         {/* IMAGE SIDE */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
@@ -45,7 +45,8 @@ const Section = ({
           className={`${alignment === "right" ? "md:col-start-2" : ""}`}
         >
           <div className="relative aspect-[3/4] overflow-hidden bg-gray-100 shadow-2xl max-w-sm mx-auto md:max-w-none">
-            <div className="absolute inset-0 bg-black/10 z-10" /> {/* VINTAGE OVERLAY */}
+            <div className="absolute inset-0 bg-black/10 z-10" />{" "}
+            {/* VINTAGE OVERLAY */}
             <img
               src={image}
               alt={title}
@@ -63,9 +64,13 @@ const Section = ({
           className={`${alignment === "right" ? "md:col-start-1 text-right items-end" : "text-left items-start"} flex flex-col justify-center`}
         >
           <span className="font-sans text-xs tracking-[0.3em] text-red-900 uppercase mb-6 flex items-center gap-4 font-semibold">
-            {alignment === "right" && <span className="h-px w-12 bg-red-900/40"></span>}
+            {alignment === "right" && (
+              <span className="h-px w-12 bg-red-900/40"></span>
+            )}
             {year}
-            {alignment === "left" && <span className="h-px w-12 bg-red-900/40"></span>}
+            {alignment === "left" && (
+              <span className="h-px w-12 bg-red-900/40"></span>
+            )}
           </span>
 
           <h2 className="font-serif text-3xl md:text-5xl text-soft-black leading-tight mb-6">
@@ -76,7 +81,6 @@ const Section = ({
             {text}
           </p>
         </motion.div>
-
       </div>
     </div>
   );
@@ -86,12 +90,11 @@ export default function LegacyPage() {
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start start", "end end"]
+    offset: ["start start", "end end"],
   });
 
   return (
     <main ref={containerRef} className="bg-bone">
-
       {/* 1. HERO HEADER */}
       <section className="h-[80vh] flex flex-col items-center justify-center text-center px-6 relative border-b border-black/5">
         <motion.div
@@ -159,7 +162,11 @@ export default function LegacyPage() {
             SHAKYA
           </h2>
           <p className="font-serif text-xl md:text-2xl italic leading-relaxed text-gray-600 font-light">
-            "The world has changed, and so have we. Transitioning from a physical gallery to 'SHAKYA', we are bringing our 25-year legacy into the digital age. This is not just a rebrand; it is a commitment to making Himalayan masterworks accessible to the global connoisseur."
+            "The world has changed, and so have we. Transitioning from a
+            physical gallery to 'SHAKYA', we are bringing our 25-year legacy
+            into the digital age. This is not just a rebrand; it is a commitment
+            to making Himalayan masterworks accessible to the global
+            connoisseur."
           </p>
         </motion.div>
       </section>
@@ -171,7 +178,9 @@ export default function LegacyPage() {
             src="/signature.png" // We will use text if image fails
             alt=""
             className="h-24 mx-auto mb-8 opacity-60"
-            onError={(e) => { e.currentTarget.style.display = 'none' }}
+            onError={(e) => {
+              e.currentTarget.style.display = "none";
+            }}
           />
           <p className="font-serif text-3xl italic text-soft-black mb-12">
             "We invite you to be part of our next chapter."
@@ -184,7 +193,6 @@ export default function LegacyPage() {
           </a>
         </div>
       </section>
-
     </main>
   );
 }

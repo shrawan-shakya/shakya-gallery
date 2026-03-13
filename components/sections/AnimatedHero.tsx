@@ -38,14 +38,13 @@ export function AnimatedHero() {
 
   return (
     <div className="relative h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-bone">
-
       {/* POSTER / FALLBACK BACKGROUND */}
       <div
-        className={`absolute inset-0 z-0 transition-opacity duration-1000 ${isVideoLoaded ? 'opacity-0' : 'opacity-100'}`}
+        className={`absolute inset-0 z-0 transition-opacity duration-1000 ${isVideoLoaded ? "opacity-0" : "opacity-100"}`}
         style={{
           backgroundImage: 'url("/hero-1.jpg")',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center'
+          backgroundSize: "cover",
+          backgroundPosition: "center",
         }}
       />
 
@@ -76,7 +75,9 @@ export function AnimatedHero() {
 
       {/* Background Watermark */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
-        <span className="font-serif text-[40vw] leading-none text-white/5 opacity-30 blur-[1px] translate-y-4">S</span>
+        <span className="font-serif text-[40vw] leading-none text-white/5 opacity-30 blur-[1px] translate-y-4">
+          S
+        </span>
       </div>
 
       <motion.div
@@ -85,39 +86,51 @@ export function AnimatedHero() {
         animate="animate"
         className="flex flex-col items-center text-center z-10 px-4 mt-[10vh] md:mt-[15vh]"
       >
-        <p className="font-sans text-[11px] md:text-xs tracking-[2em] text-white/80 uppercase mb-6 ml-2">Est. 1998</p>
+        <p className="font-sans text-[11px] md:text-xs tracking-[2em] text-white/80 uppercase mb-6 ml-2">
+          Est. 1998
+        </p>
 
-        <h1 className="sr-only">
-          Buy Original Nepalese Fine Art
-        </h1>
+        <h1 className="sr-only">Buy Original Nepalese Fine Art</h1>
 
         <div className="font-serif font-bold text-7xl md:text-9xl text-white tracking-wide leading-none drop-shadow-md">
           SHAKYA
         </div>
         <div className="flex flex-col items-center mt-4">
-          <p className="font-sans text-[11px] md:text-sm tracking-[0.8em] text-white/90 uppercase ml-3">The Gallery</p>
+          <p className="font-sans text-[11px] md:text-sm tracking-[0.8em] text-white/90 uppercase ml-3">
+            The Gallery
+          </p>
           <div className="w-16 h-[1px] bg-white/50 mt-10 mb-8" />
         </div>
 
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.0, duration: LUXURY_DURATION, ease: LUXURY_EASE }}
+          transition={{
+            delay: 1.0,
+            duration: LUXURY_DURATION,
+            ease: LUXURY_EASE,
+          }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mt-8 md:mt-12 w-full px-4"
         >
           <Link
             href="/collection"
             className="group w-full sm:w-[240px] h-[52px] bg-white text-soft-black hover:bg-gray-100 transition-all duration-500 flex items-center justify-center gap-3 shadow-xl pointer-events-auto"
           >
-            <span className="font-sans text-[10px] md:text-[11px] tracking-[0.25em] uppercase font-medium">Explore Collection</span>
-            <span className="text-lg transform group-hover:translate-x-1 transition-transform duration-300">→</span>
+            <span className="font-sans text-[10px] md:text-[11px] tracking-[0.25em] uppercase font-medium">
+              Explore Collection
+            </span>
+            <span className="text-lg transform group-hover:translate-x-1 transition-transform duration-300">
+              →
+            </span>
           </Link>
 
           <Link
             href="/legacy"
             className="group w-full sm:w-[240px] h-[52px] bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 hover:border-white/40 transition-all duration-500 flex items-center justify-center gap-3 pointer-events-auto"
           >
-            <span className="font-sans text-[10px] md:text-[11px] tracking-[0.25em] uppercase font-medium">Our Legacy</span>
+            <span className="font-sans text-[10px] md:text-[11px] tracking-[0.25em] uppercase font-medium">
+              Our Legacy
+            </span>
           </Link>
         </motion.div>
       </motion.div>

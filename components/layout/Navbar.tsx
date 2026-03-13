@@ -2,7 +2,12 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
+import {
+  motion,
+  AnimatePresence,
+  useScroll,
+  useMotionValueEvent,
+} from "framer-motion";
 import { Search, ShoppingBag } from "lucide-react";
 import { SearchOverlay } from "@/components/ui/SearchOverlay";
 import { useEffect, useState } from "react";
@@ -38,8 +43,12 @@ export function Navbar() {
   // Dynamic Text Color Logic
   // Home & Top: White
   // Scrolled OR Not Home: Soft Black
-  const textColor = (pathname === "/" && !isScrolled) ? "text-white" : "text-soft-black";
-  const hoverColor = (pathname === "/" && !isScrolled) ? "hover:text-white/70" : "hover:text-gray-500";
+  const textColor =
+    pathname === "/" && !isScrolled ? "text-white" : "text-soft-black";
+  const hoverColor =
+    pathname === "/" && !isScrolled
+      ? "hover:text-white/70"
+      : "hover:text-gray-500";
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious() || 0;
@@ -70,7 +79,10 @@ export function Navbar() {
 
   return (
     <>
-      <SearchOverlay isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+      <SearchOverlay
+        isOpen={isSearchOpen}
+        onClose={() => setIsSearchOpen(false)}
+      />
       <CartDrawer isOpen={isCartOpen} onClose={closeCart} />
 
       <motion.nav
@@ -80,7 +92,6 @@ export function Navbar() {
         }}
         animate={isHidden ? "hidden" : "visible"}
         transition={{ duration: 0.35, ease: "easeInOut" }}
-
         // THE FIX:
         // 1. At Top on Home: bg-transparent (Let Hero color show through)
         // 2. Scrolled or Not Home: bg-bone (Solid color)
@@ -89,19 +100,25 @@ export function Navbar() {
           ${pathname === "/" && !isScrolled ? "pointer-events-none bg-transparent py-6 lg:py-10 border-none shadow-none" : "pointer-events-auto bg-bone py-4 border-b border-black/5 shadow-sm"}
         `}
       >
-
         {/* LOGO */}
-        <Link href="/" className="z-50 group pointer-events-auto flex items-center h-8">
-          <div className={`font-serif tracking-[0.3em] relative font-thin transition-all duration-500 flex items-center leading-none ${textColor}
+        <Link
+          href="/"
+          className="z-50 group pointer-events-auto flex items-center h-8"
+        >
+          <div
+            className={`font-serif tracking-[0.3em] relative font-thin transition-all duration-500 flex items-center leading-none ${textColor}
             ${isScrolled ? "text-xl lg:text-2xl" : "text-2xl lg:text-3xl"}
-          `}>
+          `}
+          >
             SHAKYA
             <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-current transition-all duration-500 group-hover:w-full" />
           </div>
         </Link>
 
         {/* DESKTOP LINKS */}
-        <div className={`hidden min-[1200px]:flex gap-12 items-center font-thin pointer-events-auto ${textColor}`}>
+        <div
+          className={`hidden min-[1200px]:flex gap-12 items-center font-thin pointer-events-auto ${textColor}`}
+        >
           {links.map((link) => (
             <Link
               key={link.name}
@@ -137,7 +154,9 @@ export function Navbar() {
         </div>
 
         {/* MOBILE CONTROLS */}
-        <div className={`min-[1200px]:hidden z-50 flex items-center gap-1.5 pointer-events-auto ${textColor}`}>
+        <div
+          className={`min-[1200px]:hidden z-50 flex items-center gap-1.5 pointer-events-auto ${textColor}`}
+        >
           {/* SEARCH ICON (Mobile) */}
           <button
             onClick={() => setIsSearchOpen(true)}
@@ -175,7 +194,11 @@ export function Navbar() {
               className="w-6 h-[1px] bg-current block"
             />
             <motion.span
-              animate={isOpen ? { rotate: -45, y: -7, width: 32 } : { rotate: 0, y: 0, width: 16 }}
+              animate={
+                isOpen
+                  ? { rotate: -45, y: -7, width: 32 }
+                  : { rotate: 0, y: 0, width: 16 }
+              }
               className={`w-4 h-[1px] bg-current block ${isOpen ? "bg-soft-black" : "bg-current"}`}
             />
           </button>
@@ -198,7 +221,7 @@ export function Navbar() {
                   key={link.name}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 + (i * 0.1), duration: 0.5 }}
+                  transition={{ delay: 0.1 + i * 0.1, duration: 0.5 }}
                 >
                   <Link
                     href={link.href}

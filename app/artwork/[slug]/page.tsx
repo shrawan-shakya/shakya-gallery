@@ -10,24 +10,45 @@ import { Price } from "@/components/ui/Price";
 import { PriceOnRequest } from "@/components/ui/PriceOnRequest";
 import { ShieldCheck, Truck, Lock } from "lucide-react";
 
-
-
 export const dynamicParams = true;
 export const revalidate = 0;
 
 const components = {
   block: {
-    h1: ({ children }: any) => <h2 className="font-serif text-3xl md:text-4xl text-soft-black mb-4">{children}</h2>,
-    h2: ({ children }: any) => <h2 className="font-serif text-2xl md:text-3xl text-soft-black mb-3">{children}</h2>,
-    h3: ({ children }: any) => <h3 className="font-serif text-xl md:text-2xl text-soft-black mb-2 italic">{children}</h3>,
-    normal: ({ children }: any) => <p className="font-sans font-light text-sm leading-[2.2] tracking-wide text-gray-600 text-justify mb-6">{children}</p>,
+    h1: ({ children }: any) => (
+      <h2 className="font-serif text-3xl md:text-4xl text-soft-black mb-4">
+        {children}
+      </h2>
+    ),
+    h2: ({ children }: any) => (
+      <h2 className="font-serif text-2xl md:text-3xl text-soft-black mb-3">
+        {children}
+      </h2>
+    ),
+    h3: ({ children }: any) => (
+      <h3 className="font-serif text-xl md:text-2xl text-soft-black mb-2 italic">
+        {children}
+      </h3>
+    ),
+    normal: ({ children }: any) => (
+      <p className="font-sans font-light text-sm leading-[2.2] tracking-wide text-gray-600 text-justify mb-6">
+        {children}
+      </p>
+    ),
   },
   list: {
-    bullet: ({ children }: any) => <ul className="ml-6 list-disc space-y-2 mb-6 font-sans text-sm text-soft-black">{children}</ul>,
-    number: ({ children }: any) => <ol className="ml-6 list-decimal space-y-2 mb-6 font-sans text-sm text-soft-black">{children}</ol>,
+    bullet: ({ children }: any) => (
+      <ul className="ml-6 list-disc space-y-2 mb-6 font-sans text-sm text-soft-black">
+        {children}
+      </ul>
+    ),
+    number: ({ children }: any) => (
+      <ol className="ml-6 list-decimal space-y-2 mb-6 font-sans text-sm text-soft-black">
+        {children}
+      </ol>
+    ),
   },
 };
-
 
 // FETCH SLUGS FOR STATIC GENERATION
 export async function generateStaticParams() {
@@ -74,7 +95,11 @@ async function getArtwork(slug: string) {
   return data;
 }
 
-async function getRelatedArtworks(categoryRefs: string[], currentId: string, artist: string) {
+async function getRelatedArtworks(
+  categoryRefs: string[],
+  currentId: string,
+  artist: string,
+) {
   const query = `
     *[_type == "artwork" && _id != $currentId] | order(
       count(categories[@._ref in $categoryRefs]) desc,
@@ -97,12 +122,18 @@ async function getRelatedArtworks(categoryRefs: string[], currentId: string, art
       year
     }
   `;
-  const { data } = await sanityFetch({ query, params: { categoryRefs, currentId, artist: artist || "" } });
+  const { data } = await sanityFetch({
+    query,
+    params: { categoryRefs, currentId, artist: artist || "" },
+  });
   return data;
 }
 
-
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
   const art = await getArtwork(slug);
 
@@ -119,13 +150,19 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   // Extract a plain text snippet for the meta description
   const plainTextDescription = Array.isArray(art.description)
     ? art.description
-      .map((block: any) => block._type === 'block' ? block.children?.map((child: any) => child.text).join('') : '')
-      .join(' ')
-      .trim()
+        .map((block: any) =>
+          block._type === "block"
+            ? block.children?.map((child: any) => child.text).join("")
+            : "",
+        )
+        .join(" ")
+        .trim()
     : "";
 
   const description = plainTextDescription
-    ? plainTextDescription.length > 160 ? `${plainTextDescription.substring(0, 157)}...` : plainTextDescription
+    ? plainTextDescription.length > 160
+      ? `${plainTextDescription.substring(0, 157)}...`
+      : plainTextDescription
     : `Buy ${art.title}, an original ${material} painting by ${artist}. Authentic Nepali art for sale at SHAKYA Gallery.`;
 
   return {
@@ -143,7 +180,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
           width: 1200,
           height: 630,
           alt: art.title,
-        }
+        },
       ],
       type: "website",
     },
@@ -152,52 +189,111 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       title,
       description,
       images: [art.mainImage.url],
-    }
+    },
   };
 }
 
 export default async function ArtworkPage({
-  params
+  params,
 }: {
-  params: Promise<{ slug: string }>
+  params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
   const art = await getArtwork(slug);
 
   if (!art) return notFound();
 
-  const relatedArtworks = await getRelatedArtworks(art.categoryRefs || [], art._id, art.artist || "");
+  const relatedArtworks = await getRelatedArtworks(
+    art.categoryRefs || [],
+    art._id,
+    art.artist || "",
+  );
 
   const isSold = art.status === "sold" || art.status === "private";
 
   const Breadcrumbs = ({ className }: { className?: string }) => (
-    <nav className={`flex flex-wrap items-baseline gap-3 font-sans text-[10px] tracking-[0.2em] uppercase text-gray-800 ${className}`}>
-      <Link href="/" className="hover:text-soft-black transition-colors">Home</Link>
+    <nav
+      className={`flex flex-wrap items-baseline gap-3 font-sans text-[10px] tracking-[0.2em] uppercase text-gray-800 ${className}`}
+    >
+      <Link href="/" className="hover:text-soft-black transition-colors">
+        Home
+      </Link>
       <span className="text-gray-500">/</span>
-      <Link href="/collection" className="hover:text-soft-black transition-colors">Collection</Link>
+      <Link
+        href="/collection"
+        className="hover:text-soft-black transition-colors"
+      >
+        Collection
+      </Link>
       <span className="text-gray-500">/</span>
-      <span className="text-soft-black border-b border-black/20 pb-0.5">Current Work</span>
+      <span className="text-soft-black border-b border-black/20 pb-0.5">
+        Current Work
+      </span>
     </nav>
   );
 
   // Reusable Gallery Hub (Legacy/Advisory Links)
-  const GalleryHub = ({ className, isSidebar = false }: { className?: string, isSidebar?: boolean }) => (
-    <div className={`${isSidebar ? "pt-8" : "pt-12"} border-t border-black/5 w-full ${className}`}>
-      <h3 className={`font-sans text-[11px] tracking-[0.2em] uppercase text-gray-800 ${isSidebar ? "mb-4" : "mb-8"} text-center md:text-left`}>From The Gallery</h3>
-      <div className={`grid ${isSidebar ? "gap-4" : "gap-6"} ${isSidebar ? "grid-cols-1" : "grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4"}`}>
-        <Link href="/legacy" className={`group ${isSidebar ? "p-5" : "p-8"} bg-white border border-black/5 hover:border-black/20 transition-all flex flex-col justify-between ${isSidebar ? "min-h-[130px]" : "min-h-[160px]"}`}>
+  const GalleryHub = ({
+    className,
+    isSidebar = false,
+  }: {
+    className?: string;
+    isSidebar?: boolean;
+  }) => (
+    <div
+      className={`${isSidebar ? "pt-8" : "pt-12"} border-t border-black/5 w-full ${className}`}
+    >
+      <h3
+        className={`font-sans text-[11px] tracking-[0.2em] uppercase text-gray-800 ${isSidebar ? "mb-4" : "mb-8"} text-center md:text-left`}
+      >
+        From The Gallery
+      </h3>
+      <div
+        className={`grid ${isSidebar ? "gap-4" : "gap-6"} ${isSidebar ? "grid-cols-1" : "grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4"}`}
+      >
+        <Link
+          href="/legacy"
+          className={`group ${isSidebar ? "p-5" : "p-8"} bg-white border border-black/5 hover:border-black/20 transition-all flex flex-col justify-between ${isSidebar ? "min-h-[130px]" : "min-h-[160px]"}`}
+        >
           <div>
-            <h4 className={`font-serif ${isSidebar ? "text-lg" : "text-xl"} italic text-soft-black mb-1 group-hover:text-soft-black/70 transition-colors`}>Our 20-Year Legacy</h4>
-            <p className={`font-sans ${isSidebar ? "text-[9px]" : "text-[10px]"} tracking-wider text-gray-800 uppercase`}>Discover the roots of Shakya excellence.</p>
+            <h4
+              className={`font-serif ${isSidebar ? "text-lg" : "text-xl"} italic text-soft-black mb-1 group-hover:text-soft-black/70 transition-colors`}
+            >
+              Our 20-Year Legacy
+            </h4>
+            <p
+              className={`font-sans ${isSidebar ? "text-[9px]" : "text-[10px]"} tracking-wider text-gray-800 uppercase`}
+            >
+              Discover the roots of Shakya excellence.
+            </p>
           </div>
-          <span className={`text-[9px] tracking-[0.2em] uppercase text-gray-400 group-hover:text-soft-black ${isSidebar ? "mt-2" : "mt-4"} inline-block`}>Learn More →</span>
+          <span
+            className={`text-[9px] tracking-[0.2em] uppercase text-gray-400 group-hover:text-soft-black ${isSidebar ? "mt-2" : "mt-4"} inline-block`}
+          >
+            Learn More →
+          </span>
         </Link>
-        <Link href="/guide/buying-art" className={`group ${isSidebar ? "p-5" : "p-8"} bg-white border border-black/5 hover:border-black/20 transition-all flex flex-col justify-between ${isSidebar ? "min-h-[130px]" : "min-h-[160px]"}`}>
+        <Link
+          href="/guide/buying-art"
+          className={`group ${isSidebar ? "p-5" : "p-8"} bg-white border border-black/5 hover:border-black/20 transition-all flex flex-col justify-between ${isSidebar ? "min-h-[130px]" : "min-h-[160px]"}`}
+        >
           <div>
-            <h4 className={`font-serif ${isSidebar ? "text-lg" : "text-xl"} italic text-soft-black mb-1 group-hover:text-soft-black/70 transition-colors`}>Art Advisory</h4>
-            <p className={`font-sans ${isSidebar ? "text-[9px]" : "text-[10px]"} tracking-wider text-gray-800 uppercase`}>Expert guidance for first-time collectors.</p>
+            <h4
+              className={`font-serif ${isSidebar ? "text-lg" : "text-xl"} italic text-soft-black mb-1 group-hover:text-soft-black/70 transition-colors`}
+            >
+              Art Advisory
+            </h4>
+            <p
+              className={`font-sans ${isSidebar ? "text-[9px]" : "text-[10px]"} tracking-wider text-gray-800 uppercase`}
+            >
+              Expert guidance for first-time collectors.
+            </p>
           </div>
-          <span className={`text-[9px] tracking-[0.2em] uppercase text-gray-400 group-hover:text-soft-black ${isSidebar ? "mt-2" : "mt-4"} inline-block`}>Collector's Guide →</span>
+          <span
+            className={`text-[9px] tracking-[0.2em] uppercase text-gray-400 group-hover:text-soft-black ${isSidebar ? "mt-2" : "mt-4"} inline-block`}
+          >
+            Collector's Guide →
+          </span>
         </Link>
       </div>
     </div>
@@ -206,33 +302,37 @@ export default async function ArtworkPage({
   // Extract plain text for JSON-LD description
   const plainTextDescription = Array.isArray(art.description)
     ? art.description
-      .map((block: any) => block._type === 'block' ? block.children?.map((child: any) => child.text).join('') : '')
-      .join(' ')
-      .trim()
+        .map((block: any) =>
+          block._type === "block"
+            ? block.children?.map((child: any) => child.text).join("")
+            : "",
+        )
+        .join(" ")
+        .trim()
     : "";
 
   // JSON-LD for VisualArtwork (Resolves Search Console E-commerce Errors)
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "VisualArtwork",
-    "name": art.title,
-    "image": art.mainImage.url,
-    "description": plainTextDescription,
+    name: art.title,
+    image: art.mainImage.url,
+    description: plainTextDescription,
 
-    "creator": [
+    creator: [
       {
         "@type": "Person",
-        "name": art.artist
-      }
+        name: art.artist,
+      },
     ],
-    "artMedium": art.material,
-    "artDimensions": art.dimensions,
-    "dateCreated": art.year,
-    "material": art.material,
-    "publisher": {
+    artMedium: art.material,
+    artDimensions: art.dimensions,
+    dateCreated: art.year,
+    material: art.material,
+    publisher: {
       "@type": "Organization",
-      "name": "Shakya Gallery"
-    }
+      name: "Shakya Gallery",
+    },
   };
 
   return (
@@ -242,14 +342,12 @@ export default async function ArtworkPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <div className="min-h-screen bg-bone pt-20 lg:pt-24 pb-40 overflow-x-hidden">
-
         {/* FULL WIDTH BREADCRUMBS */}
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 mt-6 md:mt-0 mb-4 md:mb-6 border-b border-black/[0.04] pb-4">
           <Breadcrumbs />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-20 px-6 md:px-12 max-w-[1400px] mx-auto items-start">
-
           {/* BLOCK 1: GALLERY (Mob: 1, Desk: Col 1) */}
           <div className="lg:col-start-1 lg:row-start-1 lg:pt-2">
             <ArtworkGallery
@@ -265,7 +363,6 @@ export default async function ArtworkPage({
             <div className="flex flex-col gap-6 animate-in fade-in slide-in-from-bottom-8 duration-1000">
               {/* Header */}
               <div className="flex flex-col gap-2">
-
                 {/* SOLD INDICATOR */}
                 {art.status === "sold" && (
                   <div className="inline-flex items-center gap-2 mb-4">
@@ -280,7 +377,10 @@ export default async function ArtworkPage({
                 </h1>
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mt-3">
                   <p className="font-serif italic text-lg md:text-xl text-gray-700">
-                    {art.artist}, <span className="text-gray-400 not-italic font-sans text-sm ml-1 tracking-wider">{art.year}</span>
+                    {art.artist},{" "}
+                    <span className="text-gray-400 not-italic font-sans text-sm ml-1 tracking-wider">
+                      {art.year}
+                    </span>
                   </p>
 
                   {/* CATEGORY TAGS */}
@@ -289,7 +389,7 @@ export default async function ArtworkPage({
                       {art.categories.map((category: string) => (
                         <Link
                           key={category}
-                          href={`/category/${category.toLowerCase().replace(/\s+/g, '-')}`}
+                          href={`/category/${category.toLowerCase().replace(/\s+/g, "-")}`}
                           className="flex items-center justify-center px-1.5 py-0 md:px-2 md:py-1 bg-white border border-black/10 hover:border-black/30 text-soft-black font-sans text-[8px] md:text-[9px] leading-tight tracking-[0.1em] md:tracking-[0.15em] uppercase transition-colors"
                         >
                           {category}
@@ -298,18 +398,25 @@ export default async function ArtworkPage({
                     </div>
                   )}
                 </div>
-
               </div>
 
               {/* Technical Details */}
               <div className="grid grid-cols-2 gap-x-12 py-5 border-y border-black/[0.06]">
                 <div className="space-y-1">
-                  <p className="font-sans text-[11px] tracking-[0.2em] uppercase text-gray-400">Material</p>
-                  <p className="font-sans text-sm text-soft-black leading-snug">{art.material || "Mixed Media"}</p>
+                  <p className="font-sans text-[11px] tracking-[0.2em] uppercase text-gray-400">
+                    Material
+                  </p>
+                  <p className="font-sans text-sm text-soft-black leading-snug">
+                    {art.material || "Mixed Media"}
+                  </p>
                 </div>
                 <div className="space-y-1">
-                  <p className="font-sans text-[11px] tracking-[0.2em] uppercase text-gray-400">Dimensions</p>
-                  <p className="font-sans text-sm text-soft-black leading-snug">{art.dimensions || "Variable"}</p>
+                  <p className="font-sans text-[11px] tracking-[0.2em] uppercase text-gray-400">
+                    Dimensions
+                  </p>
+                  <p className="font-sans text-sm text-soft-black leading-snug">
+                    {art.dimensions || "Variable"}
+                  </p>
                 </div>
               </div>
 
@@ -317,16 +424,21 @@ export default async function ArtworkPage({
               <div className="flex flex-col gap-8 pt-2">
                 {!isSold && (
                   <div className="space-y-4">
-                    {(art.showPrice && art.price) ? (
+                    {art.showPrice && art.price ? (
                       <div className="flex flex-col gap-1">
-                        <p className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-400">Current Value</p>
+                        <p className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-400">
+                          Current Value
+                        </p>
                         <p className="font-serif text-3xl md:text-4xl text-soft-black">
                           <Price amount={art.price} />
                         </p>
                       </div>
                     ) : (
                       <div className="py-5 px-6 bg-white border border-black/[0.03] shadow-sm inline-block w-full">
-                        <PriceOnRequest startingPrice={art.startingPrice} variant="detail" />
+                        <PriceOnRequest
+                          startingPrice={art.startingPrice}
+                          variant="detail"
+                        />
                         <p className="font-sans text-[10px] tracking-[0.2em] text-gray-400 uppercase mt-3 border-t border-black/[0.05] pt-3">
                           Private Inquiry Required
                         </p>
@@ -343,33 +455,50 @@ export default async function ArtworkPage({
                 {/* TRUST SIGNALS */}
                 <div className="mt-4 grid grid-cols-2 gap-4 border-t border-black/[0.04] pt-8">
                   <div className="flex items-start gap-3">
-                    <ShieldCheck className="w-5 h-5 text-soft-black/40 mt-0.5" strokeWidth={1} />
+                    <ShieldCheck
+                      className="w-5 h-5 text-soft-black/40 mt-0.5"
+                      strokeWidth={1}
+                    />
                     <div className="space-y-0.5">
-                      <p className="font-sans text-[10px] tracking-[0.15em] uppercase text-soft-black font-medium">Authenticity</p>
-                      <p className="font-sans text-[9px] text-gray-500 leading-tight">Signed Certificate of Authenticity Included</p>
+                      <p className="font-sans text-[10px] tracking-[0.15em] uppercase text-soft-black font-medium">
+                        Authenticity
+                      </p>
+                      <p className="font-sans text-[9px] text-gray-500 leading-tight">
+                        Signed Certificate of Authenticity Included
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <Truck className="w-5 h-5 text-soft-black/40 mt-0.5" strokeWidth={1} />
+                    <Truck
+                      className="w-5 h-5 text-soft-black/40 mt-0.5"
+                      strokeWidth={1}
+                    />
                     <div className="space-y-0.5">
-                      <p className="font-sans text-[10px] tracking-[0.15em] uppercase text-soft-black font-medium">Global Delivery</p>
-                      <p className="font-sans text-[9px] text-gray-500 leading-tight">Insured Crating & Worldwide Shipping via DHL</p>
+                      <p className="font-sans text-[10px] tracking-[0.15em] uppercase text-soft-black font-medium">
+                        Global Delivery
+                      </p>
+                      <p className="font-sans text-[9px] text-gray-500 leading-tight">
+                        Insured Crating & Worldwide Shipping via DHL
+                      </p>
                     </div>
                   </div>
                 </div>
 
-
-
                 {/* DESKTOP HUB (Shows in right column on LG+) */}
-                <GalleryHub className="hidden lg:block border-none pt-8" isSidebar />
+                <GalleryHub
+                  className="hidden lg:block border-none pt-8"
+                  isSidebar
+                />
               </div>
-
             </div>
           </div>
 
           {/* BLOCK 3: TABS (Mob: 3, Desk: Col 1) */}
           <div className="lg:col-start-1 lg:row-start-2 lg:mt-12 animate-in fade-in duration-1000 delay-300">
-            <ArtworkTabs description={art.description} provenance={art.provenance} />
+            <ArtworkTabs
+              description={art.description}
+              provenance={art.provenance}
+            />
           </div>
 
           {/* SIMILAR ARTWORKS */}
@@ -381,9 +510,7 @@ export default async function ArtworkPage({
           <div className="lg:hidden lg:col-span-2 mt-12 w-full">
             <GalleryHub />
           </div>
-
         </div>
-
       </div>
     </>
   );

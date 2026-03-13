@@ -8,23 +8,21 @@ import { CurrencyProvider } from "@/hooks/use-currency";
 import { ScrollToTop } from "@/components/ui/ScrollToTop";
 
 export function ClientLayout({ children }: { children: React.ReactNode }) {
-    const pathname = usePathname();
-    const isStudio = pathname?.startsWith("/studio");
+  const pathname = usePathname();
+  const isStudio = pathname?.startsWith("/studio");
 
-    if (isStudio) {
-        return <>{children}</>;
-    }
+  if (isStudio) {
+    return <>{children}</>;
+  }
 
-    return (
-        <CurrencyProvider>
-            <SmoothScroll>
-                <Navbar />
-                <main className="flex-grow">
-                    {children}
-                </main>
-                <Footer />
-                <ScrollToTop />
-            </SmoothScroll>
-        </CurrencyProvider>
-    );
+  return (
+    <CurrencyProvider>
+      <SmoothScroll>
+        <Navbar />
+        <main className="flex-grow">{children}</main>
+        <Footer />
+        <ScrollToTop />
+      </SmoothScroll>
+    </CurrencyProvider>
+  );
 }
