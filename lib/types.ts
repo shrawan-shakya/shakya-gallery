@@ -35,4 +35,6 @@ export type FilterOptions = {
   selectedCategories: string[];
   statusFilter: "all" | "available" | "sold";
   sortOption: "newest" | "price_asc" | "price_desc";
+  showMat: boolean;
+  view: "grid" | "rows";
 };

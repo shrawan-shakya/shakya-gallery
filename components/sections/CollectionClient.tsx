@@ -17,236 +17,13 @@ import { cn } from "@/lib/utils";
 import { FeaturedCollection } from "./FeaturedCollection";
 import { Price } from "@/components/ui/Price";
 import { Artwork, Category } from "@/lib/types";
-
 import { useArtFilter } from "@/hooks/useArtFilter";
+import { FilterPanel } from "@/components/collection/FilterPanel";
+import { FrameIcon, CanvasIcon } from "@/components/ui/Icons";
 import {
-  accordion,
   staggerContainer,
   staggerItem,
 } from "@/lib/motion-variants";
-
-// --- ICONS ---
-const FrameIcon = ({ className }: { className?: string }) => (
-  <svg
-    width="16"
-    height="16"
-    viewBox="0 0 18 18"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    className={className}
-  >
-    <rect
-      x="1"
-      y="1"
-      width="16"
-      height="16"
-      stroke="currentColor"
-      strokeWidth="1.5"
-    />
-    <rect
-      x="4"
-      y="4"
-      width="10"
-      height="10"
-      stroke="currentColor"
-      strokeWidth="1"
-      opacity="0.6"
-    />
-  </svg>
-);
-
-const CanvasIcon = ({ className }: { className?: string }) => (
-  <svg
-    width="16"
-    height="16"
-    viewBox="0 0 18 18"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    className={className}
-  >
-    <rect
-      x="1"
-      y="1"
-      width="16"
-      height="16"
-      stroke="currentColor"
-      strokeWidth="1.5"
-    />
-  </svg>
-);
-
-// --- REUSABLE COMPONENT: ACCORDION SECTION ---
-const FilterSection = ({
-  title,
-  isOpen,
-  onToggle,
-  children,
-}: {
-  title: string;
-  isOpen: boolean;
-  onToggle: () => void;
-  children: React.ReactNode;
-}) => {
-  return (
-    <div className="border-b border-black/10">
-      <button
-        onClick={onToggle}
-        className="w-full flex justify-between items-center py-5 group bg-transparent"
-      >
-        <h3 className="font-sans text-[11px] tracking-[0.3em] uppercase text-gray-600 group-hover:text-soft-black transition-colors">
-          {title}
-        </h3>
-        <span className="font-sans text-lg text-soft-black/40 font-light group-hover:text-soft-black transition-colors">
-          {isOpen ? "−" : "+"}
-        </span>
-      </button>
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            variants={accordion}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            className="overflow-hidden"
-          >
-            <div className="pb-6 pt-1 flex flex-col gap-3">{children}</div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-};
-
-// --- EXTRACTED COMPONENT: FILTER PANEL ---
-const FilterPanel = ({
-  searchQuery,
-  setSearchQuery,
-  categoriesByType,
-  selectedCategories,
-  toggleCategory,
-  statusFilter,
-  setStatusFilter,
-  sortOption,
-  setSortOption,
-  openSections,
-  toggleSection,
-  categoryCounts,
-  clearFilters,
-  hasActiveFilters,
-}: {
-  searchQuery: string;
-  setSearchQuery: (val: string) => void;
-  categoriesByType: Record<string, string[]>;
-  selectedCategories: string[];
-  toggleCategory: (val: string) => void;
-  statusFilter: string;
-  setStatusFilter: (val: any) => void;
-  sortOption: string;
-  setSortOption: (val: any) => void;
-  openSections: Record<string, boolean>;
-  toggleSection: (key: string) => void;
-  categoryCounts: Record<string, number>;
-  clearFilters: () => void;
-  hasActiveFilters: boolean;
-}) => {
-  return (
-    <>
-      {Object.entries(categoriesByType).map(([type, titles]) => (
-        <FilterSection
-          key={type}
-          title={type.charAt(0).toUpperCase() + type.slice(1)}
-          isOpen={openSections[type] || false}
-          onToggle={() => toggleSection(type)}
-        >
-          {titles.map((title) => {
-            const count = categoryCounts[title] || 0;
-            const isSelected = selectedCategories.includes(title);
-            return (
-              <button
-                key={title}
-                onClick={() => toggleCategory(title)}
-                className={`text-left font-sans text-xs tracking-[0.2em] uppercase py-1 transition-all duration-300 flex justify-between items-center group/btn
-                  ${isSelected ? "text-soft-black font-semibold pl-2 border-l-2 border-soft-black" : "text-gray-500 hover:text-soft-black"}
-                `}
-              >
-                <span>{title}</span>
-                <span className="text-[11px] opacity-60 group-hover/btn:opacity-100 transition-opacity ml-2">
-                  ({count})
-                </span>
-              </button>
-            );
-          })}
-        </FilterSection>
-      ))}
-
-      <FilterSection
-        title="Availability"
-        isOpen={openSections["availability"]}
-        onToggle={() => toggleSection("availability")}
-      >
-        {["all", "available", "sold"].map((status) => (
-          <button
-            key={status}
-            onClick={() => setStatusFilter(status as any)}
-            className={`text-left font-sans text-xs tracking-[0.2em] uppercase py-1 transition-all duration-300
-              ${statusFilter === status ? "text-soft-black font-semibold pl-2 border-l-2 border-soft-black" : "text-gray-500 hover:text-soft-black"}
-            `}
-          >
-            {status}
-          </button>
-        ))}
-      </FilterSection>
-
-      <FilterSection
-        title="Sort"
-        isOpen={openSections["sort"]}
-        onToggle={() => toggleSection("sort")}
-      >
-        <button
-          onClick={() => setSortOption("newest")}
-          className={`text-left font-sans text-xs tracking-[0.2em] uppercase py-1 ${sortOption === "newest" ? "text-soft-black font-semibold pl-2 border-l-2 border-soft-black" : "text-gray-500 hover:text-soft-black"}`}
-        >
-          Newest
-        </button>
-        <button
-          onClick={() => setSortOption("price_asc")}
-          className={`text-left font-sans text-xs tracking-[0.2em] uppercase py-1 ${sortOption === "price_asc" ? "text-soft-black font-semibold pl-2 border-l-2 border-soft-black" : "text-gray-500 hover:text-soft-black"}`}
-        >
-          Price: Low to High
-        </button>
-        <button
-          onClick={() => setSortOption("price_desc")}
-          className={`text-left font-sans text-xs tracking-[0.2em] uppercase py-1 ${sortOption === "price_desc" ? "text-soft-black font-semibold pl-2 border-l-2 border-soft-black" : "text-gray-500 hover:text-soft-black"}`}
-        >
-          Price: High to Low
-        </button>
-      </FilterSection>
-
-      <AnimatePresence>
-        {hasActiveFilters && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="overflow-hidden"
-          >
-            <div className="pt-6 mt-6 border-t border-black/5">
-              <button
-                onClick={clearFilters}
-                className="w-full text-left font-sans text-[11px] tracking-[0.2em] uppercase text-gray-400 hover:text-soft-black transition-colors flex justify-between items-center group"
-              >
-                <span>Clear All Filters</span>
-                <span className="opacity-0 group-hover:opacity-100 transition-opacity">
-                  ✕
-                </span>
-              </button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
-  );
-};
 
 export function CollectionClient({
   artworks,
@@ -267,6 +44,10 @@ export function CollectionClient({
     setStatusFilter,
     sortOption,
     setSortOption,
+    showMat,
+    setShowMat,
+    view,
+    setView,
     clearFilters,
     hasActiveFilters,
     categoryCounts,
@@ -276,7 +57,6 @@ export function CollectionClient({
   const pathname = usePathname();
 
   // --- UI STATE ---
-  const [showMat, setShowMat] = useState(true);
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const [gridCols, setGridCols] = useState<2 | 3>(2);
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
@@ -303,12 +83,13 @@ export function CollectionClient({
 
   // --- GRID DISTRIBUTION ---
   const columns = useMemo(() => {
-    const cols: Artwork[][] = Array.from({ length: gridCols }, () => []);
-    filteredArtworks.forEach((art, index) => {
-      cols[index % gridCols].push(art);
+    const colsCount = view === "rows" ? 1 : gridCols;
+    const cols: Artwork[][] = Array.from({ length: colsCount }, () => []);
+    filteredArtworks.forEach((art: Artwork, index: number) => {
+      cols[index % colsCount].push(art);
     });
     return cols;
-  }, [filteredArtworks, gridCols]);
+  }, [filteredArtworks, gridCols, view]);
 
   const categoriesByType = allCategories.reduce(
     (acc, cat) => {
@@ -460,8 +241,11 @@ export function CollectionClient({
                 View
               </span>
               <button
-                onClick={() => setGridCols(2)}
-                className={`p-2 transition-colors duration-300 ${gridCols === 2 ? "text-soft-black" : "text-gray-300 hover:text-gray-500"}`}
+                onClick={() => {
+                  setView("grid");
+                  setGridCols(2);
+                }}
+                className={`p-2 transition-colors duration-300 ${view === "grid" && gridCols === 2 ? "text-soft-black" : "text-gray-300 hover:text-gray-500"}`}
               >
                 <svg
                   width="18"
@@ -488,8 +272,11 @@ export function CollectionClient({
                 </svg>
               </button>
               <button
-                onClick={() => setGridCols(3)}
-                className={`p-2 transition-colors duration-300 ${gridCols === 3 ? "text-soft-black" : "text-gray-300 hover:text-gray-500"}`}
+                onClick={() => {
+                  setView("grid");
+                  setGridCols(3);
+                }}
+                className={`p-2 transition-colors duration-300 ${view === "grid" && gridCols === 3 ? "text-soft-black" : "text-gray-300 hover:text-gray-500"}`}
               >
                 <svg
                   width="18"
@@ -535,7 +322,7 @@ export function CollectionClient({
                 {/* Mobile 1-Column Layout */}
                 <div className="flex w-full flex-col gap-12 md:hidden">
                   <AnimatePresence mode="popLayout">
-                    {filteredArtworks.map((art, index) => (
+                    {filteredArtworks.map((art: Artwork, index: number) => (
                       <ArtworkCard
                         key={art._id}
                         art={art}

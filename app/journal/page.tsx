@@ -2,6 +2,7 @@ import { sanityFetch } from "@/sanity/lib/live";
 import Link from "next/link";
 import Image from "next/image";
 import { Metadata } from "next";
+import { Button } from "@/components/ui/Button";
 
 export const metadata: Metadata = {
   title: "The Journal | Insights on Fine Art & Collecting | SHAKYA",
@@ -141,7 +142,7 @@ export default async function JournalPage() {
               )}
             </Link>
             <div className="flex flex-col justify-center items-start lg:pl-12">
-              <span className="font-sans text-xs tracking-[0.2em] text-red-800 uppercase mb-6">
+              <span className="font-sans text-xs tracking-[0.2em] text-red-800 uppercase mb-6 font-semibold">
                 Latest Entry
               </span>
               <h2 className="font-serif text-4xl md:text-6xl text-soft-black leading-none mb-6">
@@ -155,12 +156,15 @@ export default async function JournalPage() {
               <p className="font-sans text-base text-gray-500 leading-relaxed mb-8 max-w-md">
                 {featured.excerpt}
               </p>
-              <Link
-                href={`/journal/${featured.slug}`}
+              <Button
+                asChild
+                animation="slide"
                 className="px-8 py-3 bg-soft-black text-white font-sans text-xs tracking-[0.2em] uppercase hover:bg-gray-800 transition-colors"
               >
-                Read Full Story
-              </Link>
+                <Link href={`/journal/${featured.slug}`}>
+                  Read Full Story
+                </Link>
+              </Button>
             </div>
           </div>
         )}
@@ -253,12 +257,15 @@ export default async function JournalPage() {
               in your inbox as they are released.
             </p>
             <div className="pt-4">
-              <Link
-                href="/contact"
+              <Button
+                asChild
+                variant="outline"
                 className="inline-block px-12 py-4 border border-white/20 text-white font-sans text-xs tracking-[0.3em] uppercase hover:bg-white hover:text-soft-black transition-all"
               >
-                Join The Inner Circle
-              </Link>
+                <Link href="/contact">
+                  Join The Inner Circle
+                </Link>
+              </Button>
             </div>
           </div>
         </div>

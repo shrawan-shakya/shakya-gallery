@@ -19,7 +19,7 @@ const components = {
       <h2 className="font-serif text-xl text-soft-black mb-3">{children}</h2>
     ),
     normal: ({ children }: any) => (
-      <p className="font-sans font-light text-sm leading-relaxed text-soft-black mb-4 text-justify">
+      <p className="font-sans text-sm leading-relaxed text-soft-black mb-4 text-justify">
         {children}
       </p>
     ),
@@ -73,7 +73,7 @@ export function ArtworkTabs({ description, provenance }: ArtworkTabsProps) {
             <h4 className="font-serif text-lg italic text-soft-black">
               Presentation & Shipping
             </h4>
-            <div className="font-sans font-light text-sm leading-relaxed text-soft-black space-y-4 text-justify">
+            <div className="font-sans text-sm leading-relaxed text-soft-black space-y-4 text-justify">
               <p>
                 To ensure maximum protection during transit, this painting
                 arrives unframed and carefully rolled in a heavy-duty protective
@@ -95,7 +95,7 @@ export function ArtworkTabs({ description, provenance }: ArtworkTabsProps) {
             <h4 className="font-serif text-lg italic text-soft-black">
               Framing Available
             </h4>
-            <div className="font-sans font-light text-sm leading-relaxed text-soft-black space-y-4 text-justify">
+            <div className="font-sans text-sm leading-relaxed text-soft-black space-y-4 text-justify">
               <p>
                 Paintings are shipped professionally rolled in a protective tube
                 by default. This is the safest method for international transit.
@@ -124,10 +124,10 @@ export function ArtworkTabs({ description, provenance }: ArtworkTabsProps) {
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={cn(
-                "font-sans text-[11px] tracking-[0.25em] uppercase px-4 md:px-6 py-4 transition-colors relative whitespace-nowrap snap-start shrink-0 font-medium",
+                "font-sans text-micro md:text-tiny tracking-luxury-wide uppercase px-4 md:px-6 py-4 transition-colors relative whitespace-nowrap snap-start shrink-0 font-semibold",
                 activeTab === tab.id
                   ? "text-soft-black"
-                  : "text-gray-400 hover:text-gray-600",
+                  : "text-muted-foreground hover:text-soft-black/80",
                 index === 0 ? "pl-0" : "", // Remove left padding from first item so it aligns with content
                 index === tabs.length - 1 ? "pr-8 md:pr-0" : "", // Add right padding to last item for mobile scroll clearance
               )}

@@ -3,6 +3,8 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import Image from "next/image";
+import { Button } from "@/components/ui/Button";
+import Link from "next/link";
 
 // --- COMPONENTS ---
 
@@ -187,12 +189,15 @@ export default function LegacyPage() {
           <p className="font-serif text-3xl italic text-soft-black mb-12">
             "We invite you to be part of our next chapter."
           </p>
-          <a
-            href="/collection"
+          <Button
+            asChild
+            animation="slide"
             className="inline-block bg-soft-black text-white font-sans text-xs tracking-[0.2em] uppercase px-10 py-4 hover:bg-gray-800 transition-colors"
           >
-            View The Collection
-          </a>
+            <Link href="/collection">
+              View The Collection
+            </Link>
+          </Button>
         </div>
       </section>
     </main>

@@ -28,6 +28,10 @@ export function useArtFilter(
   const sortOption = (searchParams.get("sort") ||
     "newest") as FilterOptions["sortOption"];
 
+  // View Preferences
+  const showMat = searchParams.get("mat") !== "0"; // Default true
+  const view = (searchParams.get("v") || "grid") as FilterOptions["view"];
+
   // --- FILTER LOGIC ---
   const filteredArtworks = useMemo(() => {
     let result = artworks;
@@ -150,6 +154,10 @@ export function useArtFilter(
     setStatusFilter: (val: string) => updateQueryParam("status", val),
     sortOption,
     setSortOption: (val: string) => updateQueryParam("sort", val),
+    showMat,
+    setShowMat: (val: boolean) => updateQueryParam("mat", val ? "1" : "0"),
+    view,
+    setView: (val: "grid" | "rows") => updateQueryParam("v", val),
     clearFilters,
     hasActiveFilters,
     categoryCounts,

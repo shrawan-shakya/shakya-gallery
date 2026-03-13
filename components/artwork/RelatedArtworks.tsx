@@ -22,7 +22,7 @@ export function RelatedArtworks({ artworks }: RelatedArtworksProps) {
           <h2 className="font-serif text-3xl md:text-4xl text-soft-black mb-4 italic">
             Similar Artworks
           </h2>
-          <p className="font-sans text-[11px] tracking-[0.2em] uppercase text-gray-500">
+          <p className="font-sans text-[11px] tracking-[0.2em] uppercase text-gray-500 font-medium">
             Carefully curated pieces from the same collection
           </p>
         </div>
@@ -79,7 +79,7 @@ export function RelatedArtworks({ artworks }: RelatedArtworksProps) {
         <div className="flex justify-center mt-8">
           <Link
             href="/collection"
-            className="font-sans text-[11px] tracking-[0.3em] uppercase text-gray-400 hover:text-soft-black transition-colors border-b border-transparent hover:border-black/20 pb-1"
+            className="font-sans text-[11px] tracking-[0.3em] uppercase text-gray-400 hover:text-soft-black transition-colors border-b border-transparent hover:border-black/20 pb-1 font-semibold"
           >
             View Entire Collection —
           </Link>

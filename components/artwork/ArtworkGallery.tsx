@@ -74,9 +74,34 @@ export function ArtworkGallery({
   };
 
   return (
-    <div className="flex flex-col gap-6 w-full">
+    <div className="flex flex-col md:flex-row gap-4 w-full h-full lg:max-h-[85vh]">
+      {/* THUMBNAIL STRIP (Vertical on Left for Desktop, Horizontal on Mobile) */}
+      {allImages.length > 1 && (
+        <div className="flex md:flex-col gap-3 overflow-y-auto overflow-x-auto md:w-20 flex-shrink-0 scrollbar-hide order-2 md:order-1 self-start md:h-full pb-2 md:pb-0">
+          {allImages.map((img, idx) => (
+            <button
+              key={idx}
+              onClick={() => setCurrentIndex(idx)}
+              className={cn(
+                "relative flex-none w-16 h-16 md:w-20 md:h-20 transition-all duration-300 border",
+                currentIndex === idx
+                  ? "border-soft-black opacity-100 ring-1 ring-soft-black/20"
+                  : "border-transparent opacity-60 hover:opacity-100",
+              )}
+            >
+              <Image
+                src={img.url}
+                alt={`Thumbnail view ${idx + 1} of ${title}`}
+                fill
+                className="object-cover"
+              />
+            </button>
+          ))}
+        </div>
+      )}
+
       {/* MAIN STAGE */}
-      <div className="relative w-full group">
+      <div className="relative w-full group order-1 md:order-2">
         <div className="relative w-full lg:h-[80vh] flex flex-col items-center justify-center transition-all duration-500 ease-in-out px-4">
           <div
             className={cn(
@@ -176,30 +201,6 @@ export function ArtworkGallery({
         )}
       </div>
 
-      {/* THUMBNAIL STRIP */}
-      {allImages.length > 1 && (
-        <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
-          {allImages.map((img, idx) => (
-            <button
-              key={idx}
-              onClick={() => setCurrentIndex(idx)}
-              className={cn(
-                "relative flex-none w-20 h-20 rounded-sm transition-all duration-300 border-2",
-                currentIndex === idx
-                  ? "border-soft-black opacity-100 ring-1 ring-soft-black/20"
-                  : "border-transparent opacity-60 hover:opacity-100",
-              )}
-            >
-              <Image
-                src={img.url}
-                alt={`Thumbnail view ${idx + 1} of ${title}`}
-                fill
-                className="object-cover"
-              />
-            </button>
-          ))}
-        </div>
-      )}
       {/* LIGHTBOX */}
       <MediaLightbox
         isOpen={isLightboxOpen}

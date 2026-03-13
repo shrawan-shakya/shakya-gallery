@@ -86,15 +86,15 @@ export function ArtworkActions({
         <div className="flex flex-col gap-3">
           <button
             onClick={() => setIsShippingOpen(true)}
-            className="group w-full inline-flex items-center justify-between px-6 py-4 border border-black/10 bg-white hover:border-black/30 hover:shadow-sm transition-all duration-300 cursor-pointer"
+            className="group w-full inline-flex items-center justify-center gap-4 px-6 py-4 border border-black/10 bg-white hover:border-black/30 hover:shadow-sm transition-all duration-300 cursor-pointer"
           >
             <div className="flex items-center gap-3">
               <Globe className="w-4 h-4 text-gray-500 group-hover:text-soft-black transition-colors" />
               <span className="font-sans text-[10px] tracking-[0.2em] uppercase text-soft-black">
-                Estimate Worldwide Shipping
+                Estimate Shipping
               </span>
             </div>
-            <span className="text-gray-400 group-hover:text-soft-black transform group-hover:translate-x-1 transition-all">
+            <span className="text-gray-400 group-hover:text-soft-black transform group-hover:translate-x-2 transition-all">
               →
             </span>
           </button>

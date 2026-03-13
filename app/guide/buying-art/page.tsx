@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Metadata } from "next";
+import { Button } from "@/components/ui/Button";
 
 export const metadata: Metadata = {
   title: "How to Buy Fine Art | The Collector's Guide | SHAKYA",
@@ -275,13 +276,14 @@ export default function BuyingGuidePage() {
                 space and budget.
               </p>
               <div className="space-y-6">
-                <Link
-                  href="https://wa.me/61450704907"
-                  target="_blank"
-                  className="inline-flex items-center gap-3 px-8 py-4 bg-[#25D366] text-white font-sans text-xs tracking-[0.2em] uppercase hover:bg-green-600 transition-colors"
+                <Button
+                  asChild
+                  className="inline-flex items-center gap-3 px-8 py-4 bg-[#25D366] text-white font-sans text-xs tracking-[0.2em] uppercase hover:bg-green-600 transition-colors font-semibold"
                 >
-                  <span>Contact on WhatsApp</span>
-                </Link>
+                  <Link href="https://wa.me/61450704907" target="_blank">
+                    Contact on WhatsApp
+                  </Link>
+                </Button>
                 <div className="font-sans text-sm text-black">
                   <p className="mb-1 font-medium text-black font-serif text-lg tracking-tight">
                     Direct: +977-9843320342
@@ -301,15 +303,18 @@ export default function BuyingGuidePage() {
         <h2 className="font-serif text-3xl italic text-black mb-8">
           Ready to begin?
         </h2>
-        <Link
-          href="/collection"
-          className="group inline-flex items-center gap-2 font-sans text-xs tracking-[0.2em] uppercase border-b border-black pb-1 hover:text-gray-600 hover:border-gray-400 transition-all"
+        <Button
+          asChild
+          variant="link"
+          className="group inline-flex items-center gap-2 font-sans text-xs tracking-[0.2em] uppercase border-b border-black pb-1 hover:text-gray-600 hover:border-gray-400 transition-all font-semibold"
         >
-          Browse The Collection
-          <span className="group-hover:translate-x-1 transition-transform">
-            →
-          </span>
-        </Link>
+          <Link href="/collection">
+            Browse The Collection
+            <span className="group-hover:translate-x-1 transition-transform">
+              →
+            </span>
+          </Link>
+        </Button>
       </section>
     </main>
   );

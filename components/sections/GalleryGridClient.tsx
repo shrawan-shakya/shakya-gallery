@@ -14,62 +14,23 @@ import { cn } from "@/lib/utils";
 import { Price } from "@/components/ui/Price";
 import { Artwork } from "@/lib/types";
 import { ArtworkCard } from "@/components/artwork/ArtworkCard";
+import { useArtFilter } from "@/hooks/useArtFilter";
+import { FrameIcon, CanvasIcon } from "@/components/ui/Icons";
 
 import { staggerContainer, staggerItem } from "@/lib/motion-variants";
 
-// --- ICONS ---
-const FrameIcon = ({ className }: { className?: string }) => (
-  <svg
-    width="14"
-    height="14"
-    viewBox="0 0 18 18"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    className={className}
-  >
-    <rect
-      x="1"
-      y="1"
-      width="16"
-      height="16"
-      stroke="currentColor"
-      strokeWidth="1.5"
-    />
-    <rect
-      x="4"
-      y="4"
-      width="10"
-      height="10"
-      stroke="currentColor"
-      strokeWidth="1"
-      opacity="0.6"
-    />
-  </svg>
-);
-
-const CanvasIcon = ({ className }: { className?: string }) => (
-  <svg
-    width="14"
-    height="14"
-    viewBox="0 0 18 18"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    className={className}
-  >
-    <rect
-      x="1"
-      y="1"
-      width="16"
-      height="16"
-      stroke="currentColor"
-      strokeWidth="1.5"
-    />
-  </svg>
-);
-
 export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
-  const [layout, setLayout] = useState<"grid" | "single">("single");
-  const [showMat, setShowMat] = useState(true);
+  const {
+    showMat,
+    setShowMat,
+    view,
+    setView,
+  } = useArtFilter(artworks);
+
+  // Map "single" to "rows" for compatibility with internal logic
+  const layout = view === "rows" ? "single" : "grid";
+  const setLayout = (l: "single" | "grid") => setView(l === "single" ? "rows" : "grid");
+
   const [isStuck, setIsStuck] = useState(false);
   const sentinelRef = useRef<HTMLDivElement>(null);
 
@@ -261,7 +222,7 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
         {/* VIEW: SINGLE ROW */}
         {layout === "single" && (
           <div className="max-w-[1000px] mx-auto grid grid-cols-1 gap-y-20 md:gap-y-32">
-            {artworks.map((art, index) => (
+            {artworks.map((art: Artwork, index: number) => (
               <ArtworkCard
                 key={art._id}
                 art={art}
@@ -283,8 +244,8 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
                 className="flex-1 flex flex-col gap-4 md:gap-12 w-full"
               >
                 {artworks
-                  .filter((_, index) => index % 2 === colIndex)
-                  .map((art, index) => {
+                  .filter((_: Artwork, index: number) => index % 2 === colIndex)
+                  .map((art: Artwork, index: number) => {
                     const globalIndex = index * 2 + colIndex;
                     return (
                       <ArtworkCard

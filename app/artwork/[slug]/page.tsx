@@ -213,7 +213,7 @@ export default async function ArtworkPage({
 
   const Breadcrumbs = ({ className }: { className?: string }) => (
     <nav
-      className={`flex flex-wrap items-baseline gap-3 font-sans text-[10px] tracking-[0.2em] uppercase text-gray-800 ${className}`}
+      className={`flex flex-wrap items-baseline gap-3 font-sans text-[10px] tracking-[0.2em] uppercase text-gray-800 font-medium ${className}`}
     >
       <Link href="/" className="hover:text-soft-black transition-colors">
         Home
@@ -244,7 +244,7 @@ export default async function ArtworkPage({
       className={`${isSidebar ? "pt-8" : "pt-12"} border-t border-black/5 w-full ${className}`}
     >
       <h3
-        className={`font-sans text-[11px] tracking-[0.2em] uppercase text-gray-800 ${isSidebar ? "mb-4" : "mb-8"} text-center md:text-left`}
+        className={`font-sans text-[11px] tracking-[0.2em] uppercase text-gray-800 ${isSidebar ? "mb-4" : "mb-8"} text-center md:text-left font-semibold`}
       >
         From The Gallery
       </h3>
@@ -262,13 +262,13 @@ export default async function ArtworkPage({
               Our 20-Year Legacy
             </h4>
             <p
-              className={`font-sans ${isSidebar ? "text-[9px]" : "text-[10px]"} tracking-wider text-gray-800 uppercase`}
+              className={`font-sans ${isSidebar ? "text-[9px]" : "text-[10px]"} tracking-wider text-gray-800 uppercase font-medium`}
             >
               Discover the roots of Shakya excellence.
             </p>
           </div>
           <span
-            className={`text-[9px] tracking-[0.2em] uppercase text-gray-400 group-hover:text-soft-black ${isSidebar ? "mt-2" : "mt-4"} inline-block`}
+            className={`font-sans font-semibold text-[9px] tracking-[0.2em] uppercase text-gray-400 group-hover:text-soft-black ${isSidebar ? "mt-2" : "mt-4"} inline-block`}
           >
             Learn More →
           </span>
@@ -284,13 +284,13 @@ export default async function ArtworkPage({
               Art Advisory
             </h4>
             <p
-              className={`font-sans ${isSidebar ? "text-[9px]" : "text-[10px]"} tracking-wider text-gray-800 uppercase`}
+              className={`font-sans ${isSidebar ? "text-[9px]" : "text-[10px]"} tracking-wider text-gray-800 uppercase font-medium`}
             >
               Expert guidance for first-time collectors.
             </p>
           </div>
           <span
-            className={`text-[9px] tracking-[0.2em] uppercase text-gray-400 group-hover:text-soft-black ${isSidebar ? "mt-2" : "mt-4"} inline-block`}
+            className={`font-sans font-semibold text-[9px] tracking-[0.2em] uppercase text-gray-400 group-hover:text-soft-black ${isSidebar ? "mt-2" : "mt-4"} inline-block`}
           >
             Collector's Guide →
           </span>
@@ -341,32 +341,34 @@ export default async function ArtworkPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <div className="min-h-screen bg-bone pt-20 lg:pt-24 pb-40 overflow-x-hidden">
+      <div className="min-h-screen bg-bone pt-20 lg:pt-24 pb-40 overflow-x-clip">
         {/* FULL WIDTH BREADCRUMBS */}
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 mt-6 md:mt-0 mb-4 md:mb-6 border-b border-black/[0.04] pb-4">
           <Breadcrumbs />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-20 px-6 md:px-12 max-w-[1400px] mx-auto items-start">
-          {/* BLOCK 1: GALLERY (Mob: 1, Desk: Col 1) */}
-          <div className="lg:col-start-1 lg:row-start-1 lg:pt-2">
-            <ArtworkGallery
-              mainImage={art.mainImage}
-              relatedImages={art.relatedImages}
-              title={art.title}
-              orientation={art.orientation}
-            />
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-16 px-6 md:px-12 max-w-[1400px] mx-auto mb-16 relative w-full items-start lg:items-stretch">
+          {/* BLOCK 1: GALLERY (Left Column Sticky Track - 60%) */}
+          <div className="w-full relative h-full lg:col-span-3">
+            <div className="lg:sticky lg:top-24 z-40 w-full mb-4 lg:mb-0 pt-2 pb-4">
+              <ArtworkGallery
+                mainImage={art.mainImage}
+                relatedImages={art.relatedImages}
+                title={art.title}
+                orientation={art.orientation}
+              />
+            </div>
           </div>
 
-          {/* BLOCK 2: TITLE SECTION (Mob: 2, Desk: Col 2) */}
-          <div className="lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:sticky lg:top-16 self-start z-50">
-            <div className="flex flex-col gap-6 animate-in fade-in slide-in-from-bottom-8 duration-1000">
+          {/* BLOCK 2: TITLE SECTION (Right Column Scrollable Card - 40%) */}
+          <div className="w-full z-50 mb-8 lg:mb-0 lg:col-span-2">
+            <div className="flex flex-col gap-6 animate-in fade-in slide-in-from-bottom-8 duration-1000 bg-white p-8 md:p-10 border border-black/5 shadow-sm">
               {/* Header */}
               <div className="flex flex-col gap-2">
                 {/* SOLD INDICATOR */}
                 {art.status === "sold" && (
                   <div className="inline-flex items-center gap-2 mb-4">
-                    <span className="flex items-center justify-center font-sans text-[10px] tracking-[0.3em] uppercase text-white bg-[#7D1818] px-3 py-1 min-h-[24px] leading-none shadow-sm">
+                    <span className="flex items-center justify-center font-sans text-[10px] tracking-[0.3em] uppercase text-white bg-danger px-3 py-1 min-h-[24px] leading-none shadow-sm">
                       Sold / Private Collection
                     </span>
                   </div>
@@ -378,7 +380,7 @@ export default async function ArtworkPage({
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mt-3">
                   <p className="font-serif italic text-lg md:text-xl text-gray-700">
                     {art.artist},{" "}
-                    <span className="text-gray-400 not-italic font-sans text-sm ml-1 tracking-wider">
+                    <span className="text-gray-400 not-italic font-sans text-sm ml-1 tracking-wider font-medium">
                       {art.year}
                     </span>
                   </p>
@@ -390,7 +392,7 @@ export default async function ArtworkPage({
                         <Link
                           key={category}
                           href={`/category/${category.toLowerCase().replace(/\s+/g, "-")}`}
-                          className="flex items-center justify-center px-1.5 py-0 md:px-2 md:py-1 bg-white border border-black/10 hover:border-black/30 text-soft-black font-sans text-[8px] md:text-[9px] leading-tight tracking-[0.1em] md:tracking-[0.15em] uppercase transition-colors"
+                          className="flex items-center justify-center px-1.5 py-0 md:px-2 md:py-1 bg-white border border-black/10 hover:border-black/30 text-soft-black font-sans text-[8px] md:text-[9px] leading-tight tracking-[0.1em] md:tracking-[0.15em] uppercase transition-colors font-semibold"
                         >
                           {category}
                         </Link>
@@ -401,22 +403,22 @@ export default async function ArtworkPage({
               </div>
 
               {/* Technical Details */}
-              <div className="grid grid-cols-2 gap-x-12 py-5 border-y border-black/[0.06]">
-                <div className="space-y-1">
-                  <p className="font-sans text-[11px] tracking-[0.2em] uppercase text-gray-400">
-                    Material
-                  </p>
-                  <p className="font-sans text-sm text-soft-black leading-snug">
+              <div className="flex flex-col gap-3 py-5 border-y border-black/[0.06]">
+                <div className="flex items-baseline gap-2">
+                  <span className="font-sans text-[11px] tracking-[0.2em] uppercase text-gray-400 font-semibold whitespace-nowrap">
+                    Material:
+                  </span>
+                  <span className="font-sans text-sm text-soft-black leading-snug">
                     {art.material || "Mixed Media"}
-                  </p>
+                  </span>
                 </div>
-                <div className="space-y-1">
-                  <p className="font-sans text-[11px] tracking-[0.2em] uppercase text-gray-400">
-                    Dimensions
-                  </p>
-                  <p className="font-sans text-sm text-soft-black leading-snug">
+                <div className="flex items-baseline gap-2">
+                  <span className="font-sans text-[11px] tracking-[0.2em] uppercase text-gray-400 font-semibold whitespace-nowrap">
+                    Dimensions:
+                  </span>
+                  <span className="font-sans text-sm text-soft-black leading-snug">
                     {art.dimensions || "Variable"}
-                  </p>
+                  </span>
                 </div>
               </div>
 
@@ -426,7 +428,7 @@ export default async function ArtworkPage({
                   <div className="space-y-4">
                     {art.showPrice && art.price ? (
                       <div className="flex flex-col gap-1">
-                        <p className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-400">
+                        <p className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-400 font-semibold">
                           Current Value
                         </p>
                         <p className="font-serif text-3xl md:text-4xl text-soft-black">
@@ -434,12 +436,12 @@ export default async function ArtworkPage({
                         </p>
                       </div>
                     ) : (
-                      <div className="py-5 px-6 bg-white border border-black/[0.03] shadow-sm inline-block w-full">
+                      <div className="pt-2">
                         <PriceOnRequest
                           startingPrice={art.startingPrice}
                           variant="detail"
                         />
-                        <p className="font-sans text-[10px] tracking-[0.2em] text-gray-400 uppercase mt-3 border-t border-black/[0.05] pt-3">
+                        <p className="font-sans text-[10px] tracking-[0.2em] text-gray-400 uppercase mt-3 font-medium">
                           Private Inquiry Required
                         </p>
                       </div>
@@ -478,7 +480,7 @@ export default async function ArtworkPage({
                         Global Delivery
                       </p>
                       <p className="font-sans text-[9px] text-gray-500 leading-tight">
-                        Insured Crating & Worldwide Shipping via DHL
+                        Insured Crating & Worldwide Shipping
                       </p>
                     </div>
                   </div>
@@ -492,24 +494,26 @@ export default async function ArtworkPage({
               </div>
             </div>
           </div>
+        </div> {/* End Core Product Grid */}
 
-          {/* BLOCK 3: TABS (Mob: 3, Desk: Col 1) */}
-          <div className="lg:col-start-1 lg:row-start-2 lg:mt-12 animate-in fade-in duration-1000 delay-300">
+        {/* BLOCK 3: TABS (Full Width) */}
+        <div className="w-full bg-white border-y border-black/[0.04] py-16 px-8 md:px-24 xl:px-32 animate-in fade-in duration-1000 delay-300">
+          <div className="max-w-[1400px] mx-auto text-center lg:text-left">
             <ArtworkTabs
               description={art.description}
               provenance={art.provenance}
             />
           </div>
+        </div>
 
-          {/* SIMILAR ARTWORKS */}
-          <div className="lg:col-span-2">
-            <RelatedArtworks artworks={relatedArtworks} />
-          </div>
+        {/* SIMILAR ARTWORKS */}
+        <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-12 mt-20 pt-10">
+          <RelatedArtworks artworks={relatedArtworks} />
+        </div>
 
-          {/* BLOCK 4: FROM THE GALLERY (Mob: 4, Desk: Spans Bottom) */}
-          <div className="lg:hidden lg:col-span-2 mt-12 w-full">
-            <GalleryHub />
-          </div>
+        {/* BLOCK 4: FROM THE GALLERY */}
+        <div className="lg:hidden mx-auto px-6 md:px-12 mt-16 w-full max-w-[1400px]">
+          <GalleryHub />
         </div>
       </div>
     </>

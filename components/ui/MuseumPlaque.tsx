@@ -57,12 +57,12 @@ export function MuseumPlaque({
       {/* Content Layer */}
       <div className="relative z-10 flex flex-col items-center gap-1.5">
         {/* Artist */}
-        <h3 className="font-sans text-[10px] md:text-[11px] tracking-[0.2em] md:tracking-[0.45em] uppercase text-[#666666] font-semibold whitespace-nowrap">
+        <h3 className="font-sans text-[10px] md:text-[11px] tracking-[0.2em] md:tracking-[0.45em] uppercase text-muted-foreground font-semibold whitespace-nowrap">
           {artist}
         </h3>
 
         {/* Title */}
-        <h3 className="font-serif text-base md:text-xl text-soft-black font-bold italic leading-tight my-0.5 line-clamp-2">
+        <h3 className="font-serif text-base md:text-xl text-soft-black italic leading-tight my-0.5 line-clamp-2">
           {title}
         </h3>
 
@@ -77,7 +77,7 @@ export function MuseumPlaque({
         <div className="w-[15px] md:w-[30px] h-[0.5px] bg-border my-1" />
 
         {/* Year */}
-        <p className="font-sans text-[10px] md:text-[11px] tracking-[0.1em] md:tracking-[0.2em] uppercase text-[#444444] font-medium">
+        <p className="font-sans text-[10px] md:text-[11px] tracking-[0.1em] md:tracking-[0.2em] uppercase text-muted-foreground font-medium">
           {dimensions ? `${dimensions} • ` : ""}
           {year}
         </p>
