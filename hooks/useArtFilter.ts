@@ -7,6 +7,7 @@ import { Artwork, Category, FilterOptions } from "@/lib/types";
 export function useArtFilter(
   artworks: Artwork[],
   initialCategory: string | null = null,
+  initialView: FilterOptions["view"] = "grid",
 ) {
   const router = useRouter();
   const pathname = usePathname();
@@ -30,7 +31,7 @@ export function useArtFilter(
 
   // View Preferences
   const showMat = searchParams.get("mat") !== "0"; // Default true
-  const view = (searchParams.get("v") || "grid") as FilterOptions["view"];
+  const view = (searchParams.get("v") || initialView) as FilterOptions["view"];
 
   // --- FILTER LOGIC ---
   const filteredArtworks = useMemo(() => {

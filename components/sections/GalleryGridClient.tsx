@@ -25,7 +25,7 @@ export function GalleryGridClient({ artworks }: { artworks: Artwork[] }) {
     setShowMat,
     view,
     setView,
-  } = useArtFilter(artworks);
+  } = useArtFilter(artworks, null, "rows");
 
   // Map "single" to "rows" for compatibility with internal logic
   const layout = view === "rows" ? "single" : "grid";
