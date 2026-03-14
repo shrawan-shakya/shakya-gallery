@@ -40,13 +40,15 @@ export function Navbar() {
   const pathname = usePathname();
   const isHome = pathname === "/";
 
+  const isTransparent = !isScrolled;
+
   // Dynamic Text Color Logic
   // Home & Top: White
   // Scrolled OR Not Home: Soft Black
   const textColor =
-    pathname === "/" && !isScrolled ? "text-white" : "text-soft-black";
+    isHome && isTransparent ? "text-white" : "text-soft-black";
   const hoverColor =
-    pathname === "/" && !isScrolled
+    isHome && isTransparent
       ? "hover:text-white/70"
       : "hover:text-soft-black/60";
 
@@ -97,7 +99,7 @@ export function Navbar() {
         // 2. Scrolled or Not Home: bg-bone (Solid color)
         // 3. pointer-events-none: Allows clicking THROUGH the transparent navbar
         className={`fixed top-0 left-0 right-0 z-[120] px-6 lg:px-12 flex justify-between items-center w-full transition-all duration-300 ease-in-out
-          ${pathname === "/" && !isScrolled ? "pointer-events-none bg-transparent py-6 lg:py-10 border-none shadow-none" : "pointer-events-auto bg-bone py-4 border-b border-black/5 shadow-sm"}
+          ${isTransparent ? "pointer-events-none bg-transparent py-6 lg:py-10 border-none shadow-none" : "pointer-events-auto bg-bone py-4 border-b border-black/5 shadow-sm"}
         `}
       >
         {/* LOGO */}
