@@ -73,7 +73,7 @@ export default function TermsPage() {
         <p className="mb-4">
           <strong>International Shipments:</strong> We provide professional
           crating and insured shipping via registered couriers
-          (DHL/FedEx/Cargo).
+          (DHL/FedEx/Cargo). Most orders are dispatched within <strong>7-14 business days</strong> of payment verification.
         </p>
         <div className="bg-bone p-6 border border-black/5 mb-8">
           <p className="font-semibold text-soft-black mb-2">
@@ -87,22 +87,24 @@ export default function TermsPage() {
           </p>
         </div>
 
-        {/* 4. RETURNS */}
+        {/* 4. EXCHANGES & CANCELLATIONS */}
         <h2 className="font-serif text-2xl text-[#1A1A1A] mt-12 mb-6 font-semibold">
-          4. Returns & Refunds
+          4. Exchanges & Cancellations
         </h2>
         <p className="mb-4">
           We want you to be delighted with your acquisition.
         </p>
         <ul className="list-disc pl-6 mb-8 space-y-2">
           <li>
-            <strong>Online Sales:</strong> You may request a return within{" "}
-            <strong>7 days</strong> of delivery if the artwork differs
-            significantly from its description.
+            <strong>Exchanges:</strong> You may request an exchange within{" "}
+            <strong>7 days</strong> of delivery. Please note that <strong>we do not have a refund policy</strong>; all sales are eligible for gallery credit or exchange only.
+          </li>
+          <li>
+            <strong>Cancellations:</strong> Requests for cancellation must be submitted within <strong>48 hours</strong> of placing your order.
           </li>
           <li>
             The artwork must be returned in its original condition and
-            packaging.
+            packaging for any exchange to be processed.
           </li>
           <li>
             Shipping costs (both ways) and any custom duties paid are
@@ -110,8 +112,8 @@ export default function TermsPage() {
           </li>
           <li>
             <strong>Damaged Goods:</strong> If an artwork arrives damaged, you
-            must notify us within 48 hours with photographic evidence to
-            initiate an insurance claim.
+            must notify us within 5 days with photographic evidence to
+            initiate a claim.
           </li>
         </ul>
 
