@@ -1,7 +1,7 @@
 export const siteConfig = {
   name: "Shakya Gallery",
-  url: "https://shakyagallery.com",
-  ogImage: "https://shakyagallery.com/og.jpg",
+  url: "https://www.shakyagallery.com",
+  ogImage: "https://www.shakyagallery.com/og.jpg",
   description:
     "Exclusive Fine Arts Gallery in Nepal specializing in abstract, landscape, and portrait paintings.",
   since: "1998",
