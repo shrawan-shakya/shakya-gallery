@@ -129,7 +129,7 @@ export function Footer() {
               Explore
             </h4>
             <ul className="space-y-4">
-              {["Collection", "Legacy", "Exhibitions", "Viewing Rooms"].map(
+              {["Collection", "Legacy", "Journal", "How to Buy"].map(
                 (item) => (
                   <li key={item}>
                     <Link
@@ -138,14 +138,11 @@ export function Footer() {
                           ? "/collection"
                           : item === "Legacy"
                             ? "/legacy"
-                            : "/coming-soon"
+                            : item === "Journal"
+                              ? "/journal"
+                              : "/guide/buying-art"
                       }
-                      className={cn(
-                        "font-serif text-lg transition-all hover:italic",
-                        item === "Exhibitions" || item === "Viewing Rooms"
-                          ? "text-white/40 hover:text-white"
-                          : "text-white/80 hover:text-white",
-                      )}
+                      className="font-serif text-lg transition-all hover:italic text-white/80 hover:text-white"
                     >
                       {item}
                     </Link>
