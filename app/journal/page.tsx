@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   title: "The Journal | Insights on Fine Art & Collecting | SHAKYA",
   description:
     "Explore 'The Journal' by Shakya Gallery. Expert guides on buying art, artist spotlights, and market insights for the discerning collector.",
+  alternates: {
+    canonical: "/journal",
+  },
 };
 
 // 1. Fetch Articles

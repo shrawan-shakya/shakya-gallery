@@ -4,6 +4,9 @@ export const metadata: Metadata = {
   title: "Terms & Conditions | SHAKYA Gallery",
   description:
     "Terms of Service for acquiring artwork from Shakya Gallery. Authenticity, payment, shipping, and returns policy.",
+  alternates: {
+    canonical: "/terms",
+  },
 };
 
 export default function TermsPage() {

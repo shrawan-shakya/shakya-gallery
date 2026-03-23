@@ -4,7 +4,6 @@ import "./globals.css";
 import { ClientLayout } from "@/components/layout/ClientLayout";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { SanityLive } from "@/sanity/lib/live";
-import { CanonicalLink } from "@/components/ui/CanonicalLink";
 
 // 1. The Elegant Serif (Headings)
 const cormorant = Cormorant_Garamond({
@@ -83,7 +82,6 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://cdn.sanity.io" />
         <link rel="dns-prefetch" href="https://cdn.sanity.io" />
-        <CanonicalLink />
       </head>
       {/* 3. Added flex column layout so footer pushes to bottom */}
       <body

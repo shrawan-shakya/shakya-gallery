@@ -5,6 +5,9 @@ export const metadata = {
   title: "World-Class Fine Art Shipping & Logistics | SHAKYA Gallery",
   description:
     "Learn about our museum-grade global shipping, custom crating, and white-glove delivery for international art collectors.",
+  alternates: {
+    canonical: "/shipping",
+  },
 };
 
 export default function ShippingPage() {

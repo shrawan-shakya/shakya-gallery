@@ -5,6 +5,9 @@ export const metadata: Metadata = {
   title: "Refund & Return Policy | SHAKYA Gallery",
   description:
     "Our policy on returns and refunds for fine art acquisitions. All sales are final with exceptions for transit damage.",
+  alternates: {
+    canonical: "/refund-policy",
+  },
 };
 
 export default function RefundPolicyPage() {

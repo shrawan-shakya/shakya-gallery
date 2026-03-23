@@ -4,6 +4,9 @@ export const metadata: Metadata = {
   title: "Privacy Policy | SHAKYA Gallery",
   description:
     "Privacy Policy for Shakya Gallery. Learn how we collect, use, and protect your data.",
+  alternates: {
+    canonical: "/privacy-policy",
+  },
 };
 
 export default function PrivacyPolicyPage() {

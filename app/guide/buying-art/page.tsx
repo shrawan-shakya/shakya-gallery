@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   title: "How to Buy Fine Art | The Collector's Guide | SHAKYA",
   description:
     "A comprehensive guide on buying original fine art in Nepal. Learn how to select, verify, and acquire authentic abstracts, landscapes, and portraits.",
+  alternates: {
+    canonical: "/guide/buying-art",
+  },
 };
 
 const Step = ({
