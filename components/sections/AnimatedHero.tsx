@@ -66,7 +66,7 @@ export function AnimatedHero() {
           poster="/hero-1.jpg"
           onLoadedData={() => setIsVideoLoaded(true)}
         >
-          <source src="/hero intro.mp4" type="video/mp4" />
+          <source src="/hero intro.webm" type="video/webm" />
         </video>
       </motion.div>
 
