@@ -25,8 +25,9 @@ export default defineType({
     defineField({
       name: "artist",
       title: "Artist / Origin",
-      type: "string",
-      initialValue: "Unknown Master",
+      type: "reference",
+      to: [{ type: "artist" }],
+      description: "Link to the artist profile.",
     }),
 
     // --- 2. CLASSIFICATION (The "Filter" Engine) ---

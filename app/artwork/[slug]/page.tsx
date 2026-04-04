@@ -9,6 +9,7 @@ import { RelatedArtworks } from "@/components/artwork/RelatedArtworks";
 import { Price } from "@/components/ui/Price";
 import { PriceOnRequest } from "@/components/ui/PriceOnRequest";
 import { ShieldCheck, Truck, Lock } from "lucide-react";
+import { ArtistProfile } from "@/components/sections/ArtistProfile";
 
 export const dynamicParams = true;
 export const revalidate = 0;
@@ -71,7 +72,15 @@ async function getArtwork(slug: string) {
       material,
       description,
       provenance,
-      artist,
+      "artist": coalesce(artist->name, artist),
+      "artistSlug": artist->slug.current,
+      "artistRef": artist->{
+        name,
+        slug,
+        image,
+        bio,
+        specialties
+      },
       status, 
       price,
       showPrice,
@@ -118,7 +127,7 @@ async function getRelatedArtworks(
       showPrice,
       startingPrice,
       status,
-      artist,
+      "artist": coalesce(artist->name, artist),
       year
     }
   `;
@@ -485,6 +494,11 @@ export default async function ArtworkPage({
                     </div>
                   </div>
                 </div>
+
+                {/* ARTIST PROFILE */}
+                {art.artistRef && (
+                  <ArtistProfile artist={art.artistRef} />
+                )}
 
                 {/* DESKTOP HUB (Shows in right column on LG+) */}
                 <GalleryHub

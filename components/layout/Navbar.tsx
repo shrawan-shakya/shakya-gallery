@@ -16,6 +16,7 @@ import { CartDrawer } from "@/components/ui/CartDrawer";
 
 const links = [
   { name: "Collection", href: "/collection" },
+  { name: "Artists", href: "/artists" },
   { name: "Journal", href: "/journal" },
   { name: "How to Buy", href: "/guide/buying-art" },
   { name: "Legacy", href: "/legacy" },

@@ -5,6 +5,11 @@ export const structure: StructureResolver = (S) =>
   S.list()
     .title("Gallery Content")
     .items([
+      // --- ARTISTS ---
+      S.documentTypeListItem("artist").title("Artists"),
+      
+      S.divider(),
+
       // --- ARTWORKS ---
       S.listItem()
         .title("Artworks")
