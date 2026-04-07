@@ -126,7 +126,7 @@ export const ConfirmationEmail = ({
           {/* Contact Action */}
           <Section style={actionSection}>
             <Text style={actionText}>Prefer an immediate update?</Text>
-            <Link href="https://wa.me/61450704907" style={button}>
+            <Link href="https://wa.me/9779843320342" style={button}>
               Chat on WhatsApp
             </Link>
           </Section>

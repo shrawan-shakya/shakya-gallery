@@ -47,7 +47,7 @@ export function ScanClient({
           `Hi Shakya Gallery, ${whatsappName}I am currently viewing "${artworkTitle}"${locationText} and would like to know more.`,
         );
         // Standard Shakya WhatsApp number
-        window.location.href = `https://wa.me/61450704907?text=${message}`;
+        window.location.href = `https://wa.me/9779843320342?text=${message}`;
       } else {
         router.push(`/artwork/${slug}`);
       }

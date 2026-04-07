@@ -12,7 +12,7 @@ export const siteConfig = {
   contact: {
     email: "concierge@shakyagallery.com",
     secondaryEmail: "mag.boudha@gmail.com",
-    phone: "+977-9801234567",
+    phone: "+977 9843320342",
     address: {
       street: "Boudha",
       city: "Kathmandu",

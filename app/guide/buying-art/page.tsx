@@ -283,13 +283,13 @@ export default function BuyingGuidePage() {
                   asChild
                   className="inline-flex items-center gap-3 px-8 py-4 bg-[#25D366] text-white font-sans text-xs tracking-[0.2em] uppercase hover:bg-green-600 transition-colors font-semibold"
                 >
-                  <Link href="https://wa.me/61450704907" target="_blank">
+                  <Link href="https://wa.me/9779843320342" target="_blank">
                     Contact on WhatsApp
                   </Link>
                 </Button>
                 <div className="font-sans text-sm text-black">
                   <p className="mb-1 font-medium text-black font-serif text-lg tracking-tight">
-                    Direct: +977-9843320342
+                    Direct: +977 9843320342
                   </p>
                   <p className="text-black/70 italic">
                     Available for video calls & virtual gallery tours.
