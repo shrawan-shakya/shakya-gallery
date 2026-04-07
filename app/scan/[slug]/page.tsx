@@ -8,7 +8,7 @@ async function getScanArtwork(slug: string) {
     *[_type == "artwork" && slug.current == $slug][0] {
       _id,
       title,
-      artist,
+      "artist": coalesce(artist->name, artist),
       currentLocation,
       "mainImage": {
         "url": mainImage.asset->url,

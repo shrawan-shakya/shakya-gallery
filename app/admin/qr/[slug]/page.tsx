@@ -8,7 +8,7 @@ async function getArtworkForQR(slug: string) {
   const query = `
     *[_type == "artwork" && slug.current == $slug][0] {
       title,
-      artist
+      "artist": coalesce(artist->name, artist)
     }
   `;
   const { data } = await sanityFetch({ query, params: { slug } });

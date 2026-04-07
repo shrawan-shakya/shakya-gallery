@@ -19,7 +19,7 @@ async function getArtworks(limit?: number) {
       title,
       dimensions,
       year,
-      artist,
+      "artist": artist->name,
       material,
       status, // <--- Added: Fetch if it is Sold/Available
       price,  // <--- Added: Fetch the price

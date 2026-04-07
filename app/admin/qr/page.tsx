@@ -8,7 +8,7 @@ async function getAllArtworks() {
     *[_type == "artwork"] | order(title asc) {
       _id,
       title,
-      artist,
+      "artist": coalesce(artist->name, artist),
       "slug": slug.current,
       "imageUrl": mainImage.asset->url
     }
