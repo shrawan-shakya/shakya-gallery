@@ -21,7 +21,7 @@ export default async function AdminQRDashboard() {
   const artworks = await getAllArtworks();
 
   return (
-    <div className="min-h-screen bg-bone p-8 md:p-12 lg:p-20">
+    <div className="min-h-screen bg-bone pt-32 px-8 md:px-12 lg:px-20 pb-20">
       <div className="max-w-5xl mx-auto space-y-12">
         <div className="space-y-4 border-b border-black/10 pb-8">
           <h1 className="font-serif text-3xl md:text-5xl text-soft-black">

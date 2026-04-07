@@ -34,26 +34,26 @@ export default async function AdminQRPage({
   const scanUrl = `${protocol}://${host}/scan/${slug}`;
 
   return (
-    <div className="min-h-screen bg-bone flex flex-col items-center justify-center p-8">
+    <div className="min-h-screen bg-bone flex flex-col items-center pt-40 p-8">
       <div
-        className="bg-white p-12 shadow-sm border border-black/10 flex flex-col items-center text-center max-w-sm w-full"
+        className="bg-white p-8 shadow-sm border border-black/10 flex flex-col items-center text-center w-[3.5in] h-[4in] shrink-0"
         id="qr-container"
       >
         {/* Gallery Branding */}
-        <div className="mb-8 space-y-2">
-          <h1 className="font-serif text-3xl tracking-widest uppercase text-soft-black">
+        <div className="mb-6 space-y-1">
+          <h1 className="font-serif text-2xl tracking-widest uppercase text-soft-black">
             Shakya
           </h1>
           <p className="font-sans text-[8px] tracking-[0.4em] uppercase text-frame-gold">
-            Fine Art Gallery
+            THE GALLERY
           </p>
         </div>
 
         {/* The QR Code */}
-        <div className="bg-white p-4 border border-black/5 mb-8">
+        <div className="bg-white p-2 border border-black/5 mb-6">
           <QRCode
             value={scanUrl}
-            size={160}
+            size={140}
             level="H" // High error correction
             bgColor="#FFFFFF"
             fgColor="#1C1C1C" // Soft black
@@ -61,30 +61,38 @@ export default async function AdminQRPage({
         </div>
 
         {/* Artwork Details */}
-        <div className="space-y-4 mb-8 w-full px-4">
-          <h2 className="font-serif text-2xl text-soft-black leading-tight">
+        <div className="space-y-3 mb-6 w-full px-2 flex-grow flex flex-col justify-center">
+          <h2 className="font-serif text-lg text-soft-black leading-tight line-clamp-2">
             {art.title}
           </h2>
-          <div className="w-8 h-[1px] bg-frame-gold mx-auto" />
-          <p className="font-sans text-[10px] tracking-[0.2em] text-gray-500 uppercase">
+          <div className="w-6 h-[1px] bg-frame-gold mx-auto" />
+          <p className="font-sans text-[9px] tracking-[0.2em] text-gray-500 uppercase line-clamp-1">
             {art.artist}
           </p>
         </div>
 
-        <p className="font-sans text-[9px] tracking-[0.3em] uppercase text-gray-400 mt-2">
+        <p className="font-sans text-[8px] tracking-[0.3em] uppercase text-gray-400 mt-auto">
           Scan to Discover
         </p>
       </div>
 
-      <PrintButton />
+      <div className="mt-8">
+        <PrintButton />
+      </div>
 
       {/* CSS rules strictly for the print layout so it prints perfectly */}
       <style
         dangerouslySetInnerHTML={{
           __html: `
             @media print {
+                @page {
+                    size: auto;
+                    margin: 0;
+                }
                 html, body {
                     background: white !important;
+                    margin: 0 !important;
+                    padding: 0 !important;
                 }
                 body * {
                     visibility: hidden;
@@ -93,15 +101,20 @@ export default async function AdminQRPage({
                     visibility: visible;
                 }
                 #qr-container {
-                    position: absolute;
-                    left: 50%;
-                    top: 50%;
-                    transform: translate(-50%, -50%);
-                    width: 100%;
-                    max-width: 400px;
+                    position: fixed;
+                    left: 0;
+                    top: 0;
+                    width: 3.5in !important;
+                    height: 4in !important;
                     box-shadow: none !important;
-                    border: 1px solid #E5E7EB !important; /* light gray border for cutting */
-                    padding: 2rem !important;
+                    border: 1px solid #E5E7EB !important;
+                    padding: 0.5in !important;
+                    margin: 0 !important;
+                    display: flex !important;
+                    flex-direction: column !important;
+                    align-items: center !important;
+                    justify-content: center !important;
+                    -webkit-print-color-adjust: exact;
                 }
             }
         `,
