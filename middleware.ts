@@ -2,19 +2,10 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
-  const hostHeader = request.headers.get('host') || '';
+  // NOTE: Domain redirect is temporarily disabled due to Vercel Domain Settings conflict.
+  // Vercel is currently set to redirect non-www -> www, causing an infinite loop when 
+  // middleware attempts to redirect www -> non-www.
   
-  if (hostHeader.startsWith('www.')) {
-    const newHost = hostHeader.replace(/^www\./, '');
-    const protocol = request.headers.get('x-forwarded-proto') || (hostHeader.includes('localhost') ? 'http' : 'https');
-    return new Response(null, {
-      status: 301,
-      headers: {
-        Location: `${protocol}://${newHost}${request.nextUrl.pathname}${request.nextUrl.search}`,
-      },
-    });
-  }
-
   return NextResponse.next();
 }
 
