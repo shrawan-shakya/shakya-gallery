@@ -178,7 +178,7 @@ export async function generateMetadata({
     title: `${title} | SHAKYA Gallery`,
     description,
     alternates: {
-      canonical: `/artwork/${slug}`,
+      canonical: `https://shakyagallery.com/artwork/${slug}`,
     },
     openGraph: {
       title,

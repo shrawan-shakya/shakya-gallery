@@ -16,17 +16,7 @@ const nextConfig: NextConfig = {
         destination: "/category/:slug",
         permanent: true,
       },
-      {
-        source: "/:path*",
-        has: [
-          {
-            type: "host",
-            value: "www.shakyagallery.com",
-          },
-        ],
-        destination: "https://shakyagallery.com/:path*",
-        permanent: true,
-      },
+
     ];
   },
 };
