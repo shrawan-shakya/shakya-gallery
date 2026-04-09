@@ -73,7 +73,7 @@ export const NewsletterWelcomeEmail = () => {
               Since 1998 • Kathmandu, Nepal
               <br />
               <Link href="https://shakyagallery.com" style={footerLink}>
-                www.shakyagallery.com
+                shakyagallery.com
               </Link>
             </Text>
           </Section>

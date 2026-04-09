@@ -34,70 +34,14 @@ export default async function AdminQRPage({
   const scanUrl = `${protocol}://${host}/scan/${slug}`;
 
   return (
-    <div className="min-h-screen bg-bone">
-      {/* 1. UI PREVIEW (Hidden in Print) */}
-      <div className="flex flex-col items-center pt-40 p-8 print:hidden">
-        <div className="bg-white p-8 shadow-sm border border-black/10 flex flex-col items-center text-center w-[3.5in] h-[4in] shrink-0">
-          {/* Gallery Branding */}
-          <div className="mb-6 space-y-1">
-            <h1 className="font-serif text-2xl tracking-widest uppercase text-soft-black">
-              Shakya
-            </h1>
-            <p className="font-sans text-[8px] tracking-[0.4em] uppercase text-frame-gold">
-              THE GALLERY
-            </p>
-          </div>
-
-          {/* The QR Code */}
-          <div className="bg-white p-2 border border-black/5 mb-6">
-            <QRCode
-              value={scanUrl}
-              size={140}
-              level="H"
-              bgColor="#FFFFFF"
-              fgColor="#1C1C1C"
-            />
-          </div>
-
-          {/* Artwork Details */}
-          <div className="space-y-3 mb-6 w-full px-2 flex-grow flex flex-col justify-center">
-            <h2 className="font-serif text-lg text-soft-black leading-tight line-clamp-2">
-              {art.title}
-            </h2>
-            <div className="w-6 h-[1px] bg-frame-gold mx-auto" />
-            <p className="font-sans text-[9px] tracking-[0.2em] text-gray-500 uppercase line-clamp-1">
-              {art.artist}
-            </p>
-          </div>
-
-          <p className="font-sans text-[8px] tracking-[0.3em] uppercase text-gray-400 mt-auto">
-            Scan to Discover
-          </p>
-        </div>
-
-        <div className="mt-8">
-          <PrintButton />
-        </div>
-      </div>
-
-      {/* 2. ACTUAL PRINT CONTAINER (Only visible in Print) */}
+    <div className="min-h-screen bg-bone flex flex-col items-center pt-40 p-8">
       <div
+        className="bg-white p-8 shadow-sm border border-black/10 flex flex-col items-center text-center w-[3.5in] h-[4in] shrink-0"
         id="qr-container"
-        className="hidden print:flex bg-white flex-col items-center text-center"
-        style={{
-          width: "3.5in",
-          height: "4in",
-          padding: "0.5in",
-          position: "relative",
-          margin: "0",
-          border: "1px solid #E5E7EB",
-        }}
       >
-        <div className="mb-6 space-y-1 w-full">
-          <h1
-            className="font-serif text-2xl tracking-widest uppercase text-soft-black"
-            style={{ margin: 0 }}
-          >
+        {/* Gallery Branding */}
+        <div className="mb-6 space-y-1">
+          <h1 className="font-serif text-2xl tracking-widest uppercase text-soft-black">
             Shakya
           </h1>
           <p className="font-sans text-[8px] tracking-[0.4em] uppercase text-frame-gold">
@@ -105,25 +49,24 @@ export default async function AdminQRPage({
           </p>
         </div>
 
-        <div className="mb-6">
+        {/* The QR Code */}
+        <div className="bg-white p-2 border border-black/5 mb-6">
           <QRCode
             value={scanUrl}
             size={140}
-            level="H"
+            level="H" // High error correction
             bgColor="#FFFFFF"
-            fgColor="#1C1C1C"
+            fgColor="#1C1C1C" // Soft black
           />
         </div>
 
-        <div className="space-y-3 mb-6 w-full flex-grow flex flex-col justify-center">
-          <h2 className="font-serif text-lg text-soft-black leading-tight">
+        {/* Artwork Details */}
+        <div className="space-y-3 mb-6 w-full px-2 flex-grow flex flex-col justify-center">
+          <h2 className="font-serif text-lg text-soft-black leading-tight line-clamp-2">
             {art.title}
           </h2>
-          <div
-            className="w-6 h-[1px] bg-frame-gold mx-auto"
-            style={{ backgroundColor: "#D4AF37", margin: "12px auto" }}
-          />
-          <p className="font-sans text-[9px] tracking-[0.2em] text-gray-500 uppercase">
+          <div className="w-6 h-[1px] bg-frame-gold mx-auto" />
+          <p className="font-sans text-[9px] tracking-[0.2em] text-gray-500 uppercase line-clamp-1">
             {art.artist}
           </p>
         </div>
@@ -133,21 +76,45 @@ export default async function AdminQRPage({
         </p>
       </div>
 
+      <div className="mt-8">
+        <PrintButton />
+      </div>
+
+      {/* CSS rules strictly for the print layout so it prints perfectly */}
       <style
         dangerouslySetInnerHTML={{
           __html: `
             @media print {
                 @page {
-                    size: 3.5in 4.0in;
+                    size: auto;
                     margin: 0;
                 }
-                body {
+                html, body {
+                    background: white !important;
                     margin: 0 !important;
                     padding: 0 !important;
                 }
-                .min-h-screen {
-                    min-height: auto !important;
-                    height: auto !important;
+                body * {
+                    visibility: hidden;
+                }
+                #qr-container, #qr-container * {
+                    visibility: visible;
+                }
+                #qr-container {
+                    position: fixed;
+                    left: 0;
+                    top: 0;
+                    width: 3.5in !important;
+                    height: 4in !important;
+                    box-shadow: none !important;
+                    border: 1px solid #E5E7EB !important;
+                    padding: 0.5in !important;
+                    margin: 0 !important;
+                    display: flex !important;
+                    flex-direction: column !important;
+                    align-items: center !important;
+                    justify-content: center !important;
+                    -webkit-print-color-adjust: exact;
                 }
             }
         `,

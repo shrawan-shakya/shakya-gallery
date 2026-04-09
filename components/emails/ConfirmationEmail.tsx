@@ -139,7 +139,7 @@ export const ConfirmationEmail = ({
               Kathmandu, Nepal
               <br />
               <Link href="https://shakyagallery.com" style={footerLink}>
-                www.shakyagallery.com
+                shakyagallery.com
               </Link>
             </Text>
           </Section>
