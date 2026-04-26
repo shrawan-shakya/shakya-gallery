@@ -46,12 +46,8 @@ export function Navbar() {
   // Dynamic Text Color Logic
   // Home & Top: White
   // Scrolled OR Not Home: Soft Black
-  const textColor =
-    isHome && isTransparent ? "text-white" : "text-soft-black";
-  const hoverColor =
-    isHome && isTransparent
-      ? "hover:text-white/70"
-      : "hover:text-soft-black/60";
+  const textColor = isHome && isTransparent ? "text-white" : "text-soft-black";
+  const hoverColor = isHome && isTransparent ? "hover:text-white/70" : "hover:text-soft-black/60";
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious() || 0;
@@ -95,12 +91,14 @@ export function Navbar() {
         }}
         animate={isHidden ? "hidden" : "visible"}
         transition={{ duration: 0.35, ease: "easeInOut" }}
-        // THE FIX:
-        // 1. At Top on Home: bg-transparent (Let Hero color show through)
-        // 2. Scrolled or Not Home: bg-bone (Solid color)
+        // 1. At Top: bg-transparent (Let content show through)
+        // 2. Scrolled: Light glass effect on all pages
         // 3. pointer-events-none: Allows clicking THROUGH the transparent navbar
         className={`fixed top-0 left-0 right-0 z-[120] px-6 lg:px-12 flex justify-between items-center w-full transition-all duration-300 ease-in-out
-          ${isTransparent ? "pointer-events-none bg-transparent py-6 lg:py-10 border-none shadow-none" : "pointer-events-auto bg-bone py-4 border-b border-black/5 shadow-sm"}
+          ${isTransparent 
+            ? "pointer-events-none bg-transparent py-6 lg:py-10 border-none shadow-none" 
+            : "pointer-events-auto bg-bone/80 backdrop-blur-md py-4 border-b border-black/5 shadow-sm"
+          }
         `}
       >
         {/* LOGO */}
