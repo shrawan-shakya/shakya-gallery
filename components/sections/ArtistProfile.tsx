@@ -26,7 +26,7 @@ export function ArtistProfile({ artist }: ArtistProfileProps) {
         About the Artist
       </h3>
       <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
-        {artist.image && (
+        {artist.image?.asset && (
           <div className="relative w-24 h-24 shrink-0 overflow-hidden rounded-full border border-black/5 shadow-sm">
             <Image
               src={urlFor(artist.image).width(200).height(200).url()}
