@@ -34,11 +34,11 @@ export function MuseumPlaque({
   return (
     <div
       className={cn(
-        "relative mx-auto text-center z-40 group transition-all duration-500",
+        "relative text-center z-40 group transition-all duration-500",
         "bg-[linear-gradient(135deg,#F8F8F8_0%,#FFFFFF_50%,#EBEBEB_100%)]",
         "border-[0.5px] border-[#D8D8D8]",
         "shadow-[0_10px_25px_rgba(0,0,0,0.06)]",
-        "px-2 py-3 md:px-8 md:py-6 w-[90%] md:w-[80%]",
+        "px-2 py-3 md:px-8 md:py-6 w-[90%] md:w-[80%] min-w-[240px] md:min-w-[280px]",
         "overflow-hidden isolation-auto backface-hidden",
         className,
       )}
