@@ -49,7 +49,7 @@ export default async function ArtistsPage() {
             href={`/artist/${artist.slug || "#"}`}
             className="group flex flex-col items-center sm:items-start text-center sm:text-left gap-6 p-8 bg-white border border-black/5 hover:border-black/20 hover:shadow-sm transition-all duration-500"
           >
-            {artist.image ? (
+            {artist.image?.asset ? (
               <div className="relative w-32 h-32 md:w-40 md:h-40 shrink-0 overflow-hidden rounded-full shadow-sm border border-black/5">
                 <Image
                   src={urlFor(artist.image).width(400).height(400).url()}

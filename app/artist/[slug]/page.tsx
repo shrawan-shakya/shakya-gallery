@@ -82,7 +82,7 @@ export default async function ArtistPage({
           ← Back to Collection
         </Link>
         <div className="flex flex-col md:flex-row gap-10 md:gap-16 items-center md:items-start text-center md:text-left">
-          {artist.image && (
+          {artist.image?.asset && (
             <div className="relative w-48 h-48 md:w-64 md:h-64 shrink-0 overflow-hidden rounded-full shadow-sm border border-black/5">
               <Image
                 src={urlFor(artist.image).width(800).height(800).url()}
