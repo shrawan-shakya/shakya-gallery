@@ -94,7 +94,7 @@ export function Navbar() {
         // 1. At Top: bg-transparent (Let content show through)
         // 2. Scrolled: Light glass effect on all pages
         // 3. pointer-events-none: Allows clicking THROUGH the transparent navbar
-        className={`fixed top-0 left-0 right-0 z-[120] px-6 lg:px-12 flex justify-between items-center w-full transition-all duration-300 ease-in-out
+        className={`fixed top-0 left-0 right-0 z-[120] px-6 lg:px-12 flex justify-between items-center w-full transition-colors duration-300 ease-in-out ${textColor}
           ${isTransparent 
             ? "pointer-events-none bg-transparent py-6 lg:py-10 border-none shadow-none" 
             : "pointer-events-auto bg-bone/80 backdrop-blur-md py-4 border-b border-black/5 shadow-sm"
@@ -107,7 +107,7 @@ export function Navbar() {
           className="z-50 group pointer-events-auto flex items-center h-8"
         >
           <div
-            className={`font-serif tracking-[0.3em] relative font-thin transition-all duration-500 flex items-center leading-none ${textColor}
+            className={`font-serif tracking-[0.3em] relative font-thin transition-all duration-500 flex items-center leading-none
             ${isScrolled ? "text-xl lg:text-2xl" : "text-2xl lg:text-3xl"}
           `}
           >
@@ -118,7 +118,7 @@ export function Navbar() {
 
         {/* DESKTOP LINKS */}
         <div
-          className={`hidden min-[1200px]:flex gap-12 items-center font-thin pointer-events-auto ${textColor}`}
+          className={`hidden min-[1200px]:flex gap-12 items-center font-thin pointer-events-auto`}
         >
           {links.map((link) => (
             <Link
@@ -156,7 +156,7 @@ export function Navbar() {
 
         {/* MOBILE CONTROLS */}
         <div
-          className={`min-[1200px]:hidden z-50 flex items-center gap-1.5 pointer-events-auto ${textColor}`}
+          className={`min-[1200px]:hidden z-50 flex items-center gap-1.5 pointer-events-auto`}
         >
           {/* SEARCH ICON (Mobile) */}
           <button
